@@ -4,22 +4,22 @@
 
 career_scenarios = {
     0x00: "Coming of Age",
-    0x01: "Practice 1",
+    0x01: "Practice",
     0x02: "Junior Champion",
     0x03: "My First Major Title",
-    0x04: "Practice 2",
+    0x04: "Practice",
     0x05: "Rocket Powered 147",
     0x06: "The Re-Spotted Black",
-    0x07: "Practice 3",
+    0x07: "Practice",
     0x08: "On Top Of The World",
     0x09: "Against The Clock",
-    0x0a: "Practice 4",
+    0x0a: "Practice",
     0x0b: "Big Break Final",
     0x0c: "Back On Top",
-    0x0d: "Practice 5",
+    0x0d: "Practice",
     0x0e: "Master Class",
     0x0f: "Rocket Speed",
-    0x10: "Practice 6",
+    0x10: "Practice",
     0x11: "UK Champ",
     0x12: "World Champion",
 }
@@ -292,7 +292,10 @@ for i in range(7, 16)
 
 for i in range(0, 18)
 {
-    achievement_career_win(career_scenarios[i], career_subscenario_amount[i], i)
+    if (career_scenarios[i] != "Practice")
+    {
+        achievement_career_win(career_scenarios[i], career_subscenario_amount[i], i)
+    }
 }
 
 achievement_break(10, "Getting the Hang of It", "Score 10 or more points in a single break.", 3)
