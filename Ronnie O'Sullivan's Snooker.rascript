@@ -100,6 +100,7 @@ function hit_specific_ball(i)
 }
 
 function ball_index_is_red(i) => i >= 7 && i <= 21
+function ball_got_respotted(i) => byte(0x015afa90 + i * 0x10 + 0x0b) == 0x00 && prev(byte(0x015afa90 + i * 0x10 + 0x0b)) == 0xff
 
 function potted_ball_legally(i)
 {
@@ -306,6 +307,10 @@ function opponent_score() => dword(0x15B2054)
 achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rules menu.",
 points = 1, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
 
+achievement(title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
+points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && !replay() && our_shot() &&
+                      repeated(3, potted_ball_legally(6)) && measured(repeated(3, ball_got_respotted(6))))
+
 function achievement_break(target, title, desc, points)
 {
     achievement(title = title, description = desc,
@@ -357,7 +362,7 @@ achievement_break(50, "Running the Table", "Score 50 or more points in a single 
 achievement_break(100, "Century Break", "Score 100 or more points in a single break.", 25)
 achievement_break(147, "Maximum Break", "Achieve the maximum break and score 147 points in one visit to the table.", 50)
 
-// RP
+// Rich Presence
 
 rp_opponent = rich_presence_lookup("Opponent", current_opponent(), opponents, "an opponent")
 rp_score = rich_presence_value("Score", player_score())
