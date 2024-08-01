@@ -316,10 +316,22 @@ function player_score() => dword(0x15B2050)
 // $15B2054: [Signed 32-bit] Opponent score in the current frame
 function opponent_score() => dword(0x15B2054)
 
-function frame_started() => player_score() == 0 && opponent_score() == 0 && in_game() && (prev(player_score()) > 0 || prev(opponent_score()) > 0 || prev(in_menu()))
+function player_frames_won() => dword(0x015adbc0)
+function opponent_frames_won() => dword(0x015adbc4)
+
+function frame_started() => player_score() == 0 && opponent_score() == 0 && in_game() &&
+    (prev(player_score()) > 0 ||
+    prev(opponent_score()) > 0 ||
+    player_frames_won() > prev(player_frames_won()) ||
+    opponent_frames_won() > prev(opponent_frames_won()) ||
+    prev(in_menu()))
 
 function frames_won() => dword(0x015adbc0)
 function match_total_frames() => dword(0x009d8e60)
+
+function break_off() => byte(0x009d8a61) == 0x01
+
+function shot_timer() => word(0x009d8a7a)
 
 // Achievements
 //
@@ -352,6 +364,13 @@ achievement(title = "Ronnie Rainbow I", description = "Pot and re-spot each colo
 
 achievement(title = "Fast Can Be Smooth Too", description = "Legally pot a ball while shooting at full power.", points = 3,
     trigger = in_game() && !replay() && our_shot() && shot_power() == 65536 && trigger_when(prev(player_score()) < player_score()))
+
+// Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
+achievement(title = "Break-Off to a Good Start", description = "Pot a red ball on the break-off shot in Tournament or Quick Match mode.", points = 5,
+    trigger =   disable_when(their_shot(), until = in_menu() || break_off()) &&
+    in_game() && (in_tournament() || in_quick_match()) && !replay() && our_shot() &&
+    trigger_when(prev(player_score()) < player_score())
+)
 
 function achievement_break(target, title, desc, points)
 {
