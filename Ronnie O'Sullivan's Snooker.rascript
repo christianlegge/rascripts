@@ -147,6 +147,7 @@ function game_mode() => dword(0x9D8838)
 
 function in_quick_match() => game_mode() == 0
 function in_career() => game_mode() == 1
+function in_tournament() => game_mode() == 3
 
 // $9D8878: [32-bit] In-game or menu?
 //          0 = In menu
@@ -302,6 +303,9 @@ function player_score() => dword(0x15B2050)
 // $15B2054: [Signed 32-bit] Opponent score in the current frame
 function opponent_score() => dword(0x15B2054)
 
+function frames_won() => dword(0x015adbc0)
+function match_total_frames() => dword(0x009d8e60)
+
 // Achievements
 
 achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rules menu.",
@@ -310,6 +314,9 @@ points = 1, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu(
 achievement(title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
 points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && !replay() && our_shot() &&
                       repeated(3, potted_ball_legally(6)) && measured(repeated(3, ball_got_respotted(6))))
+
+achievement(title = "Just Another Notch in the Belt", description = "Win a Final match to become champion of the Premier League in Tournament mode.", points = 25,
+            trigger = in_game() && !replay() && in_tournament() && prev(game_in_progress()) && game_won() && match_total_frames() == 7 && prev(frames_won()) == 3 && frames_won() == 4)
 
 function achievement_break(target, title, desc, points)
 {
