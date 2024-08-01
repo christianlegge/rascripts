@@ -83,6 +83,59 @@ opponents = {
 
 function replay() => byte(0x01ffd98c) == 1
 
+function practice_timer() => word(0x009d8a94)
+
+function balls_on_bitfield() => dword(0x009d8a30)
+function ball_first_struck() => dword(0x009d8a50)
+
+function hit_specific_ball(i)
+{
+    mask = 1
+    for j in range(1, i)
+    {
+        mask = mask * 2
+    }
+    return balls_on_bitfield() & mask != 0 &&
+    ball_first_struck() == i
+}
+
+function ball_index_is_red(i) => i >= 7 && i <= 21
+
+function potted_ball_legally(i)
+{
+    mask = 1
+    for j in range(1, i)
+    {
+        mask = mask * 2
+    }
+    table_offset = i * 0x10
+    potted_bool = byte(0x015afa90 + table_offset + 0x0b)
+    return balls_on_bitfield() & mask != 0 &&
+    (ball_first_struck() == i || (ball_index_is_red(i) && ball_index_is_red(ball_first_struck()))) &&
+    potted_bool == 0xff && prev(potted_bool) == 0x00
+}
+
+function any_hit_ball_on() 
+{
+    hit = always_false()
+    for i in range(1, 21)
+    {
+        hit = hit || hit_specific_ball(i)
+    }
+    return hit
+}
+
+function any_legal_pot() 
+{
+    hit = always_false()
+    for i in range(1, 21)
+    {
+        hit = hit || potted_ball_legally(i)
+    }
+    return hit
+}
+
+function first_struck_ball_frame() => prev(ball_first_struck()) == 0
 
 // $9D8838: [32-bit] Game mode (invalid in menu)
 //          0 = Quick Match
