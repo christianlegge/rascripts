@@ -406,7 +406,7 @@ achievement_break(147, "Maximum Break", "Achieve the maximum break and score 147
 function practice_speedrun_leaderboard(scenario_index, practice_index) 
 {
     leaderboard(title = "Career Practice " + practice_index + " Speedrun (IGT)", description = "Fastest time to complete the " + career_scenarios[scenario_index] + " scenario in Career mode.",
-    format = "MILLISECS", value = practice_timer(), cancel = in_menu() || replay() || !in_career() || !in_career_practice(), submit = always_true(), lower_is_better = false,
+    format = "MILLISECS", value = practice_timer() / 10, cancel = in_menu() || replay() || !in_career() || !in_career_practice(), submit = always_true(), lower_is_better = false,
     start = in_career() && in_career_practice() && current_career_scenario() == scenario_index && prev(game_in_progress()) && game_won())
 }
 
