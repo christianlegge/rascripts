@@ -313,6 +313,9 @@ function match_total_frames() => dword(0x009d8e60)
 
 // Achievements
 
+achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 2,
+            trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
+
 achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rules menu.",
 points = 1, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
 
