@@ -83,7 +83,7 @@ opponents = {
 
 function replay() => byte(0x01ffd98c) == 1
 
-function practice_timer() => word(0x009d8a94)
+function practice_timer() => dword(0x009d8a94)
 
 function timer_is_running() => prev(practice_timer()) > practice_timer()
 
@@ -400,6 +400,22 @@ achievement_break(25, "That's a Decent Break, Mate", "Score 25 or more points in
 achievement_break(50, "Running the Table", "Score 50 or more points in a single break.", 10)
 achievement_break(100, "Century Break", "Score 100 or more points in a single break.", 25)
 achievement_break(147, "Maximum Break", "Achieve the maximum break and score 147 points in one visit to the table.", 50)
+
+// Leaderboards
+//
+function practice_speedrun_leaderboard(scenario_index, practice_index) 
+{
+    leaderboard(title = "Career Practice " + practice_index + " Speedrun (IGT)", description = "Fastest time to complete the " + career_scenarios[scenario_index] + " scenario in Career mode.",
+    format = "MILLISECS", value = practice_timer(), cancel = in_menu() || replay() || !in_career() || !in_career_practice(), submit = always_true(), lower_is_better = false,
+    start = in_career() && in_career_practice() && current_career_scenario() == scenario_index && prev(game_in_progress()) && game_won())
+}
+
+practice_speedrun_leaderboard(0x01, 1)
+practice_speedrun_leaderboard(0x04, 2)
+practice_speedrun_leaderboard(0x07, 3)
+practice_speedrun_leaderboard(0x0a, 4)
+practice_speedrun_leaderboard(0x0d, 5)
+practice_speedrun_leaderboard(0x10, 6)
 
 // Rich Presence
 
