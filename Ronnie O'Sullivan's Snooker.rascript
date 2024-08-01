@@ -407,9 +407,16 @@ ordinal_words = [
     "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"
 ]
 
+leaderboard(title = "Tournament/Quick Match Speedrun", description = "Fastest time to win a frame in Tournament or Quick Match mode.", format = "FRAMES", value = always_true(), cancel = in_menu() || replay() || game_lost() || !(in_quick_match() || in_tournament()),
+            start = frame_started() && (in_quick_match() || in_tournament()), submit = prev(game_in_progress()) && game_won(), lower_is_better = true)
+
 leaderboard(title = "Tournament/Quick Match High Score", description = "Highest score in Tournament or Quick Match mode upon winning the frame.", format = "VALUE", value = player_score(), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
     lower_is_better = false,
     start = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
+
+leaderboard(title = "Tournament/Quick Match Best Break", description = "Highest break in Tournament or Quick Match mode.", format = "VALUE", value = prev(current_break()), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
+    lower_is_better = false,
+    start = prev(current_break()) > 0 && in_game() && !replay() && (in_tournament() || in_quick_match()) && ((game_won() && prev(game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
 
 function practice_speedrun_leaderboard(scenario_index, practice_index) 
 {
