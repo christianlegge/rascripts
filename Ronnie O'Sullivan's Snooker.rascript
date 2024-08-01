@@ -402,10 +402,18 @@ achievement_break(100, "Century Break", "Score 100 or more points in a single br
 achievement_break(147, "Maximum Break", "Achieve the maximum break and score 147 points in one visit to the table.", 50)
 
 // Leaderboards
-//
+
+ordinal_words = [
+    "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"
+]
+
+leaderboard(title = "Tournament/Quick Match High Score", description = "Highest score in Tournament or Quick Match mode upon winning the frame.", format = "VALUE", value = player_score(), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
+    lower_is_better = false,
+    start = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
+
 function practice_speedrun_leaderboard(scenario_index, practice_index) 
 {
-    leaderboard(title = "Career Practice " + practice_index + " Speedrun (IGT)", description = "Fastest time to complete the " + career_scenarios[scenario_index] + " scenario in Career mode.",
+    leaderboard(title = "Career Practice " + practice_index + " Speedrun (IGT)", description = "Highest time remaining in the " + ordinal_words[practice_index - 1] + " Practice scenario in Career mode.",
     format = "MILLISECS", value = practice_timer() / 10, cancel = in_menu() || replay() || !in_career() || !in_career_practice(), submit = always_true(), lower_is_better = false,
     start = in_career() && in_career_practice() && current_career_scenario() == scenario_index && prev(game_in_progress()) && game_won())
 }
