@@ -340,7 +340,7 @@ achievement(title = "Just Another Notch in the Belt", description = "Win a Final
             trigger = in_game() && !replay() && in_tournament() && prev(game_in_progress()) && game_won() && match_total_frames() == 7 && prev(frames_won()) == 3 && frames_won() == 4)
 
 // Noticed this achievement adding an always false condition to the reset group - double check that
-achievement(title = "Speed Potter", description = "Complete any of the Career mode Practice stages in one minute or less.", points = 10,
+achievement(title = "Speed Potter", description = "Complete any of the Career mode Practice stages in one minute or less after starting (time bonuses don't count).", points = 10,
     trigger = in_game() && !replay() && in_career() && in_career_practice() && trigger_when(prev(game_in_progress()) && game_won()) &&
     disable_when(repeated(3601, timer_is_running()), until = (in_menu() || game_lost() || !in_career_practice())))
 
