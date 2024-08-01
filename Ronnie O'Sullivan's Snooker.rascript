@@ -121,6 +121,9 @@ function potted_ball_legally(i)
     potted_bool == 0xff && prev(potted_bool) == 0x00
 }
 
+function our_ball_potted_once(i) => once(our_shot() && potted_ball_legally(i))
+function our_ball_respotted_once(i) => once(our_shot() && ball_got_respotted(i))
+
 function any_hit_ball_on() 
 {
     hit = always_false()
@@ -313,6 +316,8 @@ function player_score() => dword(0x15B2050)
 // $15B2054: [Signed 32-bit] Opponent score in the current frame
 function opponent_score() => dword(0x15B2054)
 
+function frame_started() => player_score() == 0 && opponent_score() == 0 && in_game() && (prev(player_score()) > 0 || prev(opponent_score()) > 0 || prev(in_menu()))
+
 function frames_won() => dword(0x015adbc0)
 function match_total_frames() => dword(0x009d8e60)
 
@@ -336,8 +341,14 @@ achievement(title = "Just Another Notch in the Belt", description = "Win a Final
 
 // Noticed this achievement adding an always false condition to the reset group - double check that
 achievement(title = "Speed Potter", description = "Complete any of the Career mode Practice stages in one minute or less.", points = 10,
-            trigger = in_game() && !replay() && in_career() && in_career_practice() && trigger_when(prev(game_in_progress()) && game_won()) &&
-                      disable_when(repeated(3601, timer_is_running()), until = (in_menu() || game_lost() || !in_career_practice())))
+    trigger = in_game() && !replay() && in_career() && in_career_practice() && trigger_when(prev(game_in_progress()) && game_won()) &&
+    disable_when(repeated(3601, timer_is_running()), until = (in_menu() || game_lost() || !in_career_practice())))
+
+achievement(title = "Ronnie Rainbow II", description = "Pot and re-spot each coloured ball at least once during a single break.", points = 10,
+    trigger = in_game() && !replay() && never(in_menu()) && never(their_shot()) && never(current_break() == 0 && prev(current_break() > 0)) && never(frame_started()) && all_of(range(1, 6), our_ball_potted_once) && all_of(range(1, 6), our_ball_respotted_once))
+
+achievement(title = "Ronnie Rainbow I", description = "Pot and re-spot each coloured ball at least once during a single frame.", points = 5,
+    trigger = in_game() && !replay() && never(in_menu()) && never(frame_started()) && all_of(range(1, 6), our_ball_potted_once) && all_of(range(1, 6), our_ball_respotted_once))
 
 function achievement_break(target, title, desc, points)
 {
