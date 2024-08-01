@@ -319,7 +319,7 @@ function match_total_frames() => dword(0x009d8e60)
 // Achievements
 //
 achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
-            trigger = in_game() && !replay() && no_reds_left() && all_colours_left() && (in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
+            trigger = in_game() && !replay() && all_colours_left() && (in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
 
 achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 2,
             trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
