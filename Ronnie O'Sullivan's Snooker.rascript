@@ -102,7 +102,10 @@ function hit_specific_ball(i)
 }
 
 function ball_index_is_red(i) => i >= 7 && i <= 21
-function ball_got_respotted(i) => byte(0x015afa90 + i * 0x10 + 0x0b) == 0x00 && prev(byte(0x015afa90 + i * 0x10 + 0x0b)) == 0xff
+function ball_is_on_table(i) => byte(0x015afa90 + i * 0x10 + 0x0b) == 0x00
+function ball_got_respotted(i) => ball_is_on_table(i) && prev(byte(0x015afa90 + i * 0x10 + 0x0b)) == 0xff
+function no_reds_left() => none_of(range(7, 21), ball_is_on_table)
+function all_colours_left() => all_of(range(1, 6), ball_is_on_table)
 
 function potted_ball_legally(i)
 {
@@ -242,6 +245,8 @@ function in_career_practice() => current_career_scenario() == 0x01 || current_ca
 // $9D95F4: [32-bit] Current Career sub-scenario (0-indexed)
 function current_career_sub_scenario() => dword(0x9D95F4)
 
+
+
 // $BD7690: [32-bit] Current menu
 //          0x00 = Main menu
 //          0x01 = Start menu
@@ -265,7 +270,7 @@ function current_menu() => dword(0xBD7690)
 //          1 = Recently backed out of menu (O button)
 function last_direction_moved_on_menu() => dword(0xBD7694)
 
-// $BD87D0: [Array] Ball information table (Coordinates are from top-down view perspective, where the X direction runs along the long side of the table and the Y direction is the short side)
+// $BD87D0: [Array] Ball model table (Coordinates are from top-down view perspective, where the X direction runs along the long side of the table and the Y direction is the short side)
 //          +0x000 = Cue ball
 //          - +0x00 = [Boolean] Ball is on table?
 //          - - 0x00 = Not on table (potted)
@@ -312,6 +317,9 @@ function frames_won() => dword(0x015adbc0)
 function match_total_frames() => dword(0x009d8e60)
 
 // Achievements
+//
+achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
+            trigger = in_game() && !replay() && no_reds_left() && all_colours_left() && (in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
 
 achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 2,
             trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
