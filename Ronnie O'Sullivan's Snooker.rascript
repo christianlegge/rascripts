@@ -85,6 +85,8 @@ function replay() => byte(0x01ffd98c) == 1
 
 function practice_timer() => word(0x009d8a94)
 
+function timer_is_running() => prev(practice_timer()) > practice_timer()
+
 function balls_on_bitfield() => dword(0x009d8a30)
 function ball_first_struck() => dword(0x009d8a50)
 
@@ -193,6 +195,7 @@ function game_state() => dword(0x9D8A1C)
 
 function game_in_progress() => game_state() == -1
 function game_won() => game_state() == 0
+function game_lost() => game_state() == 1
 
 // $9D8A28: [Signed 32-bit] Current break score (shared for player and CPU)
 function current_break() => dword(0x9D8A28)
@@ -233,6 +236,8 @@ function shot_power_clamped_to_0_65536_inclusive() => dword(0x9D8E70)
 //          0x11 = UK Champ
 //          0x12 = World Champion
 function current_career_scenario() => dword(0x9D95F0)
+
+function in_career_practice() => current_career_scenario() == 0x01 || current_career_scenario() == 0x04 || current_career_scenario() == 0x07 || current_career_scenario() == 0x0a || current_career_scenario() == 0x0d || current_career_scenario() == 0x10
 
 // $9D95F4: [32-bit] Current Career sub-scenario (0-indexed)
 function current_career_sub_scenario() => dword(0x9D95F4)
@@ -317,6 +322,11 @@ points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && !replay() 
 
 achievement(title = "Just Another Notch in the Belt", description = "Win a Final match to become champion of the Premier League in Tournament mode.", points = 25,
             trigger = in_game() && !replay() && in_tournament() && prev(game_in_progress()) && game_won() && match_total_frames() == 7 && prev(frames_won()) == 3 && frames_won() == 4)
+
+// Noticed this achievement adding an always false condition to the reset group - double check that
+achievement(title = "Speed Potter", description = "Complete any of the Career mode Practice stages in one minute or less.", points = 10,
+            trigger = in_game() && !replay() && in_career() && in_career_practice() && trigger_when(prev(game_in_progress()) && game_won()) &&
+                      disable_when(repeated(3601, timer_is_running()), until = (in_menu() || game_lost() || !in_career_practice())))
 
 function achievement_break(target, title, desc, points)
 {
