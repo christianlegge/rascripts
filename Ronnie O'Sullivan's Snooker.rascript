@@ -219,7 +219,7 @@ function x_coordinate_of_cueball_spin_65536_is_all_the_way_left_65536_is_all_the
 function y_coordinate_of_cueball_spin_65536_is_all_the_way_down_65536_is_all_the_way_up() => dword(0x9D8E6C)
 
 // $9D8E70: [Signed 32-bit] Shot power (clamped to 0-65536 inclusive)
-function shot_power_clamped_to_0_65536_inclusive() => dword(0x9D8E70)
+function shot_power() => dword(0x9D8E70)
 
 // $9D95F0: [32-bit] Current Career scenario
 //          0x00 = Coming of Age
@@ -349,6 +349,9 @@ achievement(title = "Ronnie Rainbow II", description = "Pot and re-spot each col
 
 achievement(title = "Ronnie Rainbow I", description = "Pot and re-spot each coloured ball at least once during a single frame.", points = 5,
     trigger = in_game() && !replay() && never(in_menu()) && never(frame_started()) && all_of(range(1, 6), our_ball_potted_once) && all_of(range(1, 6), our_ball_respotted_once))
+
+achievement(title = "Fast Can Be Smooth Too", description = "Legally pot a ball while shooting at full power.", points = 3,
+    trigger = in_game() && !replay() && our_shot() && shot_power() == 65536 && trigger_when(prev(player_score()) < player_score()))
 
 function achievement_break(target, title, desc, points)
 {
