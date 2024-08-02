@@ -103,6 +103,7 @@ function hit_specific_ball(i)
 
 function ball_index_is_red(i) => i >= 7 && i <= 21
 function ball_is_on_table(i) => byte(0x015afa90 + i * 0x10 + 0x0b) == 0x00
+function ball_is_on_table_prev(i) => prev(byte(0x015afa90 + i * 0x10 + 0x0b)) == 0x00
 function ball_got_respotted(i) => ball_is_on_table(i) && prev(byte(0x015afa90 + i * 0x10 + 0x0b)) == 0xff
 function no_reds_left() => none_of(range(7, 21), ball_is_on_table)
 function all_colours_left() => all_of(range(1, 6), ball_is_on_table)
@@ -155,6 +156,7 @@ function game_mode() => dword(0x9D8838)
 
 function in_quick_match() => game_mode() == 0
 function in_career() => game_mode() == 1
+function in_practice() => game_mode() == 2
 function in_tournament() => game_mode() == 3
 
 // $9D8878: [32-bit] In-game or menu?
@@ -335,6 +337,10 @@ function shot_timer() => word(0x009d8a7a)
 
 // Achievements
 //
+
+achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
+            trigger = in_game() && !replay() && in_practice() && none_of(range(1, 21), ball_is_on_table) && any_of(range(1, 21), ball_is_on_table_prev))
+
 achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
             trigger = in_game() && !replay() && all_colours_left() && (in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
 
