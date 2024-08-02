@@ -437,6 +437,9 @@ achievement(title = "Well, This is a Bad Start... But Not For Me!", description 
 achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
     trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(prev(ball_first_struck()) == 0) && trigger_when(any_hit_ball_on()))
 
+achievement(title = "Can't Keep a Good Player Down", description = "From a snookered position, legally pot a ball.", points = 5,
+    trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(score_increased()))
+
 achievement(title = "Name of the Game", description = "Snooker your opponent without committing a foul.", points = 5,
     trigger = in_game() && !replay() && prev(our_shot()) && their_shot() && snookered() && !free_ball())
 
