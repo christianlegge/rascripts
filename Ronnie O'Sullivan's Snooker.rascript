@@ -391,13 +391,13 @@ function test_signed_lt_neg(a, b) => a < b && a >= 2147483648
 function test_signed_lt_pos(a, b) => a < b || a >= 2147483648
 function test_signed_gt_neg(a, b) => a > b || a <= 2147483648
 
-corner_pocket_x = 4600000
+corner_pocket_x = 4450000
 corner_pocket_x_neg = -1 * corner_pocket_x
-corner_pocket_y = 2250000
+corner_pocket_y = 2150000
 corner_pocket_y_neg = -1 * corner_pocket_y
-side_pocket_x = 200000
+side_pocket_x = 250000
 side_pocket_x_neg = -1 * side_pocket_x
-side_pocket_y = 2300000
+side_pocket_y = 2250000
 side_pocket_y_neg = -1 * side_pocket_y
 
 function cue_ball_next_to_pocket()
@@ -429,7 +429,7 @@ achievement(title = "I Know Better Than You", description = "Make a scoring play
     trigger_when(any_legal_pot()))
 
 achievement(title = "Where's the Cue Ball Going?!", description = "In one stroke, legally pot a ball and have the cue ball come to rest right next to a pocket.", points = 10,
-    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), our_ball_potted_once) && cue_ball_next_to_pocket() && prev(shot_timer()) == shot_timer() && never(in_menu() || !ball_is_on_table(0) || shot_timer_reset() || their_shot()))
+    trigger = in_game() && !replay() && our_shot() && cue_ball_next_to_pocket() && prev(player_score()) < player_score())
 
 achievement(title = "Long Pot", description = "Legally pot a ball when it and the cue ball are at opposite ends of the table.", points = 3,
     trigger = in_game() && !replay() && our_shot() && (any_of(range(1, 21), did_long_pot_a) || any_of(range(1, 21), did_long_pot_b)) && never(shot_timer_reset()))
