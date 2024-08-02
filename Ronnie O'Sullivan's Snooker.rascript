@@ -428,6 +428,9 @@ function score_increased() => prev(player_score()) < player_score()
 achievement(title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
     trigger = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
 
+achievement(title = "Two For One Deal", description = "Legally pot two or more balls with one shot.", points = 5,
+    trigger = in_game() && !replay() && our_shot() && any_of(range(7, 21), ball_on) && player_score() - prev(player_score()) >= 2)
+
 achievement(title = "Chain Reaction", description = "Legally pot a plant.", points = 3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
