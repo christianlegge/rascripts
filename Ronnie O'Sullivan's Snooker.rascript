@@ -91,6 +91,7 @@ function timer_is_running() => prev(practice_timer()) > practice_timer()
 
 function balls_on_bitfield() => dword(0x009d8a30)
 function ball_first_struck() => dword(0x009d8a50)
+function chain_struck() => dword(0x009d8a58)
 
 function ball_on(i)
 {
@@ -114,6 +115,8 @@ function ball_is_on_table_prev(i) => prev(byte(0x015afa90 + i * 0x10 + 0x0b)) ==
 function ball_got_respotted(i) => ball_is_on_table(i) && prev(byte(0x015afa90 + i * 0x10 + 0x0b)) == 0xff
 function no_reds_left() => none_of(range(7, 21), ball_is_on_table)
 function all_colours_left() => all_of(range(1, 6), ball_is_on_table)
+
+function ball_left_table(i) => ball_is_on_table_prev(i) && !ball_is_on_table(i)
 
 function potted_ball_legally(i)
 {
@@ -413,15 +416,23 @@ function cue_ball_next_to_pocket()
      (test_signed_gt_pos(cue_y, side_pocket_y) && test_signed_lt_pos(cue_x, side_pocket_x) && test_signed_gt_neg(cue_x, side_pocket_x_neg)) // bottom side
 }
 
+function plant_hit(ball) => ball_first_struck() != ball && prev(ball_first_struck()) != 0 && chain_struck() == ball
+
+function plant_pot(ball) => once(plant_hit(ball)) && once(ball_left_table(ball))
+
+function score_increased() => prev(player_score()) < player_score()
+
 
 // Achievements
+
+achievement(title = "Chain Reaction", description = "Legally pot a plant.", points = 3,
+    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
 // Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
 achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
     trigger =   disable_when((their_shot() && !snookered()), until = in_menu() || break_off()) &&
     in_game() && (in_tournament() || in_quick_match()) && !replay() && prev(our_shot()) &&
     trigger_when(their_shot()) && trigger_when(snookered()))
-)
 
 achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
     trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(prev(ball_first_struck()) == 0) && trigger_when(any_hit_ball_on()))
