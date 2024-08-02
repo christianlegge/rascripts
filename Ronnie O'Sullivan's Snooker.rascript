@@ -392,7 +392,7 @@ function shot_timer_reset() => prev(shot_timer()) > 0 && shot_timer() == 0
 function test_signed_gt_pos(a, b) => a > b && a <= 2147483647
 function test_signed_lt_neg(a, b) => a < b && a >= 2147483648
 function test_signed_lt_pos(a, b) => a < b || a >= 2147483648
-function test_signed_gt_neg(a, b) => a > b || a <= 2147483648
+function test_signed_gt_neg(a, b) => a > b || a <= 2147483647
 
 corner_pocket_x = 4450000
 corner_pocket_x_neg = -1 * corner_pocket_x
