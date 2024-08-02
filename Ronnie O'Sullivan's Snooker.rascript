@@ -338,6 +338,7 @@ function shot_timer() => word(0x009d8a7a)
 // Achievements
 //
 
+// This doesn't need logic protection for the "set up colours" option because the memory I'm using doesn't set them as off the table
 achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
             trigger = in_game() && !replay() && in_practice() && none_of(range(1, 21), ball_is_on_table) && any_of(range(1, 21), ball_is_on_table_prev))
 
