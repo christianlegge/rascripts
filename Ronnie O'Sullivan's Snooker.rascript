@@ -348,6 +348,9 @@ function shot_timer() => word(0x009d8a7a)
 function ball_x_pos(i) => dword(0x015afa90 + i * 0x10 + 0x4)
 function ball_y_pos(i) => dword(0x015afa90 + i * 0x10 + 0x0)
 
+function ball_x_velo(i) => dword(0x015af510 + i * 0x40 + 0x04)
+function ball_y_velo(i) => dword(0x015af510 + i * 0x40 + 0x00)
+
 long_pot_bound = 3500000
 left_bound = -1 * long_pot_bound
 function long_pot_possible_a(ball)
@@ -394,6 +397,14 @@ function test_signed_lt_neg(a, b) => a < b && a >= 2147483648
 function test_signed_lt_pos(a, b) => a < b || a >= 2147483648
 function test_signed_gt_neg(a, b) => a > b || a <= 2147483647
 
+function ball_banked(i)
+{
+    return once(prev(ball_x_velo(i)) <= 2147483647 && ball_x_velo(i) > 2147483647 && test_signed_gt_pos(ball_x_pos(i), 4400000)) ||
+    once(prev(ball_x_velo(i)) >= 2147483648 && ball_x_velo(i) < 2147483648 && test_signed_lt_neg(ball_x_pos(i), -4400000)) ||
+    once(prev(ball_y_velo(i)) <= 2147483647 && ball_y_velo(i) > 2147483647 && test_signed_gt_pos(ball_y_pos(i), 2200000)) ||
+    once(prev(ball_y_velo(i)) >= 2147483648 && ball_y_velo(i) < 2147483648 && test_signed_lt_neg(ball_y_pos(i), -2200000))
+}
+
 corner_pocket_x = 4450000
 corner_pocket_x_neg = -1 * corner_pocket_x
 corner_pocket_y = 2150000
@@ -424,6 +435,7 @@ function score_increased() => prev(player_score()) < player_score()
 
 
 // Achievements
+
 
 achievement(title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
     trigger = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
