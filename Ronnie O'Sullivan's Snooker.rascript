@@ -341,6 +341,7 @@ function break_off() => byte(0x009d8a61) == 0x01
 function shot_timer() => word(0x009d8a7a)
 
 function ball_x_pos(i) => dword(0x015afa90 + i * 0x10 + 0x4)
+function ball_y_pos(i) => dword(0x015afa90 + i * 0x10 + 0x0)
 
 long_pot_bound = 3500000
 left_bound = -1 * long_pot_bound
@@ -383,7 +384,38 @@ function did_long_pot_b(ball)
 
 function shot_timer_reset() => prev(shot_timer()) > 0 && shot_timer() == 0
 
+function test_signed_gt_pos(a, b) => a > b && a <= 2147483647
+function test_signed_lt_neg(a, b) => a < b && a >= 2147483648
+function test_signed_lt_pos(a, b) => a < b || a >= 2147483648
+function test_signed_gt_neg(a, b) => a > b || a <= 2147483648
+
+corner_pocket_x = 4600000
+corner_pocket_x_neg = -1 * corner_pocket_x
+corner_pocket_y = 2250000
+corner_pocket_y_neg = -1 * corner_pocket_y
+side_pocket_x = 200000
+side_pocket_x_neg = -1 * side_pocket_x
+side_pocket_y = 2300000
+side_pocket_y_neg = -1 * side_pocket_y
+
+function cue_ball_next_to_pocket()
+{
+    cue_x = ball_x_pos(0)
+    cue_y = ball_y_pos(0)
+    //return (cue_x < corner_pocket_x_neg && cue_y < corner_pocket_y_neg) || (cue_x > corner_pocket_x && cue_y < corner_pocket_y_neg)
+    return (test_signed_lt_neg(cue_x, corner_pocket_x_neg) && test_signed_lt_neg(cue_y, corner_pocket_y_neg)) || // top left
+    (test_signed_gt_pos(cue_x, corner_pocket_x) && test_signed_lt_neg(cue_y, corner_pocket_y_neg)) ||// top right
+     (test_signed_lt_neg(cue_x, corner_pocket_x_neg) && test_signed_gt_pos(cue_y, corner_pocket_y)) || // bottom left
+     (test_signed_gt_pos(cue_x, corner_pocket_x) && test_signed_gt_pos(cue_y, corner_pocket_y)) || // bottom right
+     (test_signed_lt_neg(cue_y, side_pocket_y_neg) && test_signed_lt_pos(cue_x, side_pocket_x) && test_signed_gt_neg(cue_x, side_pocket_x_neg)) || // top side
+     (test_signed_gt_pos(cue_y, side_pocket_y) && test_signed_lt_pos(cue_x, side_pocket_x) && test_signed_gt_neg(cue_x, side_pocket_x_neg)) // bottom side
+}
+
+
 // Achievements
+
+achievement(title = "Where's the Cue Ball Going?!", description = "In one stroke, legally pot a ball and have the cue ball come to rest right next to a pocket.", points = 10,
+    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), our_ball_potted_once) && cue_ball_next_to_pocket() && prev(shot_timer()) == shot_timer() && never(in_menu() || !ball_is_on_table(0) || shot_timer_reset() || their_shot()))
 
 achievement(title = "Long Pot", description = "Legally pot a ball when it and the cue ball are at opposite ends of the table.", points = 3,
     trigger = in_game() && !replay() && our_shot() && (any_of(range(1, 21), did_long_pot_a) || any_of(range(1, 21), did_long_pot_b)) && never(shot_timer_reset()))
