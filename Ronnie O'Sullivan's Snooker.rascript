@@ -416,6 +416,13 @@ function cue_ball_next_to_pocket()
 
 // Achievements
 
+// Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
+achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
+    trigger =   disable_when((their_shot() && !snookered()), until = in_menu() || break_off()) &&
+    in_game() && (in_tournament() || in_quick_match()) && !replay() && prev(our_shot()) &&
+    trigger_when(their_shot()) && trigger_when(snookered()))
+)
+
 achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
     trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(prev(ball_first_struck()) == 0) && trigger_when(any_hit_ball_on()))
 
