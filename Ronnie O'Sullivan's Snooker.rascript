@@ -80,6 +80,8 @@ opponents = {
 16: "Stephen Maguire" ,
 }
 
+function snookered() => byte(0x009d8a60) == 0x01
+function free_ball() => byte(0x009d8a5f) == 0x01
 
 function replay() => byte(0x01ffd98c) == 1
 
@@ -413,6 +415,12 @@ function cue_ball_next_to_pocket()
 
 
 // Achievements
+
+achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
+    trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(prev(ball_first_struck()) == 0) && trigger_when(any_hit_ball_on()))
+
+achievement(title = "Name of the Game", description = "Snooker your opponent without committing a foul.", points = 5,
+    trigger = in_game() && !replay() && prev(our_shot()) && their_shot() && snookered() && !free_ball())
 
 achievement(title = "I Know Better Than You", description = "Make a scoring play when the game recommends a safety shot.", points = 5,
     trigger = in_game() && !replay() && our_shot() && current_career_scenario() == 0x11 &&
