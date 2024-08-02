@@ -90,14 +90,19 @@ function timer_is_running() => prev(practice_timer()) > practice_timer()
 function balls_on_bitfield() => dword(0x009d8a30)
 function ball_first_struck() => dword(0x009d8a50)
 
-function hit_specific_ball(i)
+function ball_on(i)
 {
     mask = 1
     for j in range(1, i)
     {
         mask = mask * 2
     }
-    return balls_on_bitfield() & mask != 0 &&
+    return balls_on_bitfield() & mask != 0
+}
+
+function hit_specific_ball(i)
+{
+    return ball_on(i) &&
     ball_first_struck() == i
 }
 
@@ -335,8 +340,28 @@ function break_off() => byte(0x009d8a61) == 0x01
 
 function shot_timer() => word(0x009d8a7a)
 
+function ball_x_pos(i) => dword(0x015afa90 + i * 0x10 + 0x4)
+
+long_pot_bound = 3500000
+left_bound = -1 * long_pot_bound
+function long_pot_possible(ball)
+{
+    
+    cue_x = ball_x_pos(0)
+    ball_x = ball_x_pos(ball)
+    return ball_on(ball) && 
+    // gt/lt signs for left bound are flipped because RAIntegration logic
+    // treats all values as unsigned
+    // also why upper bounds are on right bound checks
+    ((cue_x < left_bound && cue_x > 2000000000 && ball_x > long_pot_bound && ball_x < 2000000000 ) ||
+    (cue_x > long_pot_bound && cue_x < 2000000000 && ball_x < left_bound && ball_x > 2000000000))
+
+}
+
 // Achievements
-//
+
+achievement(title = "Long Pot", description = "Legally pot a ball when it and the cue ball are at opposite ends of the table.", points = 3,
+    trigger = in_game() && !replay() && our_shot() && long_pot_possible(1) && trigger_when(byte(0) == 0xba))
 
 // This doesn't need logic protection for the "set up colours" option because the memory I'm using doesn't set them as off the table
 achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
