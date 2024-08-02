@@ -397,13 +397,16 @@ function test_signed_lt_neg(a, b) => a < b && a >= 2147483648
 function test_signed_lt_pos(a, b) => a < b || a >= 2147483648
 function test_signed_gt_neg(a, b) => a > b || a <= 2147483647
 
-function ball_banked(i)
+function ball_banked_times(i, n)
 {
-    return once(prev(ball_x_velo(i)) <= 2147483647 && ball_x_velo(i) > 2147483647 && test_signed_gt_pos(ball_x_pos(i), 4400000)) ||
-    once(prev(ball_x_velo(i)) >= 2147483648 && ball_x_velo(i) < 2147483648 && test_signed_lt_neg(ball_x_pos(i), -4400000)) ||
-    once(prev(ball_y_velo(i)) <= 2147483647 && ball_y_velo(i) > 2147483647 && test_signed_gt_pos(ball_y_pos(i), 2200000)) ||
-    once(prev(ball_y_velo(i)) >= 2147483648 && ball_y_velo(i) < 2147483648 && test_signed_lt_neg(ball_y_pos(i), -2200000))
+    return tally(n, prev(ball_x_velo(i)) <= 2147483647 && ball_x_velo(i) > 2147483647 && test_signed_gt_pos(ball_x_pos(i), 4400000),
+    prev(ball_x_velo(i)) >= 2147483648 && ball_x_velo(i) < 2147483648 && ball_x_velo(i) != 0 && test_signed_lt_neg(ball_x_pos(i), -4400000),
+    prev(ball_y_velo(i)) <= 2147483647 && ball_y_velo(i) > 2147483647 && test_signed_gt_pos(ball_y_pos(i), 2200000),
+    prev(ball_y_velo(i)) >= 2147483648 && ball_y_velo(i) < 2147483648 && ball_x_velo(i) != 0 && test_signed_lt_neg(ball_y_pos(i), -2200000))
 }
+
+function ball_banked_once(i)  => ball_banked_times(i, 1) && once(ball_left_table(i))
+function ball_banked_three(i)  => ball_banked_times(i, 3) && once(ball_left_table(i))
 
 corner_pocket_x = 4450000
 corner_pocket_x_neg = -1 * corner_pocket_x
@@ -436,6 +439,11 @@ function score_increased() => prev(player_score()) < player_score()
 
 // Achievements
 
+achievement(title = "There and Back Again", description="Legally pot a double.", points=3,
+    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_once) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
+    
+achievement(title = "Shot to Something", description="Legally pot a cocked-hat double.", points=10,
+    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_three) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
 
 achievement(title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
     trigger = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
