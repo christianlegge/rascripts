@@ -414,6 +414,12 @@ function cue_ball_next_to_pocket()
 
 // Achievements
 
+achievement(title = "I Know Better Than You", description = "Make a scoring play when the game recommends a safety shot.", points = 5,
+    trigger = in_game() && !replay() && our_shot() && current_career_scenario() == 0x11 &&
+    (current_career_sub_scenario() == 0 || current_career_sub_scenario() == 2) &&
+    disable_when(their_shot(),  until = in_menu() || replay() || game_won()) &&
+    trigger_when(any_legal_pot()))
+
 achievement(title = "Where's the Cue Ball Going?!", description = "In one stroke, legally pot a ball and have the cue ball come to rest right next to a pocket.", points = 10,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), our_ball_potted_once) && cue_ball_next_to_pocket() && prev(shot_timer()) == shot_timer() && never(in_menu() || !ball_is_on_table(0) || shot_timer_reset() || their_shot()))
 
