@@ -344,7 +344,7 @@ function ball_x_pos(i) => dword(0x015afa90 + i * 0x10 + 0x4)
 
 long_pot_bound = 3500000
 left_bound = -1 * long_pot_bound
-function long_pot_possible(ball)
+function long_pot_possible_a(ball)
 {
     
     cue_x = ball_x_pos(0)
@@ -353,15 +353,40 @@ function long_pot_possible(ball)
     // gt/lt signs for left bound are flipped because RAIntegration logic
     // treats all values as unsigned
     // also why upper bounds are on right bound checks
-    ((cue_x < left_bound && cue_x > 2000000000 && ball_x > long_pot_bound && ball_x < 2000000000 ) ||
-    (cue_x > long_pot_bound && cue_x < 2000000000 && ball_x < left_bound && ball_x > 2000000000))
-
+    (cue_x < left_bound && cue_x > 2000000000 && ball_x > long_pot_bound && ball_x < 2000000000 )
 }
+
+function long_pot_possible_b(ball)
+{
+    
+    cue_x = ball_x_pos(0)
+    ball_x = ball_x_pos(ball)
+    return ball_on(ball) && 
+    // gt/lt signs for left bound are flipped because RAIntegration logic
+    // treats all values as unsigned
+    // also why upper bounds are on right bound checks
+    (cue_x > long_pot_bound && cue_x < 2000000000 && ball_x < left_bound && ball_x > 2000000000)
+}
+
+
+function did_long_pot_a(ball)
+{
+    initial_position_valid = once(shot_timer() == 0 && long_pot_possible_a(ball))
+    return initial_position_valid && trigger_when(potted_ball_legally(ball))
+}
+
+function did_long_pot_b(ball)
+{
+    initial_position_valid = once(shot_timer() == 0 && long_pot_possible_b(ball))
+    return initial_position_valid && trigger_when(potted_ball_legally(ball))
+}
+
+function shot_timer_reset() => prev(shot_timer()) > 0 && shot_timer() == 0
 
 // Achievements
 
 achievement(title = "Long Pot", description = "Legally pot a ball when it and the cue ball are at opposite ends of the table.", points = 3,
-    trigger = in_game() && !replay() && our_shot() && long_pot_possible(1) && trigger_when(byte(0) == 0xba))
+    trigger = in_game() && !replay() && our_shot() && (any_of(range(1, 21), did_long_pot_a) || any_of(range(1, 21), did_long_pot_b)) && never(shot_timer_reset()))
 
 // This doesn't need logic protection for the "set up colours" option because the memory I'm using doesn't set them as off the table
 achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
