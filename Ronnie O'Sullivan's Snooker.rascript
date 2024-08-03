@@ -474,10 +474,10 @@ function score_increased() => prev(player_score()) < player_score()
 
 // Achievements
 
-achievement(title = "There and Back Again", description="Legally pot a double.", points=3,
+achievement(title = "There and Back Again", description="Legally pot a double by bouncing a ball off of a rail at least once before potting it.", points=3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), potted_double) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
     
-achievement(title = "Shot to Something", description="Legally pot a cocked-hat double.", points=10,
+achievement(title = "Shot to Something", description="Legally pot a cocked-hat double by bouncing a ball off of at least 3 rails before potting it.", points=10,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_three) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
 
 achievement(title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
@@ -486,7 +486,7 @@ achievement(title = "Well On Your Way", description = "Win a frame in Tournament
 achievement(title = "Two For One Deal", description = "Legally pot two or more balls with one shot.", points = 5,
     trigger = in_game() && !replay() && our_shot() && any_of(range(7, 21), ball_on) && player_score() - prev(player_score()) >= 2)
 
-achievement(title = "Chain Reaction", description = "Legally pot a plant.", points = 3,
+achievement(title = "Chain Reaction", description = "Legally pot a plant by hitting a ball on into another ball on to pot it.", points = 3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
 // Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
