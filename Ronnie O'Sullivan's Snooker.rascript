@@ -397,6 +397,11 @@ function test_signed_lt_neg(a, b) => a < b && a >= 2147483648
 function test_signed_lt_pos(a, b) => a < b || a >= 2147483648
 function test_signed_gt_neg(a, b) => a > b || a <= 2147483647
 
+function bank_top(i) =>prev(ball_y_velo(i)) >= 2147483648 && ball_y_velo(i) < 2147483648 && ball_x_velo(i) != 0 && test_signed_lt_neg(ball_y_pos(i), -2200000)
+function bank_bottom(i) => prev(ball_y_velo(i)) <= 2147483647 && ball_y_velo(i) > 2147483647 && test_signed_gt_pos(ball_y_pos(i), 2200000)
+function bank_left(i) => prev(ball_x_velo(i)) >= 2147483648 && ball_x_velo(i) < 2147483648 && ball_x_velo(i) != 0 && test_signed_lt_neg(ball_x_pos(i), -4400000)
+function bank_right(i) => prev(ball_x_velo(i)) <= 2147483647 && ball_x_velo(i) > 2147483647 && test_signed_gt_pos(ball_x_pos(i), 4400000)
+
 function ball_banked_times(i, n)
 {
     return tally(n, prev(ball_x_velo(i)) <= 2147483647 && ball_x_velo(i) > 2147483647 && test_signed_gt_pos(ball_x_pos(i), 4400000),
@@ -405,8 +410,13 @@ function ball_banked_times(i, n)
     prev(ball_y_velo(i)) >= 2147483648 && ball_y_velo(i) < 2147483648 && ball_x_velo(i) != 0 && test_signed_lt_neg(ball_y_pos(i), -2200000))
 }
 
+function banked_n_cushions(i, n)
+{
+    return tally(n, once(bank_top(i)), once(bank_bottom(i)), once(bank_left(i)), once(bank_right(i)))
+}
+
 function ball_banked_once(i)  => ball_banked_times(i, 1) && once(ball_left_table(i))
-function ball_banked_three(i)  => ball_banked_times(i, 3) && once(ball_left_table(i))
+function ball_banked_three(i)  => banked_n_cushions(i, 3) && once(ball_left_table(i))
 
 corner_pocket_x = 4450000
 corner_pocket_x_neg = -1 * corner_pocket_x
