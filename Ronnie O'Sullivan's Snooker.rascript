@@ -528,7 +528,7 @@ achievement(title = "Zero-Sum Game", description = "Score points due to an oppon
             trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
 
 achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rules menu.",
-points = 1, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
+points = 0, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
 
 achievement(title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
 points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && !replay() && our_shot() &&
