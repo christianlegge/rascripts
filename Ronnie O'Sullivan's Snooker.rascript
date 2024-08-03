@@ -116,7 +116,18 @@ function ball_got_respotted(i) => ball_is_on_table(i) && prev(byte(0x015afa90 + 
 function no_reds_left() => none_of(range(7, 21), ball_is_on_table)
 function all_colours_left() => all_of(range(1, 6), ball_is_on_table)
 
+// -1 = Ball has not been potted since game reset
+// 0 = Top right corner
+// 1 = Bottom right corner
+// 2 = Top side
+// 3 = Bottom side
+// 4 = Top left corner
+// 5 = Bottom left corner
+function recent_pocket() => byte(0x009d8ac8)
+
 function ball_left_table(i) => ball_is_on_table_prev(i) && !ball_is_on_table(i)
+
+function ball_potted_in_pocket(i, pocket) => ball_left_table(i) && recent_pocket() == pocket
 
 function potted_ball_legally(i)
 {
@@ -418,6 +429,20 @@ function banked_n_cushions(i, n)
 function ball_banked_once(i)  => ball_banked_times(i, 1) && once(ball_left_table(i))
 function ball_banked_three(i)  => banked_n_cushions(i, 3) && once(ball_left_table(i))
 
+function potted_double(i)
+{
+    return ( once(bank_top(i)) && once(ball_potted_in_pocket(i, 1)) ) ||
+    ( once(bank_top(i)) && once(ball_potted_in_pocket(i, 3)) ) ||
+    ( once(bank_top(i)) && once(ball_potted_in_pocket(i, 5)) ) ||
+    ( once(bank_bottom(i)) && once(ball_potted_in_pocket(i, 0)) ) ||
+    ( once(bank_bottom(i)) && once(ball_potted_in_pocket(i, 2)) ) ||
+    ( once(bank_bottom(i)) && once(ball_potted_in_pocket(i, 4)) ) ||
+    ( once(bank_left(i)) && once(ball_potted_in_pocket(i, 0)) ) ||
+    ( once(bank_left(i)) && once(ball_potted_in_pocket(i, 1)) ) ||
+    ( once(bank_right(i)) && once(ball_potted_in_pocket(i, 4)) ) ||
+    ( once(bank_right(i)) && once(ball_potted_in_pocket(i, 5)) ) 
+}
+
 corner_pocket_x = 4450000
 corner_pocket_x_neg = -1 * corner_pocket_x
 corner_pocket_y = 2150000
@@ -450,7 +475,7 @@ function score_increased() => prev(player_score()) < player_score()
 // Achievements
 
 achievement(title = "There and Back Again", description="Legally pot a double.", points=3,
-    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_once) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
+    trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), potted_double) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
     
 achievement(title = "Shot to Something", description="Legally pot a cocked-hat double.", points=10,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_three) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
