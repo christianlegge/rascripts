@@ -457,6 +457,7 @@ achievement(title = "Chain Reaction", description = "Legally pot a plant.", poin
 // Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
 achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
     trigger =   disable_when((their_shot() && !snookered()), until = in_menu() || break_off()) &&
+    disable_when(shot_timer_reset(), until = in_menu() || break_off()) &&
     in_game() && (in_tournament() || in_quick_match()) && !replay() && prev(our_shot()) &&
     trigger_when(their_shot()) && trigger_when(snookered()))
 
