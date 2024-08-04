@@ -352,7 +352,7 @@ function frame_started() => player_score() == 0 && opponent_score() == 0 && in_g
 function frames_won() => dword(0x015adbc0)
 function match_total_frames() => dword(0x009d8e60)
 
-function break_off() => byte(0x009d8a61) == 0x01
+function ball_in_hand() => byte(0x009d8a61) == 0x01
 
 function shot_timer() => word(0x009d8a7a)
 
@@ -471,6 +471,8 @@ function plant_pot(ball) => once(plant_hit(ball)) && once(ball_left_table(ball))
 
 function score_increased() => prev(player_score()) < player_score()
 
+function break_off() => ball_in_hand() && player_score() == 0 && opponent_score() == 0
+
 
 // Achievements
 
@@ -489,12 +491,10 @@ achievement(title = "Two For One Deal", description = "Legally pot two or more b
 achievement(title = "Chain Reaction", description = "Legally pot a plant by hitting a ball on into another ball on to pot it.", points = 3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
-// Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
 achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
-    trigger =   disable_when((their_shot() && !snookered()), until = in_menu() || break_off()) &&
-    disable_when(shot_timer_reset(), until = in_menu() || break_off()) &&
-    in_game() && (in_tournament() || in_quick_match()) && !replay() && prev(our_shot()) &&
-    trigger_when(their_shot()) && trigger_when(snookered()))
+    trigger =       in_game() && (in_tournament() || in_quick_match()) && !replay() && 
+    once(break_off()) && never(their_shot() && !snookered()) && never(shot_timer_reset()) &&
+    prev(our_shot()) && trigger_when(their_shot()) && trigger_when(snookered()))
 
 achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
     trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(prev(ball_first_struck()) == 0) && trigger_when(any_hit_ball_on()))
@@ -551,10 +551,9 @@ achievement(title = "Ronnie Rainbow I", description = "Pot and re-spot each colo
 achievement(title = "Fast Can Be Smooth Too", description = "Legally pot a ball while shooting at full power.", points = 3,
     trigger = in_game() && !replay() && our_shot() && shot_power() == 65536 && trigger_when(prev(player_score()) < player_score()))
 
-// Generates with Reset If alt group instead of ResetNextIf on pauselock - must edit for this to work correctly
 achievement(title = "Break-Off to a Good Start", description = "Pot a red ball on the break-off shot in Tournament or Quick Match mode.", points = 5,
-    trigger =   disable_when(their_shot(), until = in_menu() || break_off()) &&
-    in_game() && (in_tournament() || in_quick_match()) && !replay() && our_shot() &&
+    trigger = in_game() && (in_tournament() || in_quick_match()) && !replay() && our_shot() &&
+    once(break_off()) && never(their_shot()) &&
     trigger_when(prev(player_score()) < player_score())
 )
 
