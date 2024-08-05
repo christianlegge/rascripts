@@ -11,11 +11,11 @@ career_scenarios = {
     0x05: "Rocket Powered 147",
     0x06: "The Re-Spotted Black",
     0x07: "Practice",
-    0x08: "On Top Of The World",
-    0x09: "Against The Clock",
+    0x08: "On Top of the World",
+    0x09: "Against the Clock",
     0x0a: "Practice",
     0x0b: "Big Break Final",
-    0x0c: "Back On Top",
+    0x0c: "Back on Top",
     0x0d: "Practice",
     0x0e: "Master Class",
     0x0f: "Rocket Speed",
@@ -473,7 +473,6 @@ function score_increased() => prev(player_score()) < player_score()
 
 function break_off() => ball_in_hand() && player_score() == 0 && opponent_score() == 0
 
-
 // Achievements
 
 achievement(title = "There and Back Again", description="Legally pot a double by bouncing a ball off of a rail at least once before potting it.", points=3,
@@ -642,10 +641,13 @@ practice_speedrun_leaderboard(0x10, 6)
 // Rich Presence
 
 rp_opponent = rich_presence_lookup("Opponent", current_opponent(), opponents, "an opponent")
-rp_score = rich_presence_value("Score", player_score())
-rp_oppscore = rich_presence_value("OppScore", opponent_score())
-rp_career_scenario = rich_presence_lookup("Career Scenario", current_career_scenario(), career_scenarios)
-rp_break = rich_presence_value("Break", current_break())
+rp_score = rich_presence_value("Number", player_score())
+rp_oppscore = rich_presence_value("Number", opponent_score())
+rp_career_scenario = rich_presence_lookup("Scenario", current_career_scenario(), career_scenarios)
+rp_break = rich_presence_value("Number", current_break())
+rp_player_frames = rich_presence_value("Number", player_frames_won())
+rp_opponent_frames = rich_presence_value("Number", opponent_frames_won())
+rp_total_frames = rich_presence_value("Number", match_total_frames())
 
 rich_presence_conditional_display(in_menu(), "In menus")
 rich_presence_conditional_display(replay(), "Watching replays")
@@ -654,6 +656,10 @@ rich_presence_conditional_display(game_mode() == 0, "Facing {0} in Quick Match m
 rich_presence_conditional_display(game_mode() == 1, "Playing {0} in Career mode", rp_career_scenario)
 rich_presence_conditional_display(game_mode() == 2 && current_break() > 0, "Having a round of practice [On a break of {0}]", rp_break)
 rich_presence_conditional_display(game_mode() == 2, "Having a round of practice")
-rich_presence_conditional_display(game_mode() == 3 && our_shot() && current_break() > 0, "Facing {0} in Tournament mode [Score {1}-{2}] [On a break of {3}]", rp_opponent, rp_score, rp_oppscore, rp_break)
-rich_presence_conditional_display(game_mode() == 3, "Facing {0} in Tournament mode [Score {1}-{2}]", rp_opponent, rp_score, rp_oppscore)
+rich_presence_conditional_display(game_mode() == 3 && our_shot() && current_break() > 0,
+    "Competing in a tournament [Ronnie O'Sullivan {0} ({1}) {2} {3}] [Score {4}-{5}] [On a break of {6}]",
+    rp_player_frames, rp_total_frames, rp_opponent_frames, rp_opponent, rp_score, rp_oppscore, rp_break)
+rich_presence_conditional_display(game_mode() == 3,
+    "Competing in a tournament [Ronnie O'Sullivan {0} ({1}) {2} {3}] [Score {4}-{5}]",
+    rp_player_frames, rp_total_frames, rp_opponent_frames, rp_opponent, rp_score, rp_oppscore)
 rich_presence_display("Playing Ronnie O'Sullivan's Snooker")
