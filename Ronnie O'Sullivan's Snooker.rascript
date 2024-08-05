@@ -568,7 +568,7 @@ function achievement_break(target, title, desc, points)
 function achievement_quick_match_win(title, opponent, oppIndex)
 {
     achievement(title = title, description = "Defeat " + opponent + " in Quick Match mode.",
-    points = 10, trigger = in_game() && !replay() && in_quick_match() &&
+    points = 5, trigger = in_game() && !replay() && in_quick_match() &&
     current_opponent() == oppIndex && prev(game_in_progress()) && game_won())
 }
 
