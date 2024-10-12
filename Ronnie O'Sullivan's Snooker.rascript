@@ -125,7 +125,7 @@ function all_colours_left() => all_of(range(1, 6), ball_is_on_table)
 // 5 = Bottom left corner
 function recent_pocket() => byte(0x009d8ac8)
 
-function ball_left_table(i) => ball_is_on_table_prev(i) && !ball_is_on_table(i)
+function ball_left_table(i) => byte(0x015afa90 + i * 0x10 + 0x0b) > prev(byte(0x015afa90 + i * 0x10 + 0x0b))
 
 function ball_potted_in_pocket(i, pocket) => ball_left_table(i) && recent_pocket() == pocket
 
@@ -440,7 +440,7 @@ function potted_double(i)
     ( once(bank_left(i)) && once(ball_potted_in_pocket(i, 0)) ) ||
     ( once(bank_left(i)) && once(ball_potted_in_pocket(i, 1)) ) ||
     ( once(bank_right(i)) && once(ball_potted_in_pocket(i, 4)) ) ||
-    ( once(bank_right(i)) && once(ball_potted_in_pocket(i, 5)) ) 
+    ( once(bank_right(i)) && once(ball_potted_in_pocket(i, 5)) )
 }
 
 corner_pocket_x = 4450000
@@ -482,7 +482,7 @@ achievement(title = "Shot to Something", description="Legally pot a cocked-hat d
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_three) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
 
 achievement(title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
-    trigger = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
+    trigger = in_game() && !replay() && __ornext(in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
 
 achievement(title = "Two For One Deal", description = "Legally pot two or more balls with one shot.", points = 5,
     trigger = in_game() && !replay() && our_shot() && any_of(range(7, 21), ball_on) && player_score() - prev(player_score()) >= 2)
@@ -491,7 +491,7 @@ achievement(title = "Chain Reaction", description = "Legally pot a plant by hitt
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
 achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
-    trigger =       in_game() && (in_tournament() || in_quick_match()) && !replay() && 
+    trigger =       in_game() && __ornext(in_tournament() || in_quick_match()) && !replay() && 
     once(break_off()) && never(their_shot() && !snookered()) && never(shot_timer_reset()) &&
     prev(our_shot()) && trigger_when(their_shot()) && trigger_when(snookered()))
 
@@ -521,7 +521,7 @@ achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the
             trigger = in_game() && !replay() && in_practice() && none_of(range(1, 21), ball_is_on_table) && any_of(range(1, 21), ball_is_on_table_prev))
 
 achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
-            trigger = in_game() && !replay() && all_colours_left() && (in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
+            trigger = in_game() && !replay() && all_colours_left() && __ornext(in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
 
 achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 2,
             trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
@@ -551,7 +551,7 @@ achievement(title = "Fast Can Be Smooth Too", description = "Legally pot a ball 
     trigger = in_game() && !replay() && our_shot() && shot_power() == 65536 && trigger_when(prev(player_score()) < player_score()))
 
 achievement(title = "Break-Off to a Good Start", description = "Pot a red ball on the break-off shot in Tournament or Quick Match mode.", points = 5,
-    trigger = in_game() && (in_tournament() || in_quick_match()) && !replay() && our_shot() &&
+    trigger = in_game() && __ornext(in_tournament() || in_quick_match()) && !replay() && our_shot() &&
     once(break_off()) && never(their_shot()) &&
     trigger_when(prev(player_score()) < player_score())
 )
@@ -614,21 +614,21 @@ ordinal_words = [
 ]
 
 leaderboard(title = "Tournament/Quick Match Speedrun", description = "Fastest time to win a frame in Tournament or Quick Match mode.", format = "FRAMES", value = always_true(), cancel = in_menu() || replay() || game_lost() || !(in_quick_match() || in_tournament()),
-            start = frame_started() && (in_quick_match() || in_tournament()), submit = prev(game_in_progress()) && game_won(), lower_is_better = true)
+            start = frame_started(), submit = prev(game_in_progress()) && game_won(), lower_is_better = true)
 
 leaderboard(title = "Tournament/Quick Match High Score", description = "Highest score in Tournament or Quick Match mode upon winning the frame.", format = "VALUE", value = player_score(), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
     lower_is_better = false,
-    start = in_game() && !replay() && (in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
+    start = prev(game_in_progress()) && game_won())
 
 leaderboard(title = "Tournament/Quick Match Best Break", description = "Highest break in Tournament or Quick Match mode.", format = "VALUE", value = prev(current_break()), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
     lower_is_better = false,
-    start = prev(current_break()) > 0 && in_game() && !replay() && (in_tournament() || in_quick_match()) && ((game_won() && prev(game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
+    start = prev(current_break()) > 0 && ((game_won() && prev(game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
 
 function practice_speedrun_leaderboard(scenario_index, practice_index) 
 {
     leaderboard(title = "Career Practice " + practice_index + " Speedrun (IGT)", description = "Highest time remaining in the " + ordinal_words[practice_index - 1] + " Practice scenario in Career mode.",
     format = "MILLISECS", value = practice_timer() / 10, cancel = in_menu() || replay() || !in_career() || !in_career_practice(), submit = always_true(), lower_is_better = false,
-    start = in_career() && in_career_practice() && current_career_scenario() == scenario_index && prev(game_in_progress()) && game_won())
+    start = current_career_scenario() == scenario_index && prev(game_in_progress()) && game_won())
 }
 
 practice_speedrun_leaderboard(0x01, 1)
