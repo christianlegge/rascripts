@@ -266,7 +266,7 @@ function shot_power() => dword(0x9D8E70)
 //          0x12 = World Champion
 function current_career_scenario() => dword(0x9D95F0)
 
-function in_career_practice() => current_career_scenario() == 0x01 || current_career_scenario() == 0x04 || current_career_scenario() == 0x07 || current_career_scenario() == 0x0a || current_career_scenario() == 0x0d || current_career_scenario() == 0x10
+function in_career_practice() => __ornext(current_career_scenario() == 0x01 || current_career_scenario() == 0x04 || current_career_scenario() == 0x07 || current_career_scenario() == 0x0a || current_career_scenario() == 0x0d || current_career_scenario() == 0x10)
 
 // $9D95F4: [32-bit] Current Career sub-scenario (0-indexed)
 function current_career_sub_scenario() => dword(0x9D95F4)
@@ -518,7 +518,7 @@ achievement(title = "Long Pot", description = "Legally pot a ball when it and th
 
 // This doesn't need logic protection for the "set up colours" option because the memory I'm using doesn't set them as off the table
 achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
-            trigger = in_game() && !replay() && in_practice() && none_of(range(1, 21), ball_is_on_table) && any_of(range(1, 21), ball_is_on_table_prev))
+            trigger = in_game() && !replay() && in_practice() && none_of(range(1, 21), ball_is_on_table) && __ornext(any_of(range(1, 21), ball_is_on_table_prev)))
 
 achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
             trigger = in_game() && !replay() && all_colours_left() && __ornext(in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
@@ -616,19 +616,19 @@ ordinal_words = [
 leaderboard(title = "Tournament/Quick Match Speedrun", description = "Fastest time to win a frame in Tournament or Quick Match mode.", format = "FRAMES", value = always_true(), cancel = in_menu() || replay() || game_lost() || !(in_quick_match() || in_tournament()),
             start = frame_started(), submit = prev(game_in_progress()) && game_won(), lower_is_better = true)
 
-leaderboard(title = "Tournament/Quick Match High Score", description = "Highest score in Tournament or Quick Match mode upon winning the frame.", format = "VALUE", value = player_score(), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
+leaderboard(title = "Tournament/Quick Match High Score", description = "Highest score in Tournament or Quick Match mode upon winning the frame.", format = "VALUE", value = player_score(), cancel = always_false(), submit = always_true(),
     lower_is_better = false,
-    start = prev(game_in_progress()) && game_won())
+    start = !in_menu() && !replay() && __ornext(in_quick_match() || in_tournament()) && prev(game_in_progress()) && game_won())
 
-leaderboard(title = "Tournament/Quick Match Best Break", description = "Highest break in Tournament or Quick Match mode.", format = "VALUE", value = prev(current_break()), cancel = in_menu() || replay() || !(in_quick_match() || in_tournament()), submit = always_true(),
+leaderboard(title = "Tournament/Quick Match Best Break", description = "Highest break in Tournament or Quick Match mode.", format = "VALUE", value = prev(current_break()), cancel = always_false(), submit = always_true(),
     lower_is_better = false,
-    start = prev(current_break()) > 0 && ((game_won() && prev(game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
+    start = !in_menu() && !replay() && __ornext(in_quick_match() || in_tournament()) && prev(current_break()) > 0 && ((game_won() && prev(game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
 
 function practice_speedrun_leaderboard(scenario_index, practice_index) 
 {
     leaderboard(title = "Career Practice " + practice_index + " Speedrun (IGT)", description = "Highest time remaining in the " + ordinal_words[practice_index - 1] + " Practice scenario in Career mode.",
-    format = "MILLISECS", value = practice_timer() / 10, cancel = in_menu() || replay() || !in_career() || !in_career_practice(), submit = always_true(), lower_is_better = false,
-    start = current_career_scenario() == scenario_index && prev(game_in_progress()) && game_won())
+    format = "MILLISECS", value = practice_timer() / 10, cancel = always_false(), submit = always_true(), lower_is_better = false,
+    start = current_career_scenario() == scenario_index && !in_menu() && !replay() && in_career() && in_career_practice() && prev(game_in_progress()) && game_won())
 }
 
 practice_speedrun_leaderboard(0x01, 1)
