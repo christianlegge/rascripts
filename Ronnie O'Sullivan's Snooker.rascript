@@ -530,7 +530,7 @@ achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rul
 points = 0, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
 
 achievement(title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
-points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && !replay() && our_shot() &&
+points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && never(replay()) && our_shot() &&
                       repeated(3, potted_ball_legally(6)) && measured(repeated(3, ball_got_respotted(6))))
 
 achievement(title = "Just Another Notch in the Belt", description = "Win a Final match to become champion of the Premier League in Tournament mode.", points = 25,
@@ -622,7 +622,7 @@ leaderboard(title = "Tournament/Quick Match High Score", description = "Highest 
 
 leaderboard(title = "Tournament/Quick Match Best Break", description = "Highest break in Tournament or Quick Match mode.", format = "VALUE", value = prev(current_break()), cancel = always_false(), submit = always_true(),
     lower_is_better = false,
-    start = !in_menu() && !replay() && __ornext(in_quick_match() || in_tournament()) && prev(current_break()) > 0 && ((game_won() && prev(game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
+    start = !in_menu() && !replay() && __ornext(in_quick_match() || in_tournament()) && prev(current_break()) > 0 && ((game_won() && prev(!game_won()) && our_shot()) || (prev(our_shot()) && their_shot())))
 
 function practice_speedrun_leaderboard(scenario_index, practice_index) 
 {
@@ -630,6 +630,9 @@ function practice_speedrun_leaderboard(scenario_index, practice_index)
     format = "MILLISECS", value = practice_timer() / 10, cancel = always_false(), submit = always_true(), lower_is_better = false,
     start = current_career_scenario() == scenario_index && !in_menu() && !replay() && in_career() && in_career_practice() && prev(game_in_progress()) && game_won())
 }
+
+leaderboard(title="test", description="test", start = always_true(), cancel = always_false(), submit=always_true(),
+value = byte(0x0) * 100 + 0 * 0)
 
 practice_speedrun_leaderboard(0x01, 1)
 practice_speedrun_leaderboard(0x04, 2)
