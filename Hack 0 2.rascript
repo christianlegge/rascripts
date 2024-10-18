@@ -97,11 +97,11 @@ function level_clear_cheevo(title, desc, screen, points) {
     trigger = goal_delta() && current_level_id() == screen)
 }
 
-level_clear_cheevo("The Nimble", "Clear Ch. 1 - Rivalry.", 0x0105, 3)
-level_clear_cheevo("The Biologist", "Clear Ch. 2 - Breakthrough.", 0x0106, 3)
-level_clear_cheevo("The Invulnerable", "Clear Ch. 3 - Heat.", 0x0103, 3)
-level_clear_cheevo("The Kineticist", "Clear Ch. 4 - Manipulation.", 0x0102, 3)
-level_clear_cheevo("The Ethereal", "Clear Ch. 5 - Takeover.", 0x0101, 3)
+level_clear_cheevo("The Nimble", "Clear Chapter 1 - Rivalry.", 0x0105, 3)
+level_clear_cheevo("The Biologist", "Clear Chapter 2 - Breakthrough.", 0x0106, 3)
+level_clear_cheevo("The Invulnerable", "Clear Chapter 3 - Heat.", 0x0103, 3)
+level_clear_cheevo("The Kineticist", "Clear Chapter 4 - Manipulation.", 0x0102, 3)
+level_clear_cheevo("The Ethereal", "Clear Chapter 5 - Takeover.", 0x0101, 3)
 
 function end_screen_cheevo(title, desc, screen, points) {
 }
