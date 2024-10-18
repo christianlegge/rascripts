@@ -42,6 +42,8 @@ function current_level_id() => word(0x00010B)
 //          (Flickers to 0x80 before going back to 0)
 function goal_flag() => byte(0x000DD5)
 
+function goal_delta() => goal_flag() == 0x01 && prev(goal_flag() == 0x00)
+
 // $001471: [8-bit] Standing on moving platform? (Includes enemies like Mega Moles)
 //          0x00 = No
 //          0x01 = Yes
@@ -85,3 +87,14 @@ function death_delta() => death_flag() > prev(death_flag())
 function message_box_boolean() => byte(0x02200E)
 
 function message_delta() => message_box_boolean() > prev(message_box_boolean())
+
+function level_clear_cheevo(title, desc, screen, points) {
+    achievement(title = title, description = desc, points = points, type = "progression",
+    trigger = goal_delta() && current_level_id() == screen)
+}
+
+level_clear_cheevo("The Nimble", "Clear Ch. 1 - Rivalry", 0x0105, 3)
+level_clear_cheevo("The Biologist", "Clear Ch. 2 - Breakthrough", 0x0106, 3)
+level_clear_cheevo("The Invulnerable", "Clear Ch. 3 - Heat", 0x0103, 3)
+level_clear_cheevo("The Kineticist", "Clear Ch. 4 - Manipulation", 0x0102, 3)
+level_clear_cheevo("The Ethereal", "Clear Ch. 5 - Takeover", 0x0101, 3)
