@@ -88,13 +88,35 @@ function message_box_boolean() => byte(0x02200E)
 
 function message_delta() => message_box_boolean() > prev(message_box_boolean())
 
+function mario_x_screen() => byte(0x0000D2)
+
+function mario_y_coord() => word(0x0000D3)
+
 function level_clear_cheevo(title, desc, screen, points) {
     achievement(title = title, description = desc, points = points, type = "progression",
     trigger = goal_delta() && current_level_id() == screen)
 }
 
-level_clear_cheevo("The Nimble", "Clear Ch. 1 - Rivalry", 0x0105, 3)
-level_clear_cheevo("The Biologist", "Clear Ch. 2 - Breakthrough", 0x0106, 3)
-level_clear_cheevo("The Invulnerable", "Clear Ch. 3 - Heat", 0x0103, 3)
-level_clear_cheevo("The Kineticist", "Clear Ch. 4 - Manipulation", 0x0102, 3)
-level_clear_cheevo("The Ethereal", "Clear Ch. 5 - Takeover", 0x0101, 3)
+level_clear_cheevo("The Nimble", "Clear Ch. 1 - Rivalry.", 0x0105, 3)
+level_clear_cheevo("The Biologist", "Clear Ch. 2 - Breakthrough.", 0x0106, 3)
+level_clear_cheevo("The Invulnerable", "Clear Ch. 3 - Heat.", 0x0103, 3)
+level_clear_cheevo("The Kineticist", "Clear Ch. 4 - Manipulation.", 0x0102, 3)
+level_clear_cheevo("The Ethereal", "Clear Ch. 5 - Takeover.", 0x0101, 3)
+
+function end_screen_cheevo(title, desc, screen, points) {
+}
+
+function diary_cheevo(title, desc, screen, points) {
+    achievement(title = title, description = desc, points = points,
+    trigger = message_delta() && current_level_id() == screen)
+}
+
+diary_cheevo("Taking the High Road", "Find my first diary entry.", 0x0025, 2)
+diary_cheevo("Darkened Door", "Find my second diary entry.", 0x0026, 5)
+diary_cheevo("Leap Frog", "Find my third diary entry.", 0x0027, 3)
+
+achievement(title = "Doubling Back", description = "Find my fourth diary entry.", points = 2,
+trigger = message_delta() && current_level_id() == 0x0102 && mario_y_coord() == 0x80)
+
+achievement(title = "Terraforming", description = "Find my fifth diary entry.", points = 3,
+trigger = message_delta() && current_level_id() == 0x101 && mario_x_screen() == 0x09)
