@@ -142,8 +142,8 @@ function end_cheevo(title, desc, screen, points, type) {
     trigger = level_loaded() && current_level_id() == screen, type = type)
 }
 
-end_cheevo("Your Work is Not Done", "Reach End 1 and escape the facility.", 0x002E, 5, type = "progression")
-end_cheevo("The Rabbit Hole", "Reach End 2 and learn more about Charles's plans.", 0x002B, 5, type = "progression")
+end_cheevo("Not Quite a Resolution", "Reach End 1 and escape the facility.", 0x002E, 5, type = "progression")
+end_cheevo("Up in the Rafters", "Reach End 2 and learn more about Charles's plans.", 0x002B, 5, type = "progression")
 end_cheevo("Learning the Code", "Reach End 3 and put your knowledge to use.", 0x0031, 5, type = "progression")
 end_cheevo("Victory Candescence", "Reach End 4 and learn the truth about my brother.", 0x0036, 10, type = "win_condition")
 end_cheevo("You Didn't Accept My Gift?", "Reach Hidden End 1 and pay for your insubordination.", 0x003A, 1, type = "")
