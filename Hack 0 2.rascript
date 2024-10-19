@@ -147,7 +147,7 @@ end_cheevo("Up in the Rafters", "Reach End 2 and learn more about Charles's plan
 end_cheevo("Learning the Code", "Reach End 3 and put your knowledge to use.", 0x0031, 5, type = "progression")
 end_cheevo("Victory Candescence", "Reach End 4 and learn the truth about my brother.", 0x0036, 10, type = "win_condition")
 end_cheevo("You Didn't Accept My Gift?", "Reach Hidden End 1 and pay for your insubordination.", 0x003A, 1, type = "")
-end_cheevo("Writing on the Wall", "Reach Hidden End 2 and learn the truth about yourself.", 0x0038, 10, type = "")
+end_cheevo("Writing on the Wall", "Reach Hidden End 2 and learn the truth about yourself.", 0x0038, 10, type = "win_condition")
 
 achievement(title = "Shell Surfer", description = "Reach the end of Chapter 2 - Breakthrough without riding a mole after encountering the Disco Shell.", points = 5,
 trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && never(on_mole() && pswitch_timer() == 0) && never(prev(game_state()) != 0x14) && trigger_when(goal_delta()))
