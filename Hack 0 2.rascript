@@ -155,12 +155,12 @@ trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && neve
 // Leaderboards
 
 leaderboard(title = "Chapter 6 - Resolution? Least Deaths", description = "Complete Chapter 6 - Resolution? from the beginning with the least number of deaths.", format = "VALUE", value = death_delta(),
-start = level_loaded() && current_level_id() == 0x0002, cancel = __ornext(game_state() == 0x00 || game_state() == 0x0E), submit = level_loaded() && current_level_id() == 0x002c)
+start = level_loaded() && current_level_id() == 0x0002, cancel = __ornext(game_state() == 0x00 || game_state() == 0x0E || current_level_id() == 0x2A), submit = level_loaded() && current_level_id() == 0x002c)
 
 leaderboard(title = "Unauthorized Area Least Deaths", description = "Complete the unauthorized area from the beginning with the least number of deaths.", format = "VALUE", value = death_delta(),
 start = level_loaded() && current_level_id() == 0x0032, cancel = __ornext(game_state() == 0x00 || game_state() == 0x0E), submit = level_loaded() && current_level_id() == 0x0034)
 
-leaderboard(title = "The Walls are Lava", description = "Complete Chapter 1 - Rivalry with the least wallrunning time without using the checkpoint.", format = "FRAMES", value = wallrunning(), start = level_loaded() && current_level_id() == 0x0105 && ch_1_checkpoint() == 0, cancel = __ornext(current_level_id() != 0x0105 || game_state() != 0x14), submit = goal_delta())
+leaderboard(title = "The Walls are Lava", description = "Complete Chapter 1 - Rivalry with the least wallrunning time without using the checkpoint.", format = "FRAMES", value = wallrunning(), start = level_loaded() && current_level_id() == 0x0105 && ch_1_checkpoint() == 0, cancel = (current_level_id() != 0x0105 && current_level_id() != 0x0025) || death_delta() || game_state() == 0x0E, submit = goal_delta())
 
 // Rich Presence
 
