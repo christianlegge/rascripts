@@ -76,6 +76,8 @@ function ch_1_checkpoint() => bit6(0x001ECB)
 //          Bit7 = Level cleared
 function ch_2_breakthrough_state() => byte(0x001ECC)
 
+function levels_beaten() => byte(0x001F2E)
+
 // $01B405: [8-bit] Death flag
 //          0x00 = Playing normally
 //          0x01 = Death transition is active
@@ -102,6 +104,8 @@ function wallrunning() => byte(0x0013E3) != 0x00
 
 function level_loaded() => prev(game_state()) == 0x13 && game_state() == 0x14
 
+function in_level_loose() => game_state() >= 0x0F && game_state() <= 0x16
+
 // Achievements
 
 function level_clear_cheevo(title, desc, screen, points) {
@@ -116,7 +120,7 @@ level_clear_cheevo("The Kineticist", "Clear Chapter 4 - Manipulation.", 0x0102, 
 level_clear_cheevo("The Ethereal", "Clear Chapter 5 - Takeover.", 0x0101, 3)
 
 achievement(title = "Codebreaker", description = "Enter the unauthorized area.", points = 5,
-trigger = level_loaded() && current_level_id() == 0x0032)
+trigger = level_loaded() && current_level_id() == 0x0032, type = "progression")
 
 function diary_cheevo(title, desc, screen, points) {
     achievement(title = title, description = desc, points = points,
@@ -161,13 +165,39 @@ leaderboard(title = "The Walls are Lava", description = "Complete Chapter 1 - Ri
 // Rich Presence
 
 level_names = {
-0x0105: "Rivalry",
-0x0106: "Breakthrough",
-0x0103: "Heat",
-0x0102: "Manipulation",
-0x0101: "Takeover",
-0x0001: "Prologue"
+0x0001: "learning the ropes in Prologue.",
+0x002F: "discovering a decommissioned area.",
+0x0105: "bouncing off the walls in Rivalry.",
+0x0025: "bouncing off the walls in Rivalry.",
+0x0106: "playing with the moles in Breakthrough.",
+0x0026: "playing with the moles in Breakthrough.",
+0x0103: "squeaking through in Heat.",
+0x0027: "squeaking through in Heat.",
+0x0102: "feather falling in Manipulation.",
+0x0101: "phasing in and out in Takeover.",
+0x0002: "trying to find a Resolution?",
+0x0028: "trying to find a Resolution?",
+0x0029: "trying to find a Resolution?",
+0x002c: "trying to find a Resolution?",
+0x0032: "exploring an unauthorized area.",
+0x0033: "exploring an unauthorized area.",
+0x0034: "exploring an unauthorized area.",
+0x002D: "escaping the facility... for now.",
+0x002E: "escaping the facility... for now.",
+0x002B: "starting to uncover the truth.",
+0x0030: "in disguise... wait, what?",
+0x0031: "in disguise... wait, what?",
+0x0035: "meeting the real Marvin.",
+0x0036: "meeting the real Marvin.",
+0x0039: "learning not to turn down a generous gift.",
+0x003A: "learning not to turn down a generous gift.",
 }
 
 rp_powerup = rich_presence_lookup("Powerup", mario_powerup(), { 0x00: "Small Mario", 0x01: "Big Mario" }, "Mario")
-rp_level = rich_presence_lookup("Level", current_level_id(), level_names, "Prologue")
+rp_level = rich_presence_lookup("Level", current_level_id(), level_names, "in a level.")
+rp_levels_beaten = rich_presence_value("Exits", levels_beaten())
+
+rich_presence_conditional_display(in_level_loose() && __ornext(current_level_id() == 0x0037 || current_level_id() == 0x0038), "Charles is learning the truth. [🚩{0}/5]", rp_levels_beaten)
+rich_presence_conditional_display(in_level_loose(), "{0} is {1} [🚩{2}/5]", rp_powerup, rp_level, rp_levels_beaten)
+rich_presence_conditional_display(game_state() <= 0x0A, "Mario is on the title screen.")
+rich_presence_display("{0} is in the overworld. [🚩{1}/5]", rp_powerup, rp_levels_beaten)
