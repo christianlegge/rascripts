@@ -88,9 +88,13 @@ function message_box_boolean() => byte(0x02200E)
 
 function message_delta() => message_box_boolean() > prev(message_box_boolean())
 
+function mario_powerup() => byte(0x000019)
+
 function mario_x_screen() => byte(0x0000D2)
 
 function mario_y_coord() => word(0x0000D3)
+
+// Achievements
 
 function level_clear_cheevo(title, desc, screen, points) {
     achievement(title = title, description = desc, points = points, type = "progression",
@@ -132,3 +136,14 @@ end_cheevo("End 3 of 4", "You learned the code, but there is more to uncover.", 
 end_cheevo("End 4 of 4", "Learn the truth about my brother.", 0x0036, 10)
 end_cheevo("Hidden End 1 of 2", "You didn't accept my gift?", 0x003A, 1)
 end_cheevo("Hidden End 2 of 2", "Learn the truth about yourself.", 0x0038, 10)
+
+// Leaderboards
+
+// Rich Presence
+
+level_names = {
+
+}
+
+rp_powerup = rich_presence_lookup("Powerup", mario_powerup(), { 0x00: "Small Mario", 0x01: "Big Mario" }, "Mario")
+
