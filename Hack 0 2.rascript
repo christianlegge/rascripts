@@ -120,3 +120,15 @@ trigger = message_delta() && current_level_id() == 0x0102 && mario_y_coord() == 
 
 achievement(title = "Terraforming", description = "Find my fifth diary entry.", points = 3,
 trigger = message_delta() && current_level_id() == 0x101 && mario_x_screen() == 0x09)
+
+function end_cheevo(title, desc, screen, points) {
+    achievement(title = title, description = desc, points = points,
+    trigger = prev(game_state()) == 0x13 && game_state() == 0x14 && current_level_id() == screen)
+}
+
+end_cheevo("End 1 of 4", "You have escaped the facility, but your work is not done.", 0x002E, 5)
+end_cheevo("End 2 of 4", "My plans for this organization run deeper than you realize.", 0x002B, 5)
+end_cheevo("End 3 of 4", "You learned the code, but there is more to uncover.", 0x0031, 5)
+end_cheevo("End 4 of 4", "Learn the truth about my brother.", 0x0036, 10)
+end_cheevo("Hidden End 1 of 2", "You didn't accept my gift?", 0x003A, 1)
+end_cheevo("Hidden End 2 of 2", "Learn the truth about yourself.", 0x0038, 10)
