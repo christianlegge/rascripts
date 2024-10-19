@@ -145,9 +145,9 @@ function end_cheevo(title, desc, screen, points, type) {
 end_cheevo("End 1 of 4", "You have escaped the facility, but your work is not done.", 0x002E, 5, type = "progression")
 end_cheevo("End 2 of 4", "My plans for this organization run deeper than you realize.", 0x002B, 5, type = "progression")
 end_cheevo("End 3 of 4", "You learned the code, but there is more to uncover.", 0x0031, 5, type = "progression")
-end_cheevo("End 4 of 4", "Learn the truth about my brother.", 0x0036, 10, type = "win_condition")
-end_cheevo("Hidden End 1 of 2", "You didn't accept my gift?", 0x003A, 1, type = "")
-end_cheevo("Hidden End 2 of 2", "Learn the truth about yourself.", 0x0038, 10, type = "")
+end_cheevo("Victory Candescence", "Reach End 4 and learn the truth about my brother.", 0x0036, 10, type = "win_condition")
+end_cheevo("You Didn't Accept My Gift?", "Reach Hidden End 1.", 0x003A, 1, type = "")
+end_cheevo("Hidden End 2 of 2", "Reach Hidden End 2 and learn the truth about yourself.", 0x0038, 10, type = "")
 
 achievement(title = "Shell Surfer", description = "Reach the end of Chapter 2 - Breakthrough without riding a mole after encountering the Disco Shell.", points = 5,
 trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && never(on_mole() && pswitch_timer() == 0) && never(prev(game_state()) != 0x14) && trigger_when(goal_delta()))
@@ -155,10 +155,10 @@ trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && neve
 // Leaderboards
 
 leaderboard(title = "Chapter 6 - Resolution? Least Deaths", description = "Complete Chapter 6 - Resolution? from the beginning with the least number of deaths.", format = "VALUE", value = death_delta(),
-start = level_loaded() && current_level_id() == 0x0002, cancel = game_state() == 0x0E, submit = level_loaded() && current_level_id() == 0x002c)
+start = level_loaded() && current_level_id() == 0x0002, cancel = __ornext(game_state() == 0x00 || game_state() == 0x0E), submit = level_loaded() && current_level_id() == 0x002c)
 
 leaderboard(title = "Unauthorized Area Least Deaths", description = "Complete the unauthorized area from the beginning with the least number of deaths.", format = "VALUE", value = death_delta(),
-start = level_loaded() && current_level_id() == 0x0032, cancel = game_state() == 0x0E, submit = level_loaded() && current_level_id() == 0x0034)
+start = level_loaded() && current_level_id() == 0x0032, cancel = __ornext(game_state() == 0x00 || game_state() == 0x0E), submit = level_loaded() && current_level_id() == 0x0034)
 
 leaderboard(title = "The Walls are Lava", description = "Complete Chapter 1 - Rivalry with the least wallrunning time without using the checkpoint.", format = "FRAMES", value = wallrunning(), start = level_loaded() && current_level_id() == 0x0105 && ch_1_checkpoint() == 0, cancel = __ornext(current_level_id() != 0x0105 || game_state() != 0x14), submit = goal_delta())
 
