@@ -165,6 +165,7 @@ leaderboard(title = "The Walls are Lava", description = "Complete Chapter 1 - Ri
 // Rich Presence
 
 level_names = {
+0x00c5: "being briefed on the mission.",
 0x0001: "learning the ropes in Prologue.",
 0x002F: "discovering a decommissioned area.",
 0x0105: "bouncing off the walls in Rivalry.",
