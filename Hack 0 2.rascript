@@ -142,12 +142,12 @@ function end_cheevo(title, desc, screen, points, type) {
     trigger = level_loaded() && current_level_id() == screen, type = type)
 }
 
-end_cheevo("End 1 of 4", "You have escaped the facility, but your work is not done.", 0x002E, 5, type = "progression")
-end_cheevo("End 2 of 4", "My plans for this organization run deeper than you realize.", 0x002B, 5, type = "progression")
-end_cheevo("End 3 of 4", "You learned the code, but there is more to uncover.", 0x0031, 5, type = "progression")
+end_cheevo("Your Work is Not Done", "Reach End 1 and escape the facility.", 0x002E, 5, type = "progression")
+end_cheevo("The Rabbit Hole", "Reach End 2 and learn more about Charles's plans.", 0x002B, 5, type = "progression")
+end_cheevo("Learning the Code", "Reach End 3 and put your knowledge to use.", 0x0031, 5, type = "progression")
 end_cheevo("Victory Candescence", "Reach End 4 and learn the truth about my brother.", 0x0036, 10, type = "win_condition")
-end_cheevo("You Didn't Accept My Gift?", "Reach Hidden End 1.", 0x003A, 1, type = "")
-end_cheevo("Hidden End 2 of 2", "Reach Hidden End 2 and learn the truth about yourself.", 0x0038, 10, type = "")
+end_cheevo("You Didn't Accept My Gift?", "Reach Hidden End 1 and pay for your insubordination.", 0x003A, 1, type = "")
+end_cheevo("Writing on the Wall", "Reach Hidden End 2 and learn the truth about yourself.", 0x0038, 10, type = "")
 
 achievement(title = "Shell Surfer", description = "Reach the end of Chapter 2 - Breakthrough without riding a mole after encountering the Disco Shell.", points = 5,
 trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && never(on_mole() && pswitch_timer() == 0) && never(prev(game_state()) != 0x14) && trigger_when(goal_delta()))
