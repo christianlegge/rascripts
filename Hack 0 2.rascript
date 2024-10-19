@@ -69,6 +69,8 @@ function ch_3_heat_state() => byte(0x001EC9)
 //          Bit7 = Level cleared
 function ch_1_rivalry_state() => byte(0x001ECB)
 
+function ch_1_checkpoint() => bit6(0x001ECB)
+
 // $001ECC: [Bitfield] Ch 2 - Breakthrough state
 //          Bit6 = Checkpoint active
 //          Bit7 = Level cleared
@@ -96,6 +98,10 @@ function mario_y_coord() => word(0x0000D3)
 
 function pswitch_timer() => byte(0x0014AD)
 
+function wallrunning() => byte(0x0013E3) != 0x00
+
+function level_loaded() => prev(game_state()) == 0x13 && game_state() == 0x14
+
 // Achievements
 
 function level_clear_cheevo(title, desc, screen, points) {
@@ -108,6 +114,9 @@ level_clear_cheevo("The Biologist", "Clear Chapter 2 - Breakthrough.", 0x0106, 3
 level_clear_cheevo("The Invulnerable", "Clear Chapter 3 - Heat.", 0x0103, 3)
 level_clear_cheevo("The Kineticist", "Clear Chapter 4 - Manipulation.", 0x0102, 3)
 level_clear_cheevo("The Ethereal", "Clear Chapter 5 - Takeover.", 0x0101, 3)
+
+achievement(title = "Codebreaker", description = "Enter the unauthorized area.", points = 5,
+trigger = level_loaded() && current_level_id() == 0x0032)
 
 function end_screen_cheevo(title, desc, screen, points) {
 }
@@ -129,7 +138,7 @@ trigger = message_delta() && current_level_id() == 0x101 && mario_x_screen() == 
 
 function end_cheevo(title, desc, screen, points) {
     achievement(title = title, description = desc, points = points,
-    trigger = prev(game_state()) == 0x13 && game_state() == 0x14 && current_level_id() == screen)
+    trigger = level_loaded() && current_level_id() == screen)
 }
 
 end_cheevo("End 1 of 4", "You have escaped the facility, but your work is not done.", 0x002E, 5)
@@ -144,11 +153,24 @@ trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && neve
 
 // Leaderboards
 
+leaderboard(title = "Chapter 6 - Resolution? Least Deaths", description = "Complete Chapter 6 - Resolution? from the beginning with the least number of deaths.", format = "VALUE", value = death_delta(),
+start = level_loaded() && current_level_id() == 0x0002, cancel = game_state() == 0x0E, submit = level_loaded() && current_level_id() == 0x002c)
+
+leaderboard(title = "Unauthorized Area Least Deaths", description = "Complete the unauthorized area from the beginning with the least number of deaths.", format = "VALUE", value = death_delta(),
+start = level_loaded() && current_level_id() == 0x0032, cancel = game_state() == 0x0E, submit = level_loaded() && current_level_id() == 0x0034)
+
+leaderboard(title = "The Walls are Lava", description = "Complete Chapter 1 - Rivalry with the least wallrunning time without using the checkpoint.", format = "FRAMES", value = wallrunning(), start = level_loaded() && current_level_id() == 0x0105 && ch_1_checkpoint() == 0, cancel = __ornext(current_level_id() != 0x0105 || game_state() != 0x14), submit = goal_delta())
+
 // Rich Presence
 
 level_names = {
-
+0x0105: "Rivalry",
+0x0106: "Breakthrough",
+0x0103: "Heat",
+0x0102: "Manipulation",
+0x0101: "Takeover",
+0x0001: "Prologue"
 }
 
 rp_powerup = rich_presence_lookup("Powerup", mario_powerup(), { 0x00: "Small Mario", 0x01: "Big Mario" }, "Mario")
-
+rp_level = rich_presence_lookup("Level", current_level_id(), level_names, "Prologue")
