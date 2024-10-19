@@ -118,9 +118,6 @@ level_clear_cheevo("The Ethereal", "Clear Chapter 5 - Takeover.", 0x0101, 3)
 achievement(title = "Codebreaker", description = "Enter the unauthorized area.", points = 5,
 trigger = level_loaded() && current_level_id() == 0x0032)
 
-function end_screen_cheevo(title, desc, screen, points) {
-}
-
 function diary_cheevo(title, desc, screen, points) {
     achievement(title = title, description = desc, points = points,
     trigger = message_delta() && current_level_id() == screen)
