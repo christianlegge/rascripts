@@ -124,7 +124,7 @@ trigger = level_loaded() && current_level_id() == 0x0032, type = "progression")
 
 function diary_cheevo(title, desc, screen, points) {
     achievement(title = title, description = desc, points = points,
-    trigger = message_delta() && current_level_id() == screen)
+    trigger = message_delta() && current_level_id() == screen, type="progression")
 }
 
 diary_cheevo("Taking the High Road", "Find my first diary entry.", 0x0025, 2)
@@ -132,10 +132,10 @@ diary_cheevo("Darkened Door", "Find my second diary entry.", 0x0026, 5)
 diary_cheevo("Leap Frog", "Find my third diary entry.", 0x0027, 3)
 
 achievement(title = "Doubling Back", description = "Find my fourth diary entry.", points = 2,
-trigger = message_delta() && current_level_id() == 0x0102 && mario_y_coord() == 0x80)
+trigger = message_delta() && current_level_id() == 0x0102 && mario_y_coord() == 0x80, type="progression")
 
 achievement(title = "Terraforming", description = "Find my fifth diary entry.", points = 3,
-trigger = message_delta() && current_level_id() == 0x101 && mario_x_screen() == 0x09)
+trigger = message_delta() && current_level_id() == 0x101 && mario_x_screen() == 0x09, type="progression")
 
 function end_cheevo(title, desc, screen, points, type) {
     achievement(title = title, description = desc, points = points,
