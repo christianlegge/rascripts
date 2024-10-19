@@ -94,6 +94,8 @@ function mario_x_screen() => byte(0x0000D2)
 
 function mario_y_coord() => word(0x0000D3)
 
+function pswitch_timer() => byte(0x0014AD)
+
 // Achievements
 
 function level_clear_cheevo(title, desc, screen, points) {
@@ -136,6 +138,9 @@ end_cheevo("End 3 of 4", "You learned the code, but there is more to uncover.", 
 end_cheevo("End 4 of 4", "Learn the truth about my brother.", 0x0036, 10)
 end_cheevo("Hidden End 1 of 2", "You didn't accept my gift?", 0x003A, 1)
 end_cheevo("Hidden End 2 of 2", "Learn the truth about yourself.", 0x0038, 10)
+
+achievement(title = "Shell Surfer", description = "Reach the end of Chapter 2 - Breakthrough without riding a mole after encountering the Disco Shell.", points = 5,
+trigger = once(current_level_id() == 0x0106 && mario_x_screen() == 0x0c) && never(on_mole() && pswitch_timer() == 0) && never(prev(game_state()) != 0x14) && trigger_when(goal_delta()))
 
 // Leaderboards
 
