@@ -2,76 +2,76 @@
 // #ID = 20416
 
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Becky With The Boys
-//          Bit1 = Hopeless Romantic
-//          Bit2 = Conor Gets Lucky
-//          Bit3 = Just Friends
-//          Bit4 = Kiki and Conor
-//          Bit5 = True Love
-//          Bit6 = Mountain Girl Becky
-//          Bit7 = Born to Model
+function ___becky_with_the_boys() => bit0()
+function ___hopeless_romantic() => bit1()
+function ___conor_gets_lucky() => bit2()
+function ___just_friends() => bit3()
+function ___kiki_and_conor() => bit4()
+function ___true_love() => bit5()
+function ___mountain_girl_becky() => bit6()
+function ___born_to_model() => bit7()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC00)
 
 // $1DAC01: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Born to Waitress
-//          Bit1 = Soulmates
-//          Bit2 = Blind Date Fantasy
-//          Bit3 = Day at the Spa
-//          Bit4 = Pulling the Strings
-//          Bit5 = Strike a Pose
-//          Bit6 = Poor Poor Danny
-//          Bit7 = Lick My Boot
+function ___born_to_waitress() => bit0()
+function ___soulmates() => bit1()
+function ___blind_date_fantasy() => bit2()
+function ___day_at_the_spa() => bit3()
+function ___pulling_the_strings() => bit4()
+function ___strike_a_pose() => bit5()
+function ___poor_poor_danny() => bit6()
+function ___lick_my_boot() => bit7()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC01)
 
 // $1DAC02: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Capture the Heart
-//          Bit1 = Charge it!
-//          Bit2 = Hello Ladies!
-//          Bit3 = Big Decision
-//          Bit4 = Revealing Conor
-//          Bit5 = Breaking Free
-//          Bit6 = Becky And Brett
-//          Bit7 = Elliot, Watch Out!
+function ___capture_the_heart() => bit0()
+function ___charge_it() => bit1()
+function ___hello_ladies() => bit2()
+function ___big_decision() => bit3()
+function ___revealing_conor() => bit4()
+function ___breaking_free() => bit5()
+function ___becky_and_brett() => bit6()
+function ___elliot_watch_out() => bit7()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC02)
 
 // $1DAC03: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Find me at  the club
-//          Bit1 = Make Peace
-//          Bit2 = Three of a Kind
-//          Bit3 = Erica And Danny
-//          Bit4 = Hard Day At Work
-//          Bit5 = Sprung!
-//          Bit6 = Dan the Ladies Man
-//          Bit7 = Rub a dub dub
+function ___find_me_at_the_club() => bit0()
+function ___make_peace() => bit1()
+function ___three_of_a_kind() => bit2()
+function ___erica_and_danny() => bit3()
+function ___hard_day_at_work() => bit4()
+function ___sprung() => bit5()
+function ___dan_the_ladies_man() => bit6()
+function ___rub_a_dub_dub() => bit7()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC03)
 
 // $1DAC04: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Double Date Dance
-//          Bit1 = Erica on the Deck
-//          Bit2 = Alex and Shana
-//          Bit3 = Game On!
-//          Bit4 = Do Not Disturb
-//          Bit5 = Sanctuary
-//          Bit6 = Im too sexy
-//          Bit7 = Downhill Daredevils
+function ___double_date_dance() => bit0()
+function ___erica_on_the_deck() => bit1()
+function ___alex_and_shana() => bit2()
+function ___game_on() => bit3()
+function ___do_not_disturb() => bit4()
+function ___sanctuary() => bit5()
+function ___im_too_sexy() => bit6()
+function ___downhill_daredevils() => bit7()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC04)
 
 // $1DAC05: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Leanne And Lucas
-//          Bit1 = Re-Matchmaker
-//          Bit2 = Reservoir Pups
-//          Bit3 = Brett the Funghi
-//          Bit4 = Becky In Pencil
-//          Bit5 = Who the Man?
-//          Bit6 = Scaredy Cat
-//          Bit7 = Stud
+function ___leanne_and_lucas() => bit0()
+function ___rematchmaker() => bit1()
+function ___reservoir_pups() => bit2()
+function ___brett_the_funghi() => bit3()
+function ___becky_in_pencil() => bit4()
+function ___who_the_man() => bit5()
+function ___scaredy_cat() => bit6()
+function ___stud() => bit7()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC05)
 
 // $1DAC06: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-//          Bit0 = Smile for the Camera
-//          Bit1 = Conor is Sprung!
-//          Bit2 = Hooked Up!
-//          Bit3 = Sprung Gang
+function ___smile_for_the_camera() => bit0()
+function ___conor_is_sprung() => bit1()
+function ___hooked_up() => bit2()
+function ___sprung_gang() => bit3()
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC06)
 
 // $1E10A0: [8-bit] Current character
@@ -83,239 +83,239 @@ function current_character() => byte(0x1E10A0)
 function current_scene_index() => byte(0x1E10A8)
 
 // $1E10E0: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Nail File
-//          Bit1 = Bar Towel
-//          Bit2 = Cell Phone
-//          Bit3 = Becky's # (Cell Phone)
-//          Bit4 = Brett's # (Cell Phone)
-//          Bit5 = Erica's # (Cell Phone)
-//          Bit6 = Kiki's # (Cell Phone)
-//          Bit7 = Danny's # (Cell Phone)
+function ___nail_file() => bit0()
+function ___bar_towel() => bit1()
+function ___cell_phone() => bit2()
+function ___beckys__cell_phone() => bit3()
+function ___bretts__cell_phone() => bit4()
+function ___ericas__cell_phone() => bit5()
+function ___kikis__cell_phone() => bit6()
+function ___dannys__cell_phone() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E0)
 
 // $1E10E1: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Lucas' # (Cell Phone)
-//          Bit1 = Alex's # (Cell Phone)
-//          Bit2 = Sean's # (Cell Phone)
-//          Bit3 = Leanne's # (Cell Phone)
-//          Bit4 = Shana's # (Cell Phone)
-//          Bit5 = Elliot's # (Cell Phone)
-//          Bit6 = Conor's # (Cell Phone)
-//          Bit7 = Conor's Father's # (Cell Phone)
+function ___lucas__cell_phone() => bit0()
+function ___alexs__cell_phone() => bit1()
+function ___seans__cell_phone() => bit2()
+function ___leannes__cell_phone() => bit3()
+function ___shanas__cell_phone() => bit4()
+function ___elliots__cell_phone() => bit5()
+function ___conors__cell_phone() => bit6()
+function ___conors_fathers__cell_phone() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E1)
 
 // $1E10E2: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Make-up Kit
-//          Bit1 = Blush (Make-up Kit)
-//          Bit2 = Eyeliner (Make-up Kit)
-//          Bit3 = Eyeshadow (Make-up Kit)
-//          Bit4 = Lipstick (Make-up Kit)
-//          Bit5 = Cover-up  (Make-up Kit)
-//          Bit6 = Mascara (Make-up Kit)
-//          Bit7 = Lipliner (Make-up Kit)
+function ___makeup_kit() => bit0()
+function ___blush_makeup_kit() => bit1()
+function ___eyeliner_makeup_kit() => bit2()
+function ___eyeshadow_makeup_kit() => bit3()
+function ___lipstick_makeup_kit() => bit4()
+function ___coverup_makeup_kit() => bit5()
+function ___mascara_makeup_kit() => bit6()
+function ___lipliner_makeup_kit() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E2)
 
 // $1E10E3: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Pepper Spray
-//          Bit1 = Chewing Gum
-//          Bit2 = Best Friends Forever Necklace
-//          Bit3 = Microchip
-//          Bit4 = Laxatives
-//          Bit5 = Hairbrush
-//          Bit6 = Texas Flame Hot Sauce
-//          Bit7 = Sweatshirt
+function ___pepper_spray() => bit0()
+function ___chewing_gum() => bit1()
+function ___best_friends_forever_necklace() => bit2()
+function ___microchip() => bit3()
+function ___laxatives() => bit4()
+function ___hairbrush() => bit5()
+function ___texas_flame_hot_sauce() => bit6()
+function ___sweatshirt() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E3)
 
 // $1E10E4: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Bracelet
-//          Bit1 = Rose
-//          Bit2 = Money
-//          Bit3 = Twenty bucks (Money)
-//          Bit4 = Twenty-five bucks (Money)
-//          Bit5 = Fifty bucks (Money)
-//          Bit6 = One hundred bucks (Money)
-//          Bit7 = Five hundred bucks (Money)
+function ___bracelet() => bit0()
+function ___rose() => bit1()
+function ___money() => bit2()
+function ___twenty_bucks_money() => bit3()
+function ___twentyfive_bucks_money() => bit4()
+function ___fifty_bucks_money() => bit5()
+function ___one_hundred_bucks_money() => bit6()
+function ___five_hundred_bucks_money() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E4)
 
 // $1E10E5: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = A thousand bucks (Money)
-//          Bit1 = Two thousand bucks (Money)
-//          Bit2 = Five thousand bucks (Money)
-//          Bit3 = Joke Book
-//          Bit4 = The one about the guy with the 5 legs... (Joke Book)
-//          Bit5 = The blonde joke (Joke Book)
-//          Bit6 = The hippie joke (Joke Book)
-//          Bit7 = The skunk joke (Joke Book)
+function ___a_thousand_bucks_money() => bit0()
+function ___two_thousand_bucks_money() => bit1()
+function ___five_thousand_bucks_money() => bit2()
+function ___joke_book() => bit3()
+function ___the_one_about_the_guy_with_the_5_legs_joke_book() => bit4()
+function ___the_blonde_joke_joke_book() => bit5()
+function ___the_hippie_joke_joke_book() => bit6()
+function ___the_skunk_joke_joke_book() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E5)
 
 // $1E10E6: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Yo mama joke (Joke Book)
-//          Bit1 = Magic Bandana
-//          Bit2 = Sunglasses
-//          Bit3 = Vintage LP
-//          Bit4 = Pocket Knife
-//          Bit5 = Love Beads
-//          Bit6 = Incense
-//          Bit7 = Sneakers
+function ___yo_mama_joke_joke_book() => bit0()
+function ___magic_bandana() => bit1()
+function ___sunglasses() => bit2()
+function ___vintage_lp() => bit3()
+function ___pocket_knife() => bit4()
+function ___love_beads() => bit5()
+function ___incense() => bit6()
+function ___sneakers() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E6)
 
 // $1E10E7: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = High Heels
-//          Bit1 = Go-Go Boots
-//          Bit2 = Slippers
-//          Bit3 = Business Card
-//          Bit4 = Lint Brush
-//          Bit5 = VIP Sanctuary Club Pass
-//          Bit6 = Baby picture of Sean
-//          Bit7 = Peace Sign Button
+function ___high_heels() => bit0()
+function ___gogo_boots() => bit1()
+function ___slippers() => bit2()
+function ___business_card() => bit3()
+function ___lint_brush() => bit4()
+function ___vip_sanctuary_club_pass() => bit5()
+function ___baby_picture_of_sean() => bit6()
+function ___peace_sign_button() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E7)
 
 // $1E10E8: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Perfume from Kiki
-//          Bit1 = Perfume from Erica
-//          Bit2 = Watch
-//          Bit3 = Hairpin
-//          Bit4 = Glass of Water
-//          Bit5 = Tray of Food
-//          Bit6 = Modeling Portfolio
-//          Bit7 = Pinecone
+function ___perfume_from_kiki() => bit0()
+function ___perfume_from_erica() => bit1()
+function ___watch() => bit2()
+function ___hairpin() => bit3()
+function ___glass_of_water() => bit4()
+function ___tray_of_food() => bit5()
+function ___modeling_portfolio() => bit6()
+function ___pinecone() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E8)
 
 // $1E10E9: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Raw Dead Fish
-//          Bit1 = Box of Chocolates
-//          Bit2 = Granny Panties
-//          Bit3 = Photo Evidence
-//          Bit4 = Rabbit's Foot
-//          Bit5 = Toadstools
-//          Bit6 = Camera
-//          Bit7 = Devil's Zephyr Cologne
+function ___raw_dead_fish() => bit0()
+function ___box_of_chocolates() => bit1()
+function ___granny_panties() => bit2()
+function ___photo_evidence() => bit3()
+function ___rabbits_foot() => bit4()
+function ___toadstools() => bit5()
+function ___camera() => bit6()
+function ___devils_zephyr_cologne() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10E9)
 
 // $1E10EA: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Gold Medal
-//          Bit1 = Silver Medal
-//          Bit2 = Bronze Medal
-//          Bit3 = Unlocking Social Anxiety
-//          Bit4 = Ear Plugs
-//          Bit5 = Book of Horoscopes
-//          Bit6 = Heimlich Maneuver
-//          Bit7 = Amorous Action
+function ___gold_medal() => bit0()
+function ___silver_medal() => bit1()
+function ___bronze_medal() => bit2()
+function ___unlocking_social_anxiety() => bit3()
+function ___ear_plugs() => bit4()
+function ___book_of_horoscopes() => bit5()
+function ___heimlich_maneuver() => bit6()
+function ___amorous_action() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10EA)
 
 // $1E10EB: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Golden Line Notebook for Becky
-//          Bit1 = What? Ho Bird Mountain? (Golden Line Notebook)
-//          Bit2 = I've wanted to be a model ever since I was three years old! (Golden Line Notebook)
-//          Bit3 = Eat yellow snow and die (Golden Line Notebook)
-//          Bit4 = You tell me, buuuddy (Golden Line Notebook)
-//          Bit5 = Hey, my Grandma called. She wants her hat back (Golden Line Notebook)
-//          Bit6 = Do you ever go skinny dipping? (Golden Line Notebook)
-//          Bit7 = Probably the same place you left your brain, tree-hugger (Golden Line Notebook)
+function ___golden_line_notebook_for_becky() => bit0()
+function ___what_ho_bird_mountain_golden_line_notebook() => bit1()
+function ___ive_wanted_to_be_a_model_ever_since_i_was_three_years_old_golden_line_notebook() => bit2()
+function ___eat_yellow_snow_and_die_golden_line_notebook() => bit3()
+function ___you_tell_me_buuuddy_golden_line_notebook() => bit4()
+function ___hey_my_grandma_called_she_wants_her_hat_back_golden_line_notebook() => bit5()
+function ___do_you_ever_go_skinny_dipping_golden_line_notebook() => bit6()
+function ___probably_the_same_place_you_left_your_brain_treehugger_golden_line_notebook() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10EB)
 
 // $1E10EC: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Yellow yoyo yawning you're yuck (Golden Line Notebook)
-//          Bit1 = One time, my friend mixed ketchup and apple sauce and I ate it (Golden Line Notebook)
-//          Bit2 = This book is as inane as you are! (Golden Line Notebook)
-//          Bit3 = You wanna look down girls' shirts (Golden Line Notebook)
-//          Bit4 = Keep him wondering if he's going to get a goodnight kiss (Golden Line Notebook)
-//          Bit5 = She only does it because she lost her pet lizard in a tragic boating accident (Golden Line Notebook)
-//          Bit6 = Waaaaaaaaaaaaaaaaake Up!!! (Golden Line Notebook)
-//          Bit7 = He lives in a cave, plotting evil against us 'kids' (Golden Line Notebook)
+function ___yellow_yoyo_yawning_youre_yuck_golden_line_notebook() => bit0()
+function ___one_time_my_friend_mixed_ketchup_and_apple_sauce_and_i_ate_it_golden_line_notebook() => bit1()
+function ___this_book_is_as_inane_as_you_are_golden_line_notebook() => bit2()
+function ___you_wanna_look_down_girls_shirts_golden_line_notebook() => bit3()
+function ___keep_him_wondering_if_hes_going_to_get_a_goodnight_kiss_golden_line_notebook() => bit4()
+function ___she_only_does_it_because_she_lost_her_pet_lizard_in_a_tragic_boating_accident_golden_line_notebook() => bit5()
+function ___waaaaaaaaaaaaaaaaake_up_golden_line_notebook() => bit6()
+function ___he_lives_in_a_cave_plotting_evil_against_us_kids_golden_line_notebook() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10EC)
 
 // $1E10ED: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Haha... Brett's a r****d... funny... (Golden Line Notebook)
-//          Bit1 = Shut up, big head (Golden Line Notebook)
-//          Bit2 = Remember that time you needed someone to hook up with your boyfriend and I was right there, helping you out? (Golden Line Notebook)
-//          Bit3 = I put sixteen laxatives in your drink (Golden Line Notebook)
-//          Bit4 = Maybe. The voices in my head say a lot of things (Golden Line Notebook)
-//          Bit5 = Wisdom Stone
-//          Bit6 = Candy
-//          Bit7 = Golden Line Notebook for Brett
+function ___haha_bretts_a_rd_funny_golden_line_notebook() => bit0()
+function ___shut_up_big_head_golden_line_notebook() => bit1()
+function ___remember_that_time_you_needed_someone_to_hook_up_with_your_boyfriend_and_i_was_right_there_helping_you_out_golden_line_notebook() => bit2()
+function ___i_put_sixteen_laxatives_in_your_drink_golden_line_notebook() => bit3()
+function ___maybe_the_voices_in_my_head_say_a_lot_of_things_golden_line_notebook() => bit4()
+function ___wisdom_stone() => bit5()
+function ___candy() => bit6()
+function ___golden_line_notebook_for_brett() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10ED)
 
 // $1E10EE: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = No, you look like an aerobics instructor (Golden Line Notebook)
-//          Bit1 = Women's television has come a long way in terms of story development and production quality, Lucas (Golden Line Notebook)
-//          Bit2 = This purple one here looks nice (Golden Line Notebook)
-//          Bit3 = None of your beeswax, biznatch! Ow! Yeah! How do you like it, huh?! (Golden Line Notebook)
-//          Bit4 = No, I'm not talking about sex, I'm talking about fungus! (Golden Line Notebook)
-//          Bit5 = Moo (Golden Line Notebook)
-//          Bit6 = Smashing to make your acquaintance. I'm Bartholemew Arugula Paisley (Golden Line Notebook)
-//          Bit7 = Look, you sit under a cow's ass, you're gonna get crapped on (Golden Line Notebook)
+function ___no_you_look_like_an_aerobics_instructor_golden_line_notebook() => bit0()
+function ___womens_television_has_come_a_long_way_in_terms_of_story_development_and_production_quality_lucas_golden_line_notebook() => bit1()
+function ___this_purple_one_here_looks_nice_golden_line_notebook() => bit2()
+function ___none_of_your_beeswax_biznatch_ow_yeah_how_do_you_like_it_huh_golden_line_notebook() => bit3()
+function ___no_im_not_talking_about_sex_im_talking_about_fungus_golden_line_notebook() => bit4()
+function ___moo_golden_line_notebook() => bit5()
+function ___smashing_to_make_your_acquaintance_im_bartholemew_arugula_paisley_golden_line_notebook() => bit6()
+function ___look_you_sit_under_a_cows_ass_youre_gonna_get_crapped_on_golden_line_notebook() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10EE)
 
 // $1E10EF: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = You couldn't be more deep if I threw you down the well myself (Golden Line Notebook)
-//          Bit1 = Can I have your underwear? I'm supposed to get women's, but nobody would know the difference if you gave me yours! (Golden Line Notebook)
-//          Bit2 = I don't think his cousin counts, dude (Golden Line Notebook)
-//          Bit3 = You don't go to Dippy Donuts if you're looking for a steak (Golden Line Notebook)
-//          Bit4 = Yeah, it is kind of hard for me to be as classy as a guy who dresses like a pirate (Golden Line Notebook)
-//          Bit5 = I hope you don't think me forward, but I have an overwhelming urge to chew on you (Golden Line Notebook)
-//          Bit6 = I don't know, I'd say you're about as cute as a chickpea on some cornpone (Golden Line Notebook)
-//          Bit7 = I'm going to a player's anonymous meeting after this. Wanna come? (Golden Line Notebook)
+function ___you_couldnt_be_more_deep_if_i_threw_you_down_the_well_myself_golden_line_notebook() => bit0()
+function ___can_i_have_your_underwear_im_supposed_to_get_womens_but_nobody_would_know_the_difference_if_you_gave_me_yours_golden_line_notebook() => bit1()
+function ___i_dont_think_his_cousin_counts_dude_golden_line_notebook() => bit2()
+function ___you_dont_go_to_dippy_donuts_if_youre_looking_for_a_steak_golden_line_notebook() => bit3()
+function ___yeah_it_is_kind_of_hard_for_me_to_be_as_classy_as_a_guy_who_dresses_like_a_pirate_golden_line_notebook() => bit4()
+function ___i_hope_you_dont_think_me_forward_but_i_have_an_overwhelming_urge_to_chew_on_you_golden_line_notebook() => bit5()
+function ___i_dont_know_id_say_youre_about_as_cute_as_a_chickpea_on_some_cornpone_golden_line_notebook() => bit6()
+function ___im_going_to_a_players_anonymous_meeting_after_this_wanna_come_golden_line_notebook() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10EF)
 
 // $1E10F0: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Chocolate fudge, actually (Golden Line Notebook)
-//          Bit1 = Earrings
-//          Bit2 = Umbrella
-//          Bit3 = MP3 Player
-//          Bit4 = Dragon tattoo
-//          Bit5 = Carnation
-//          Bit6 = Book of love sonnets
-//          Bit7 = Music box
+function ___chocolate_fudge_actually_golden_line_notebook() => bit0()
+function ___earrings() => bit1()
+function ___umbrella() => bit2()
+function ___mp3_player() => bit3()
+function ___dragon_tattoo() => bit4()
+function ___carnation() => bit5()
+function ___book_of_love_sonnets() => bit6()
+function ___music_box() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10F0)
 
 // $1E10F1: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Red Pendant
-//          Bit1 = Green Pendant
-//          Bit2 = Blue Pendant
-//          Bit3 = Hay
-//          Bit4 = Bucket
-//          Bit5 = Candle
-//          Bit6 = Cards
-//          Bit7 = Cocoa
+function ___red_pendant() => bit0()
+function ___green_pendant() => bit1()
+function ___blue_pendant() => bit2()
+function ___hay() => bit3()
+function ___bucket() => bit4()
+function ___candle() => bit5()
+function ___cards() => bit6()
+function ___cocoa() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10F1)
 
 // $1E10F2: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Finger Printing Kit
-//          Bit1 = Gasoline
-//          Bit2 = Gift Card
-//          Bit3 = Hedgehog
-//          Bit4 = ID
-//          Bit5 = Drinks
-//          Bit6 = Radio
-//          Bit7 = Keys
+function ___finger_printing_kit() => bit0()
+function ___gasoline() => bit1()
+function ___gift_card() => bit2()
+function ___hedgehog() => bit3()
+function ___id() => bit4()
+function ___drinks() => bit5()
+function ___radio() => bit6()
+function ___keys() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10F2)
 
 // $1E10F3: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Lighter
-//          Bit1 = Magic Dove
-//          Bit2 = Mittens
-//          Bit3 = Lock Pick
-//          Bit4 = Chips
-//          Bit5 = Racing Poles
-//          Bit6 = Silver Ring
-//          Bit7 = Ski Equipment
+function ___lighter() => bit0()
+function ___magic_dove() => bit1()
+function ___mittens() => bit2()
+function ___lock_pick() => bit3()
+function ___chips() => bit4()
+function ___racing_poles() => bit5()
+function ___silver_ring() => bit6()
+function ___ski_equipment() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10F3)
 
 // $1E10F4: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Sleeping Bag
-//          Bit1 = Styrofoam Cup
-//          Bit2 = Swizzle Stick
-//          Bit3 = Pink Wallet
-//          Bit4 = Brown Wallet
-//          Bit5 = Comb
-//          Bit6 = Nintendo DS
-//          Bit7 = Gloves
+function ___sleeping_bag() => bit0()
+function ___styrofoam_cup() => bit1()
+function ___swizzle_stick() => bit2()
+function ___pink_wallet() => bit3()
+function ___brown_wallet() => bit4()
+function ___comb() => bit5()
+function ___nintendo_ds() => bit6()
+function ___gloves() => bit7()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10F4)
 
 // $1E10F5: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
-//          Bit0 = Baseball Hat
-//          Bit1 = Hand Warmers
+function ___baseball_hat() => bit0()
+function ___hand_warmers() => bit1()
 function museum_unlocks_0_locked_1_unlocked() => byte(0x1E10F5)
 
 // $1E1FA8: [8-bit] Scene index for Brett
