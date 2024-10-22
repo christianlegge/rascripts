@@ -2,14 +2,14 @@
 // #ID = 20416
 
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
-function ___becky_with_the_boys() => bit0()
-function ___hopeless_romantic() => bit1()
-function ___conor_gets_lucky() => bit2()
-function ___just_friends() => bit3()
-function ___kiki_and_conor() => bit4()
-function ___true_love() => bit5()
-function ___mountain_girl_becky() => bit6()
-function ___born_to_model() => bit7()
+function ___becky_with_the_boys() => bit0(0x1DAC00)
+function ___hopeless_romantic() => bit1(0x1DAC00)
+function ___conor_gets_lucky() => bit2(0x1DAC00)
+function ___just_friends() => bit3(0x1DAC00)
+function ___kiki_and_conor() => bit4(0x1DAC00)
+function ___true_love() => bit5(0x1DAC00)
+function ___mountain_girl_becky() => bit6(0x1DAC00)
+function ___born_to_model() => bit7(0x1DAC00)
 function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC00)
 
 // $1DAC01: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
