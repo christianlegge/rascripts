@@ -1,5 +1,6 @@
 // Sprung: A Game Where Everyone Scores | Sprung: The Dating Game
 // #ID = 20416
+// #MinimumVersion = 1.3
 
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
 function ___becky_with_the_boys() => bit0(0x1DAC00)
