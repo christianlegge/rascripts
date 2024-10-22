@@ -560,6 +560,8 @@ function achievement_break(target, title, desc, points)
 {
     achievement(title = title, description = desc,
     points = points, trigger = never(!our_shot() || in_menu()) &&
+    never(current_career_scenario() != prev(current_career_scenario())) &&
+    never(current_career_sub_scenario() != prev(current_career_sub_scenario())) &&
     once(our_shot() && current_break() == 0) && in_game() && !replay() &&
     our_shot() && prev(current_break() < target) && current_break() >= target)
 }
