@@ -1,6 +1,7 @@
 // Ronnie O'Sullivan's Snooker
 // #ID = 2913
 // md5: eccd9c59b8053233ac82b5f3c87596b7 - Europe
+// #MinimumVersion = 1.3
 
 career_scenarios = {
     0x00: "Coming of Age",
@@ -485,7 +486,7 @@ achievement(title = "Well On Your Way", description = "Win a frame in Tournament
     trigger = in_game() && !replay() && __ornext(in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
 
 achievement(title = "Two For One Deal", description = "Legally pot two or more balls with one shot.", points = 5,
-    trigger = in_game() && !replay() && our_shot() && any_of(range(7, 21), ball_on) && player_score() - prev(player_score()) >= 2)
+    trigger = in_game() && prev(in_game()) && !replay() && our_shot() && any_of(range(7, 21), ball_on) && player_score() - prev(player_score()) >= 2)
 
 achievement(title = "Chain Reaction", description = "Legally pot a plant by hitting a ball on into another ball on to pot it.", points = 3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
