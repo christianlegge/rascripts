@@ -67,8 +67,8 @@ function ___brett_the_funghi() => bit3(0x1DAC05)
 function ___becky_in_pencil() => bit4(0x1DAC05)
 function ___who_the_man() => bit5(0x1DAC05)
 function ___scaredy_cat() => bit6(0x1DAC05)
-function ___stud() => bit7(0x1DAC050x1DAC06)
-function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC050x1DAC06)
+function ___stud() => bit7(0x1DAC05)
+function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC05)
 
 // $1DAC06: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
 function ___smile_for_the_camera() => bit0(0x1DAC06)
@@ -411,6 +411,71 @@ function scene_index_for_becky() => byte(0x1E1FF5)
 function has_item_func(accessor) => accessor()
 function has_item_prev(accessor) => prev(accessor())
 
+brett_art = [
+    ___kiki_and_conor,
+    ___pulling_the_strings,
+    ___strike_a_pose,
+    ___hello_ladies,
+    ___big_decision,
+    ___revealing_conor,
+    ___becky_and_brett,
+    ___three_of_a_kind,
+    ___erica_and_danny,
+    ___hard_day_at_work,
+    ___sprung,
+    ___dan_the_ladies_man,
+    ___rub_a_dub_dub,
+    ___erica_on_the_deck,
+    ___alex_and_shana,
+    ___game_on,
+    ___do_not_disturb,
+    ___sanctuary,
+    ___downhill_daredevils,
+    ___rematchmaker,
+    ___reservoir_pups,
+    ___brett_the_funghi,
+    ___becky_in_pencil,
+    ___who_the_man,
+    ___scaredy_cat,
+    ___stud,
+]
+
+becky_art = [
+    ___becky_with_the_boys,
+    ___hopeless_romantic,
+    ___conor_gets_lucky,
+    ___just_friends,
+    ___true_love,
+    ___mountain_girl_becky,
+    ___born_to_model,
+    ___born_to_waitress,
+    ___soulmates,
+    ___blind_date_fantasy,
+    ___day_at_the_spa,
+    ___poor_poor_danny,
+    ___lick_my_boot,
+    ___charge_it,
+    ___breaking_free,
+    ___elliot_watch_out,
+    ___find_me_at_the_club,
+    ___make_peace,
+    ___double_date_dance,
+    ___im_too_sexy,
+    ___leanne_and_lucas,
+    ___smile_for_the_camera,
+    ___conor_is_sprung,
+    ___hooked_up,
+    ___sprung_gang,
+]
+
+pendants = [
+    ___red_pendant,
+    ___blue_pendant,
+    ___green_pendant,
+]
+
+// Achievements
+
 function got_item_achievement(title, desc, points, hasitem) {
     achievement(title = title, description = desc, points = points, trigger = in_game() && prev(!hasitem) && hasitem)
 }
@@ -423,10 +488,7 @@ function all_items_achievement(title, desc, points, items) {
 
 got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1)
 
-pendants = [
-    ___red_pendant,
-    ___blue_pendant,
-    ___green_pendant,
-]
-
 all_items_achievement("Lost Woods, Here I Come", "Obtain all three pendants.", 5, pendants)
+
+all_items_achievement("Brett's Art Gallery", "Obtain all of Brett's art.", 10, brett_art)
+all_items_achievement("Becky's Art Gallery", "Obtain all of Becky's art.", 10, becky_art)
