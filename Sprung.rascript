@@ -2,6 +2,8 @@
 // #ID = 20416
 // #MinimumVersion = 1.3
 
+function in_game() => byte(0x0017f1fc) == 0x20
+
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
 function ___becky_with_the_boys() => bit0(0x1DAC00)
 function ___hopeless_romantic() => bit1(0x1DAC00)
@@ -405,3 +407,9 @@ function scene_index_for_brett() => byte(0x1E1FA8)
 //          0x2e = Golden Bonus: Trading Places
 //          0x2f = Bonus: Panic Room
 function scene_index_for_becky() => byte(0x1E1FF5)
+
+function got_item_achievement(title, desc, points, hasitem) {
+    achievement(title = title, description = desc, points = points, trigger = in_game() && prev(!hasitem) && hasitem)
+}
+
+got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1)
