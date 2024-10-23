@@ -474,6 +474,17 @@ pendants = [
     ___green_pendant,
 ]
 
+money = [
+    ___twenty_bucks_money,
+    ___twentyfive_bucks_money,
+    ___fifty_bucks_money,
+    ___one_hundred_bucks_money,
+    ___five_hundred_bucks_money,
+    ___a_thousand_bucks_money,
+    ___two_thousand_bucks_money,
+    ___five_thousand_bucks_money,
+]
+
 // Achievements
 
 function got_item_achievement(title, desc, points, hasitem) {
@@ -492,3 +503,5 @@ all_items_achievement("Lost Woods, Here I Come", "Obtain all three pendants.", 5
 
 all_items_achievement("Brett's Art Gallery", "Obtain all of Brett's art.", 10, brett_art)
 all_items_achievement("Becky's Art Gallery", "Obtain all of Becky's art.", 10, becky_art)
+
+all_items_achievement("Boy You're Rich!", "Fill your wallet with all of the money items.", 5, money)
