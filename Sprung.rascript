@@ -485,6 +485,14 @@ money = [
     ___five_thousand_bucks_money,
 ]
 
+jokes = [
+    ___the_one_about_the_guy_with_the_5_legs_joke_book,
+    ___the_blonde_joke_joke_book,
+    ___the_hippie_joke_joke_book,
+    ___the_skunk_joke_joke_book,
+    ___yo_mama_joke_joke_book,
+]
+
 // Achievements
 
 function got_item_achievement(title, desc, points, hasitem) {
@@ -505,3 +513,5 @@ all_items_achievement("Brett's Art Gallery", "Obtain all of Brett's art.", 10, b
 all_items_achievement("Becky's Art Gallery", "Obtain all of Becky's art.", 10, becky_art)
 
 all_items_achievement("Boy You're Rich!", "Fill your wallet with all of the money items.", 5, money)
+
+all_items_achievement("He's a Funny Guy", "Learn all of the jokes in the joke book.", 3, jokes)
