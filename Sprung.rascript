@@ -408,8 +408,25 @@ function scene_index_for_brett() => byte(0x1E1FA8)
 //          0x2f = Bonus: Panic Room
 function scene_index_for_becky() => byte(0x1E1FF5)
 
+function has_item_func(accessor) => accessor()
+function has_item_prev(accessor) => prev(accessor())
+
 function got_item_achievement(title, desc, points, hasitem) {
     achievement(title = title, description = desc, points = points, trigger = in_game() && prev(!hasitem) && hasitem)
 }
 
+function all_items_achievement(title, desc, points, items) {
+    achievement(title = title, description = desc, points = points, trigger = in_game() &&
+    sum_of(items, has_item_prev) == length(items) - 1 &&
+    sum_of(items, has_item_func) == length(items)) 
+}
+
 got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1)
+
+pendants = [
+    ___red_pendant,
+    ___blue_pendant,
+    ___green_pendant,
+]
+
+all_items_achievement("Lost Woods, Here I Come", "Obtain all three pendants.", 5, pendants)
