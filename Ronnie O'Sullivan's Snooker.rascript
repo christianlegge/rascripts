@@ -524,14 +524,14 @@ achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the
 achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
             trigger = in_game() && !replay() && all_colours_left() && __ornext(in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
 
-achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 2,
+achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 1,
             trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
 
 achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rules menu.",
 points = 0, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
 
 achievement(title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
-points = 5, trigger = never(in_menu() || !our_shot()) && in_game() && never(replay()) && our_shot() &&
+points = 5, trigger = never(in_menu() || !our_shot() || current_break() == 0) && in_game() && never(replay()) && our_shot() &&
                       repeated(3, potted_ball_legally(6)) && measured(repeated(3, ball_got_respotted(6))))
 
 achievement(title = "Just Another Notch in the Belt", description = "Win a Final match to become champion of the Premier League in Tournament mode.", points = 25,
