@@ -493,6 +493,48 @@ jokes = [
     ___yo_mama_joke_joke_book,
 ]
 
+brett_lines = [
+    ___no_you_look_like_an_aerobics_instructor_golden_line_notebook,
+    ___womens_television_has_come_a_long_way_in_terms_of_story_development_and_production_quality_lucas_golden_line_notebook,
+    ___this_purple_one_here_looks_nice_golden_line_notebook,
+    ___none_of_your_beeswax_biznatch_ow_yeah_how_do_you_like_it_huh_golden_line_notebook,
+    ___no_im_not_talking_about_sex_im_talking_about_fungus_golden_line_notebook,
+    ___moo_golden_line_notebook,
+    ___smashing_to_make_your_acquaintance_im_bartholemew_arugula_paisley_golden_line_notebook,
+    ___look_you_sit_under_a_cows_ass_youre_gonna_get_crapped_on_golden_line_notebook,
+    ___you_couldnt_be_more_deep_if_i_threw_you_down_the_well_myself_golden_line_notebook,
+    ___can_i_have_your_underwear_im_supposed_to_get_womens_but_nobody_would_know_the_difference_if_you_gave_me_yours_golden_line_notebook,
+    ___i_dont_think_his_cousin_counts_dude_golden_line_notebook,
+    ___you_dont_go_to_dippy_donuts_if_youre_looking_for_a_steak_golden_line_notebook,
+    ___yeah_it_is_kind_of_hard_for_me_to_be_as_classy_as_a_guy_who_dresses_like_a_pirate_golden_line_notebook,
+    ___i_hope_you_dont_think_me_forward_but_i_have_an_overwhelming_urge_to_chew_on_you_golden_line_notebook,
+    ___i_dont_know_id_say_youre_about_as_cute_as_a_chickpea_on_some_cornpone_golden_line_notebook,
+    ___im_going_to_a_players_anonymous_meeting_after_this_wanna_come_golden_line_notebook,
+    ___chocolate_fudge_actually_golden_line_notebook,
+]
+
+becky_lines = [
+    ___what_ho_bird_mountain_golden_line_notebook,
+    ___ive_wanted_to_be_a_model_ever_since_i_was_three_years_old_golden_line_notebook,
+    ___eat_yellow_snow_and_die_golden_line_notebook,
+    ___you_tell_me_buuuddy_golden_line_notebook,
+    ___hey_my_grandma_called_she_wants_her_hat_back_golden_line_notebook,
+    ___do_you_ever_go_skinny_dipping_golden_line_notebook,
+    ___probably_the_same_place_you_left_your_brain_treehugger_golden_line_notebook,
+    ___yellow_yoyo_yawning_youre_yuck_golden_line_notebook,
+    ___one_time_my_friend_mixed_ketchup_and_apple_sauce_and_i_ate_it_golden_line_notebook,
+    ___this_book_is_as_inane_as_you_are_golden_line_notebook,
+    ___you_wanna_look_down_girls_shirts_golden_line_notebook,
+    ___keep_him_wondering_if_hes_going_to_get_a_goodnight_kiss_golden_line_notebook,
+    ___she_only_does_it_because_she_lost_her_pet_lizard_in_a_tragic_boating_accident_golden_line_notebook,
+    ___waaaaaaaaaaaaaaaaake_up_golden_line_notebook,
+    ___he_lives_in_a_cave_plotting_evil_against_us_kids_golden_line_notebook,
+    ___haha_bretts_a_rd_funny_golden_line_notebook,
+    ___shut_up_big_head_golden_line_notebook,
+    ___remember_that_time_you_needed_someone_to_hook_up_with_your_boyfriend_and_i_was_right_there_helping_you_out_golden_line_notebook,
+    ___maybe_the_voices_in_my_head_say_a_lot_of_things_golden_line_notebook,
+]
+
 // Achievements
 
 function got_item_achievement(title, desc, points, hasitem) {
@@ -502,7 +544,7 @@ function got_item_achievement(title, desc, points, hasitem) {
 function all_items_achievement(title, desc, points, items) {
     achievement(title = title, description = desc, points = points, trigger = in_game() &&
     sum_of(items, has_item_prev) == length(items) - 1 &&
-    sum_of(items, has_item_func) == length(items)) 
+    measured(sum_of(items, has_item_func) == length(items))) 
 }
 
 got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1)
@@ -515,3 +557,6 @@ all_items_achievement("Becky's Art Gallery", "Obtain all of Becky's art.", 10, b
 all_items_achievement("Boy You're Rich!", "Fill your wallet with all of the money items.", 5, money)
 
 all_items_achievement("He's a Funny Guy", "Learn all of the jokes in the joke book.", 3, jokes)
+
+all_items_achievement("Silver-Tongued Devil", "Use all of Brett's golden lines.", 5, brett_lines)
+all_items_achievement("Smooth Talker", "Use all of Becky's golden lines that are obtainable.", 5, becky_lines)
