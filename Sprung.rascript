@@ -535,6 +535,38 @@ becky_lines = [
     ___maybe_the_voices_in_my_head_say_a_lot_of_things_golden_line_notebook,
 ]
 
+medals = [
+    ___gold_medal,
+    ___silver_medal,
+    ___bronze_medal,
+]
+
+brett_numbers = [
+    ___beckys__cell_phone,
+    ___bretts__cell_phone,
+    ___ericas__cell_phone,
+    ___kikis__cell_phone,
+    ___dannys__cell_phone,
+    ___lucas__cell_phone,
+    ___alexs__cell_phone,
+    ___leannes__cell_phone,
+    ___shanas__cell_phone,
+    ___elliots__cell_phone,
+    ___conors__cell_phone,
+]
+
+becky_numbers = [
+    ___dannys__cell_phone,
+    ___lucas__cell_phone,
+    ___alexs__cell_phone,
+    ___seans__cell_phone,
+    ___leannes__cell_phone,
+    ___shanas__cell_phone,
+    ___elliots__cell_phone,
+    ___conors__cell_phone,
+    ___conors_fathers__cell_phone,
+]
+
 // Achievements
 
 function got_item_achievement(title, desc, points, hasitem) {
@@ -549,6 +581,8 @@ function all_items_achievement(title, desc, points, items) {
 
 got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1)
 
+got_item_achievement("If Only I Could Find a Way to Use These", "Obtain the laxatives.", 1, ___laxatives() == 1)
+
 all_items_achievement("Lost Woods, Here I Come", "Obtain all three pendants.", 5, pendants)
 
 all_items_achievement("Brett's Art Gallery", "Obtain all of Brett's art.", 10, brett_art)
@@ -560,3 +594,8 @@ all_items_achievement("He's a Funny Guy", "Learn all of the jokes in the joke bo
 
 all_items_achievement("Silver-Tongued Devil", "Use all of Brett's golden lines.", 5, brett_lines)
 all_items_achievement("Smooth Talker", "Use all of Becky's golden lines that are obtainable.", 5, becky_lines)
+
+all_items_achievement("Win, Place and Show", "Obtain all three medals.", 3, medals)
+
+all_items_achievement("Mr. Popular", "Obtain all of Brett's phone numbers.", 5, brett_numbers)
+all_items_achievement("Miss Congeniality", "Obtain all of Becky's phone numbers.", 5, becky_numbers)
