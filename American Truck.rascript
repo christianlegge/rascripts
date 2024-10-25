@@ -72,7 +72,7 @@ trigger = single_player() && once(trip_meter() == 0x00) && never(true_speed() < 
 achievement(title = "Road Rage", description = "Destroy 30 cars for points in a single life in 1-player mode.", points = 5,
 trigger = single_player() && measured(tally(30, active_score() > prev(active_score()) && active_score() - prev(active_score()) < 10)) && never(lost_life()))
 
-achievement(title = "Expanding the Fleet", description = "Obtain an extra life in 1-player mode.", points = 2,
+achievement(title = "Expanding the Fleet", description = "Obtain an extra life in 1-player mode.", points = 10,
 trigger = single_player() && driving() && lives() > prev(lives()))
 
 achievement(title = "Quick Service", description = "Pick up a wrench to repair your truck in 1-player mode.", points = 2,
