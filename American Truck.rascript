@@ -7,6 +7,7 @@ function lost_life() => byte(0x0849) == 0xff && prev(byte(0x0849)) == 0x00
 function cleared_trip() => byte(0x084a) == 0xff && prev(byte(0x084a)) == 0x00
 
 function driving() => byte(0x0849) == 0x00 && byte(0x084a) == 0x00
+function prev_driving() => prev(byte(0x0849)) == 0x00 && prev(byte(0x084a)) == 0x00
 
 function in_game() => (byte(0x0849) == 0x00 || byte(0x0849) == 0xFF) && (byte(0x084a) == 0x00 || byte(0x084a) == 0xFF)
 
@@ -75,7 +76,7 @@ achievement(title = "Expanding the Fleet", description = "Obtain an extra life i
 trigger = single_player() && driving() && lives() > prev(lives()))
 
 achievement(title = "Quick Service", description = "Pick up a wrench to repair your truck in 1-player mode.", points = 2,
-trigger = single_player() && driving() && trip_meter() > 0x00 && health() > prev(health()))
+trigger = single_player() && driving() && prev_driving() && trip_meter() > 0x00 && health() > prev(health()))
 
 achievement(title = "Stimulus Package", description = "Pick up a dollar sign to increase your score in 1-player mode.", points = 2,
 trigger = single_player() && driving() && active_score() - prev(active_score()) == 0x10)
