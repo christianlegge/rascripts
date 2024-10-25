@@ -18,6 +18,8 @@ function p1_score() => tbyte_be(0xac11)
 
 function true_speed() => byte(0x6b4a)
 
+function health() => byte(0x6b50)
+
 function single_player() => byte(0x084e) == 0x00
 
 // Achievements
@@ -56,3 +58,12 @@ trigger = single_player() && once(trip_meter() == 0x00) && never(true_speed() < 
 
 achievement(title = "Road Rage", description = "Destroy 30 cars for points in a single life in 1-player mode.", points = 5,
 trigger = single_player() && measured(tally(30, p1_score() > prev(p1_score()) && p1_score() - prev(p1_score()) < 10)) && never(lost_life()))
+
+achievement(title = "Expanding the Fleet", description = "Obtain an extra life in 1-player mode.", points = 2,
+trigger = single_player() && driving() && lives() > prev(lives()))
+
+achievement(title = "Quick Service", description = "Pick up a wrench to repair your truck in 1-player mode.", points = 2,
+trigger = single_player() && driving() && trip_meter() > 0x00 && health() > prev(health()))
+
+achievement(title = "Stimulus Package", description = "Pick up a dollar sign to increase your score in 1-player mode.", points = 2,
+trigger = single_player() && driving() && p1_score() - prev(p1_score()) == 0x10)
