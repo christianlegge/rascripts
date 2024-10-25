@@ -6,6 +6,8 @@ function lost_life() => byte(0x0849) == 0xff && prev(byte(0x0849)) == 0x00
 
 function cleared_trip() => byte(0x084a) == 0xff && prev(byte(0x084a)) == 0x00
 
+function driving() => byte(0x0849) == 0x00 && byte(0x084a) == 0x00
+
 function current_trip() => byte(0x084b)
 
 function trip_meter() => byte(0x1d68)
@@ -51,3 +53,6 @@ trip_clear_achievement("Your Business Completed!", 10, 9)
 
 achievement(title = "Hammer Down", description = "Pass an entire trip without letting up on the gas on 1-player mode.", points = 5,
 trigger = single_player() && once(trip_meter() == 0x00) && never(true_speed() < prev(true_speed())) && never(lost_life()) && trigger_when(cleared_trip()))
+
+achievement(title = "Road Rage", description = "Destroy 30 cars for points in a single life in 1-player mode.", points = 5,
+trigger = single_player() && measured(tally(30, p1_score() > prev(p1_score()) && p1_score() - prev(p1_score()) < 10)) && never(lost_life()))
