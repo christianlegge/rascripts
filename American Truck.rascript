@@ -47,11 +47,17 @@ trip_clear_achievement("How Are You?", 2, 1)
 trip_clear_achievement("Breaker Breaker", 2, 2)
 trip_clear_achievement("How's My Driving?", 3, 3)
 trip_clear_achievement("Ten-Four, Good Buddy", 3, 4)
-trip_clear_achievement("Copy That", 4, 5)
-trip_clear_achievement("On Your Six", 4, 6)
-trip_clear_achievement("How Are You?", 5, 7)
-trip_clear_achievement("We Got a Great Big Convoy", 5, 8)
-trip_clear_achievement("Your Business Completed!", 10, 9)
+trip_clear_achievement("We Got a Great Big Convoy", 4, 5)
+# trip_clear_achievement("On Your Six", 4, 6)
+# trip_clear_achievement("How Are You?", 5, 7)
+# trip_clear_achievement("We Got a Great Big Convoy", 5, 8)
+# trip_clear_achievement("Your Business Completed!", 10, 9)
+
+achievement("Your Business Completed!", description = "Earn a spot on the leaderboard in 1-player mode by finishing with a score higher than 50,000.", points = 10, type = "progression",
+trigger = single_player() && lives() == 0x01 && lost_life() && p1_score() > 0x500)
+
+achievement("Thank You For Smoking", description = "Top the leaderboard in 1-player mode by finishing with a score higher than 200,000.", points = 25,
+trigger = single_player() && lives() == 0x01 && lost_life() && p1_score() > 0x2000)
 
 achievement(title = "Hammer Down", description = "Pass an entire trip without letting up on the gas on 1-player mode.", points = 5,
 trigger = single_player() && once(trip_meter() == 0x00) && never(true_speed() < prev(true_speed())) && never(lost_life()) && trigger_when(cleared_trip()))
