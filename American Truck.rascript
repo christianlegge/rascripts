@@ -80,6 +80,19 @@ trigger = single_player() && driving() && trip_meter() > 0x00 && health() > prev
 achievement(title = "Stimulus Package", description = "Pick up a dollar sign to increase your score in 1-player mode.", points = 2,
 trigger = single_player() && driving() && active_score() - prev(active_score()) == 0x10)
 
+// Leaderboards
+
+leaderboard(title = "Single Player High Score", description = "Earn the highest score in single player mode.",
+start = single_player() && lives() == 0x01 && lost_life(),
+cancel = always_false(), submit = always_true(),
+value = bcd(active_score()) * 100)
+
+leaderboard(title = "Single Player Perfect Run", description = "Earn the highest score in single player mode without losing a life.",
+start = single_player() && in_game(),
+submit = lost_life(),
+cancel = !in_game(),
+value = bcd(active_score()) * 100)
+
 // Rich Presence
 
 rp_active_score = rich_presence_value("Number", bcd(active_score()) * 100)
