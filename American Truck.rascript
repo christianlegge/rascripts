@@ -82,17 +82,17 @@ trigger = single_player() && driving() && active_score() - prev(active_score()) 
 
 // Rich Presence
 
-rp_active_score = rich_presence_value("Number", active_score() * 100)
-rp_p1_score = rich_presence_value("Number", score_1p() * 100)
-rp_p2_score = rich_presence_value("Number", score_2p() * 100)
+rp_active_score = rich_presence_value("Number", bcd(active_score()) * 100)
+rp_p1_score = rich_presence_value("Number", bcd(score_1p()) * 100)
+rp_p2_score = rich_presence_value("Number", bcd(score_2p()) * 100)
 rp_trip = rich_presence_value("Number", current_trip())
 
 rich_presence_conditional_display(!in_game(), "Gearing up for the next trip")
 rich_presence_conditional_display(active_player_1(),
-"🚚 Driving with a buddy on trip {0} [1P driving] 1P:{1} 2P:{2}",
+"🚚 Driving with a buddy on trip {0} [1P at the wheel] 1P:{1} 2P:{2}",
 rp_trip, rp_active_score, rp_p2_score)
 rich_presence_conditional_display(active_player_2(),
-"🚚 Driving with a buddy on trip {0} [2P driving] 1P:{1} 2P:{2}",
+"🚚 Driving with a buddy on trip {0} [2P at the wheel] 1P:{1} 2P:{2}",
 rp_trip, rp_p1_score, rp_active_score)
 rich_presence_conditional_display(single_player(),
 "🚚 Completing an order on trip {0} Score:{1}",
