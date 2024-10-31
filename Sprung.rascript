@@ -603,6 +603,60 @@ museum_items = [
     ___hand_warmers,
 ]
 
+all_art = [
+    ___kiki_and_conor,
+    ___pulling_the_strings,
+    ___strike_a_pose,
+    ___hello_ladies,
+    ___big_decision,
+    ___revealing_conor,
+    ___becky_and_brett,
+    ___three_of_a_kind,
+    ___erica_and_danny,
+    ___hard_day_at_work,
+    ___sprung,
+    ___dan_the_ladies_man,
+    ___rub_a_dub_dub,
+    ___erica_on_the_deck,
+    ___alex_and_shana,
+    ___game_on,
+    ___do_not_disturb,
+    ___sanctuary,
+    ___downhill_daredevils,
+    ___rematchmaker,
+    ___reservoir_pups,
+    ___brett_the_funghi,
+    ___becky_in_pencil,
+    ___who_the_man,
+    ___scaredy_cat,
+    ___stud,
+    ___becky_with_the_boys,
+    ___hopeless_romantic,
+    ___conor_gets_lucky,
+    ___just_friends,
+    ___true_love,
+    ___mountain_girl_becky,
+    ___born_to_model,
+    ___born_to_waitress,
+    ___soulmates,
+    ___blind_date_fantasy,
+    ___day_at_the_spa,
+    ___poor_poor_danny,
+    ___lick_my_boot,
+    ___charge_it,
+    ___breaking_free,
+    ___elliot_watch_out,
+    ___find_me_at_the_club,
+    ___make_peace,
+    ___double_date_dance,
+    ___im_too_sexy,
+    ___leanne_and_lucas,
+    ___smile_for_the_camera,
+    ___conor_is_sprung,
+    ___hooked_up,
+    ___sprung_gang,
+]
+
 brett_art = [
     ___kiki_and_conor,
     ___pulling_the_strings,
@@ -812,11 +866,11 @@ all_items_achievement("Miss Congeniality", "Obtain all of Becky's phone numbers.
 rp_brettscene = rich_presence_lookup("BrettScene", scene_index_for_brett(), brett_scenes)
 rp_beckyscene = rich_presence_lookup("BeckyScene", scene_index_for_becky(), becky_scenes)
 rp_museum = rich_presence_value("Museum", sum_of(museum_items, has_item_func))
-rp_art_gallery = rich_presence_value("ArtGallery", sum_of(brett_art + becky_art, has_item_func))
+rp_art_gallery = rich_presence_value("ArtGallery", sum_of(all_art, has_item_func))
 
-rich_presence_conditional_display(!in_game(), ")
-rich_presence_conditional_display(current_character() == 0x00, "Brett is in {0} [Museum:{1}] [Art Gallery:{2}]",
+rich_presence_conditional_display(!in_game(), "In the menu [Museum:{0}/100] [Art Gallery:{1}/52]", rp_museum, rp_art_gallery)
+rich_presence_conditional_display(current_character() == 0x00, "Brett is in {0} [Museum:{1}/100] [Art Gallery:{2}/52]",
     rp_brettscene, rp_museum, rp_art_gallery)
-rich_presence_conditional_display(current_character() == 0x01, "Becky is in {0} [Museum:{1}] [Art Gallery:{2}]",
+rich_presence_conditional_display(current_character() == 0x01, "Becky is in {0} [Museum:{1}/100] [Art Gallery:{2}/52]",
     rp_beckyscene, rp_museum, rp_art_gallery)
-rich_presence_display("Playing Sprung: The Dating Game")
+rich_presence_display("Playing Sprung: The Dating Game [Museum:{0}/100] [Art Gallery:{1}/52]", rp_museum, rp_art_gallery)
