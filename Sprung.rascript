@@ -604,6 +604,7 @@ museum_items = [
 ]
 
 all_art = [
+    ___capture_the_heart,
     ___kiki_and_conor,
     ___pulling_the_strings,
     ___strike_a_pose,
