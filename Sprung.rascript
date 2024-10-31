@@ -869,9 +869,9 @@ rp_beckyscene = rich_presence_lookup("BeckyScene", scene_index_for_becky(), beck
 rp_museum = rich_presence_value("Museum", sum_of(museum_items, has_item_func))
 rp_art_gallery = rich_presence_value("ArtGallery", sum_of(all_art, has_item_func))
 
-rich_presence_conditional_display(!in_game(), "In the menu [Museum:{0}/100] [Art Gallery:{1}/52]", rp_museum, rp_art_gallery)
-rich_presence_conditional_display(current_character() == 0x00, "Brett is in {0} [Museum:{1}/100] [Art Gallery:{2}/52]",
+rich_presence_conditional_display(!in_game(), "In the menu [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52]", rp_museum, rp_art_gallery)
+rich_presence_conditional_display(current_character() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52]",
     rp_brettscene, rp_museum, rp_art_gallery)
-rich_presence_conditional_display(current_character() == 0x01, "Becky is in {0} [Museum:{1}/100] [Art Gallery:{2}/52]",
+rich_presence_conditional_display(current_character() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52]",
     rp_beckyscene, rp_museum, rp_art_gallery)
-rich_presence_display("Playing Sprung: The Dating Game [Museum:{0}/100] [Art Gallery:{1}/52]", rp_museum, rp_art_gallery)
+rich_presence_display("Playing Sprung: The Dating Game [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52]", rp_museum, rp_art_gallery)
