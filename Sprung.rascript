@@ -140,7 +140,7 @@ function art_gallery_unlocks_0_locked_1_unlocked() => byte(0x1DAC06)
 //          0x00 = Brett
 //          0x01 = Becky
 function current_character() => byte(0x1E10A0)
-function current_character_eu() => byte(0x205760)
+function current_character_eu() => byte(0x1E2200)
 
 // $1E10E0: [Bitfield] Museum unlocks (0=locked, 1=unlocked)
 function ___nail_file() => bit0(0x1E10E0)
@@ -1498,22 +1498,22 @@ rp_museum = rich_presence_value("Museum", sum_of(museum_items, has_item_func))
 rp_art_gallery = rich_presence_value("ArtGallery", sum_of(all_art, has_item_func))
 rp_lines = rich_presence_value("Lines", sum_of(all_lines, has_item_func))
 
-rp_eu_brettscene = rich_presence_lookup("BrettSceneEu", scene_index_for_brett_eu(), brett_scenes)
-rp_eu_beckyscene = rich_presence_lookup("BeckySceneEu", scene_index_for_becky_eu(), becky_scenes)
-rp_eu_museum = rich_presence_value("MuseumEu", sum_of(museum_items_eu, has_item_func))
-rp_eu_art_gallery = rich_presence_value("ArtGalleryEu", sum_of(all_art_eu, has_item_func))
-rp_eu_lines = rich_presence_value("LinesEu", sum_of(all_lines_eu, has_item_func))
+rp_brettscene_eu = rich_presence_lookup("BrettScene", scene_index_for_brett_eu(), brett_scenes)
+rp_beckyscene_eu = rich_presence_lookup("BeckyScene", scene_index_for_becky_eu(), becky_scenes)
+rp_museum_eu = rich_presence_value("MuseumEu", sum_of(museum_items_eu, has_item_func))
+rp_art_gallery_eu = rich_presence_value("ArtGalleryEu", sum_of(all_art_eu, has_item_func))
+rp_lines_eu = rich_presence_value("LinesEu", sum_of(all_lines_eu, has_item_func))
 
 rich_presence_conditional_display(us() && !in_game(), "In the menu [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum, rp_art_gallery, rp_lines)
-rich_presence_conditional_display(eu() && !in_game_eu(), "In the menu [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum, rp_art_gallery, rp_lines)
+rich_presence_conditional_display(eu() && !in_game_eu(), "In the menu [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
 rich_presence_conditional_display(us() && current_character() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
     rp_brettscene, rp_museum, rp_art_gallery, rp_lines)
 rich_presence_conditional_display(eu() && current_character_eu() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
-    rp_brettscene, rp_museum, rp_art_gallery, rp_lines)
+    rp_brettscene_eu, rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
 rich_presence_conditional_display(us() && current_character() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
     rp_beckyscene, rp_museum, rp_art_gallery, rp_lines)
 rich_presence_conditional_display(eu() && current_character_eu() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
-    rp_beckyscene, rp_museum, rp_art_gallery, rp_lines)
-rich_presence_conditional_display(eu(), "Playing Sprung: The Dating Game [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
+    rp_beckyscene_eu, rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
 rich_presence_conditional_display(us(), "Playing Sprung: A Game Where Everyone Scores [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum, rp_art_gallery, rp_lines)
+rich_presence_conditional_display(eu(), "Playing Sprung: The Dating Game [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
 rich_presence_display("Playing Sprung")
