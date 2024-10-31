@@ -445,7 +445,7 @@ brett_scenes = {
 //          0x2d = Bonus: Hyp Hyp Hooray! (2)
 //          0x2e = Golden Bonus: Trading Places
 //          0x2f = Bonus: Panic Room
-function scene_index_for_becky() => byte(0x1E1FF5)
+function scene_index_for_becky() => byte(0x1E1FF4)
 
 becky_scenes = {
     0x01: "The Arrival",
