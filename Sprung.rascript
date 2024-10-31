@@ -4,6 +4,8 @@
 
 function in_game() => byte(0x0017f1fc) == 0x20
 
+function scene_delta() => dword(0x001C5D74) == 0xFFFFFFFF && prev(dword(0x001C5D74)) != 0xFFFFFFFF
+
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
 function ___becky_with_the_boys() => bit0(0x1DAC00)
 function ___hopeless_romantic() => bit1(0x1DAC00)
@@ -578,6 +580,21 @@ function all_items_achievement(title, desc, points, items) {
     sum_of(items, has_item_prev) == length(items) - 1 &&
     measured(sum_of(items, has_item_func) == length(items))) 
 }
+
+function brett_scene_achievement(title, desc, points, index, type = "") {
+    achievement(title = title, description = desc, points = points, trigger = in_game() &&
+    scene_index_for_brett() == index &&
+    scene_delta(), type = type)
+}
+
+function becky_scene_achievement(title, desc, points, index, type = "") {
+    achievement(title = title, description = desc, points = points, trigger = in_game() &&
+    scene_index_for_becky() == index &&
+    scene_delta(), type = type)
+}
+
+brett_scene_achievement("The Final Chapter", "Finish Brett's campaign and decide his and Becky's fate.", 10, 0x1a, "progression")
+becky_scene_achievement("Moments of Truth", "Finish Becky's campaign and decide her and Brett's fate.", 10, 0x24, "progression")
 
 got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1)
 
