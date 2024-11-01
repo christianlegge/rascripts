@@ -1533,13 +1533,15 @@ leaderboard(title = "Kiss Face Race Speedrun (IGT)", description = "Complete Bon
 start = (us() && current_character() == 0x01 && scene_index_for_becky() == 0x26 && scene_delta()) ||
 (eu() && current_character_eu() == 0x01 && scene_index_for_becky_eu() == 0x26 && scene_delta_eu()),
 cancel = always_false(), submit = always_true(),
-value = max_of(measured(timer(), when = us()), measured(timer_eu(), when = eu())))
+value = max_of(measured(timer(), when = us()), measured(timer_eu(), when = eu())),
+format = "SECS")
 
 leaderboard(title = "Ripping the Jacker Speedrun (IGT)", description = "Complete Final Level Part II: Ripping the Jacker with the most time left on the timer.", 
 start = (us() && current_character() == 0x01 && scene_index_for_becky() == 0x20 && scene_delta()) ||
 (eu() && current_character_eu() == 0x01 && scene_index_for_becky_eu() == 0x20 && scene_delta_eu()),
 cancel = always_false(), submit = always_true(),
-value = max_of(measured(timer(), when = us()), measured(timer_eu(), when = eu())))
+value = max_of(measured(timer(), when = us()), measured(timer_eu(), when = eu())),
+format = "SECS")
 
 // Rich Presence
 
