@@ -1463,6 +1463,22 @@ function brett_scene_achievement(title, desc, points, index, type = "") {
     scene_delta_eu()), type = type)
 }
 
+function brett_scene_achievement_2(title, desc, points, index, index2, type = "") {
+    achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
+    current_character() == 0x00 &&
+    scene_index_for_brett() == index &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x00 &&
+    scene_index_for_brett_eu() == index &&
+    scene_delta_eu()) || (us() && in_game() &&
+    current_character() == 0x00 &&
+    scene_index_for_brett() == index2 &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x00 &&
+    scene_index_for_brett_eu() == index2 &&
+    scene_delta_eu()), type = type)
+}
+
 function becky_scene_achievement(title, desc, points, index, type = "") {
     achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
     current_character() == 0x01 &&
@@ -1473,15 +1489,67 @@ function becky_scene_achievement(title, desc, points, index, type = "") {
     scene_delta_eu()), type = type)
 }
 
+function becky_scene_achievement_2(title, desc, points, index, index2, type = "") {
+    achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
+    current_character() == 0x01 &&
+    scene_index_for_becky() == index &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x01 &&
+    scene_index_for_becky_eu() == index &&
+    scene_delta_eu()) || (us() && in_game() &&
+    current_character() == 0x01 &&
+    scene_index_for_becky() == index2 &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x01 &&
+    scene_index_for_becky_eu() == index2 &&
+    scene_delta_eu()), type = type)
+}
+
+function becky_scene_achievement_3(title, desc, points, index, index2, index3, type = "") {
+    achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
+    current_character() == 0x01 &&
+    scene_index_for_becky() == index &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x01 &&
+    scene_index_for_becky_eu() == index &&
+    scene_delta_eu()) || (us() && in_game() &&
+    current_character() == 0x01 &&
+    scene_index_for_becky() == index2 &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x01 &&
+    scene_index_for_becky_eu() == index2 &&
+    scene_delta_eu()) || (us() && in_game() &&
+    current_character() == 0x01 &&
+    scene_index_for_becky() == index3 &&
+    scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x01 &&
+    scene_index_for_becky_eu() == index3 &&
+    scene_delta_eu()), type = type)
+}
+
+achievement(title = "Balancing Act", description =  "Complete 3's a Crowd with Brett.", points = 2, trigger = (us() && in_game() &&
+current_character() == 0x00 &&
+scene_index_for_brett() == 0x05 &&
+scene_delta()) || (eu() && in_game_eu() &&
+current_character_eu() == 0x00 &&
+scene_index_for_brett_eu() == 0x05 &&
+scene_delta_eu()) || (us() && in_game() &&
+current_character() == 0x00 &&
+scene_index_for_brett() == 0x06 &&
+scene_delta()) || (eu() && in_game_eu() &&
+current_character_eu() == 0x00 &&
+scene_index_for_brett_eu() == 0x06 &&
+scene_delta_eu()), type = "progression")
+
 brett_scene_achievement("Aren't You Cold?", "Complete Lift Off! with Brett.", 1, 0x01, "progression")
-brett_scene_achievement("Balancing Act", "Complete 3's a Crowd with Brett.", 2, 0x06, "progression")
-brett_scene_achievement("Double Dare", "Complete Playing Doubles with Brett.", 2, 0x0b, "progression")
+// brett_scene_achievement("Balancing Act", "Complete 3's a Crowd with Brett.", 2, 0x06, "progression")
+brett_scene_achievement_2("Double Dare", "Complete Playing Doubles with Brett.", 2, 0x0a, 0x0b, "progression")
 brett_scene_achievement("The Matchmaker", "Complete Forlorn Friend with Brett.", 2, 0x11, "progression")
-brett_scene_achievement("Hanging in the Jacuzzi", "Complete The Hot Tub Rub with Brett.", 5, 0x15, "progression")
-brett_scene_achievement("The Final Chapter", "Finish Brett's campaign and decide his and Becky's fate.", 10, 0x1a, "progression")
+brett_scene_achievement_2("Hanging in the Jacuzzi", "Complete The Hot Tub Rub with Brett.", 5, 0x14, 0x15, "progression")
+brett_scene_achievement_2("The Final Chapter", "Finish Brett's campaign and decide his and Becky's fate.", 10, 0x19, 0x1a, "progression")
 
 becky_scene_achievement("Ski Trip of a Lifetime", "Complete The Arrival with Becky.", 1, 0x01, "progression")
-becky_scene_achievement("We Dig Your Vibe", "Complete Guess Who? with Becky.", 2, 0x06, "progression")
+becky_scene_achievement_3("We Dig Your Vibe", "Complete Guess Who? with Becky.", 2, 0x04, 0x05, 0x06, "progression")
 becky_scene_achievement("Conor is Sprung!", "Complete Conquering Conor with Becky.", 2, 0x0c, "progression")
 becky_scene_achievement("You Can Have Him", "Complete Best Friend Connection with Becky.", 2, 0x14, "progression")
 becky_scene_achievement("Conor's Comeuppance", "Complete Serving the Freezing Dish with Becky.", 5, 0x1a, "progression")
@@ -1500,9 +1568,9 @@ becky_scene_achievement("I Bought It", "Complete Bonus: Snow Bird Shopping Spree
 becky_scene_achievement("I've Heard of Speed Dating but This Is Ridiculous", "Complete Bonus: Kiss Face Race with Becky.", 3, 0x26)
 becky_scene_achievement("Can't We Just All Get Along?", "Complete Bonus: Snow Bird Catfight XXI with Becky.", 3, 0x27)
 becky_scene_achievement("Radical!", "Complete Bonus: Say it in Snowboard! with Becky.", 3, 0x28)
-becky_scene_achievement("Reconnaissance Mission", "Complete Bonus: Gift of Gab with Becky.", 3, 0x2a)
+becky_scene_achievement_2("Reconnaissance Mission", "Complete Bonus: Gift of Gab with Becky.", 3, 0x29, 0x2a)
 becky_scene_achievement("Silencio", "Complete Bonus: Becky's Cine-dream! with Becky.", 3, 0x2b)
-becky_scene_achievement("You Are Getting Very Sprung", "Complete Bonus: Hyp Hyp Hooray! with Becky.", 3, 0x2d)
+becky_scene_achievement_2("You Are Getting Very Sprung", "Complete Bonus: Hyp Hyp Hooray! with Becky.", 3, 0x2c, 0x2d)
 becky_scene_achievement("Perhaps You're Seeing the World From My Point of View", "Complete Golden Bonus: Trading Places with Becky.", 10, 0x2e)
 becky_scene_achievement("Trauma Center", "Complete Bonus: Panic Room with Becky.", 3, 0x2f)
 
