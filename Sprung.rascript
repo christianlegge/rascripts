@@ -8,14 +8,11 @@ function eu() => word(0xE) == 0x814B
 function in_game() => byte(0x0017f1fc) == 0x20
 function in_game_eu() => byte(0x17f57c) == 0x20
 
-function scene_delta() => dword(0x001C5D74) == 0xFFFFFFFF && prev(dword(0x001C5D74)) != 0xFFFFFFFF
-function scene_delta_eu() => dword(0x1c56f4) == 0xFFFFFFFF && prev(dword(0x1c56f4)) != 0xFFFFFFFF
+function scene_delta() => bit3(0x15a43c) == 1 && prev(bit3(0x15a43c)) != 1
+function scene_delta_eu() => bit3(0x15a7bc) == 1 && prev(bit3(0x15a7bc)) != 1
 
-function kiss_timer() => byte(0x1d8fd8)
-function kiss_timer_eu() => byte(0x1d3a58)
-
-function jacker_timer() => byte(0x1d02f8)
-function jacker_timer_eu() => byte(0x21c2f8)
+function timer() => byte(0x58 + tbyte(0x158d70))
+function timer_eu() => byte(0x58 + tbyte(0x1590f0))
 
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
 function ___becky_with_the_boys() => bit0(0x1DAC00)
@@ -1536,13 +1533,13 @@ leaderboard(title = "Kiss Face Race Speedrun (IGT)", description = "Complete Bon
 start = (us() && current_character() == 0x01 && scene_index_for_becky() == 0x26 && scene_delta()) ||
 (eu() && current_character_eu() == 0x01 && scene_index_for_becky_eu() == 0x26 && scene_delta_eu()),
 cancel = always_false(), submit = always_true(),
-value = max_of(measured(kiss_timer(), when = us()), measured(kiss_timer_eu(), when = eu())))
+value = max_of(measured(timer(), when = us()), measured(timer_eu(), when = eu())))
 
 leaderboard(title = "Ripping the Jacker Speedrun (IGT)", description = "Complete Final Level Part II: Ripping the Jacker with the most time left on the timer.", 
 start = (us() && current_character() == 0x01 && scene_index_for_becky() == 0x20 && scene_delta()) ||
 (eu() && current_character_eu() == 0x01 && scene_index_for_becky_eu() == 0x20 && scene_delta_eu()),
 cancel = always_false(), submit = always_true(),
-value = max_of(measured(jacker_timer(), when = us()), measured(jacker_timer_eu(), when = eu())))
+value = max_of(measured(timer(), when = us()), measured(timer_eu(), when = eu())))
 
 // Rich Presence
 
