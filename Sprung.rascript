@@ -11,6 +11,12 @@ function in_game_eu() => byte(0x17f57c) == 0x20
 function scene_delta() => dword(0x001C5D74) == 0xFFFFFFFF && prev(dword(0x001C5D74)) != 0xFFFFFFFF
 function scene_delta_eu() => dword(0x1c56f4) == 0xFFFFFFFF && prev(dword(0x1c56f4)) != 0xFFFFFFFF
 
+function kiss_timer() => byte(0x1d8fd8)
+function kiss_timer_eu() => byte(0x1d3a58)
+
+function jacker_timer() => byte(0x1d02f8)
+function jacker_timer_eu() => byte(0x21c2f8)
+
 // $1DAC00: [Bitfield] Art Gallery unlocks (0=locked, 1=unlocked)
 function ___becky_with_the_boys() => bit0(0x1DAC00)
 function ___hopeless_romantic() => bit1(0x1DAC00)
@@ -1452,16 +1458,20 @@ function all_items_achievement(title, desc, points, items, items_eu) {
 
 function brett_scene_achievement(title, desc, points, index, type = "") {
     achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
+    current_character() == 0x00 &&
     scene_index_for_brett() == index &&
     scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x00 &&
     scene_index_for_brett_eu() == index &&
     scene_delta_eu()), type = type)
 }
 
 function becky_scene_achievement(title, desc, points, index, type = "") {
     achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
+    current_character() == 0x01 &&
     scene_index_for_becky() == index &&
     scene_delta()) || (eu() && in_game_eu() &&
+    current_character_eu() == 0x01 &&
     scene_index_for_becky_eu() == index &&
     scene_delta_eu()), type = type)
 }
@@ -1519,6 +1529,20 @@ all_items_achievement("Win, Place and Show", "Obtain all three medals.", 3, meda
 
 all_items_achievement("Mr. Popular", "Obtain all of Brett's phone numbers.", 5, brett_numbers, brett_numbers_eu)
 all_items_achievement("Miss Congeniality", "Obtain all of Becky's phone numbers.", 5, becky_numbers, becky_numbers_eu)
+
+// Leaderboards
+
+leaderboard(title = "Kiss Face Race Speedrun (IGT)", description = "Complete Bonus: Kiss Face Race with the most time left on the timer.", 
+start = (us() && current_character() == 0x01 && scene_index_for_becky() == 0x26 && scene_delta()) ||
+(eu() && current_character_eu() == 0x01 && scene_index_for_becky_eu() == 0x26 && scene_delta_eu()),
+cancel = always_false(), submit = always_true(),
+value = max_of(measured(kiss_timer(), when = us()), measured(kiss_timer_eu(), when = eu())))
+
+leaderboard(title = "Ripping the Jacker Speedrun (IGT)", description = "Complete Final Level Part II: Ripping the Jacker with the most time left on the timer.", 
+start = (us() && current_character() == 0x01 && scene_index_for_becky() == 0x20 && scene_delta()) ||
+(eu() && current_character_eu() == 0x01 && scene_index_for_becky_eu() == 0x20 && scene_delta_eu()),
+cancel = always_false(), submit = always_true(),
+value = max_of(measured(jacker_timer(), when = us()), measured(jacker_timer_eu(), when = eu())))
 
 // Rich Presence
 
