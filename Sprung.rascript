@@ -1527,6 +1527,8 @@ all_items_achievement("Win, Place and Show", "Obtain all three medals.", 3, meda
 all_items_achievement("Mr. Popular", "Obtain all of Brett's phone numbers.", 5, brett_numbers, brett_numbers_eu)
 all_items_achievement("Miss Congeniality", "Obtain all of Becky's phone numbers.", 5, becky_numbers, becky_numbers_eu)
 
+all_items_achievement("Sprungsonian", "Obtain all of the museum items.", 25, museum_items, museum_items_eu)
+
 // Leaderboards
 
 leaderboard(title = "Kiss Face Race Speedrun (IGT)", description = "Complete Bonus: Kiss Face Race with the most time left on the timer.", 
