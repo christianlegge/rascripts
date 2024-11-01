@@ -8,8 +8,8 @@ function eu() => word(0xE) == 0x814B
 function in_game() => byte(0x0017f1fc) == 0x20
 function in_game_eu() => byte(0x17f57c) == 0x20
 
-function scene_delta() => bit3(0x15a43c) == 1 && prev(bit3(0x15a43c)) != 1
-function scene_delta_eu() => bit3(0x15a7bc) == 1 && prev(bit3(0x15a7bc)) != 1
+function scene_delta() => byte(0x1d2da8) == 1 && prev(byte(0x1d2da8)) != 1
+function scene_delta_eu() => byte(0x1d3188) == 1 && prev(byte(0x1d3188)) != 1
 
 function timer() => byte(0x58 + tbyte(0x158d70))
 function timer_eu() => byte(0x58 + tbyte(0x1590f0))
