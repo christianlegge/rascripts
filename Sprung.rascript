@@ -1448,9 +1448,9 @@ function got_item_achievement(title, desc, points, hasitem, hasitem_eu) {
 function all_items_achievement(title, desc, points, items, items_eu) {
     achievement(title = title, description = desc, points = points, trigger = (us() && in_game() &&
     sum_of(items, has_item_prev) == length(items) - 1 &&
-    measured(sum_of(items, has_item_func) == length(items))) || (eu() && in_game_eu() &&
+    measured(sum_of(items, has_item_func) == length(items), when = us())) || (eu() && in_game_eu() &&
     sum_of(items_eu, has_item_prev) == length(items_eu) - 1 &&
-    measured(sum_of(items_eu, has_item_func) == length(items_eu))))
+    measured(sum_of(items_eu, has_item_func) == length(items_eu), when = eu())))
 }
 
 function brett_scene_achievement(title, desc, points, index, type = "") {
