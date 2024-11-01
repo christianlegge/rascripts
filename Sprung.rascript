@@ -1466,8 +1466,38 @@ function becky_scene_achievement(title, desc, points, index, type = "") {
     scene_delta_eu()), type = type)
 }
 
+brett_scene_achievement("Aren't You Cold?", "Complete Lift Off! with Brett.", 1, 0x01, "progression")
+brett_scene_achievement("Balancing Act", "Complete 3's a Crowd with Brett.", 2, 0x06, "progression")
+brett_scene_achievement("Double Dare", "Complete Playing Doubles with Brett.", 2, 0x0b, "progression")
+brett_scene_achievement("The Matchmaker", "Complete Forlorn Friend with Brett.", 2, 0x11, "progression")
+brett_scene_achievement("Hanging in the Jacuzzi", "Complete The Hot Tub Rub with Brett.", 5, 0x15, "progression")
 brett_scene_achievement("The Final Chapter", "Finish Brett's campaign and decide his and Becky's fate.", 10, 0x1a, "progression")
+
+becky_scene_achievement("Ski Trip of a Lifetime", "Complete The Arrival with Becky.", 1, 0x01, "progression")
+becky_scene_achievement("We Dig Your Vibe", "Complete Guess Who? with Becky.", 2, 0x06, "progression")
+becky_scene_achievement("Conor is Sprung!", "Complete Conquering Conor with Becky.", 2, 0x0c, "progression")
+becky_scene_achievement("You Can Have Him", "Complete Best Friend Connection with Becky.", 2, 0x14, "progression")
+becky_scene_achievement("Conor's Comeuppance", "Complete Serving the Freezing Dish with Becky.", 5, 0x1a, "progression")
 becky_scene_achievement("Moments of Truth", "Finish Becky's campaign and decide her and Brett's fate.", 10, 0x24, "progression")
+
+brett_scene_achievement("Sprungset Boulevard", "Complete Bonus: Ski Noir with Brett.", 3, 0x1b)
+brett_scene_achievement("Memory Test", "Complete Bonus: Conor Sez! with Brett.", 3, 0x1c)
+brett_scene_achievement("Hot Sauce? That's the Best You Can Do?", "Complete Bonus: Truth or Dare! with Brett.", 3, 0x1d)
+brett_scene_achievement("Let Her Down Easy", "Complete Bonus: Dumped! with Brett.", 3, 0x1e)
+brett_scene_achievement("Baby, I'm Just After Your Blog URL", "Complete Bonus: 2 Fast 2 Flirtatious with Brett.", 3, 0x1f)
+brett_scene_achievement("Charge It", "Complete Bonus: Big Spender with Brett.", 3, 0x20)
+brett_scene_achievement("Come Here Often?", "Complete Bonus: Club Mare with Brett.", 3, 0x21)
+brett_scene_achievement("Popped Collar Comedy Tour", "Complete Golden Bonus: Dan'd Up Stand-up! with Brett.", 10, 0x23)
+
+becky_scene_achievement("I Bought It", "Complete Bonus: Snow Bird Shopping Spree with Becky.", 3, 0x25)
+becky_scene_achievement("I've Heard of Speed Dating but This Is Ridiculous", "Complete Bonus: Kiss Face Race with Becky.", 3, 0x26)
+becky_scene_achievement("Can't We Just All Get Along?", "Complete Bonus: Snow Bird Catfight XXI with Becky.", 3, 0x27)
+becky_scene_achievement("Radical!", "Complete Bonus: Say it in Snowboard! with Becky.", 3, 0x28)
+becky_scene_achievement("Reconnaissance Mission", "Complete Bonus: Gift of Gab with Becky.", 3, 0x2a)
+becky_scene_achievement("Silencio", "Complete Bonus: Becky's Cine-dream! with Becky.", 3, 0x2b)
+becky_scene_achievement("You Are Getting Very Sprung", "Complete Bonus: Hyp Hyp Hooray! with Becky.", 3, 0x2d)
+becky_scene_achievement("Perhaps You're Seeing the World From My Point of View", "Complete Golden Bonus: Trading Places with Becky.", 10, 0x2e)
+becky_scene_achievement("Trauma Center", "Complete Bonus: Panic Room with Becky.", 3, 0x2f)
 
 got_item_achievement("Pucker Up", "Obtain the Amorous Action.", 1, ___amorous_action() == 1, eu___amorous_action() == 1)
 
@@ -1482,8 +1512,8 @@ all_items_achievement("Boy You're Rich!", "Fill your wallet with all of the mone
 
 all_items_achievement("He's a Funny Guy", "Learn all of the jokes in the joke book.", 3, jokes, jokes_eu)
 
-all_items_achievement("Silver-Tongued Devil", "Use all of Brett's golden lines.", 5, brett_lines, brett_lines_eu)
-all_items_achievement("Smooth Talker", "Use all of Becky's golden lines that are obtainable.", 5, becky_lines, becky_lines_eu)
+all_items_achievement("Silver-Tongued Devil", "Use all of Brett's golden lines.", 10, brett_lines, brett_lines_eu)
+all_items_achievement("Smooth Talker", "Use all of Becky's golden lines that are obtainable.", 10, becky_lines, becky_lines_eu)
 
 all_items_achievement("Win, Place and Show", "Obtain all three medals.", 3, medals, medals_eu)
 
