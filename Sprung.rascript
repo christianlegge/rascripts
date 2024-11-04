@@ -1551,7 +1551,7 @@ brett_scene_achievement_2("The Final Chapter", "Finish Brett's campaign and deci
 becky_scene_achievement("Ski Trip of a Lifetime", "Complete The Arrival with Becky.", 1, 0x01, "progression")
 becky_scene_achievement_3("We Dig Your Vibe", "Complete Guess Who? with Becky.", 2, 0x04, 0x05, 0x06, "progression")
 becky_scene_achievement("Conor is Sprung!", "Complete Conquering Conor with Becky.", 2, 0x0c, "progression")
-becky_scene_achievement("You Can Have Him", "Complete Best Friend Connection with Becky.", 2, 0x14, "progression")
+becky_scene_achievement("You Can Have Him", "Complete Best Friend Connection with Becky.", 2, 0x16, "progression")
 becky_scene_achievement("Conor's Comeuppance", "Complete Serving the Freezing Dish with Becky.", 5, 0x1a, "progression")
 becky_scene_achievement("Moments of Truth", "Finish Becky's campaign and decide her and Brett's fate.", 10, 0x24, "progression")
 
