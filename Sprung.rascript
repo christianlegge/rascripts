@@ -1629,13 +1629,13 @@ rp_lines_eu = rich_presence_value("LinesEu", sum_of(all_lines_eu, has_item_func)
 
 rich_presence_conditional_display(us() && !in_game(), "In the menu [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum, rp_art_gallery, rp_lines)
 rich_presence_conditional_display(eu() && !in_game_eu(), "In the menu [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
-rich_presence_conditional_display(us() && current_character() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
+rich_presence_conditional_display(us() && current_character() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{3}/37]",
     rp_brettscene, rp_museum, rp_art_gallery, rp_lines)
-rich_presence_conditional_display(eu() && current_character_eu() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
+rich_presence_conditional_display(eu() && current_character_eu() == 0x00, "🙋‍♂️Brett is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{3}/37]",
     rp_brettscene_eu, rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
-rich_presence_conditional_display(us() && current_character() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
+rich_presence_conditional_display(us() && current_character() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{3}/37]",
     rp_beckyscene, rp_museum, rp_art_gallery, rp_lines)
-rich_presence_conditional_display(eu() && current_character_eu() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{2}/37]",
+rich_presence_conditional_display(eu() && current_character_eu() == 0x01, "🙋‍♀️Becky is in {0} [🏆Museum:{1}/100] [🖼️Art Gallery:{2}/52] [📓Golden Lines:{3}/37]",
     rp_beckyscene_eu, rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
 rich_presence_conditional_display(us(), "Playing Sprung: A Game Where Everyone Scores [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum, rp_art_gallery, rp_lines)
 rich_presence_conditional_display(eu(), "Playing Sprung: The Dating Game [🏆Museum:{0}/100] [🖼️Art Gallery:{1}/52] [📓Golden Lines:{2}/37]", rp_museum_eu, rp_art_gallery_eu, rp_lines_eu)
