@@ -128,6 +128,9 @@ windfall_dialogue = [
 
 // Achievements
 
+achievement(title = "Taking the Scenic Route", description = "[WW] Starting from the Island save file, enter Dragon Roost Cavern.", points = 5,
+trigger = ww() && island_file() && prev(stage_id() == 0x0b) && in_map("M_NewD2") && stage_id() == 0x03)
+
 achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsaken Fortress.", points = 1,
 trigger = ww() && stealth_file() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
