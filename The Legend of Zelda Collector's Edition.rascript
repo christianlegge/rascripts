@@ -87,7 +87,7 @@ function float_range(min, accessor, max) {
 
 // Achievements
 
-achievement(title = "Prison Break", description = "Escape the jail in Forsaken Fortress.", points = 1,
+achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsaken Fortress.", points = 1,
 trigger = ww() && stealth_file() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
 float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
