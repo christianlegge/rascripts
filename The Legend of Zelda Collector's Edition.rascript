@@ -85,9 +85,54 @@ function float_range(min, accessor, max) {
     return min <= accessor && accessor <= max
 }
 
+function dialogue_index() => word_be(tbyte_be(0x3c1559) + 0x40)
+function dialogue_index_equals_single(index) => dialogue_index() == index
+function dialogue_equals(index) {
+    return once(any_of(index, dialogue_index_equals_single))
+}
+
+windfall_dialogue = [
+    [12802],
+    [12501],
+    [11607],
+    [7001],
+    [7601],
+    [13409],
+    [11401],
+    [11402],
+    [11502],
+    [11701],
+    [11204],
+    [11113],
+    [11301],
+    [10001],
+    [11801],
+    [7501],
+    [12202],
+    [12401],
+    [12902],
+    [13711],
+    [13701],
+    [12301],
+    [8901],
+    [10371, 10384],
+    [9943, 9917],
+    [9944, 9919],
+    [9945, 9921],
+    [9947, 9923],
+    [10801, 10805],
+    [7201, 7225],
+    [10101, 10129],
+    [4301, 4314],
+]
+
 // Achievements
 
 achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsaken Fortress.", points = 1,
 trigger = ww() && stealth_file() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
 float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
+
+achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
+trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
+array_map(windfall_dialogue, dialogue_equals))))
