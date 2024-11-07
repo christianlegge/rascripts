@@ -93,6 +93,8 @@ function dialogue_equals(index) {
 
 function cutscene_id() => word_be(0x3d0b80)
 
+function pig_timer() => word_be(0x3d1492)
+
 windfall_dialogue = [
     [12802],
     [12501],
@@ -133,6 +135,9 @@ windfall_dialogue = [
 achievement(title = "Boy You're Poor!", description = "[WW] Get thrown out of the auction house.", points = 1,
 trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && prev(stage_id() == 0x0b) && stage_id() == 0x00 && never(prev(stage_id() == 0x00)))
 
+achievement(title = "Rupees Before Swine", description = "[WW] Help find Dampa's pig for a reward.", points = 3,
+trigger = ww() && island_file() && stage_id() == 0x00 && dialogue_index() == 12938)
+
 achievement(title = "Taking the Scenic Route", description = "[WW] Starting from the Island save file, enter Dragon Roost Cavern.", points = 5,
 trigger = ww() && island_file() && prev(stage_id() == 0x0b) && in_map("M_NewD2") && stage_id() == 0x03)
 
@@ -144,3 +149,12 @@ float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
 achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
 array_map(windfall_dialogue, dialogue_equals))))
+
+// Leaderboards
+
+leaderboard(title = "[WW] Porcine Procurer (IGT)", description = "Find Dampa's pig on Windfall Island with the most time remaining.",
+start = ww() && island_file() && stage_id() == 0x00 && dialogue_index() == 12935,
+cancel = always_false(),
+submit = always_true(),
+value = pig_timer() * 2,
+format = "FRAMES")
