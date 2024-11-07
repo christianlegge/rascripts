@@ -91,6 +91,8 @@ function dialogue_equals(index) {
     return once(any_of(index, dialogue_index_equals_single))
 }
 
+function cutscene_id() => word_be(0x3d0b80)
+
 windfall_dialogue = [
     [12802],
     [12501],
@@ -127,6 +129,9 @@ windfall_dialogue = [
 ]
 
 // Achievements
+
+achievement(title = "Boy You're Poor!", description = "[WW] Get thrown out of the auction house.", points = 1,
+trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && prev(stage_id() == 0x0b) && stage_id() == 0x00 && never(prev(stage_id() == 0x00)))
 
 achievement(title = "Taking the Scenic Route", description = "[WW] Starting from the Island save file, enter Dragon Roost Cavern.", points = 5,
 trigger = ww() && island_file() && prev(stage_id() == 0x0b) && in_map("M_NewD2") && stage_id() == 0x03)
