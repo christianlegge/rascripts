@@ -85,6 +85,8 @@ function float_range(min, accessor, max) {
     return min <= accessor && accessor <= max
 }
 
+function equals1(accessor) => accessor() == 1
+
 function dialogue_index() => word_be(tbyte_be(0x3c1559) + 0x40)
 function dialogue_index_equals_single(index) => dialogue_index() == index
 function dialogue_equals(index) {
@@ -94,6 +96,10 @@ function dialogue_equals(index) {
 function cutscene_id() => word_be(0x3d0b80)
 
 function pig_timer() => word_be(0x3d1492)
+
+function spotlight1() => bit2(0x3cc04e)
+function spotlight2() => bit3(0x3cc04e)
+function spotlight3() => bit4(0x3cc04e)
 
 windfall_dialogue = [
     [12802],
@@ -132,6 +138,9 @@ windfall_dialogue = [
 
 // Achievements
 
+achievement(title = "Spotlight Placeholder", description = "[WW] Disable all the spotlights in Forsaken Fortress.", points = 5,
+trigger = ww() && stealth_file() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww() && stealth_file()))
+
 achievement(title = "Boy You're Poor!", description = "[WW] Get thrown out of the auction house.", points = 1,
 trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && prev(stage_id() == 0x0b) && stage_id() == 0x00 && never(prev(stage_id() == 0x00)))
 
@@ -148,7 +157,7 @@ float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
 
 achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
-array_map(windfall_dialogue, dialogue_equals))))
+array_map(windfall_dialogue, dialogue_equals)), when = ww() && island_file()))
 
 // Leaderboards
 
