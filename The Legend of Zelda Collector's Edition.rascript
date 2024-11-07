@@ -152,6 +152,13 @@ array_map(windfall_dialogue, dialogue_equals))))
 
 // Leaderboards
 
+leaderboard(title = "[WW] Get Rich Quick", description = "Have the most Rupees at the end of the Wind Waker demo.",
+start = prev(!ww()) && ww(),
+cancel = always_false(),
+submit = always_true(),
+value = wind_waker_demo_rupees(),
+format = "VALUE")
+
 leaderboard(title = "[WW] Porcine Procurer (IGT)", description = "Find Dampa's pig on Windfall Island with the most time remaining.",
 start = ww() && island_file() && stage_id() == 0x00 && dialogue_index() == 12935,
 cancel = always_false(),
