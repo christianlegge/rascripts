@@ -115,6 +115,8 @@ function spotlight3() => bit4(0x3cc04e)
 
 function riding_ship() => bit0(0x3d1599) == 1
 
+function killerbees_found() => bit6(0x3cbf07)
+
 function ff_map() => bit0(0x3cc04b)
 function ff_rupee() => bit1(0x3cc04b)
 function ff_compass() => bit2(0x3cc04b)
@@ -156,6 +158,9 @@ windfall_dialogue = [
 ]
 
 // Achievements
+
+achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island.", points = 5,
+trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1)
 
 achievement(title = "Teacher's Pet", description = "[WW] Bring a Joy Pendant to Ms. Marie for a reward.", points = 3,
 trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) == 0 && dialogue_index() == 10042)
