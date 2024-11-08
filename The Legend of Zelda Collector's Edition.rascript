@@ -157,6 +157,9 @@ windfall_dialogue = [
 
 // Achievements
 
+achievement(title = "Teacher's Pet", description = "[WW] Bring a Joy Pendant to Ms. Marie for a reward.", points = 3,
+trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) == 0 && dialogue_index() == 10042)
+
 achievement(title = "Fortress Forager", description = "[WW] Open all the chests in the Forsaken Fortress.", points = 5,
 trigger = ww() && stage_id() == 0x02 && prev(ff_map() + ff_rupee() + ff_compass() + ff_heart()) == 3 &&
 measured(ff_map() + ff_rupee() + ff_compass() + ff_heart() == 4, when = ww() && stage_id() == 0x02))
