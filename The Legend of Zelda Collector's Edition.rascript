@@ -14,6 +14,8 @@
 function game_id_probably_not_but_it_might_be_good_enough() => byte(0x029B45)
 function ww() => byte(0x029b45) == 0x08
 
+function boss_dead() => bit3(0x3cc069) == 1
+
 // $3C1558: [32-bit BE] -Wind Waker demo- Pointer to dialogue index, NULL when not in dialogue
 //          +0x40 = [16-bit BE] Dialogue index
 function wind_waker_demo_pointer_to_dialogue_index_null_when_not_in_dialogue() => word_be(0x3C1558)
@@ -158,6 +160,9 @@ float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
 achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
 array_map(windfall_dialogue, dialogue_equals)), when = ww() && island_file()))
+
+achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern.", points = 25,
+trigger = ww() && stage_id() == 0x03 && prev(!boss_dead()) && boss_dead())
 
 // Leaderboards
 
