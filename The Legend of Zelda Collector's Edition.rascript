@@ -105,6 +105,8 @@ function spotlight1() => bit2(0x3cc04e)
 function spotlight2() => bit3(0x3cc04e)
 function spotlight3() => bit4(0x3cc04e)
 
+function riding_ship() => bit0(0x3d1599) == 1
+
 windfall_dialogue = [
     [12802],
     [12501],
@@ -141,6 +143,9 @@ windfall_dialogue = [
 ]
 
 // Achievements
+
+achievement(title = "Can't Let You Do That", description = "[WW] Try to sail beyond your limits.", points = 1,
+trigger = ww() && riding_ship() && prev(dialogue_index()) != 1545 && dialogue_index() == 1545)
 
 achievement(title = "Spotlight Placeholder", description = "[WW] Disable all the spotlights in Forsaken Fortress.", points = 5,
 trigger = ww() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww()))
