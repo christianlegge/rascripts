@@ -16,6 +16,8 @@ function ww() => byte(0x029b45) == 0x08
 
 function boss_dead() => bit3(0x3cc069) == 1
 
+function sea_sector_x() => byte(0x3fd635)
+
 // $3C1558: [32-bit BE] -Wind Waker demo- Pointer to dialogue index, NULL when not in dialogue
 //          +0x40 = [16-bit BE] Dialogue index
 function wind_waker_demo_pointer_to_dialogue_index_null_when_not_in_dialogue() => word_be(0x3C1558)
@@ -149,8 +151,11 @@ trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && 
 achievement(title = "Rupees Before Swine", description = "[WW] Help find Dampa's pig for a reward.", points = 3,
 trigger = ww() && stage_id() == 0x00 && dialogue_index() == 12938)
 
-achievement(title = "Taking the Scenic Route", description = "[WW] Starting from the Island save file, enter Dragon Roost Cavern.", points = 5,
+achievement(title = "Taking the Scenic Route I", description = "[WW] Starting from the Island save file, enter Dragon Roost Cavern.", points = 10,
 trigger = ww() && island_file() && prev(stage_id() == 0x0b) && in_map("M_NewD2") && stage_id() == 0x03)
+
+achievement(title = "Taking the Scenic Route II", description = "[WW] Starting from the Stealth save file, reach Dragon Roost Island.", points = 25,
+trigger = ww() && stealth_file() && stage_id() == 0x00 && sea_sector_x() == 0x02 && prev(cutscene_id()) == 0xffff && cutscene_id() == 0x0097)
 
 achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsaken Fortress.", points = 1,
 trigger = ww() && in_air() && prev(on_ground()) &&
