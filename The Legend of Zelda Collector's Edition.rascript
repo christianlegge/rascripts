@@ -159,6 +159,9 @@ windfall_dialogue = [
 
 // Achievements
 
+achievement(title = "Tipsters Placeholder", description = "[WW] Learn a rumor from the Little Tipsters.", points = 2,
+trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialogue_index() == 13717)
+
 achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island.", points = 5,
 trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1)
 
