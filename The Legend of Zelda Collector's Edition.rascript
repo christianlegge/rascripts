@@ -200,7 +200,7 @@ trigger = ww() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
 float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
 
-achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
+achievement(title = "Census Taker", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
 array_map(windfall_dialogue, dialogue_equals)), when = ww()))
 
