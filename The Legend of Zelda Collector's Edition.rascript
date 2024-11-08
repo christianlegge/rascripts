@@ -115,6 +115,8 @@ function spotlight1() => bit2(0x3cc04e)
 function spotlight2() => bit3(0x3cc04e)
 function spotlight3() => bit4(0x3cc04e)
 
+function max_hearts() => word_be(0x3cb8d0)
+
 function riding_ship() => bit0(0x3d1599) == 1
 
 function killerbees_found() => bit6(0x3cbf07)
@@ -160,6 +162,9 @@ windfall_dialogue = [
 ]
 
 // Achievements
+
+achievement(title = "Tough Love", description = "[WW] Collect 4 Pieces of Heart to earn a new Heart Container.", points = 25,
+trigger = ww() && prev(max_hearts() == 0x0f) && max_hearts() == 0x10)
 
 achievement(title = "Tipsters Placeholder", description = "[WW] Learn a rumor from the Little Tipsters.", points = 2,
 trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialogue_index() == 13717)
