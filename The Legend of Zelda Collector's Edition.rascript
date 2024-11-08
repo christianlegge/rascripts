@@ -99,7 +99,12 @@ function dialogue_equals(index) {
 
 function cutscene_id() => word_be(0x3d0b80)
 
+function sword_id() => byte(0x3cb8de)
+
 function pig_timer() => word_be(0x3d1492)
+
+function in_barrel() => byte(0x3d149d) == 0x09 && byte(0x3d149f) == 0x09
+function ff_thrown_in_jail() => bit2(0x3cbef8) == 1
 
 function spotlight1() => bit2(0x3cc04e)
 function spotlight2() => bit3(0x3cc04e)
@@ -173,6 +178,10 @@ array_map(windfall_dialogue, dialogue_equals)), when = ww()))
 
 achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern.", points = 25,
 trigger = ww() && stage_id() == 0x03 && prev(!boss_dead()) && boss_dead())
+
+achievement(title = "The Shadow", description = "[WW] Recover your sword from the Forsaken Fortress without getting thrown in jail or hiding in a barrel.", points = 10,
+trigger = never(!ww()) && once(prev(!stealth_file()) && stealth_file()) && trigger_when(prev(sword_id() == 0xff) && sword_id() == 0x38) &&
+never(ff_thrown_in_jail()) && never(in_barrel()))
 
 // Leaderboards
 
