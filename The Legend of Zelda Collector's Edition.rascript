@@ -77,7 +77,7 @@ function zpos() => float_be(0x3EB0DC)
 // $3FDFCC: [32-bit BE] -Wind Waker Demo- Frame Timer
 //          
 //          Demo ends at 0x10c8c (68748 frames)
-function wind_waker_demo_frame_timer() => dword_be(0x3FDFCC)
+function frame_timer() => dword_be(0x3FDFCC)
 
 function stage_id() => byte(0x3cc06c)
 
@@ -229,3 +229,10 @@ cancel = always_false(),
 submit = always_true(),
 value = pig_timer() * 2,
 format = "FRAMES")
+
+leaderboard(title = "[WW] Flash Photography", description = "Complete Lenzo's Picto Box quest the fastest from starting the demo.",
+start = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6,
+cancel = always_false(),
+submit = always_true(),
+value = frame_timer(),
+format = "FRAMES", lower_is_better = true)
