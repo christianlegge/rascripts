@@ -115,6 +115,11 @@ function spotlight3() => bit4(0x3cc04e)
 
 function riding_ship() => bit0(0x3d1599) == 1
 
+function ff_map() => bit0(0x3cc04b)
+function ff_rupee() => bit1(0x3cc04b)
+function ff_compass() => bit2(0x3cc04b)
+function ff_heart() => bit3(0x3cc04b)
+
 windfall_dialogue = [
     [12802],
     [12501],
@@ -151,6 +156,10 @@ windfall_dialogue = [
 ]
 
 // Achievements
+
+achievement(title = "Fortress Forager", description = "[WW] Open all the chests in the Forsaken Fortress.", points = 5,
+trigger = ww() && stage_id() == 0x02 && prev(ff_map() + ff_rupee() + ff_compass() + ff_heart()) == 3 &&
+measured(ff_map() + ff_rupee() + ff_compass() + ff_heart() == 4, when = ww() && stage_id() == 0x02))
 
 achievement(title = "Can't Let You Do That", description = "[WW] Try to sail beyond your limits.", points = 1,
 trigger = ww() && riding_ship() && prev(dialogue_index()) != 1545 && dialogue_index() == 1545)
