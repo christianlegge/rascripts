@@ -165,7 +165,7 @@ achievement(title = "Can't Let You Do That", description = "[WW] Try to sail bey
 trigger = ww() && riding_ship() && prev(dialogue_index()) != 1545 && dialogue_index() == 1545)
 
 achievement(title = "Spotlight Placeholder", description = "[WW] Disable all the spotlights in Forsaken Fortress.", points = 5,
-trigger = ww() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww()))
+trigger = ww() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww() && stage_id() == 0x02))
 
 achievement(title = "Boy You're Poor!", description = "[WW] Get thrown out of the auction house.", points = 1,
 trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && prev(stage_id() == 0x0b) && stage_id() == 0x00 && never(prev(stage_id() == 0x00)))
