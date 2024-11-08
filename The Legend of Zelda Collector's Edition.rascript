@@ -141,25 +141,25 @@ windfall_dialogue = [
 // Achievements
 
 achievement(title = "Spotlight Placeholder", description = "[WW] Disable all the spotlights in Forsaken Fortress.", points = 5,
-trigger = ww() && stealth_file() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww() && stealth_file()))
+trigger = ww() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww()))
 
 achievement(title = "Boy You're Poor!", description = "[WW] Get thrown out of the auction house.", points = 1,
 trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && prev(stage_id() == 0x0b) && stage_id() == 0x00 && never(prev(stage_id() == 0x00)))
 
 achievement(title = "Rupees Before Swine", description = "[WW] Help find Dampa's pig for a reward.", points = 3,
-trigger = ww() && island_file() && stage_id() == 0x00 && dialogue_index() == 12938)
+trigger = ww() && stage_id() == 0x00 && dialogue_index() == 12938)
 
 achievement(title = "Taking the Scenic Route", description = "[WW] Starting from the Island save file, enter Dragon Roost Cavern.", points = 5,
 trigger = ww() && island_file() && prev(stage_id() == 0x0b) && in_map("M_NewD2") && stage_id() == 0x03)
 
 achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsaken Fortress.", points = 1,
-trigger = ww() && stealth_file() && in_air() && prev(on_ground()) &&
+trigger = ww() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
 float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
 
 achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
-array_map(windfall_dialogue, dialogue_equals)), when = ww() && island_file()))
+array_map(windfall_dialogue, dialogue_equals)), when = ww()))
 
 achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern.", points = 25,
 trigger = ww() && stage_id() == 0x03 && prev(!boss_dead()) && boss_dead())
@@ -174,7 +174,7 @@ value = wind_waker_demo_rupees(),
 format = "VALUE")
 
 leaderboard(title = "[WW] Porcine Procurer (IGT)", description = "Find Dampa's pig on Windfall Island with the most time remaining.",
-start = ww() && island_file() && stage_id() == 0x00 && dialogue_index() == 12935,
+start = ww() && stage_id() == 0x00 && dialogue_index() == 12935,
 cancel = always_false(),
 submit = always_true(),
 value = pig_timer() * 2,
