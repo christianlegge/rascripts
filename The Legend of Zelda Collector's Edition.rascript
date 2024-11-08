@@ -126,6 +126,8 @@ function ff_rupee() => bit1(0x3cc04b)
 function ff_compass() => bit2(0x3cc04b)
 function ff_heart() => bit3(0x3cc04b)
 
+function pawprint_platform_chest() => bit5(0x3cbc77)
+
 windfall_dialogue = [
     [12802],
     [12501],
@@ -165,6 +167,9 @@ windfall_dialogue = [
 
 achievement(title = "Tough Love", description = "[WW] Collect 4 Pieces of Heart to earn a new Heart Container.", points = 25,
 trigger = ww() && prev(max_hearts() == 0x0f) && max_hearts() == 0x10)
+
+achievement(title = "Lookout Platform Placeholder", description = "[WW] Open the chest on the lookout platform near Pawprint Isle.", points = 2,
+trigger = ww() && stage_id() == 0x00 && prev(pawprint_platform_chest()) == 0 && pawprint_platform_chest() == 1)
 
 achievement(title = "Tipsters Placeholder", description = "[WW] Learn a rumor from the Little Tipsters.", points = 2,
 trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialogue_index() == 13717)
