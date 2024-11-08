@@ -99,6 +99,8 @@ function dialogue_equals(index) {
 
 function cutscene_id() => word_be(0x3d0b80)
 
+function picto_quest() => byte(0x3cbfb8)
+
 function sword_id() => byte(0x3cb8de)
 
 function pig_timer() => word_be(0x3d1492)
@@ -161,6 +163,9 @@ windfall_dialogue = [
 
 achievement(title = "Tipsters Placeholder", description = "[WW] Learn a rumor from the Little Tipsters.", points = 2,
 trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialogue_index() == 13717)
+
+achievement(title = "Link the Paparazzo", description = "[WW] Complete your work as Lenzo's assistant.", points = 10,
+trigger = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6)
 
 achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island.", points = 5,
 trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1)
