@@ -106,6 +106,9 @@ function pig_timer() => word_be(0x3d1492)
 function in_barrel() => byte(0x3d149d) == 0x09 && byte(0x3d149f) == 0x09
 function ff_thrown_in_jail() => bit2(0x3cbef8) == 1
 
+function ffrupee1() => bit0(0x3cc05f)
+function ffrupee2() => bit1(0x3cc05f)
+
 function spotlight1() => bit2(0x3cc04e)
 function spotlight2() => bit3(0x3cc04e)
 function spotlight3() => bit4(0x3cc04e)
@@ -175,6 +178,9 @@ float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
 achievement(title = "Windfall Island Census", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
 array_map(windfall_dialogue, dialogue_equals)), when = ww()))
+
+achievement(title = "Red Rupee Placeholder", description = "[WW] Collect both red Rupees in the Forsaken Fortress main entrance.", points = 2,
+trigger = ww() && stage_id() == 0x02 && prev(ffrupee1()) + prev(ffrupee2()) == 1 && ffrupee1() + ffrupee2() == 2)
 
 achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern.", points = 25,
 trigger = ww() && stage_id() == 0x03 && prev(!boss_dead()) && boss_dead())
