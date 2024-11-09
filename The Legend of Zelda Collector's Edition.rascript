@@ -187,6 +187,9 @@ trigger = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest(
 achievement(title = "Get Me Out of Here", description = "[WW] Purchase the Sail.", points = 10,
 trigger = ww() && stage_id() == 0x00 && prev(!owns_sail()) && owns_sail())
 
+achievement(title = "The Heist", description = "[WW] Sneak into the bomb shop and upset Cannon.", points = 2,
+trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) != 10129 && dialogue_index() == 10129)
+
 achievement(title = "Wind Waker Placeholder", description = "[WW] Obtain the Wind Waker from the King of Red Lions.", points = 3,
 trigger = ww() && stage_id() == 0x00 && prev(!owns_waker()) && owns_waker())
 
