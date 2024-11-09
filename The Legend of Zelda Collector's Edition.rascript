@@ -81,6 +81,13 @@ function frame_timer() => dword_be(0x3FDFCC)
 
 function stage_id() => byte(0x3cc06c)
 
+function owns_sail() => bit0(0x3cb922) == 1
+function owns_waker() => bit0(0x3cb923) == 1
+function owns_hook() => bit0(0x3cb924) == 1
+function owns_tuner() => bit0(0x3cb928) == 1
+function owns_picto_box() => bit0(0x3cb929) == 1
+function owns_deluxe_picto_box() => bit1(0x3cb929) == 1
+
 function in_map(name) {
     return ascii_string_equals(0x3d0a04, name)
 }
@@ -176,6 +183,9 @@ trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialo
 
 achievement(title = "Link the Paparazzo", description = "[WW] Complete your work as Lenzo's assistant.", points = 10,
 trigger = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6)
+
+achievement(title = "Wind Waker Placeholder", description = "[WW] Obtain the Wind Waker from the King of Red Lions.", points = 3,
+trigger = ww() && stage_id() == 0x00 && prev(!owns_waker()) && owns_waker())
 
 achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island.", points = 5,
 trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1)
