@@ -172,6 +172,9 @@ windfall_dialogue = [
 
 // Achievements
 
+achievement(title = "Forsaken Fortress Placeholder", description = "[WW] Escape the Forsaken Fortress and meet the King of Red Lions.", points = 10,
+trigger = ww() && prev(cutscene_id()) == 0x003f && cutscene_id() == 0x00ad && stage_id() == 0x00)
+
 achievement(title = "Tough Love", description = "[WW] Collect 4 Pieces of Heart to earn a new Heart Container.", points = 25,
 trigger = ww() && prev(max_hearts() == 0x0f) && max_hearts() == 0x10)
 
