@@ -17,6 +17,7 @@ function ww() => byte(0x029b45) == 0x08
 function boss_dead() => bit3(0x3cc069) == 1
 
 function sea_sector_x() => byte(0x3fd635)
+function sea_sector_y() => byte(0x3fd636)
 
 // $3C1558: [32-bit BE] -Wind Waker demo- Pointer to dialogue index, NULL when not in dialogue
 //          +0x40 = [16-bit BE] Dialogue index
@@ -207,13 +208,13 @@ achievement(title = "Link the Paparazzo", description = "[WW] Complete your work
 trigger = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6)
 
 achievement(title = "Get Me Out of Here", description = "[WW] Purchase the Sail.", points = 10,
-trigger = ww() && stage_id() == 0x00 && prev(!owns_sail()) && owns_sail())
+trigger = ww() && stage_id() == 0x00 && sea_sector_x() == 0x00 && sea_sector_y() == 0xfe && prev(!owns_sail()) && owns_sail())
 
 achievement(title = "The Heist", description = "[WW] Sneak into the bomb shop and upset Cannon.", points = 2,
 trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) != 10129 && dialogue_index() == 10129)
 
 achievement(title = "Wind Waker Placeholder", description = "[WW] Obtain the Wind Waker from the King of Red Lions.", points = 3,
-trigger = ww() && stage_id() == 0x00 && prev(!owns_waker()) && owns_waker())
+trigger = ww() && stage_id() == 0x00 && sea_sector_x() == 0x02 && sea_sector_y() == 0xfe && prev(!owns_waker()) && owns_waker())
 
 achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island.", points = 5,
 trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1)
