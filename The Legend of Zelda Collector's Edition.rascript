@@ -184,6 +184,9 @@ trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialo
 achievement(title = "Link the Paparazzo", description = "[WW] Complete your work as Lenzo's assistant.", points = 10,
 trigger = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6)
 
+achievement(title = "Get Me Out of Here", description = "[WW] Purchase the Sail.", points = 10,
+trigger = ww() && stage_id() == 0x00 && prev(!owns_sail()) && owns_sail())
+
 achievement(title = "Wind Waker Placeholder", description = "[WW] Obtain the Wind Waker from the King of Red Lions.", points = 3,
 trigger = ww() && stage_id() == 0x00 && prev(!owns_waker()) && owns_waker())
 
