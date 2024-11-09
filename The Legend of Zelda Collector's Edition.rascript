@@ -98,6 +98,19 @@ function float_range(min, accessor, max) {
 
 function equals1(accessor) => accessor() == 1
 
+function drc_yellow_rupee() => bit2(0x3cc04a)
+function drc_knights_crest() => bit3(0x3cc04a)
+function drc_big_key() => bit4(0x3cc04a)
+function drc_treasure_chart_11() => bit5(0x3cc04a)
+function drc_compass() => bit6(0x3cc04a)
+function drc_key1() => bit0(0x3cc04b)
+function drc_key2() => bit1(0x3cc04b)
+function drc_map() => bit2(0x3cc04b)
+function drc_key3() => bit3(0x3cc04b)
+function drc_joy_pendant() => bit4(0x3cc04b)
+function drc_treasure_chart_39() => bit6(0x3cc04b)
+function drc_joy_pendant2() => bit7(0x3cc04b)
+
 function dialogue_index() => word_be(tbyte_be(0x3c1559) + 0x40)
 function dialogue_index_equals_single(index) => dialogue_index() == index
 function dialogue_equals(index) {
