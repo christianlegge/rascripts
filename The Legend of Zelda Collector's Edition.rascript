@@ -98,18 +98,20 @@ function float_range(min, accessor, max) {
 
 function equals1(accessor) => accessor() == 1
 
-function drc_yellow_rupee() => bit2(0x3cc04a)
-function drc_knights_crest() => bit3(0x3cc04a)
-function drc_big_key() => bit4(0x3cc04a)
-function drc_treasure_chart_11() => bit5(0x3cc04a)
-function drc_compass() => bit6(0x3cc04a)
-function drc_key1() => bit0(0x3cc04b)
-function drc_key2() => bit1(0x3cc04b)
-function drc_map() => bit2(0x3cc04b)
-function drc_key3() => bit3(0x3cc04b)
-function drc_joy_pendant() => bit4(0x3cc04b)
-function drc_treasure_chart_39() => bit6(0x3cc04b)
-function drc_joy_pendant2() => bit7(0x3cc04b)
+drc_chests = [
+    bit2(0x3cc04a),
+    bit3(0x3cc04a),
+    bit4(0x3cc04a),
+    bit5(0x3cc04a),
+    bit6(0x3cc04a),
+    bit0(0x3cc04b),
+    bit1(0x3cc04b),
+    bit2(0x3cc04b),
+    bit3(0x3cc04b),
+    bit4(0x3cc04b),
+    bit6(0x3cc04b),
+    bit7(0x3cc04b)
+]
 
 function dialogue_index() => word_be(tbyte_be(0x3c1559) + 0x40)
 function dialogue_index_equals_single(index) => dialogue_index() == index
@@ -184,6 +186,10 @@ windfall_dialogue = [
 ]
 
 // Achievements
+
+achievement(title = "DRC Chests Placeholder", description = "[WW] Open all the chests in Dragon Roost Cavern.", points = 25,
+trigger = ww() && stage_id() == 0x03 && sum_of(drc_chests, x => prev(x)) == length(drc_chests) - 1 &&
+measured(sum_of(drc_chests, x => x) == length(drc_chests), when = ww() && stage_id() == 0x03))
 
 achievement(title = "Forsaken Fortress Placeholder", description = "[WW] Escape the Forsaken Fortress and meet the King of Red Lions.", points = 10,
 trigger = ww() && prev(cutscene_id()) == 0x003f && cutscene_id() == 0x00ad && stage_id() == 0x00)
