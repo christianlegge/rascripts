@@ -5,7 +5,8 @@
 // $4821: [8-bit] Demo active
 //        0x00 = Normal gameplay
 //        0xFF = Demo, controls disabled
-function demo_active() => byte(0x004821) == 0xFF
+function demo_flag() => byte(0x004821)
+function demo_active() => demo_flag() == 0xFF
 
 // $482D: [8-bit] Current scene number
 function current_scene() => byte(0x00482D)
@@ -45,6 +46,15 @@ function fuel_segment_4_starting_from_left() => byte(0x005279)
 //        0x20 = Full
 function fuel_segment_5_starting_from_left() => byte(0x00527A)
 
+function is_crashing() => byte(0x951e) == 1
+
+function missile_a() => byte(0x64fe)
+function barrier() => byte(0x64ff)
+function missile_b() => byte(0x6500)
+function ranger() => byte(0x64fc)
+function kyouka() => byte(0x64fd)
+function radar() => byte(0x5d8d)
+
 function in_scene_transition() => bit0(0x4822) == 1
 function in_game_over() => bit4(0x4822) == 1
 
@@ -78,9 +88,27 @@ ship_ids = [
 
 ]
 
-function in_game() => demo_active() == 0 && !in_scene_transition() && !in_game_over()
+function in_game() => demo_flag() == 0 && !in_scene_transition() && !in_game_over()
 
 // Achievements
+
+function pickup_achievement(name, desc, points, accessor, id) {
+    achievement(name, desc, points,
+        in_game() && prev(accessor != id) && accessor == id)
+}
+
+pickup_achievement("Smokescreen placeholder", "Equip the Zipping with Smokescreen missiles.", 1, missile_a(), 0x35)
+pickup_achievement("You're a Firework", "Equip the Zipping with Miracle missilies.", 1, missile_b(), 0x34)
+pickup_achievement("Bomb Has Been Planted", "Equip the Zipping with Timer Bomb missiles.", 1, missile_b(), 0x36)
+pickup_achievement("Homer Zipson", "Equip the Zipping with Feint missiles.", 1, missile_b(), 0x37)
+pickup_achievement("Smokescreen placeholder", "Equip the Zipping with Flower missiles.", 1, missile_b(), 0x38)
+pickup_achievement("Triple Shot", "Equip the Zipping with Diffusion missiles.", 1, missile_a(), 0x33)
+pickup_achievement("The Hedgehog", "Equip the Zipping with Barrier bombs.", 1, barrier(), 0x39)
+pickup_achievement("Finger on the Trigger", "Activate the Zipping's Ranger mode.", 1, ranger(), 0xFF)
+pickup_achievement("Harder, Better, Faster", "Activate the Zipping's Strength mode.", 1, kyouka(), 0xFF)
+pickup_achievement("Target Acquired", "Activate the Zipping's radar.", 1, radar(), 0x01)
+
+
 
 achievement("Sector Clear", "Shoot or stun every type of enemy ship in a single scene.", 10, 
     never(demo_active()) && never(current_scene() != prev(current_scene())) && never(in_game_over()) && never(in_scene_transition()) &&
