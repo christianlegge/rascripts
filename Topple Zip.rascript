@@ -7,6 +7,7 @@
 //        0xFF = Demo, controls disabled
 function demo_flag() => byte(0x004821)
 function demo_active() => demo_flag() == 0xFF
+function no_demo() => demo_flag() == 0x00
 
 // $482D: [8-bit] Current scene number
 function current_scene() => byte(0x00482D)
@@ -55,6 +56,7 @@ function ranger() => byte(0x64fc)
 function kyouka() => byte(0x64fd)
 function radar() => byte(0x5d8d)
 
+function status_byte() => byte(0x4822)
 function in_scene_transition() => bit0(0x4822) == 1
 function in_game_over() => bit4(0x4822) == 1
 
@@ -90,6 +92,8 @@ ship_ids = [
 
 function in_game() => demo_flag() == 0 && !in_scene_transition() && !in_game_over()
 
+function goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0b && current_scene() == 0x0b
+
 // Achievements
 
 function pickup_achievement(name, desc, points, accessor, id) {
@@ -107,6 +111,9 @@ pickup_achievement("The Hedgehog", "Equip the Zipping with Barrier bombs.", 1, b
 pickup_achievement("Finger on the Trigger", "Activate the Zipping's Ranger mode.", 1, ranger(), 0xFF)
 pickup_achievement("Harder, Better, Faster", "Activate the Zipping's Strength mode.", 1, kyouka(), 0xFF)
 pickup_achievement("Target Acquired", "Activate the Zipping's radar.", 1, radar(), 0x01)
+
+achievement("Goal placeholder", "Reach the Goal scene and see the ending.", 5,
+    no_demo() && goal_trigger())
 
 
 
