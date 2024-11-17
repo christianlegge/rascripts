@@ -95,6 +95,7 @@ ship_ids = [
 function in_game() => demo_flag() == 0 && !in_scene_transition() && !in_game_over() && boot_status() == 0xFF
 
 function game_start() => tally(1, prev(boot_status()) == 0 && boot_status() == 0xFF, prev(status_byte()) == 0x10 && status_byte() == 0)
+function game_start_lb() => (prev(boot_status()) == 0 && boot_status() == 0xFF) || (prev(status_byte()) == 0x10 && status_byte() == 0)
 
 function goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0b && current_scene() == 0x0b
 
@@ -127,7 +128,7 @@ achievement("Kitted Out", "Have all three types of missile at once.", 5,
     in_game() && missile_a() != 0 && missile_b() != 0 && barrier() == 0x39)
 
 achievement("Gas Gas Gas", "Equip the Zipping with Mach Bars for a speed boost.", 1,
-    in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x41)))
+    in_game() && prev(ship_speed()) < 1 && ship_speed() == 1)
 
 achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.", 5,
     in_game() && prev(ship_speed()) < 2 && ship_speed() == 2)
@@ -156,7 +157,7 @@ achievement("Sector Clear", "Shoot or stun every type of enemy ship in a single 
 // Leaderboards
 
 leaderboard("Reach the Goal (RTA)", "Fastest time to reach the Goal scene.",
-    start = game_start(),
+    start = game_start_lb(),
     cancel = __ornext(negate_gen_reset()),
     submit = goal_trigger(),
     value = measured(always_true()),
