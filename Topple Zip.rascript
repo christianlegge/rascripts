@@ -145,17 +145,17 @@ achievement("King of the Sky", "Reach the Goal scene and finish the race.", 5,
 achievement("Princess of the Stars", "Reach the Princess scene and foster peace in the galaxy.", 10,
     no_demo() && p_goal_trigger(), type = "win_condition")
 
-achievement("Where We're Going, We Don't Need Maps", "Reach the Goal scene without using the radar.", 25,
-    game_start() && trigger_when(goal_trigger()) && gen_reset() && never(radar() == 0x01))
+achievement("Where We're Going, We Don't Need Maps", "Reach any ending without using the radar.", 25,
+    game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() && never(radar() == 0x01))
 
-achievement("A Steady Hand", "Reach the Goal scene without letting the Zipping topple.", 25,
-    game_start() && trigger_when(goal_trigger()) && gen_reset() && never(is_crashing()))
+achievement("A Steady Hand", "Reach any ending without letting the Zipping topple.", 25,
+    game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() && never(is_crashing()))
 
-achievement("World Traveller", "Reach the Goal scene after visiting all other scenes in a single game.", 10,
-    game_start() && goal_trigger() && gen_reset() && measured(tally_of(range(1,6), 6, num => once(current_scene() == num))))
+achievement("World Traveller", "Reach any ending after visiting all numbered scenes in a single game.", 10,
+    game_start() && (goal_trigger() || p_goal_trigger()) && gen_reset() && measured(tally_of(range(1,6), 6, num => once(current_scene() == num))))
 
-achievement("Chaff Dodger", "Reach the Goal scene without collecting any negative items.", 10,
-    game_start() && trigger_when(goal_trigger()) && gen_reset() &&
+achievement("Chaff Dodger", "Reach any ending without collecting any negative items.", 10,
+    game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() &&
     never(any_of(collectible_addrs, addr => item_collected(addr, 0x44))) &&
     never(any_of(collectible_addrs, addr => item_collected(addr, 0x45))))
 
