@@ -162,3 +162,25 @@ leaderboard("Reach the Goal (RTA)", "Fastest time to reach the Goal scene.",
     submit = goal_trigger(),
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
+
+leaderboard("World Traveller (RTA)", "Fastest time to reach the Goal scene after visiting all other scenes.",
+    start = game_start_lb(),
+    cancel = __ornext(negate_gen_reset()) || goal_trigger() && tally(1, [
+    repeated(6, always_true()),
+    deduct(once(current_scene() == 1)),
+    deduct(once(current_scene() == 2)),
+    deduct(once(current_scene() == 3)),
+    deduct(once(current_scene() == 4)),
+    deduct(once(current_scene() == 5)),
+    deduct(once(current_scene() == 6))
+    ]),
+    submit = goal_trigger() && tally_of(range(1,6), 6, num => once(current_scene() == num)),
+    value = measured(always_true()),
+    format = "FRAMES", lower_is_better = true)
+
+leaderboard("Road Rage", "Shoot or stun the most ships before reaching the Goal scene.",
+    start = game_start_lb(),
+    cancel = __ornext(negate_gen_reset()),
+    submit = goal_trigger(),
+    value = measured(tally_of(ship_hit_addrs, 0, addr => byte(addr) > 0 && prev(byte(addr)) == 0)),
+    format = "VALUE")
