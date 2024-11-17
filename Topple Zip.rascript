@@ -124,7 +124,7 @@ achievement("Gas Gas Gas", "Equip the Zipping with Mach Bars for a speed boost."
     in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x41)))
 
 achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.", 5,
-    in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x43)))
+    in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x42)))
 
 achievement("Princess of the Stars", "Reach the Goal scene and see the ending.", 5,
     no_demo() && goal_trigger())
