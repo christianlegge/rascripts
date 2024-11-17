@@ -153,7 +153,7 @@ achievement("A Steady Hand", "Reach any ending without letting the Zipping toppl
     game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() && never(is_crashing()))
 
 achievement("World Traveller", "Reach any ending after visiting all numbered scenes in a single game.", 10,
-    game_start() && (goal_trigger() || p_goal_trigger()) && gen_reset() && measured(tally_of(range(1,6), 6, num => once(current_scene() == num))))
+    game_start() && (goal_trigger() || p_goal_trigger()) && gen_reset() && measured(tally_of(range(1,9), 9, num => once(current_scene() == num))))
 
 achievement("Chaff Dodger", "Reach any ending without collecting any negative items.", 10,
     game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() &&
