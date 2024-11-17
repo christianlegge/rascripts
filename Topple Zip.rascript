@@ -127,7 +127,7 @@ pickup_achievement("Harder, Better, Faster...", "Activate the Zipping's Strength
 pickup_achievement("Target Acquired", "Activate the Zipping's radar.", 2, radar(), 0x01)
 pickup_achievement("Outer Limits", "Reach scene 6.", 3, current_scene(), 6,"progression")
 pickup_achievement("In Another Castle", "Upgrade your capabilities with the P-Radar.", 4, radar(), 0x02, "progression")
-pickup_achievement("Infiltrating the Fortress", "Reach scene 9.", 5, current_scene(), 6,"progression")
+pickup_achievement("Infiltrating the Fortress", "Reach scene 9.", 5, current_scene(), 9,"progression")
 pickup_achievement("Brains Over Brawn", "Equip the Zipping with Key missiles.", 5, missile_a(), 0x3A,"progression")
 
 achievement("Kitted Out", "Have all three types of missile at once.", 5,
