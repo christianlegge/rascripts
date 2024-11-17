@@ -103,6 +103,7 @@ function gen_reset() => never(demo_active()) && never(status_byte() == 0x10) && 
 function negate_gen_reset() => demo_active() || status_byte() == 0x10 || boot_status() == 0
 
 function item_collected(element, id) => prev(byte(element)) == 2 && byte(element) == 0xFE && byte(element + 2) == id && byte(0x790e) == id 
+function item_collected_any(element) => prev(byte(element)) == 2 && byte(element) == 0xFE && byte(element + 2) != 0 && byte(0x790e) == byte(element + 2)
 
 function ship_speed() => byte(0x5d8c)
 
@@ -182,5 +183,12 @@ leaderboard("Road Rage", "Shoot or stun the most ships before reaching the Goal 
     start = game_start_lb(),
     cancel = __ornext(negate_gen_reset()),
     submit = goal_trigger(),
+    value = measured(tally_of(ship_hit_addrs, 0, addr => byte(addr) > 0 && prev(byte(addr)) == 0)),
+    format = "VALUE")
+
+leaderboard("Mini Zipping vs. The World", "Shoot or stun the most ships without picking up any items.",
+    start = game_start_lb(),
+    cancel = __ornext(negate_gen_reset()),
+    submit = goal_trigger() || any_of(collectible_addrs, addr => item_collected_any(addr)),
     value = measured(tally_of(ship_hit_addrs, 0, addr => byte(addr) > 0 && prev(byte(addr)) == 0)),
     format = "VALUE")
