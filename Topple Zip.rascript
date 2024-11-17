@@ -122,6 +122,9 @@ pickup_achievement("Finger on the Trigger", "Activate the Zipping's Ranger mode.
 pickup_achievement("Harder, Better, Faster...", "Activate the Zipping's Strength mode.", 3, kyouka(), 0xFF)
 pickup_achievement("Target Acquired", "Activate the Zipping's radar.", 2, radar(), 0x01)
 
+achievement("Kitted Out", "Have all three types of missile at once.", 5,
+    in_game() && missile_a() != 0 && missile_b() != 0 && barrier() == 0x39)
+
 achievement("Gas Gas Gas", "Equip the Zipping with Mach Bars for a speed boost.", 1,
     in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x41)))
 
