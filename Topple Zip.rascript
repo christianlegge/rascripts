@@ -98,6 +98,7 @@ function game_start() => tally(1, prev(boot_status()) == 0 && boot_status() == 0
 function game_start_lb() => (prev(boot_status()) == 0 && boot_status() == 0xFF) || (prev(status_byte()) == 0x10 && status_byte() == 0)
 
 function goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0b && current_scene() == 0x0b
+function p_goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0a && current_scene() == 0x0a
 
 function gen_reset() => never(demo_active()) && never(status_byte() == 0x10) && never(boot_status() == 0)
 function negate_gen_reset() => demo_active() || status_byte() == 0x10 || boot_status() == 0
@@ -109,9 +110,9 @@ function ship_speed() => byte(0x5d8c)
 
 // Achievements
 
-function pickup_achievement(name, desc, points, accessor, id) {
+function pickup_achievement(name, desc, points, accessor, id, type = "") {
     achievement(name, desc, points,
-        in_game() && prev(accessor != id) && accessor == id)
+        in_game() && prev(accessor != id) && accessor == id, type = type)
 }
 
 pickup_achievement("Up in Smoke", "Equip the Zipping with Smokescreen missiles.", 1, missile_a(), 0x35)
@@ -124,6 +125,10 @@ pickup_achievement("Give Peace a Chance", "Equip the Zipping with Flower missile
 pickup_achievement("Finger on the Trigger", "Activate the Zipping's Ranger mode.", 2, ranger(), 0xFF)
 pickup_achievement("Harder, Better, Faster...", "Activate the Zipping's Strength mode.", 3, kyouka(), 0xFF)
 pickup_achievement("Target Acquired", "Activate the Zipping's radar.", 2, radar(), 0x01)
+pickup_achievement("Outer Limits", "Reach scene 6.", 3, current_scene(), 6,"progression")
+pickup_achievement("In Another Castle", "Upgrade your capabilities with the P-Radar.", 4, radar(), 0x02, "progression")
+pickup_achievement("Infiltrating the Fortress", "Reach scene 9.", 5, current_scene(), 6,"progression")
+pickup_achievement("Brains Over Brawn", "Equip the Zipping with Key missiles.", 5, missile_a(), 0x3A,"progression")
 
 achievement("Kitted Out", "Have all three types of missile at once.", 5,
     in_game() && missile_a() != 0 && missile_b() != 0 && barrier() == 0x39)
@@ -131,11 +136,14 @@ achievement("Kitted Out", "Have all three types of missile at once.", 5,
 achievement("Gas Gas Gas", "Equip the Zipping with Mach Bars for a speed boost.", 1,
     in_game() && prev(ship_speed()) < 1 && ship_speed() == 1)
 
-achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.", 5,
+achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.", 4,
     in_game() && prev(ship_speed()) < 2 && ship_speed() == 2)
 
-achievement("Princess of the Stars", "Reach the Goal scene and see the ending.", 5,
-    no_demo() && goal_trigger(), type = "win_condition")
+achievement("King of the Sky", "Reach the Goal scene and finish the race.", 5,
+    no_demo() && goal_trigger(), type = "progression")
+
+achievement("Princess of the Stars", "Reach the Princess scene and foster peace in the galaxy.", 10,
+    no_demo() && p_goal_trigger(), type = "win_condition")
 
 achievement("Where We're Going, We Don't Need Maps", "Reach the Goal scene without using the radar.", 25,
     game_start() && trigger_when(goal_trigger()) && gen_reset() && never(radar() == 0x01))
@@ -164,18 +172,28 @@ leaderboard("Reach the Goal (RTA)", "Fastest time to reach the Goal scene.",
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
 
-leaderboard("World Traveller (RTA)", "Fastest time to reach the Goal scene after visiting all other scenes.",
+leaderboard("World Traveller (RTA)", "Fastest time to reach any ending after visiting all numbered scenes.",
     start = game_start_lb(),
-    cancel = __ornext(negate_gen_reset()) || goal_trigger() && tally(1, [
-    repeated(6, always_true()),
+    cancel = __ornext(negate_gen_reset()) || (goal_trigger() || p_goal_trigger()) && tally(1, [
+    repeated(9, always_true()),
     deduct(once(current_scene() == 1)),
     deduct(once(current_scene() == 2)),
     deduct(once(current_scene() == 3)),
     deduct(once(current_scene() == 4)),
     deduct(once(current_scene() == 5)),
-    deduct(once(current_scene() == 6))
+    deduct(once(current_scene() == 6)),
+    deduct(once(current_scene() == 7)),
+    deduct(once(current_scene() == 8)),
+    deduct(once(current_scene() == 9))
     ]),
-    submit = goal_trigger() && tally_of(range(1,6), 6, num => once(current_scene() == num)),
+    submit = goal_trigger() && tally_of(range(1,9), 9, num => once(current_scene() == num)),
+    value = measured(always_true()),
+    format = "FRAMES", lower_is_better = true)
+
+leaderboard("Princess of the Stars (RTA)", "Fastest time to reach the princess.",
+    start = game_start_lb(),
+    cancel = __ornext(negate_gen_reset()),
+    submit = p_goal_trigger(),
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
 
