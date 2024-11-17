@@ -92,13 +92,14 @@ ship_ids = [
 
 ]
 
-function in_game() => demo_flag() == 0 && !in_scene_transition() && !in_game_over()
+function in_game() => demo_flag() == 0 && !in_scene_transition() && !in_game_over() && boot_status() == 0xFF
 
 function game_start() => tally(1, prev(boot_status()) == 0 && boot_status() == 0xFF, prev(status_byte()) == 0x10 && status_byte() == 0)
 
 function goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0b && current_scene() == 0x0b
 
-function gen_reset() => never(demo_active()) && never(status_byte() == 0x10)
+function gen_reset() => never(demo_active()) && never(status_byte() == 0x10) && never(boot_status() == 0)
+function negate_gen_reset() => demo_active() || status_byte() == 0x10 || boot_status() == 0
 
 function item_collected(element, id) => prev(byte(element)) == 2 && byte(element) == 0xFE && byte(element + 2) == id && byte(0x790e) == id 
 
@@ -151,3 +152,12 @@ achievement("Chaff Dodger", "Reach the Goal scene without collecting any negativ
 achievement("Sector Clear", "Shoot or stun every type of enemy ship in a single scene.", 10, 
     never(demo_active()) && never(current_scene() != prev(current_scene())) && never(in_game_over()) && never(in_scene_transition()) &&
     measured(tally_of(ship_hit_addrs, 12, addr => once(byte(addr) > 0 && prev(byte(addr)) == 0))))
+
+// Leaderboards
+
+leaderboard("Reach the Goal (RTA)", "Fastest time to reach the Goal scene.",
+    start = game_start(),
+    cancel = __ornext(negate_gen_reset()),
+    submit = goal_trigger(),
+    value = measured(always_true()),
+    format = "FRAMES", lower_is_better = true)
