@@ -102,6 +102,8 @@ function gen_reset() => never(demo_active()) && never(status_byte() == 0x10)
 
 function item_collected(element, id) => prev(byte(element)) == 2 && byte(element) == 0xFE && byte(element + 2) == id && byte(0x790e) == id 
 
+function ship_speed() => byte(0x5d8c)
+
 // Achievements
 
 function pickup_achievement(name, desc, points, accessor, id) {
@@ -124,7 +126,7 @@ achievement("Gas Gas Gas", "Equip the Zipping with Mach Bars for a speed boost."
     in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x41)))
 
 achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.", 5,
-    in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x42)))
+    in_game() && prev(ship_speed()) < 2 && ship_speed() == 2)
 
 achievement("Princess of the Stars", "Reach the Goal scene and see the ending.", 5,
     no_demo() && goal_trigger(), type = "win_condition")
