@@ -109,7 +109,7 @@ function pickup_achievement(name, desc, points, accessor, id) {
         in_game() && prev(accessor != id) && accessor == id)
 }
 
-pickup_achievement("Smokescreen placeholder", "Equip the Zipping with Smokescreen missiles.", 1, missile_a(), 0x35)
+pickup_achievement("Up in Smoke", "Equip the Zipping with Smokescreen missiles.", 1, missile_a(), 0x35)
 pickup_achievement("Triple Shot", "Equip the Zipping with Diffusion missiles.", 1, missile_a(), 0x33)
 pickup_achievement("The Hedgehog", "Equip the Zipping with Barrier bombs.", 1, barrier(), 0x39)
 pickup_achievement("You're a Firework", "Equip the Zipping with Miracle missilies.", 1, missile_b(), 0x34)
@@ -127,7 +127,7 @@ achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.
     in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x42)))
 
 achievement("Princess of the Stars", "Reach the Goal scene and see the ending.", 5,
-    no_demo() && goal_trigger())
+    no_demo() && goal_trigger(), type = "win_condition")
 
 achievement("Where We're Going, We Don't Need Maps", "Reach the Goal scene without using the radar.", 25,
     game_start() && trigger_when(goal_trigger()) && gen_reset() && never(radar() == 0x01))
