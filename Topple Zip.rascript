@@ -111,20 +111,26 @@ function pickup_achievement(name, desc, points, accessor, id) {
 }
 
 pickup_achievement("Smokescreen placeholder", "Equip the Zipping with Smokescreen missiles.", 1, missile_a(), 0x35)
+pickup_achievement("Triple Shot", "Equip the Zipping with Diffusion missiles.", 1, missile_a(), 0x33)
+pickup_achievement("The Hedgehog", "Equip the Zipping with Barrier bombs.", 1, barrier(), 0x39)
 pickup_achievement("You're a Firework", "Equip the Zipping with Miracle missilies.", 1, missile_b(), 0x34)
 pickup_achievement("Bomb Has Been Planted", "Equip the Zipping with Timer Bomb missiles.", 1, missile_b(), 0x36)
 pickup_achievement("Homer Zipson", "Equip the Zipping with Feint missiles.", 1, missile_b(), 0x37)
-pickup_achievement("Smokescreen placeholder", "Equip the Zipping with Flower missiles.", 1, missile_b(), 0x38)
-pickup_achievement("Triple Shot", "Equip the Zipping with Diffusion missiles.", 1, missile_a(), 0x33)
-pickup_achievement("The Hedgehog", "Equip the Zipping with Barrier bombs.", 1, barrier(), 0x39)
+pickup_achievement("Give Peace a Chance", "Equip the Zipping with Flower missiles.", 1, missile_b(), 0x38)
 pickup_achievement("Finger on the Trigger", "Activate the Zipping's Ranger mode.", 2, ranger(), 0xFF)
-pickup_achievement("Harder, Better, Faster", "Activate the Zipping's Strength mode.", 3, kyouka(), 0xFF)
+pickup_achievement("Harder, Better, Faster...", "Activate the Zipping's Strength mode.", 3, kyouka(), 0xFF)
 pickup_achievement("Target Acquired", "Activate the Zipping's radar.", 2, radar(), 0x01)
+
+achievement("Gas Gas Gas", "Equip the Zipping with Mach Bars for a speed boost.", 1,
+    in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x41)))
+
+achievement("Quick as a Flash", "Equip the Zipping with Turbo for maximum speed.", 5,
+    in_game() && any_of(collectible_addrs, addr => item_collected(addr, 0x43)))
 
 achievement("Goal placeholder", "Reach the Goal scene and see the ending.", 5,
     no_demo() && goal_trigger())
 
-achievement("Where We're Going, We Don't Need Maps", "Reach the Goal scene without using the radar.", 10,
+achievement("Where We're Going, We Don't Need Maps", "Reach the Goal scene without using the radar.", 25,
     game_start() && trigger_when(goal_trigger()) && gen_reset() && never(radar() == 0x01))
 
 achievement("A Steady Hand", "Reach the Goal scene without letting the Zipping topple.", 25,
