@@ -127,6 +127,13 @@ achievement("Where We're Going, We Don't Need Maps", "Reach the Goal scene witho
 achievement("A Steady Hand", "Reach the Goal scene without letting the Zipping topple.", 25,
     game_start() && trigger_when(goal_trigger()) && gen_reset() && never(is_crashing()))
 
+achievement("World Traveller", "Reach the Goal scene after visiting all other scenes in a single game.", 10,
+    game_start() && goal_trigger() && gen_reset() && measured(tally_of(range(1,6), 6, num => once(current_scene() == num))))
+
+
+// achievement("Chaff Dodger", "Reach the Goal scene without collecting any negative items.", 10,
+
+
 achievement("Sector Clear", "Shoot or stun every type of enemy ship in a single scene.", 10, 
     never(demo_active()) && never(current_scene() != prev(current_scene())) && never(in_game_over()) && never(in_scene_transition()) &&
     measured(tally_of(ship_hit_addrs, 12, addr => once(byte(addr) > 0 && prev(byte(addr)) == 0))))
