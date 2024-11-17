@@ -167,7 +167,7 @@ achievement("Sector Clear", "Shoot or stun every type of enemy ship in a single 
 
 leaderboard("Reach the Goal (RTA)", "Fastest time to reach the Goal scene.",
     start = game_start_lb(),
-    cancel = __ornext(negate_gen_reset()),
+    cancel = __ornext(negate_gen_reset() || p_goal_trigger()),
     submit = goal_trigger(),
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
@@ -186,20 +186,20 @@ leaderboard("World Traveller (RTA)", "Fastest time to reach any ending after vis
     deduct(once(current_scene() == 8)),
     deduct(once(current_scene() == 9))
     ]),
-    submit = goal_trigger() && tally_of(range(1,9), 9, num => once(current_scene() == num)),
+    submit = (goal_trigger() || p_goal_trigger()) && tally_of(range(1,9), 9, num => once(current_scene() == num)),
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
 
 leaderboard("Princess of the Stars (RTA)", "Fastest time to reach the princess.",
     start = game_start_lb(),
-    cancel = __ornext(negate_gen_reset()),
+    cancel = __ornext(negate_gen_reset() || goal_trigger()),
     submit = p_goal_trigger(),
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
 
 leaderboard("Road Rage", "Shoot or stun the most ships before reaching the Goal scene.",
     start = game_start_lb(),
-    cancel = __ornext(negate_gen_reset()),
+    cancel = __ornext(negate_gen_reset() || p_goal_trigger()),
     submit = goal_trigger(),
     value = measured(tally_of(ship_hit_addrs, 0, addr => byte(addr) > 0 && prev(byte(addr)) == 0)),
     format = "VALUE")
@@ -207,6 +207,10 @@ leaderboard("Road Rage", "Shoot or stun the most ships before reaching the Goal 
 leaderboard("Mini Zipping vs. The World", "Shoot or stun the most ships without picking up any items.",
     start = game_start_lb(),
     cancel = __ornext(negate_gen_reset()),
-    submit = goal_trigger() || any_of(collectible_addrs, addr => item_collected_any(addr)),
+    submit = goal_trigger() || p_goal_trigger() || any_of(collectible_addrs, addr => item_collected_any(addr)),
     value = measured(tally_of(ship_hit_addrs, 0, addr => byte(addr) > 0 && prev(byte(addr)) == 0)),
     format = "VALUE")
+
+// Rich Presence
+
+
