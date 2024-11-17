@@ -152,8 +152,8 @@ achievement("Where We're Going, We Don't Need Maps", "Reach any ending without u
 achievement("A Steady Hand", "Reach any ending without letting the Zipping topple.", 25,
     game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() && never(is_crashing()))
 
-achievement("World Traveller", "Reach any ending after visiting all numbered scenes in a single game.", 10,
-    game_start() && (goal_trigger() || p_goal_trigger()) && gen_reset() && measured(tally_of(range(1,9), 9, num => once(current_scene() == num))))
+achievement("World Traveller", "Reach any ending after visiting scenes 1-8 in a single game.", 10,
+    game_start() && (goal_trigger() || p_goal_trigger()) && gen_reset() && measured(tally_of(range(1,8), 8, num => once(current_scene() == num))))
 
 achievement("Chaff Dodger", "Reach any ending without collecting any negative items.", 10,
     game_start() && trigger_when(goal_trigger() || p_goal_trigger()) && gen_reset() &&
@@ -173,10 +173,10 @@ leaderboard("Reach the Goal (RTA)", "Fastest time to reach the Goal scene.",
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
 
-leaderboard("World Traveller (RTA)", "Fastest time to reach any ending after visiting all numbered scenes.",
+leaderboard("World Traveller (RTA)", "Fastest time to reach any ending after visiting scenes 1-8 in a single game.",
     start = game_start_lb(),
     cancel = __ornext(negate_gen_reset()) || (goal_trigger() || p_goal_trigger()) && tally(1, [
-    repeated(9, always_true()),
+    repeated(8, always_true()),
     deduct(once(current_scene() == 1)),
     deduct(once(current_scene() == 2)),
     deduct(once(current_scene() == 3)),
@@ -184,10 +184,9 @@ leaderboard("World Traveller (RTA)", "Fastest time to reach any ending after vis
     deduct(once(current_scene() == 5)),
     deduct(once(current_scene() == 6)),
     deduct(once(current_scene() == 7)),
-    deduct(once(current_scene() == 8)),
-    deduct(once(current_scene() == 9))
+    deduct(once(current_scene() == 8))
     ]),
-    submit = (goal_trigger() || p_goal_trigger()) && tally_of(range(1,9), 9, num => once(current_scene() == num)),
+    submit = (goal_trigger() || p_goal_trigger()) && tally_of(range(1,8), 8, num => once(current_scene() == num)),
     value = measured(always_true()),
     format = "FRAMES", lower_is_better = true)
 
