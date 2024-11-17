@@ -93,6 +93,7 @@ ship_ids = [
 ]
 
 function in_game() => demo_flag() == 0 && !in_scene_transition() && !in_game_over() && boot_status() == 0xFF
+function in_game_or_transition() => demo_flag() == 0 && !in_game_over() && boot_status() == 0xFF
 
 function game_start() => tally(1, prev(boot_status()) == 0 && boot_status() == 0xFF, prev(status_byte()) == 0x10 && status_byte() == 0)
 function game_start_lb() => (prev(boot_status()) == 0 && boot_status() == 0xFF) || (prev(status_byte()) == 0x10 && status_byte() == 0)
@@ -213,4 +214,29 @@ leaderboard("Mini Zipping vs. The World", "Shoot or stun the most ships without 
 
 // Rich Presence
 
+missile_dict = {
+    0x33: "Diffusion",
+    0x34: "Miracle",
+    0x35: "Smokescreen",
+    0x36: "Timer Bomb",
+    0x37: "Feint",
+    0x38: "Flower",
+    0x39: "Barrier",
+    0x3A: "Key"
+}
 
+rp_scene = rich_presence_value("Scene", current_scene())
+rp_radar = rich_presence_lookup("Radar", radar(), {
+    0x00: "✗",
+    0x01: "✓",
+    0x02: "P"
+})
+rp_missile_a = rich_presence_lookup("MissileA", missile_a(), missile_dict, "Normal")
+rp_missile_b = rich_presence_lookup("MissileB", missile_b(), missile_dict, "None")
+rp_speed = rich_presence_lookup("Speed", ship_speed(), { 0: "1", 1: "2", 2: "3" }, "1")
+
+rich_presence_conditional_display(in_game_or_transition(), "Flying the Zipping through scene {0} | MissileA:{1} | MissileB:{2} | Radar:{3} | Speed:{4}", rp_scene, rp_missile_a, rp_missile_b, rp_radar, rp_speed)
+rich_presence_conditional_display(no_demo() && current_scene() == 0x0b, "Enjoying a sweet victory over the Zipping's competition")
+rich_presence_conditional_display(no_demo() && current_scene() == 0x0a, "Fostering peace in the galaxy with the princess")
+rich_presence_conditional_display(demo_active(), "Viewing a training montage")
+rich_presence_display("Playing Topple Zip")
