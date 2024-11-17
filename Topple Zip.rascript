@@ -66,6 +66,7 @@ function collectible_array() => byte(0x42c0) // 14 entries, 0x20 bytes each
 function ship_array() => byte(0x4640) // 12 entries, 0x20 bytes each
 
 ship_hit_addrs = range(0x4640, 0x4640 + 0x20 * 11, 0x20)
+collectible_addrs = range(0x42c0, 0x42c0 + 0x20 * 13, 0x20)
 
 bad_collectibles = [
     0x44, // Minus
@@ -100,6 +101,8 @@ function goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 &&
 
 function gen_reset() => never(demo_active()) && never(status_byte() == 0x10)
 
+function item_collected(element, id) => prev(byte(element)) == 2 && byte(element) == 0xFE && byte(element + 2) == id && byte(0x790e) == id 
+
 // Achievements
 
 function pickup_achievement(name, desc, points, accessor, id) {
@@ -130,9 +133,10 @@ achievement("A Steady Hand", "Reach the Goal scene without letting the Zipping t
 achievement("World Traveller", "Reach the Goal scene after visiting all other scenes in a single game.", 10,
     game_start() && goal_trigger() && gen_reset() && measured(tally_of(range(1,6), 6, num => once(current_scene() == num))))
 
-
-// achievement("Chaff Dodger", "Reach the Goal scene without collecting any negative items.", 10,
-
+achievement("Chaff Dodger", "Reach the Goal scene without collecting any negative items.", 10,
+    game_start() && trigger_when(goal_trigger()) && gen_reset() &&
+    never(any_of(collectible_addrs, addr => item_collected(addr, 0x44))) &&
+    never(any_of(collectible_addrs, addr => item_collected(addr, 0x45))))
 
 achievement("Sector Clear", "Shoot or stun every type of enemy ship in a single scene.", 10, 
     never(demo_active()) && never(current_scene() != prev(current_scene())) && never(in_game_over()) && never(in_scene_transition()) &&
