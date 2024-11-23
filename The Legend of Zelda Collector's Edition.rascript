@@ -89,6 +89,7 @@ function owns_tuner() => bit0(0x3cb928) == 1
 function owns_picto_box() => bit0(0x3cb929) == 1
 function owns_deluxe_picto_box() => bit1(0x3cb929) == 1
 function treasure_chart_23() => bit5(0x3cb9a6) == 1
+function note_to_mom() => bit0(0x3cbf1b) == 1
 
 function in_map(name) {
     return ascii_string_equals(0x3d0a04, name)
@@ -255,6 +256,9 @@ achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsa
 trigger = ww() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
 float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0))
+
+achievement(title = "I Really Would, But I Gotta Run", description = "[WW] Promise to deliver the Note to Mom for Baito.", points = 5,
+trigger = ww() && stage_id() == 0x0b && prev(!note_to_mom()) && note_to_mom())
 
 achievement(title = "Census Taker", description = "[WW] Speak to all the denizens of Windfall Island.", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
