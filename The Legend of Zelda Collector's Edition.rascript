@@ -88,6 +88,7 @@ function owns_hook() => bit0(0x3cb924) == 1
 function owns_tuner() => bit0(0x3cb928) == 1
 function owns_picto_box() => bit0(0x3cb929) == 1
 function owns_deluxe_picto_box() => bit1(0x3cb929) == 1
+function treasure_chart_23() => bit5(0x3cb9a6) == 1
 
 function in_map(name) {
     return ascii_string_equals(0x3d0a04, name)
@@ -200,6 +201,12 @@ trigger = ww() && prev(max_hearts() == 0x0f) && max_hearts() == 0x10)
 
 achievement(title = "Lookout Platform Placeholder", description = "[WW] Open the chest on the lookout platform near Pawprint Isle.", points = 2,
 trigger = ww() && stage_id() == 0x00 && prev(pawprint_platform_chest()) == 0 && pawprint_platform_chest() == 1)
+
+achievement(title = "Picto Box Placeholder", description = "[WW] Find the Picto Box.", points = 2,
+trigger = ww() && stage_id() == 0x0b && prev(!owns_picto_box()) && owns_picto_box())
+
+achievement(title = "Squid-Hunt Expert", description = "[WW] Win Treasure Chart #23 from Salvatore.", points = 5,
+trigger = ww() && stage_id() == 0x0b && prev(!treasure_chart_23()) && treasure_chart_23())
 
 achievement(title = "Tipsters Placeholder", description = "[WW] Learn a rumor from the Little Tipsters.", points = 2,
 trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialogue_index() == 13717)
