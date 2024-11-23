@@ -290,21 +290,21 @@ submit = always_true(),
 value = pig_timer() * 2,
 format = "FRAMES")
 
-leaderboard(title = "[WW] Swift Sword Salvage", description = "Recover your sword from the Forsaken Forest the fastest from starting the demo. Time is measured with the in-game timer.",
+leaderboard(title = "[WW] Swift Sword Salvage", description = "Recover your sword from the Forsaken Forest the fastest from starting the demo.",
 start = ww() && stage_id() == 0x02 && prev(sword_id() == 0xff) && sword_id() == 0x38,
 cancel = always_false(),
 submit = always_true(),
 value = frame_timer(),
 format = "FRAMES", lower_is_better = true)
 
-leaderboard(title = "[WW] Speedy Spider Squash", description = "Defeat Gohma the fastest from starting the demo. Time is measured with the in-game timer.",
+leaderboard(title = "[WW] Speedy Spider Squash", description = "Defeat Gohma the fastest from starting the demo.",
 start = ww() && stage_id() == 0x03 && prev(!boss_dead()) && boss_dead(),
 cancel = always_false(),
 submit = always_true(),
 value = frame_timer(),
 format = "FRAMES", lower_is_better = true)
 
-leaderboard(title = "[WW] Flash Photography", description = "Complete Lenzo's Picto Box quest the fastest from starting the demo. Time is measured with the in-game timer.",
+leaderboard(title = "[WW] Flash Photography", description = "Complete Lenzo's Picto Box quest the fastest from starting the demo.",
 start = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6,
 cancel = always_false(),
 submit = always_true(),
