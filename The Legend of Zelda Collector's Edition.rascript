@@ -234,8 +234,8 @@ achievement(title = "Fortress Forager", description = "[WW] Open all the chests 
 trigger = ww() && stage_id() == 0x02 && prev(ff_map() + ff_rupee() + ff_compass() + ff_heart()) == 3 &&
 measured(ff_map() + ff_rupee() + ff_compass() + ff_heart() == 4, when = ww() && stage_id() == 0x02))
 
-achievement(title = "Can't Let You Do That", description = "[WW] Try to sail beyond your limits.", points = 1,
-trigger = ww() && riding_ship() && prev(dialogue_index()) != 1545 && dialogue_index() == 1545)
+// achievement(title = "Can't Let You Do That", description = "[WW] Try to sail beyond your limits.", points = 1,
+// trigger = ww() && riding_ship() && prev(dialogue_index()) != 1545 && dialogue_index() == 1545)
 
 achievement(title = "Out of the Limelight", description = "[WW] Disable all the spotlights in Forsaken Fortress.", points = 5,
 trigger = ww() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww() && stage_id() == 0x02))
