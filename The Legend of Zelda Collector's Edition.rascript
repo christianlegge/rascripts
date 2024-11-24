@@ -277,7 +277,7 @@ never(ff_thrown_in_jail()) && never(in_barrel()))
 // Leaderboards
 
 leaderboard(title = "[WW] Get Rich Quick", description = "Have the most Rupees at the end of the Wind Waker demo.",
-start = prev(!ww()) && ww(),
+start = prev(ww()) && !ww(),
 cancel = always_false(),
 submit = always_true(),
 value = wind_waker_demo_rupees(),
