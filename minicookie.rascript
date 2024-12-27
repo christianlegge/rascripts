@@ -74,11 +74,11 @@ for i in range(0x360, 0x3bf) {
 }
 
 achievement(
-    title = "Pump It Up", points = 1,
-    description = "test", trigger =
+    title = "Pump It Up", points = 1, id = 489282,
+    description = "Solve the twelfth Picross puzzle and make art! (See Forum Topic)", trigger =
     sum_of(empty_addr, (x) => byte(x)) == 1 &&
     //all_of(empty_addr, (x) => byte(x) == 0) &&
     sum_of(empty_addr, (x) => prev(byte(x))) == 3 &&
-    sum_of(filled_addr, (x) => byte(x)) == length(filled_addr) * 2
+    all_of(filled_addr, (x) => byte(x) == 2)
 )
 
