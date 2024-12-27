@@ -227,7 +227,7 @@ trigger = ww() && stage_id() == 0x00 && sea_sector_x() == 0x02 && sea_sector_y()
 achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island", points = 5,
 trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1, id = 482751)
 
-achievement(title = "Teacher's Pet", description = "[WW] Bring a Joy Pendant to Ms. Marie for a reward.", points = 3,
+achievement(title = "Teacher's Pet", description = "[WW] Bring a Joy Pendant to Ms. Marie for a reward", points = 3,
 trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) == 0 && dialogue_index() == 10042, id = 482750)
 
 achievement(title = "Fortress Forager", description = "[WW] Open all the chests in the Forsaken Fortress", points = 5,
