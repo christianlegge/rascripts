@@ -19,6 +19,222 @@ function invitation_count() => byte(0x00CEE0)
 function blue_present_count() => byte(0x00CEE1)
 function red_present_count() => byte(0x00CEE2)
 
+// Permanent Flags
+
+willow_blues_gb = [
+    bit4(0xc215),
+    bit4(0xc216), bit5(0xc216), bit6(0xc216), bit7(0xc216),
+    bit0(0xc217), bit1(0xc217), bit2(0xc217)
+]
+
+vulture_blues_gb = [
+    bit4(0xc217), bit5(0xc217), bit6(0xc217), bit7(0xc217),
+    bit0(0xc218), bit1(0xc218), bit2(0xc218), bit3(0xc218)
+]
+
+krow_blues_gb = [
+    bit4(0xc218), bit5(0xc218), bit6(0xc218), bit7(0xc218),
+    bit0(0xc219), bit1(0xc219), bit2(0xc219), bit3(0xc219)
+]
+
+claw_blues_gb = [
+    bit4(0xc219), bit5(0xc219), bit6(0xc219), bit7(0xc219),
+    bit0(0xc21a), bit1(0xc21a), bit2(0xc21a), bit3(0xc21a)
+]
+
+mako_blues_gb = [
+    bit4(0xc21a), bit5(0xc21a), bit6(0xc21a), bit7(0xc21a),
+    bit0(0xc21b), bit1(0xc21b), bit2(0xc21b), bit3(0xc21b)
+]
+
+aztec_blues_gb = [
+    bit5(0xc21d), bit6(0xc21d), bit7(0xc21d),
+    bit0(0xc21e), bit1(0xc21e), bit2(0xc21e), bit3(0xc21e), bit4(0xc21e)
+]
+
+willow_invites_gb = [
+    bit0(0xc207), bit1(0xc207), bit2(0xc207), bit3(0xc207)
+    ]
+
+vulture_invites_gb = [
+    bit4(0xc207), bit5(0xc207), bit6(0xc207), bit7(0xc207)
+]
+
+krow_invites_gb = [
+    bit0(0xc208), bit1(0xc208), bit2(0xc208), bit3(0xc208)
+]
+
+mako_invites_gb = [
+    bit4(0xc208), bit5(0xc208), bit6(0xc208), bit7(0xc208)
+]
+
+claw_invites_gb = [
+    bit0(0xc209), bit1(0xc209), bit2(0xc209), bit3(0xc209)
+]
+
+aztec_invites_gb = [
+    bit4(0xc209), bit5(0xc209), bit6(0xc209), bit7(0xc209)
+]
+
+willow_reds_gb = [
+    bit5(0xc21b), bit6(0xc21b), bit7(0xc21b),
+    bit0(0xc21c), bit1(0xc21c), bit2(0xc21c)
+]
+
+vulture_reds_gb = [
+    bit3(0xc21c), bit4(0xc21c)
+]
+
+krow_reds_gb = [
+    bit5(0xc21c), bit6(0xc21c)
+]
+
+mako_reds_gb = [
+    bit7(0xc21c), bit0(0xc21d)
+]
+
+claw_reds_gb = [
+    bit1(0xc21d), bit2(0xc21d)
+]
+
+aztec_reds_gb = [
+    bit3(0xc21d), bit4(0xc21d)
+]
+
+willow_blues_gbc = [
+    bit5(0xc301),
+    bit0(0xc30c),
+    bit6(0xc36c), // boss
+    bit6(0xc36e),
+    bit4(0xc36f),
+    bit7(0xc371),
+    bit7(0xc375),
+    bit3(0xc37c)
+]
+
+vulture_blues_gbc = [
+    bit0(0xc349), // boss
+    bit6(0xc350),
+    bit4(0xc380),
+    bit5(0xc382),
+    bit6(0xc385),
+    bit5(0xc391),
+    bit5(0xc394),
+    bit6(0xc3e2)
+]
+
+krow_blues_gbc = [
+    bit5(0xc3b1),
+    bit6(0xc3b2),
+    bit5(0xc3b3),
+    bit0(0xc3e4), bit1(0xc3e4), bit2(0xc3e4), // boss 3, 2, 1
+    bit7(0xc3e5), // boss 4
+    bit6(0xc3eb)  // boss 5
+]
+
+mako_blues_gbc = [
+    bit4(0xc333),
+    bit6(0xc3b7),
+    bit5(0xc3b8), bit6(0xc3b8),
+    bit5(0xc3b9),
+    bit6(0xc3ba),
+    bit6(0xc3bb),
+    bit6(0xc3bc)
+]
+
+claw_blues_gbc = [
+    bit4(0xc3bd), bit6(0xc3bd),
+    bit0(0xc3c2), bit2(0xc3c2),
+    bit4(0xc3c9), bit6(0xc3c9),
+    bit2(0xc3cf),
+    bit1(0xc3f7) // boss
+]
+
+aztec_blues_gbc = [
+    bit0(0xc31c), bit3(0xc31c), bit4(0xc31c),
+    bit6(0xc323),
+    bit4(0xc328),
+    bit3(0xc331), bit4(0xc331),
+    bit2(0xc3fd) // boss
+]
+
+willow_invites_gbc = [
+    bit2(0xc30e),
+    bit7(0xc311),
+    bit7(0xc3d6),
+    bit7(0xc3d9)
+]
+
+vulture_invites_gbc = [
+    bit0(0xc34b), bit3(0xc34b),
+    bit3(0xc388),
+    bit7(0xc3e3)
+]
+
+krow_invites_gbc = [
+    bit0(0xc397),
+    bit5(0xc3a1),
+    bit0(0xc3a6),
+    bit6(0xc3fb)
+]
+
+mako_invites_gbc = [
+    bit5(0xc338),
+    bit2(0xc341),
+    bit7(0xc405),
+    bit7(0xc408)
+]
+
+claw_invites_gbc = [
+    bit3(0xc3c0),
+    bit5(0xc3c6),
+    bit0(0xc3cc),
+    bit4(0xc3d2)
+]
+
+aztec_invites_gbc = [
+    bit0(0xc328),
+    bit3(0xc32d),
+    bit3(0xc32e),
+    bit2(0xc400)
+]
+
+willow_reds_gbc = [
+    bit2(0xc302),
+    bit3(0xc308),
+    bit2(0xc314),
+    bit7(0xc3d3),
+    bit7(0xc40b),
+    bit7(0xc40f)
+]
+
+vulture_reds_gbc = [
+    bit7(0xc347),
+    bit7(0xc353)
+]
+
+krow_reds_gbc = [
+    bit0(0xc39d),
+    bit4(0xc3f9)
+]
+
+mako_reds_gbc = [
+    bit6(0xc33a),
+    bit7(0xc406)
+]
+
+claw_reds_gbc = [
+    bit4(0xc3c6),
+    bit7(0xc3cd)
+]
+
+aztec_reds_gbc = [
+    bit4(0xc329),
+    bit3(0xc323)
+]
+
+// Achievements
+
 achievement(
     title = "Present Collect!", points = 5,
     description = "Retrieve your first [Stolen Present].",
