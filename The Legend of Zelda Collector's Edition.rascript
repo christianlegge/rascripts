@@ -190,7 +190,7 @@ windfall_dialogue = [
 
 // Achievements
 
-achievement(title = "Clearing Out the Cavern", description = "[WW] Open all the chests in Dragon Roost Cavern", points = 25,
+achievement(title = "Clearing Out the Cavern", description = "[WW] Open every chest in Dragon Roost Cavern", points = 25,
 trigger = ww() && stage_id() == 0x03 && sum_of(drc_chests, x => prev(x)) == length(drc_chests) - 1 &&
 measured(sum_of(drc_chests, x => x) == length(drc_chests), when = ww() && stage_id() == 0x03), id = 482744)
 
@@ -200,7 +200,7 @@ trigger = ww() && prev(cutscene_id()) == 0x003f && cutscene_id() == 0x00ad && st
 achievement(title = "Tough Love", description = "[WW] Collect 4 Pieces of Heart to earn a new Heart Container", points = 25,
 trigger = ww() && prev(max_hearts() == 0x0f) && max_hearts() == 0x10, id = 482739)
 
-achievement(title = "I Can See My House From Here", description = "[WW] Open the chest on the lookout platform near Pawprint Isle", points = 2,
+achievement(title = "I Can See My House from Here", description = "[WW] Open the chest on the lookout platform near Pawprint Isle", points = 2,
 trigger = ww() && stage_id() == 0x00 && prev(pawprint_platform_chest()) == 0 && pawprint_platform_chest() == 1, id = 482740)
 
 achievement(title = "Amateur Photographer", description = "[WW] Find the Picto Box", points = 2,
@@ -224,23 +224,23 @@ trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) != 10129 && dialo
 achievement(title = "I'm With the Band", description = "[WW] Obtain the Wind Waker from the King of Red Lions", points = 3,
 trigger = ww() && stage_id() == 0x00 && sea_sector_x() == 0x02 && sea_sector_y() == 0xfe && prev(!owns_waker()) && owns_waker(), id = 482741)
 
-achievement(title = "Hide and Seek", description = "[WW] Find all the Killer Bees on Windfall Island", points = 5,
+achievement(title = "Hide and Seek", description = "[WW] Find all of the Killer Bees on Windfall Island", points = 5,
 trigger = ww() && stage_id() == 0x00 && prev(killerbees_found()) == 0 && killerbees_found() == 1, id = 482751)
 
-achievement(title = "Teacher's Pet", description = "[WW] Bring a Joy Pendant to Ms. Marie for a reward", points = 3,
+achievement(title = "Teacher's Pet", description = "[WW] Bring a Joy Pendant to Mrs. Marie for a reward", points = 3,
 trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) == 0 && dialogue_index() == 10042, id = 482750)
 
-achievement(title = "Fortress Forager", description = "[WW] Open all the chests in the Forsaken Fortress", points = 5,
+achievement(title = "Fortress Forager", description = "[WW] Open every chest in the Forsaken Fortress", points = 5,
 trigger = ww() && stage_id() == 0x02 && prev(ff_map() + ff_rupee() + ff_compass() + ff_heart()) == 3 &&
 measured(ff_map() + ff_rupee() + ff_compass() + ff_heart() == 4, when = ww() && stage_id() == 0x02), id = 482736)
 
 // achievement(title = "Can't Let You Do That", description = "[WW] Try to sail beyond your limits", points = 1,
 // trigger = ww() && riding_ship() && prev(dialogue_index()) != 1545 && dialogue_index() == 1545, id = 0)
 
-achievement(title = "Out of the Limelight", description = "[WW] Disable all the spotlights in Forsaken Fortress", points = 5,
+achievement(title = "Out of the Limelight", description = "[WW] Disable every spotlight in the Forsaken Fortress", points = 5,
 trigger = ww() && stage_id() == 0x02 && measured(spotlight1() + spotlight2() + spotlight3() == 3, when = ww() && stage_id() == 0x02), id = 482731)
 
-achievement(title = "Boy You're Poor!", description = "[WW] Get thrown out of the auction house", points = 1,
+achievement(title = "Boy, You're Poor!", description = "[WW] Get thrown out of the auction house", points = 1,
 trigger = never(!ww()) && once(in_map("Orichh") && dialogue_index() == 7216) && prev(stage_id() == 0x0b) && stage_id() == 0x00 && never(prev(stage_id() == 0x00)), id = 482749)
 
 achievement(title = "Rupees Before Swine", description = "[WW] Help find Dampa's pig for a reward", points = 3,
@@ -252,7 +252,7 @@ trigger = ww() && island_file() && prev(stage_id() == 0x0b) && in_map("M_NewD2")
 achievement(title = "Taking the Scenic Route I", description = "[WW] Starting from the Stealth save file, reach Dragon Roost Island", points = 25,
 trigger = ww() && stealth_file() && stage_id() == 0x00 && sea_sector_x() == 0x02 && prev(cutscene_id()) == 0xffff && cutscene_id() == 0x0097, id = 482733)
 
-achievement(title = "Prison Break", description = "[WW] Escape the jail in Forsaken Fortress", points = 1,
+achievement(title = "Prison Break", description = "[WW] Escape the jail in the Forsaken Fortress", points = 1,
 trigger = ww() && in_air() && prev(on_ground()) &&
 in_map("majroom") && stage_id() == 0x02 && float_range(2500.0, ypos(), 2525.0) &&
 float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0), id = 482728)
@@ -260,11 +260,11 @@ float_range(-3425.0, xpos(), -3400.0) && float_range(7575.0, zpos(), 7600.0), id
 achievement(title = "I Really Would, But I Gotta Run", description = "[WW] Promise to deliver the Note to Mom for Baito", points = 5,
 trigger = ww() && stage_id() == 0x0b && prev(!note_to_mom()) && note_to_mom(), id = 482747)
 
-achievement(title = "Census Taker", description = "[WW] Speak to all the denizens of Windfall Island", points = 5,
+achievement(title = "Census Taker", description = "[WW] Speak to all of the denizens of Windfall Island", points = 5,
 trigger = never(!ww()) && measured(tally(length(windfall_dialogue),
 array_map(windfall_dialogue, dialogue_equals)), when = ww()), id = 482748)
 
-achievement(title = "Cash Grab", description = "[WW] Collect both red Rupees in the Forsaken Fortress main entrance", points = 2,
+achievement(title = "Cash Grab", description = "[WW] Collect both Red Rupees in the Forsaken Fortress main entrance", points = 2,
 trigger = ww() && stage_id() == 0x02 && prev(ffrupee1()) + prev(ffrupee2()) == 1 && ffrupee1() + ffrupee2() == 2, id = 482735)
 
 achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern", points = 25,
