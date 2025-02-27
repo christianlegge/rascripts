@@ -221,7 +221,7 @@ trigger = ww() && stage_id() == 0x00 && sea_sector_x() == 0x00 && sea_sector_y()
 achievement(title = "The Heist", description = "[WW] Sneak into the bomb shop and upset Cannon", points = 2,
 trigger = ww() && stage_id() == 0x0b && prev(dialogue_index()) != 10129 && dialogue_index() == 10129, id = 482752)
 
-achievement(title = "I'm With the Band", description = "[WW] Obtain the Wind Waker from the King of Red Lions", points = 3,
+achievement(title = "That's a Mouthful", description = "[WW] Obtain the Wind Waker from the King of Red Lions", points = 3,
 trigger = ww() && stage_id() == 0x00 && sea_sector_x() == 0x02 && sea_sector_y() == 0xfe && prev(!owns_waker()) && owns_waker(), id = 482741)
 
 achievement(title = "Hide and Seek", description = "[WW] Find all of the Killer Bees on Windfall Island", points = 5,
