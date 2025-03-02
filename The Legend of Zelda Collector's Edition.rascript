@@ -15,6 +15,7 @@ function game_id_probably_not_but_it_might_be_good_enough() => byte(0x029B45)
 function ww() => byte(0x029b45) == 0x08
 
 function boss_dead() => bit3(0x3cc069) == 1
+function boss_dead_delta() => bit3(0x3cc069) > prev(bit3(0x3cc069))
 
 function sea_sector_x() => byte(0x3fd635)
 function sea_sector_y() => byte(0x3fd636)
@@ -188,13 +189,10 @@ windfall_dialogue = [
     [4301, 4314],
 ]
 
-gohma_health_start = 0xaadc4c
-gohma_health_offset = 0x80 - 0x4c
-
-function gohma_health(idx) {
-    max = gohma_health_start + gohma_health_offset * idx
-    curr = gohma_health_start + gohma_health_offset * idx + 1
-    return prev(byte(curr)) > 0x00 && prev(byte(curr)) <= 0x0a && __ornext(byte(curr) == 0x00 || byte(curr) >= 0x80) && byte(max) == 0x0a
+function gohma_health() {
+    max = byte(tbyte_be(0x3fd789) + 0x284)
+    curr = byte(tbyte_be(0x3fd789) + 0x285)
+    return prev((curr)) > 0x00 && prev((curr)) <= 0x0a && ((curr) == 0x00 || (curr) >= 0x80) && (max) == 0x0a
 }
 
 
@@ -278,7 +276,7 @@ achievement(title = "Cash Grab", description = "[WW] Collect both Red Rupees in 
 trigger = ww() && stage_id() == 0x02 && prev(ffrupee1()) + prev(ffrupee2()) == 1 && ffrupee1() + ffrupee2() == 2, id = 482735)
 
 achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern", points = 25,
-trigger = ww() && stage_id() == 0x03 && in_map("M_DragB") && any_of(range(-2,20), gohma_health), id = 482732)
+trigger = ww() && stage_id() == 0x03 && in_map("M_DragB") && (gohma_health() || boss_dead_delta()), id = 482732)
 
 achievement(title = "The Shadow", description = "[WW] Recover your sword from the Forsaken Fortress without getting thrown in jail or hiding in a barrel", points = 10,
 trigger = never(!ww()) && once(prev(!stealth_file()) && stealth_file()) && trigger_when(prev(sword_id() == 0xff) && sword_id() == 0x38) &&
