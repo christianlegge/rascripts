@@ -188,6 +188,16 @@ windfall_dialogue = [
     [4301, 4314],
 ]
 
+gohma_health_start = 0xaadc4c
+gohma_health_offset = 0x80 - 0x4c
+
+function gohma_health(idx) {
+    max = gohma_health_start + gohma_health_offset * idx
+    curr = gohma_health_start + gohma_health_offset * idx + 1
+    return prev(byte(curr)) > 0x00 && prev(byte(curr)) <= 0x0a && __ornext(byte(curr) == 0x00 || byte(curr) >= 0x80) && byte(max) == 0x0a
+}
+
+
 // Achievements
 
 achievement(title = "Clearing Out the Cavern", description = "[WW] Open every chest in Dragon Roost Cavern", points = 25,
@@ -268,7 +278,7 @@ achievement(title = "Cash Grab", description = "[WW] Collect both Red Rupees in 
 trigger = ww() && stage_id() == 0x02 && prev(ffrupee1()) + prev(ffrupee2()) == 1 && ffrupee1() + ffrupee2() == 2, id = 482735)
 
 achievement(title = "Express Exterminator", description = "[WW] Defeat Gohma in Dragon Roost Cavern", points = 25,
-trigger = ww() && stage_id() == 0x03 && prev(!boss_dead()) && boss_dead(), id = 482732)
+trigger = ww() && stage_id() == 0x03 && in_map("M_DragB") && any_of(range(-2,20), gohma_health), id = 482732)
 
 achievement(title = "The Shadow", description = "[WW] Recover your sword from the Forsaken Fortress without getting thrown in jail or hiding in a barrel", points = 10,
 trigger = never(!ww()) && once(prev(!stealth_file()) && stealth_file()) && trigger_when(prev(sword_id() == 0xff) && sword_id() == 0x38) &&
