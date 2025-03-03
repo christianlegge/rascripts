@@ -16,8 +16,9 @@ function dkc_theme() => byte(0x00C563)
 function countdown_to_theme() => byte(0x00C564)
 function ammo() => byte(0x00CED9)
 function invitation_count() => byte(0x00CEE0)
-function blue_present_count() => byte(0x00CEE1)
+function gbc_blues() => byte(0x00CEE1)
 function red_present_count() => byte(0x00CEE2)
+function gb_blues() => byte(0xffad)
 
 // Permanent Flags
 
@@ -54,7 +55,7 @@ aztec_blues_gb = [
 
 willow_invites_gb = [
     bit0(0xc207), bit1(0xc207), bit2(0xc207), bit3(0xc207)
-    ]
+]
 
 vulture_invites_gb = [
     bit4(0xc207), bit5(0xc207), bit6(0xc207), bit7(0xc207)
@@ -233,13 +234,225 @@ aztec_reds_gbc = [
     bit3(0xc323)
 ]
 
+gb_maps = {
+        0x00: "Willow Woods",
+        0x01: "Willow Woods",
+        0x02: "Willow Woods",
+        0x03: "Willow Woods",
+        0x04: "Willow Woods",
+        0x05: "Willow Woods",
+        0x06: "Willow Woods",
+        0x07: "Willow Woods",
+        0x08: "Willow Woods",
+        0x09: "Willow Woods",
+        0x0a: "Willow Woods",
+        0x0b: "Willow Woods",
+        0x0c: "Willow Woods",
+        0x0e: "Willow Woods",
+        0x0f: "Vultureville",
+        0x10: "Vultureville",
+        0x11: "Vultureville",
+        0x12: "Vultureville",
+        0x13: "Vultureville",
+        0x14: "Vultureville",
+        0x16: "Vultureville",
+        0x17: "Vultureville",
+        0x18: "Vultureville",
+        0x19: "Vultureville",
+        0x1c: "Vultureville",
+        0x1d: "Willow Woods",
+        0x1e: "Willow Woods",
+        0x20: "Willow Woods",
+        0x21: "Mako Islands",
+        0x22: "Mako Islands",
+        0x23: "Mako Islands",
+        0x24: "Claw Swamp",
+        0x25: "Krow Keep",
+        0x26: "Willow Woods",
+        0x27: "Willow Woods",
+        0x28: "Willow Woods",
+        0x29: "Willow Woods",
+        0x2b: "Mako Islands",
+        0x2d: "Mako Islands",
+        0x2f: "Mako Islands",
+        0x30: "Vultureville",
+        0x31: "Vultureville",
+        0x32: "Vultureville",
+        0x34: "Vultureville",
+        0x35: "Vultureville",
+        0x36: "Vultureville",
+        0x37: "Vultureville",
+        0x39: "Vultureville",
+        0x3a: "Vultureville",
+        0x3d: "Krow Keep",
+        0x3e: "Aztec Temple",
+        0x3f: "Claw Swamp",
+        0x40: "Claw Swamp",
+        0x41: "Claw Swamp",
+        0x42: "Claw Swamp",
+        0x43: "Claw Swamp",
+        0x44: "Claw Swamp",
+        0x45: "Claw Swamp",
+        0x46: "Claw Swamp",
+        0x47: "Vultureville",
+        0x48: "Vultureville",
+        0x49: "Krow Keep",
+        0x4a: "Krow Keep",
+        0x4b: "Krow Keep",
+        0x4c: "Krow Keep",
+        0x4d: "Krow Keep",
+        0x4e: "Krow Keep",
+        0x4f: "Krow Keep",
+        0x50: "Vultureville",
+        0x51: "Krow Keep",
+        0x52: "Mako Islands",
+        0x53: "Mako Islands",
+        0x54: "Mako Islands",
+        0x55: "Mako Islands",
+        0x56: "Mako Islands",
+        0x57: "Mako Islands",
+        0x59: "Willow Woods",
+        0x5a: "Claw Swamp",
+        0x5b: "Final Dungeon",
+        0x5c: "Aztec Temple",
+        0x5d: "Krow Keep",
+        0x5e: "Krow Keep",
+        0x5f: "Krow Keep",
+        0x60: "Krow Keep",
+        0x69: "Final Dungeon",
+        0x6a: "Mako Islands",
+        0x6b: "Mako Islands"
+}
+
+gbc_maps = {
+        0x00: "Willow Woods",
+        0x01: "Aztec Temple",
+        0x02: "Mako Islands",
+        0x03: "Vultureville",
+        0x05: "Final Dungeon",
+        0x08: "Willow Woods",
+        0x09: "Willow Woods",
+        0x0a: "Willow Woods",
+        0x0b: "Willow Woods",
+        0x0f: "Willow Woods",
+        0x10: "Willow Woods",
+        0x11: "Willow Woods",
+        0x12: "Willow Woods",
+        0x13: "Willow Woods",
+        0x14: "Willow Woods",
+        0x26: "Vultureville",
+        0x29: "Krow Keep",
+        0x2a: "Krow Keep",
+        0x2b: "Krow Keep",
+        0x2d: "Krow Keep",
+        0x39: "Mako Islands",
+        0x3a: "Mako Islands",
+        0x3b: "Mako Islands",
+        0x3c: "Mako Islands",
+        0x3d: "Mako Islands",
+        0x3e: "Mako Islands",
+        0x3f: "Claw Swamp",
+        0x4a: "Mako Islands",
+        0x4b: "Mako Islands",
+        0x4d: "Mako Islands",
+        0x4e: "Mako Islands",
+        0x4f: "Claw Swamp",
+        0x53: "Krow Keep",
+        0x58: "Krow Keep",
+        0x59: "Claw Swamp",
+        0x61: "Krow Keep",
+        0x62: "Aztec Temple",
+        0x66: "Aztec Temple",
+        0x68: "Mako Islands",
+        0x69: "Mako Islands",
+        0x6a: "Mako Islands",
+        0x6b: "Mako Islands",
+        0x6c: "Willow Woods"
+}
+
+function world_blues_gb(map_id) {
+    if gb_maps[map_id] == "Willow Woods" {
+        return sum_of(willow_blues_gb, _ => _)
+    } else if gb_maps[map_id] == "Vultureville" {
+        return sum_of(vulture_blues_gb, _ => _)
+    } else if gb_maps[map_id] == "Krow Keep" {
+        return sum_of(krow_blues_gb, _ => _)
+    } else if gb_maps[map_id] == "Claw Swamp" {
+        return sum_of(claw_blues_gb, _ => _)
+    } else if gb_maps[map_id] == "Mako Islands" {
+        return sum_of(mako_blues_gb, _ => _)
+    } else if gb_maps[map_id] == "Aztec Temple" {
+        return sum_of(aztec_blues_gb, _ => _)
+    } else {
+        return 0
+    }
+}
+
+function world_blues_gbc(map_id) {
+    if gbc_maps[map_id] == "Willow Woods" {
+        return sum_of(willow_blues_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Vultureville" {
+        return sum_of(vulture_blues_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Krow Keep" {
+        return sum_of(krow_blues_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Claw Swamp" {
+        return sum_of(claw_blues_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Mako Islands" {
+        return sum_of(mako_blues_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Aztec Temple" {
+        return sum_of(aztec_blues_gbc, _ => _)
+    } else {
+        return 0
+    }
+}
+
+function gbc() => byte(0xff4d) == 0x80
+function gb() => !gbc()
+
+function gb_map_screen() => byte(0xffa6)
+function gbc_map_screen() => byte(0xce40)
+
+function in_game_flag() => byte(0x00C55B)
+function gbc_in_game() => in_game_flag() == 0x01
+function gb_in_game_flag() => byte(0x00C5B2)
+function gb_in_game() => gb_in_game_flag() != 0x00
+
+// Rich Presence
+//
+
+rich_presence_conditional_display(gb() && !gb_in_game(), "[GB] Conker is in the main menu")
+rich_presence_conditional_display(gbc() && !gbc_in_game(), "[GBC] Conker is in the main menu")
+for map_id in gb_maps {
+    if (gb_maps[map_id] != "Final Dungeon") {
+    rich_presence_conditional_display(gb() && gb_map_screen() == map_id, "[GB] Conker is exploring the " + gb_maps[map_id] + " [🟦{0}/8]",
+    rich_presence_value("Blues", world_blues_gb(map_id)))
+    }
+    else {
+        rich_presence_conditional_display(gb() && gb_map_screen() == map_id, "[GB] Conker is saving Berri and friends")
+    }
+}
+for map_id in gbc_maps {
+if (gbc_maps[map_id] != "Final Dungeon") {
+    rich_presence_conditional_display(gbc() && gbc_map_screen() == map_id, "[GBC] Conker is exploring the " + gbc_maps[map_id] + " [🟦{0}/8]",
+    rich_presence_value("Blues", world_blues_gbc(map_id)))
+    }
+    else {
+        rich_presence_conditional_display(gbc() && gbc_map_screen() == map_id, "[GBC] Conker is saving Berri and friends")
+    }
+}
+rich_presence_conditional_display(gb(), "[GB] Conker is out looking for Berri [🟦{0}/48] [{1}]", rich_presence_value("Blues", gb_blues()),
+rich_presence_value("Map", gb_map_screen()))
+rich_presence_conditional_display(gbc(), "[GBC] Conker is out looking for Berri [🟦{0}/48] [{1}]", rich_presence_value("Blues", gbc_blues()),
+rich_presence_value("Map", gbc_map_screen()))
+rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_value("GBCIndicator", byte(0xff4d)))
+
 // Achievements
 
 achievement(
     title = "Present Collect!", points = 5,
     description = "Retrieve your first [Stolen Present].",
     id = 12693, badge = "12588", published = "2014-09-10 4:42:33 AM", modified = "2014-11-05 7:21:29 PM",
-    trigger = blue_present_count() == 1
+    trigger = gbc_blues() == 1
 )
 
 achievement(
@@ -281,7 +494,7 @@ achievement(
     title = "East-Side Farm-Yard", points = 10, type="progression",
     description = "Collect enough Presents to enter the Old Barn.",
     id = 12694, badge = "12590", published = "2014-09-10 4:42:36 AM", modified = "2020-07-05 7:03:30 AM",
-    trigger = blue_present_count() == 8
+    trigger = gbc_blues() == 8
 )
 
 achievement(
@@ -337,7 +550,7 @@ achievement(
     title = "Jaunter back to Cools-Ville.", points = 10, type="progression",
     description = "Collect enough Presents to leave Vulture-Ville and Enter Krow Keep.",
     id = 12702, badge = "12617", published = "2014-09-10 4:43:16 AM", modified = "2020-07-05 7:03:11 AM",
-    trigger = blue_present_count() == 16
+    trigger = gbc_blues() == 16
 )
 
 achievement(
@@ -358,14 +571,14 @@ achievement(
     title = "Next Venue", points = 10,
     description = "Collect enough Presents to leave Krow Keep.",
     id = 15669, badge = "15233", published = "2014-10-16 6:52:43 AM", modified = "2020-07-05 7:02:40 AM",
-    trigger = blue_present_count() == 24
+    trigger = gbc_blues() == 24
 )
 
 achievement(
     title = "Toll of the Bog", points = 10,
     description = "Collect enough Presents to enter the Claw Swamp.",
     id = 12698, badge = "12593", published = "2014-09-10 4:43:05 AM", modified = "2020-07-05 7:03:21 AM",
-    trigger = blue_present_count() == 24
+    trigger = gbc_blues() == 24
 )
 
 achievement(
