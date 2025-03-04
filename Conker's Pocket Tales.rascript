@@ -448,6 +448,94 @@ rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_val
 
 // Achievements
 
+function all_blues_achievement(gb_bit_array, gbc_bit_array, title, name) {
+    achievement(
+        title = title,
+        points = 5,
+        description = "Collect all of the Blue Presents in " + name + ".",
+        trigger = (gb() && gb_in_game() && measured(sum_of(gb_bit_array, _ => _) == 8) && sum_of(gb_bit_array, x => prev(x)) == 7) || (gbc() && gbc_in_game() && measured(sum_of(gbc_bit_array, _ => _) == 8) && sum_of(gbc_bit_array, x => prev(x)) == 7),
+        type = "progression"
+    )
+}
+
+function all_optional_achievement(gb_bit_array, gbc_bit_array, title, name) {
+    achievement(
+        title = title,
+        points = 5,
+        description = "Collect all of the Party Invites and Special Presents in " + name + ".",
+        trigger = (gb() && gb_in_game() && measured(sum_of(gb_bit_array, _ => _) == length(gb_bit_array)) && sum_of(gb_bit_array, x => prev(x)) == length(gb_bit_array) - 1) ||
+                  (gbc() && gbc_in_game() && measured(sum_of(gbc_bit_array, _ => _) == length(gbc_bit_array)) && sum_of(gbc_bit_array, x => prev(x)) == length(gbc_bit_array) - 1)
+    )
+}
+
+
+all_blues_achievement(willow_blues_gb, willow_blues_gbc, "Willow Woods Blues", "Willow Woods")
+all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, "Vulture Culture", "Vultureville")
+all_blues_achievement(krow_blues_gb, krow_blues_gbc, "Krow Keep Blues", "Krow Keep")
+all_blues_achievement(mako_blues_gb, mako_blues_gbc, "Mako Islands Blues", "Mako Islands")
+all_blues_achievement(claw_blues_gb, claw_blues_gbc, "Claw Swamp Blues", "Claw Swamp")
+all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, "Aztec Temple Blues", "Aztec Temple")
+
+willow_optional_flags_gb = willow_invites_gb
+for flag in willow_reds_gb {
+    array_push(willow_optional_flags_gb, flag)
+}
+willow_optional_flags_gbc = willow_invites_gbc
+for flag in willow_reds_gbc {
+    array_push(willow_optional_flags_gbc, flag)
+}
+all_optional_achievement(willow_optional_flags_gb, willow_optional_flags_gbc, "Willow Woods Party", "Willow Woods")
+
+vulture_optional_flags_gb = vulture_invites_gb
+for flag in vulture_reds_gb {
+    array_push(vulture_optional_flags_gb, flag)
+}
+vulture_optional_flags_gbc = vulture_invites_gbc
+for flag in vulture_reds_gbc {
+    array_push(vulture_optional_flags_gbc, flag)
+}
+all_optional_achievement(vulture_optional_flags_gb, vulture_optional_flags_gbc, "Vultureville Party", "Vultureville")
+
+krow_optional_flags_gb = krow_invites_gb
+for flag in krow_reds_gb {
+    array_push(krow_optional_flags_gb, flag)
+}
+krow_optional_flags_gbc = krow_invites_gbc
+for flag in krow_reds_gbc {
+    array_push(krow_optional_flags_gbc, flag)
+}
+all_optional_achievement(krow_optional_flags_gb, krow_optional_flags_gbc, "Krow Keep Party", "Krow Keep")
+
+mako_optional_flags_gb = mako_invites_gb
+for flag in mako_reds_gb {
+    array_push(mako_optional_flags_gb, flag)
+}
+mako_optional_flags_gbc = mako_invites_gbc
+for flag in mako_reds_gbc {
+    array_push(mako_optional_flags_gbc, flag)
+}
+all_optional_achievement(mako_optional_flags_gb, mako_optional_flags_gbc, "Mako Islands Party", "Mako Islands")
+
+claw_optional_flags_gb = claw_invites_gb
+for flag in claw_reds_gb {
+    array_push(claw_optional_flags_gb, flag)
+}
+claw_optional_flags_gbc = claw_invites_gbc
+for flag in claw_reds_gbc {
+    array_push(claw_optional_flags_gbc, flag)
+}
+all_optional_achievement(claw_optional_flags_gb, claw_optional_flags_gbc, "Claw Swamp Party", "Claw Swamp")
+
+aztec_optional_flags_gb = aztec_invites_gb
+for flag in aztec_reds_gb {
+    array_push(aztec_optional_flags_gb, flag)
+}
+aztec_optional_flags_gbc = aztec_invites_gbc
+for flag in aztec_reds_gbc {
+    array_push(aztec_optional_flags_gbc, flag)
+}
+all_optional_achievement(aztec_optional_flags_gb, aztec_optional_flags_gbc, "Aztec Temple Party", "Aztec Temple")
+
 achievement(
     title = "Present Collect!", points = 5,
     description = "Retrieve your first [Stolen Present].",
