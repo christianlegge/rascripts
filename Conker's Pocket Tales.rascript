@@ -579,7 +579,8 @@ function all_blues_achievement(gb_bit_array, gbc_bit_array, title, name) {
         title = title,
         points = 5,
         description = "Collect all of the Blue Presents in " + name + ".",
-        trigger = (gb() && gb_in_game() && measured(sum_of(gb_bit_array, _ => _) == 8) && sum_of(gb_bit_array, x => prev(x)) == 7) || (gbc() && gbc_in_game() && measured(sum_of(gbc_bit_array, _ => _) == 8) && sum_of(gbc_bit_array, x => prev(x)) == 7),
+        trigger = ( measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
+            ( measured(sum_of(gbc_bit_array, _ => _) == 8, when = gbc() && gbc_in_game()) && sum_of(gbc_bit_array, x => prev(x)) == 7),
         type = "progression"
     )
 }
@@ -589,18 +590,18 @@ function all_optional_achievement(gb_bit_array, gbc_bit_array, title, name) {
         title = title,
         points = 5,
         description = "Collect all of the Party Invites and Special Presents in " + name + ".",
-        trigger = (gb() && gb_in_game() && measured(sum_of(gb_bit_array, _ => _) == length(gb_bit_array)) && sum_of(gb_bit_array, x => prev(x)) == length(gb_bit_array) - 1) ||
-                  (gbc() && gbc_in_game() && measured(sum_of(gbc_bit_array, _ => _) == length(gbc_bit_array)) && sum_of(gbc_bit_array, x => prev(x)) == length(gbc_bit_array) - 1)
+        trigger = ( measured(sum_of(gb_bit_array, _ => _) == length(gb_bit_array), when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == length(gb_bit_array) - 1) ||
+                  ( measured(sum_of(gbc_bit_array, _ => _) == length(gbc_bit_array), when = gbc() && gbc_in_game()) && sum_of(gbc_bit_array, x => prev(x)) == length(gbc_bit_array) - 1)
     )
 }
 
 
-all_blues_achievement(willow_blues_gb, willow_blues_gbc, "Willow Woods Blues", "Willow Woods")
-all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, "Vulture Culture", "Vultureville")
-all_blues_achievement(krow_blues_gb, krow_blues_gbc, "Krow Keep Blues", "Krow Keep")
-all_blues_achievement(mako_blues_gb, mako_blues_gbc, "Mako Islands Blues", "Mako Islands")
-all_blues_achievement(claw_blues_gb, claw_blues_gbc, "Claw Swamp Blues", "Claw Swamp")
-all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, "Aztec Temple Blues", "Aztec Temple")
+all_blues_achievement(willow_blues_gb, willow_blues_gbc, "Anti-Hsstamean", "Willow Woods")
+all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, "For the Birds", "Vultureville")
+all_blues_achievement(krow_blues_gb, krow_blues_gbc, "Keep Waldorf Down", "Krow Keep")
+all_blues_achievement(mako_blues_gb, mako_blues_gbc, "Wave Race: Squirrel Storm", "Mako Islands")
+all_blues_achievement(claw_blues_gb, claw_blues_gbc, "Fiending for More Box Puzzles", "Claw Swamp")
+all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, "Stronger than a Graveler", "Aztec Temple")
 
 willow_optional_flags_gb = willow_invites_gb
 for flag in willow_reds_gb {
@@ -610,7 +611,7 @@ willow_optional_flags_gbc = willow_invites_gbc
 for flag in willow_reds_gbc {
     array_push(willow_optional_flags_gbc, flag)
 }
-all_optional_achievement(willow_optional_flags_gb, willow_optional_flags_gbc, "Willow Woods Party", "Willow Woods")
+all_optional_achievement(willow_optional_flags_gb, willow_optional_flags_gbc, "Woods Wizard", "Willow Woods")
 
 vulture_optional_flags_gb = vulture_invites_gb
 for flag in vulture_reds_gb {
@@ -620,7 +621,7 @@ vulture_optional_flags_gbc = vulture_invites_gbc
 for flag in vulture_reds_gbc {
     array_push(vulture_optional_flags_gbc, flag)
 }
-all_optional_achievement(vulture_optional_flags_gb, vulture_optional_flags_gbc, "Vultureville Party", "Vultureville")
+all_optional_achievement(vulture_optional_flags_gb, vulture_optional_flags_gbc, "Vulture Victor", "Vultureville")
 
 krow_optional_flags_gb = krow_invites_gb
 for flag in krow_reds_gb {
@@ -630,7 +631,7 @@ krow_optional_flags_gbc = krow_invites_gbc
 for flag in krow_reds_gbc {
     array_push(krow_optional_flags_gbc, flag)
 }
-all_optional_achievement(krow_optional_flags_gb, krow_optional_flags_gbc, "Krow Keep Party", "Krow Keep")
+all_optional_achievement(krow_optional_flags_gb, krow_optional_flags_gbc, "Keep King", "Krow Keep")
 
 mako_optional_flags_gb = mako_invites_gb
 for flag in mako_reds_gb {
@@ -640,7 +641,7 @@ mako_optional_flags_gbc = mako_invites_gbc
 for flag in mako_reds_gbc {
     array_push(mako_optional_flags_gbc, flag)
 }
-all_optional_achievement(mako_optional_flags_gb, mako_optional_flags_gbc, "Mako Islands Party", "Mako Islands")
+all_optional_achievement(mako_optional_flags_gb, mako_optional_flags_gbc, "Mako Medalist", "Mako Islands")
 
 claw_optional_flags_gb = claw_invites_gb
 for flag in claw_reds_gb {
@@ -650,7 +651,7 @@ claw_optional_flags_gbc = claw_invites_gbc
 for flag in claw_reds_gbc {
     array_push(claw_optional_flags_gbc, flag)
 }
-all_optional_achievement(claw_optional_flags_gb, claw_optional_flags_gbc, "Claw Swamp Party", "Claw Swamp")
+all_optional_achievement(claw_optional_flags_gb, claw_optional_flags_gbc, "Swamp Swindler", "Claw Swamp")
 
 aztec_optional_flags_gb = aztec_invites_gb
 for flag in aztec_reds_gb {
@@ -660,16 +661,16 @@ aztec_optional_flags_gbc = aztec_invites_gbc
 for flag in aztec_reds_gbc {
     array_push(aztec_optional_flags_gbc, flag)
 }
-all_optional_achievement(aztec_optional_flags_gb, aztec_optional_flags_gbc, "Aztec Temple Party", "Aztec Temple")
+all_optional_achievement(aztec_optional_flags_gb, aztec_optional_flags_gbc, "Temple Topper", "Aztec Temple")
 
-achievement(title = "Beat Game", points = 10,
+achievement(title = "Berri Alive", points = 10,
     description = "Enter the end portal in the final dungeon and save Berri!",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end()) ||
         (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end()),
     type = "win_condition"
 )
 
-achievement(title = "Whole Shebang", points = 25,
+achievement(title = "Conkered!", points = 25,
     description = "Save all the acorns and Berri with all the collectibles to earn the Whole Shebang rating.",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end() && gb_shebang()) ||
         (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end() && gbc_shebang()),
