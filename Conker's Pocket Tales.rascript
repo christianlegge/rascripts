@@ -15,12 +15,27 @@ function coin() => byte(0x00C466)
 function dkc_theme() => byte(0x00C563)
 function countdown_to_theme() => byte(0x00C564)
 function ammo() => byte(0x00CED9)
-function invitation_count() => byte(0x00CEE0)
+function gbc_invites() => byte(0x00CEE0)
 function gbc_blues() => byte(0x00CEE1)
-function red_present_count() => byte(0x00CEE2)
-function gb_blues() => byte(0xffad)
+function gbc_reds() => byte(0x00CEE2)
+function gb_blues() => bcd(byte(0xffad))
+function gbc_acorns_saved() => byte(0xce42)
+function gbc_berri() => byte(0xc456)
+function gb_invites() => bcd(byte(0xffae))
+function gb_berri() => bit7(0xc201)
+function gb_berri_and_acorns() => bitcount(0xc201)
 
 // Permanent Flags
+//
+final_acorns_gb = [
+    bit0(0xc201),
+    bit1(0xc201),
+    bit2(0xc201),
+    bit3(0xc201),
+    bit4(0xc201),
+    bit5(0xc201),
+    bit6(0xc201)
+]
 
 willow_blues_gb = [
     bit4(0xc215),
@@ -370,6 +385,9 @@ gbc_maps = {
         0x6c: "Willow Woods"
 }
 
+function gb_end() => bit6(0xc21f) == 1
+function gbc_end() => byte(0xc5cb) == 1
+
 function world_blues_gb(map_id) {
     if gb_maps[map_id] == "Willow Woods" {
         return sum_of(willow_blues_gb, _ => _)
@@ -416,6 +434,16 @@ function in_game_flag() => byte(0x00C55B)
 function gbc_in_game() => in_game_flag() == 0x01
 function gb_in_game_flag() => byte(0x00C5B2)
 function gb_in_game() => gb_in_game_flag() != 0x00
+
+function gb_shebang() {
+    return gb_blues() + gb_invites() + 
+    sum_of(willow_reds_gb, _ => _) + sum_of(vulture_reds_gb, _ => _) + sum_of(krow_reds_gb, _ => _) + sum_of(mako_reds_gb, _ => _) + sum_of(claw_reds_gb, _ => _) + sum_of(aztec_reds_gb, _ => _) +
+    gb_berri_and_acorns() >= 100
+}
+
+function gbc_shebang() {
+    return gbc_blues() + gbc_reds() + gbc_invites() + gbc_acorns_saved() + gbc_berri() >= 100
+}
 
 // Rich Presence
 //
@@ -536,6 +564,22 @@ for flag in aztec_reds_gbc {
 }
 all_optional_achievement(aztec_optional_flags_gb, aztec_optional_flags_gbc, "Aztec Temple Party", "Aztec Temple")
 
+achievement(title = "Beat Game", points = 10,
+    description = "Enter the end portal in the final dungeon and save Berri!",
+    trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end()) ||
+        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end()),
+    type = "win_condition"
+)
+
+achievement(title = "Whole Shebang", points = 25,
+    description = "Save all the acorns and Berri with all the collectibles to earn the Whole Shebang rating.",
+    trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end() && gb_shebang()) ||
+        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end() && gbc_shebang()),
+    type = "win_condition"
+)
+
+// PREVIOUS ACHIEVEMENTS
+
 achievement(
     title = "Present Collect!", points = 5,
     description = "Retrieve your first [Stolen Present].",
@@ -589,7 +633,7 @@ achievement(
     title = "Lost in the Mail", points = 10,
     description = "Collect 1 Party Invitation.",
     id = 12696, badge = "12596", published = "2014-09-10 4:42:41 AM", modified = "2014-11-05 7:22:02 PM",
-    trigger = invitation_count() == 1
+    trigger = gbc_invites() == 1
 )
 
 achievement(
@@ -631,7 +675,7 @@ achievement(
     title = "No Wonder They Didn't Show", points = 10,
     description = "Collect 3 Party Invitation.",
     id = 12700, badge = "12596", published = "2014-09-10 4:43:11 AM", modified = "2019-10-12 1:05:01 PM",
-    trigger = invitation_count() == 3
+    trigger = gbc_invites() == 3
 )
 
 achievement(
@@ -645,7 +689,7 @@ achievement(
     title = "A \"Special\" Gift", points = 10,
     description = "Find one Red Present.",
     id = 12707, badge = "12609", published = "2014-09-10 4:43:37 AM", modified = "2019-10-12 1:05:01 PM",
-    trigger = red_present_count() == 1
+    trigger = gbc_reds() == 1
 )
 
 achievement(
@@ -673,12 +717,12 @@ achievement(
     title = "Red Birthday", points = 25,
     description = "Find all Red Presents.",
     id = 12708, badge = "12613", published = "2014-09-10 4:43:42 AM", modified = "2020-07-05 7:02:56 AM",
-    trigger = red_present_count() == 16
+    trigger = gbc_reds() == 16
 )
 
 achievement(
     title = "Trashed My Own House Party 'Cuz Nobody Came", points = 25, type="win_condition",
     description = "Collect all 24 Party Invitations.",
     id = 15668, badge = "15235", published = "2014-10-16 6:46:56 AM", modified = "2020-07-05 7:02:46 AM",
-    trigger = invitation_count() == 24
+    trigger = gbc_invites() == 24
 )
