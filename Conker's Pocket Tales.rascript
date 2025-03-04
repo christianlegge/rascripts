@@ -515,14 +515,39 @@ function gb_reds() {
     return sum_of(willow_reds_gb, _ => _) + sum_of(vulture_reds_gb, _ => _) + sum_of(krow_reds_gb, _ => _) + sum_of(mako_reds_gb, _ => _) + sum_of(claw_reds_gb, _ => _) + sum_of(aztec_reds_gb, _ => _)
 }
 
+function gb_rank_score() {
+    return gb_blues() + gb_invites() / 2 + gb_reds() * 2 + gb_berri_and_acorns()
+}
+
+function gbc_rank_score() {
+    return gbc_blues() + gbc_invites() / 2 + gbc_reds() * 2 + gbc_acorns_saved() + gbc_berri()
+}
+
 function gb_shebang() {
-    return gb_blues() + gb_invites() + 
-    sum_of(willow_reds_gb, _ => _) + sum_of(vulture_reds_gb, _ => _) + sum_of(krow_reds_gb, _ => _) + sum_of(mako_reds_gb, _ => _) + sum_of(claw_reds_gb, _ => _) + sum_of(aztec_reds_gb, _ => _) +
-    gb_berri_and_acorns() >= 100
+    return gb_rank_score() >= 100
 }
 
 function gbc_shebang() {
-    return gbc_blues() + gbc_reds() + gbc_invites() + gbc_acorns_saved() + gbc_berri() >= 100
+    return gbc_rank_score() >= 100
+}
+
+function collected_frame_gb() {
+    return __ornext(
+        gb_blues() > prev(gb_blues()) ||
+        gb_invites() > prev(gb_invites()) ||
+        gb_reds() > prev(gb_reds()) ||
+        gb_berri_and_acorns() > prev(gb_berri_and_acorns())
+    )
+}
+
+function collected_frame_gbc() {
+    return __ornext(
+        gbc_blues() > prev(gbc_blues()) ||
+        gbc_invites() > prev(gbc_invites()) ||
+        gbc_reds() > prev(gbc_reds()) ||
+        gbc_acorns_saved() > prev(gbc_acorns_saved()) ||
+        gbc_berri() > prev(gbc_berri())
+    )
 }
 
 // Rich Presence
@@ -573,6 +598,16 @@ rich_presence_value("Reds", gbc_reds()))
 rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_value("GBCIndicator", byte(0xff4d)))
 
 // Achievements
+//
+function rank_achievement(threshold, title, rank_name) {
+    achievement(
+        title = title,
+        points = 5,
+        description = "Achieve the " + rank_name + " rank.",
+        trigger = (gb() && prev(gb_in_game()) && gb_rank_score() >= threshold && collected_frame_gb()) ||
+            (gbc() && prev(gbc_in_game()) && gbc_rank_score() >= threshold && collected_frame_gbc())
+    )
+}
 
 function all_blues_achievement(gb_bit_array, gbc_bit_array, title, name) {
     achievement(
@@ -594,6 +629,12 @@ function all_optional_achievement(gb_bit_array, gbc_bit_array, title, name) {
                   ( measured(sum_of(gbc_bit_array, _ => _) == length(gbc_bit_array), when = gbc() && gbc_in_game()) && sum_of(gbc_bit_array, x => prev(x)) == length(gbc_bit_array) - 1)
     )
 }
+
+rank_achievement(32, "But I'm Saving Them", "Acorn Aggravator")
+rank_achievement(40, "I Am the One Who Stomps", "Conker Stomper")
+rank_achievement(56, "I Might Just Wild Out", "Crazy Squirrel")
+rank_achievement(64, "Death From Above", "Treetop Terror")
+rank_achievement(80, "Birthday Boy", "Birthday Bonanza")
 
 
 all_blues_achievement(willow_blues_gb, willow_blues_gbc, "Anti-Hsstamean", "Willow Woods")
