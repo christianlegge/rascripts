@@ -37,6 +37,10 @@ final_acorns_gb = [
     bit6(0xc201)
 ]
 
+function gb_acorns_saved() {
+    return sum_of(final_acorns_gb, _ => _)
+}
+
 willow_blues_gb = [
     bit4(0xc215),
     bit4(0xc216), bit5(0xc216), bit6(0xc216), bit7(0xc216),
@@ -424,6 +428,78 @@ function world_blues_gbc(map_id) {
     }
 }
 
+function world_invites_gb(map_id) {
+    if gb_maps[map_id] == "Willow Woods" {
+        return sum_of(willow_invites_gb, _ => _)
+    } else if gb_maps[map_id] == "Vultureville" {
+        return sum_of(vulture_invites_gb, _ => _)
+    } else if gb_maps[map_id] == "Krow Keep" {
+        return sum_of(krow_invites_gb, _ => _)
+    } else if gb_maps[map_id] == "Claw Swamp" {
+        return sum_of(claw_invites_gb, _ => _)
+    } else if gb_maps[map_id] == "Mako Islands" {
+        return sum_of(mako_invites_gb, _ => _)
+    } else if gb_maps[map_id] == "Aztec Temple" {
+        return sum_of(aztec_invites_gb, _ => _)
+    } else {
+        return 0
+    }
+}
+
+function world_invites_gbc(map_id) {
+    if gbc_maps[map_id] == "Willow Woods" {
+        return sum_of(willow_invites_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Vultureville" {
+        return sum_of(vulture_invites_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Krow Keep" {
+        return sum_of(krow_invites_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Claw Swamp" {
+        return sum_of(claw_invites_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Mako Islands" {
+        return sum_of(mako_invites_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Aztec Temple" {
+        return sum_of(aztec_invites_gbc, _ => _)
+    } else {
+        return 0
+    }
+}
+
+function world_reds_gb(map_id) {
+    if gb_maps[map_id] == "Willow Woods" {
+        return sum_of(willow_reds_gb, _ => _)
+    } else if gb_maps[map_id] == "Vultureville" {
+        return sum_of(vulture_reds_gb, _ => _)
+    } else if gb_maps[map_id] == "Krow Keep" {
+        return sum_of(krow_reds_gb, _ => _)
+    } else if gb_maps[map_id] == "Claw Swamp" {
+        return sum_of(claw_reds_gb, _ => _)
+    } else if gb_maps[map_id] == "Mako Islands" {
+        return sum_of(mako_reds_gb, _ => _)
+    } else if gb_maps[map_id] == "Aztec Temple" {
+        return sum_of(aztec_reds_gb, _ => _)
+    } else {
+        return 0
+    }
+}
+
+function world_reds_gbc(map_id) {
+    if gbc_maps[map_id] == "Willow Woods" {
+        return sum_of(willow_reds_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Vultureville" {
+        return sum_of(vulture_reds_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Krow Keep" {
+        return sum_of(krow_reds_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Claw Swamp" {
+        return sum_of(claw_reds_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Mako Islands" {
+        return sum_of(mako_reds_gbc, _ => _)
+    } else if gbc_maps[map_id] == "Aztec Temple" {
+        return sum_of(aztec_reds_gbc, _ => _)
+    } else {
+        return 0
+    }
+}
+
 function gbc() => byte(0xff4d) == 0x80
 function gb() => !gbc()
 
@@ -434,6 +510,10 @@ function in_game_flag() => byte(0x00C55B)
 function gbc_in_game() => in_game_flag() == 0x01
 function gb_in_game_flag() => byte(0x00C5B2)
 function gb_in_game() => gb_in_game_flag() != 0x00
+
+function gb_reds() {
+    return sum_of(willow_reds_gb, _ => _) + sum_of(vulture_reds_gb, _ => _) + sum_of(krow_reds_gb, _ => _) + sum_of(mako_reds_gb, _ => _) + sum_of(claw_reds_gb, _ => _) + sum_of(aztec_reds_gb, _ => _)
+}
 
 function gb_shebang() {
     return gb_blues() + gb_invites() + 
@@ -452,26 +532,44 @@ rich_presence_conditional_display(gb() && !gb_in_game(), "[GB] Conker is in the 
 rich_presence_conditional_display(gbc() && !gbc_in_game(), "[GBC] Conker is in the main menu")
 for map_id in gb_maps {
     if (gb_maps[map_id] != "Final Dungeon") {
-    rich_presence_conditional_display(gb() && gb_map_screen() == map_id, "[GB] Conker is exploring the " + gb_maps[map_id] + " [🟦{0}/8]",
-    rich_presence_value("Blues", world_blues_gb(map_id)))
+    num_reds = 2
+    if (gb_maps[map_id] == "Willow Woods") {
+        num_reds = 6
+    }
+    rich_presence_conditional_display(gb() && gb_map_screen() == map_id, "[GB] Conker is exploring " + gb_maps[map_id] + " [🟦{0}/8] [✉️{1}/4] [🟥{2}/"+num_reds+"]",
+    rich_presence_value("Blues", world_blues_gb(map_id)),
+    rich_presence_value("Invites", world_invites_gb(map_id)),
+    rich_presence_value("Reds", world_reds_gb(map_id)))
     }
     else {
-        rich_presence_conditional_display(gb() && gb_map_screen() == map_id, "[GB] Conker is saving Berri and friends")
+        rich_presence_conditional_display(gb() && gb_map_screen() == map_id, "[GB] Conker is saving Berri and friends [🌰{0}/7]",
+        rich_presence_value("Acorns", gb_acorns_saved()))
     }
 }
 for map_id in gbc_maps {
 if (gbc_maps[map_id] != "Final Dungeon") {
-    rich_presence_conditional_display(gbc() && gbc_map_screen() == map_id, "[GBC] Conker is exploring the " + gbc_maps[map_id] + " [🟦{0}/8]",
-    rich_presence_value("Blues", world_blues_gbc(map_id)))
+    num_reds = 2
+    if (gbc_maps[map_id] == "Willow Woods") {
+        num_reds = 6
+    }
+    rich_presence_conditional_display(gbc() && gbc_map_screen() == map_id, "[GBC] Conker is exploring " + gbc_maps[map_id] + " [🟦{0}/8] [✉️{1}/4] [🟥{2}/"+num_reds+"]",
+    rich_presence_value("Blues", world_blues_gbc(map_id)),
+    rich_presence_value("Invites", world_invites_gbc(map_id)),
+    rich_presence_value("Reds", world_reds_gbc(map_id)))
     }
     else {
-        rich_presence_conditional_display(gbc() && gbc_map_screen() == map_id, "[GBC] Conker is saving Berri and friends")
+        rich_presence_conditional_display(gbc() && gbc_map_screen() == map_id, "[GBC] Conker is saving Berri and friends [🌰{0}/7]",
+        rich_presence_value("Acorns", gbc_acorns_saved()))
     }
 }
-rich_presence_conditional_display(gb(), "[GB] Conker is out looking for Berri [🟦{0}/48] [{1}]", rich_presence_value("Blues", gb_blues()),
-rich_presence_value("Map", gb_map_screen()))
-rich_presence_conditional_display(gbc(), "[GBC] Conker is out looking for Berri [🟦{0}/48] [{1}]", rich_presence_value("Blues", gbc_blues()),
-rich_presence_value("Map", gbc_map_screen()))
+rich_presence_conditional_display(gb(), "[GB] Conker is out looking for Berri [🟦{0}/48] [✉️{1}/24] [🟥{2}/16] [{3}]", rich_presence_value("Blues", gb_blues()),
+rich_presence_value("Invites", gb_invites()),
+rich_presence_value("Map", gb_map_screen()),
+rich_presence_value("Reds", gb_reds()))
+rich_presence_conditional_display(gbc(), "[GBC] Conker is out looking for Berri [🟦{0}/48] [✉️{1}/24] [🟥{2}/16] [{3}]", rich_presence_value("Blues", gbc_blues()),
+rich_presence_value("Invites", gbc_invites()),
+rich_presence_value("Map", gbc_map_screen()),
+rich_presence_value("Reds", gbc_reds()))
 rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_value("GBCIndicator", byte(0xff4d)))
 
 // Achievements
