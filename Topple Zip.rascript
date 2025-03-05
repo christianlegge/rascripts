@@ -98,8 +98,8 @@ function in_game_or_transition() => demo_flag() == 0 && !in_game_over() && boot_
 function game_start() => tally(1, prev(boot_status()) == 0 && boot_status() == 0xFF, prev(status_byte()) == 0x10 && status_byte() == 0)
 function game_start_lb() => (prev(boot_status()) == 0 && boot_status() == 0xFF) || (prev(status_byte()) == 0x10 && status_byte() == 0)
 
-function goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0b && current_scene() == 0x0b
-function p_goal_trigger() => prior(status_byte() == 0) && status_byte() == 0x11 && prev(current_scene()) < 0x0a && current_scene() == 0x0a
+function goal_trigger() => prior(status_byte() == 0) && in_scene_transition() && prev(current_scene()) < 0x0b && current_scene() == 0x0b
+function p_goal_trigger() => prior(status_byte() == 0) && in_scene_transition() && prev(current_scene()) < 0x0a && current_scene() == 0x0a
 
 function gen_reset() => never(demo_active()) && never(status_byte() == 0x10) && never(boot_status() == 0)
 function negate_gen_reset() => demo_active() || status_byte() == 0x10 || boot_status() == 0
