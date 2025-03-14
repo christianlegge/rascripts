@@ -149,7 +149,7 @@ krow_blues_gbc = [
     bit5(0xc3b3),
     bit0(0xc3e4), bit1(0xc3e4), bit2(0xc3e4), // boss 3, 2, 1
     bit7(0xc3e5), // boss 4
-    bit6(0xc3eb)  // boss 5
+    bit6(0xc3e6)  // boss 5
 ]
 
 mako_blues_gbc = [
@@ -171,7 +171,7 @@ claw_blues_gbc = [
 ]
 
 aztec_blues_gbc = [
-    bit0(0xc31c), bit3(0xc31c), bit4(0xc31c),
+    bit0(0xc31c), bit3(0xc31c), bit5(0xc31c),
     bit6(0xc323),
     bit4(0xc328),
     bit3(0xc331), bit4(0xc331),
@@ -500,7 +500,7 @@ function world_reds_gbc(map_id) {
     }
 }
 
-function gbc() => byte(0xff4d) == 0x80
+function gbc() => byte(0xff4d) != 0xff
 function gb() => !gbc()
 
 function gb_map_screen() => byte(0xffa6)
@@ -609,13 +609,14 @@ function rank_achievement(threshold, title, rank_name) {
     )
 }
 
-function all_blues_achievement(gb_bit_array, gbc_bit_array, title, name) {
+function all_blues_achievement(gb_bit_array, gbc_bit_array, map_screen, title, name) {
     achievement(
         title = title,
         points = 5,
         description = "Collect all of the Blue Presents in " + name + ".",
         trigger = ( measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
-            ( measured(sum_of(gbc_bit_array, _ => _) == 8, when = gbc() && gbc_in_game()) && sum_of(gbc_bit_array, x => prev(x)) == 7),
+            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && sum_of(gbc_bit_array, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
+            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == map_screen),
         type = "progression"
     )
 }
@@ -637,12 +638,12 @@ rank_achievement(64, "Death From Above", "Treetop Terror")
 rank_achievement(80, "Birthday Boy", "Birthday Bonanza")
 
 
-all_blues_achievement(willow_blues_gb, willow_blues_gbc, "Anti-Hsstamean", "Willow Woods")
-all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, "For the Birds", "Vultureville")
-all_blues_achievement(krow_blues_gb, krow_blues_gbc, "Keep Waldorf Down", "Krow Keep")
-all_blues_achievement(mako_blues_gb, mako_blues_gbc, "Wave Race: Squirrel Storm", "Mako Islands")
-all_blues_achievement(claw_blues_gb, claw_blues_gbc, "Fiending for More Box Puzzles", "Claw Swamp")
-all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, "Stronger than a Graveler", "Aztec Temple")
+all_blues_achievement(willow_blues_gb, willow_blues_gbc, 0x08, "Anti-Hsstamean", "Willow Woods")
+all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, 0x51, "For the Birds", "Vultureville")
+all_blues_achievement(krow_blues_gb, krow_blues_gbc, 0x61, "Keep Waldorf Down", "Krow Keep")
+all_blues_achievement(mako_blues_gb, mako_blues_gbc, 0x02, "Wave Race: Squirrel Storm", "Mako Islands")
+all_blues_achievement(claw_blues_gb, claw_blues_gbc, 0x60, "Fiending for More Box Puzzles", "Claw Swamp")
+all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, 0x62, "Stronger than a Graveler", "Aztec Temple")
 
 willow_optional_flags_gb = willow_invites_gb
 for flag in willow_reds_gb {
