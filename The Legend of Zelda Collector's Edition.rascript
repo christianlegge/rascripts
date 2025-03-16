@@ -218,7 +218,7 @@ achievement(title = "Squid-Hunt Expert", description = "[WW] Win Treasure Chart 
 trigger = ww() && stage_id() == 0x0b && prev(!treasure_chart_23()) && treasure_chart_23(), id = 482746)
 
 achievement(title = "The Latest Buzz", description = "[WW] Learn a rumor from the Little Tipsters", points = 2,
-trigger = ww() && stage_id() == 0x00 && prev(dialogue_index()) != 13717 && dialogue_index() == 13717, id = 482737)
+trigger = ww() && stage_id() == 0x00 && ((prev(dialogue_index()) != 13718 && dialogue_index() == 13718) || ( prev(dialogue_index()) != 13717 && dialogue_index() == 13717) ), id = 482737)
 
 achievement(title = "Link the Paparazzo", description = "[WW] Complete your work as Lenzo's assistant", points = 10,
 trigger = ww() && stage_id() == 0x0b && prev(picto_quest()) == 5 && picto_quest() == 6, id = 482738)
