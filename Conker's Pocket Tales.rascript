@@ -39,6 +39,16 @@ function gb_target_time_remaining_100() {
     measured(whole, when = frac == 0x00))
 }
 
+function gb_lj_distance_meters() => byte(0xdf88)
+function gb_lj_distance_frac() => byte(0xdf89)
+function gb_lj_landed() => byte(0xdf7e) == 0x02 && prev(byte(0xdf7e)) == 0x01
+
+function gb_lj_distance_100() {
+    whole = gb_lj_distance_meters()
+    frac = gb_lj_distance_frac()
+    return whole * 100 + frac * 100 / 16
+}
+
 // Permanent Flags
 //
 final_acorns_gb = [
@@ -613,11 +623,18 @@ rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_val
 
 // Leaderboards
 
-leaderboard("[GB] Willow Woods Target Practice", description = "Get the best time in the Willow Woods Target Practice minigame.", 
+leaderboard("[GB] Willow Woods Target Practice", description = "Get the best time in the Willow Woods target practice minigame.", 
     start = gb() && gb_in_game() && gb_map_screen() == 0x03 && gb_targets_left() == 0 && prev(gb_targets_left()) == 0x80,
     cancel = always_false(),
     submit = always_true(),
     value = gb_target_time_remaining_100(),
+    format = "FIXED2")
+
+leaderboard ("[GB] Mako Islands Long Jump", description = "Get the best distance in the Mako Islands long jump minigame.",
+    start = gb() && gb_in_game() && gb_map_screen() == 0x56 && gb_lj_landed(),
+    cancel = always_false(),
+    submit = always_true(),
+    value = gb_lj_distance_100(),
     format = "FIXED2")
 
 // Achievements
