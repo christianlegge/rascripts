@@ -60,6 +60,17 @@ function gb_hurdle_time_100() {
     return whole + frac
 }
 
+function gb_swim_distance() => word_be(0xdf76)
+function gb_swim_conker_time_secs() => bcd(byte(0xdf71))
+function gb_swim_conker_time_frac() => byte(0xdf72)
+function gb_swim_conker_time_raw() => word_be(0xdf71)
+
+function gb_swim_time_100() {
+    whole = gb_swim_conker_time_secs() * 100
+    frac = gb_swim_conker_time_frac() * 100 / 60
+    return whole + frac
+}
+
 
 // Permanent Flags
 //
@@ -654,6 +665,13 @@ leaderboard("[GB] Mako Islands Hurdle Race", description = "Get the best time in
     cancel = always_false(),
     submit = always_true(),
     value = gb_hurdle_time_100(),
+    format = "FIXED2")
+
+leaderboard("[GB] Mako Islands Swim Race", description = "Get the best time in the Mako Islands swim race minigame.",
+    start = gb() && gb_in_game() && gb_map_screen() == 0x54 && gb_swim_distance() >= 0x9db && prev(gb_swim_conker_time_raw()) == 0 && gb_swim_conker_time_raw() != 0,
+    cancel = always_false(),
+    submit = always_true(),
+    value = gb_swim_time_100(),
     format = "FIXED2")
 
 // Achievements
