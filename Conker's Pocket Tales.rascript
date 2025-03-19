@@ -49,6 +49,18 @@ function gb_lj_distance_100() {
     return whole * 100 + frac * 100 / 16
 }
 
+function gb_hurdle_distance() => word_be(0xdf76)
+function gb_hurdle_conker_time_secs() => bcd(byte(0xdf71))
+function gb_hurdle_conker_time_frac() => byte(0xdf72)
+function gb_hurdle_conker_time_raw() => word_be(0xdf71)
+
+function gb_hurdle_time_100() {
+    whole = gb_hurdle_conker_time_secs() * 100
+    frac = gb_hurdle_conker_time_frac() * 100 / 60
+    return whole + frac
+}
+
+
 // Permanent Flags
 //
 final_acorns_gb = [
@@ -635,6 +647,13 @@ leaderboard ("[GB] Mako Islands Long Jump", description = "Get the best distance
     cancel = always_false(),
     submit = always_true(),
     value = gb_lj_distance_100(),
+    format = "FIXED2")
+
+leaderboard("[GB] Mako Islands Hurdle Race", description = "Get the best time in the Mako Islands hurdle race minigame.",
+    start = gb() && gb_in_game() && gb_map_screen() == 0x55 && gb_hurdle_distance() >= 0x918 && prev(gb_hurdle_conker_time_raw()) == 0 && gb_hurdle_conker_time_raw() != 0,
+    cancel = always_false(),
+    submit = always_true(),
+    value = gb_hurdle_time_100(),
     format = "FIXED2")
 
 // Achievements
