@@ -25,6 +25,20 @@ function gb_invites() => bcd(byte(0xffae))
 function gb_berri() => bit7(0xc201)
 function gb_berri_and_acorns() => bitcount(0xc201)
 
+// Minigame stuff
+//
+function gb_targets_left() => byte(0xdf7c)
+function gb_target_time_seconds() => bcd(byte(0xdf7b))
+function gb_target_time_frac() => byte(0xdecf)
+
+function gb_target_time_remaining_100() {
+    whole = gb_target_time_seconds() * 100
+    frac = prev(gb_target_time_frac())
+    frac_hundreds = (60 - frac) * 100 / 60
+    return max_of(measured(whole + frac_hundreds, when = frac != 0x00),
+    measured(whole, when = frac == 0x00))
+}
+
 // Permanent Flags
 //
 final_acorns_gb = [
@@ -596,6 +610,15 @@ rich_presence_value("Invites", gbc_invites()),
 rich_presence_value("Map", gbc_map_screen()),
 rich_presence_value("Reds", gbc_reds()))
 rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_value("GBCIndicator", byte(0xff4d)))
+
+// Leaderboards
+
+leaderboard("[GB] Willow Woods Target Practice", description = "Get the best time in the Willow Woods Target Practice minigame.", 
+    start = gb() && gb_in_game() && gb_map_screen() == 0x03 && gb_targets_left() == 0 && prev(gb_targets_left()) == 0x80,
+    cancel = always_false(),
+    submit = always_true(),
+    value = gb_target_time_remaining_100(),
+    format = "FIXED2")
 
 // Achievements
 //
