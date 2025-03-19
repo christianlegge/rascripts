@@ -71,6 +71,20 @@ function gb_swim_time_100() {
     return whole + frac
 }
 
+function gb_boat_lap() => byte(0xdfb1)
+function gb_boat_lap1_secs() => bcd(byte(0xdfb3))
+function gb_boat_lap1_frac() => byte(0xdfb4)
+function gb_boat_lap2_secs() => bcd(byte(0xdfb5))
+function gb_boat_lap2_frac() => byte(0xdfb6)
+
+function gb_boat_total_time_100() {
+    whole1 = gb_boat_lap1_secs() * 100
+    frac1 = gb_boat_lap1_frac() * 100 / 60
+    whole2 = gb_boat_lap2_secs() * 100
+    frac2 = gb_boat_lap2_frac() * 100 / 60
+    return whole1 + frac1 + whole2 + frac2
+}
+
 
 // Permanent Flags
 //
@@ -673,6 +687,13 @@ leaderboard("[GB] Mako Islands Swim Race", description = "Get the best time in t
     submit = always_true(),
     value = gb_swim_time_100(),
     format = "FIXED2")
+
+leaderboard("[GB] Mako Islands Boat Race", description = "Get the best time in the Mako Islands boat race.",
+    start = gb() && gb_in_game() && gb_map_screen() == 0x6a && gb_boat_lap() == 0x02 && prev(gb_boat_lap()) == 0x01,
+    cancel = always_false(),
+    submit = always_true(),
+    value = gb_boat_total_time_100(),
+    format = "MILLISECS")
 
 // Achievements
 //
