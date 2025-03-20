@@ -955,6 +955,11 @@ achievement(title = "Nothing Gets Past You", points = 3,
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x4b && gb_cup_correct() == 3 && prev(gb_cup_correct() == 2)) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x35 && gbc_cup_correct() == 0x0b && prev(gbc_cup_correct()) == 0x08), type = "missable")
 
+achievement(title = "Have a Plan to Crack Every Nut You Meet", points = 10,
+    description = "Perform well enough to earn bonus energy in the Mako Islands shooting minigame.",
+    trigger = (gb() && gb_in_game() && gb_map_screen() == 0x57 && gb_mako_shooting_endtimer() == 0x01 && prev(gb_mako_shooting_endtimer()) == 0x02 && gb_mako_shooting_score() == 9400) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x3b && gbc_mako_shooting_endtimer() == 0x00 && prev(gbc_mako_shooting_endtimer()) > 0 && gbc_mako_shooting_hits() == 0x19 ), type = "missable")
+
 // PREVIOUS ACHIEVEMENTS
 
 achievement(
