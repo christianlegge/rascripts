@@ -38,8 +38,8 @@ function gb_target_time_remaining_100() {
     whole = gb_target_time_seconds() * 100
     frac = prev(gb_target_time_frac())
     frac_hundreds = (60 - frac) * 100 / 60
-    measured(whole, when = frac == 0x00))
     return max_of(measured(whole + frac_hundreds, when = frac != 0x00),
+    measured(whole, when = frac == 0x00))
 }
 
 function gbc_targets_left() => byte(0xc081)
@@ -128,6 +128,9 @@ function gb_gold_panning_time_100() {
     frac = gb_gold_panning_time_frac() * 100 / 60
     return whole + frac
 }
+
+function gbc_gold_panning_nuggets() => byte(0xc116)
+function gbc_gold_panning_time() => byte(0xc11b) + byte(0xc11c) * 10
 
 // Permanent Flags
 //
@@ -927,6 +930,11 @@ achievement(title = "You Already Know How to Use that Thing, Huh?", points = 10,
     description = "Complete the Willow Woods target practice within the target time (15 seconds on GBC, 17 seconds on GB).",
     trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x03 && trigger_when(gb_targets_left() == 0x80 && prev(gb_targets_left()) == 0x1) && gb_target_time_seconds() >= 15 ) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x0a && trigger_when(gbc_targets_left() == 0 && prev(gbc_targets_left()) == 1) && gbc_target_time_seconds() >= 17), type = "missable")
+
+achievement(title = "Gold Rush", points = 5,
+    description = "Complete the Vultureville gold panning minigame with 20 or more seconds remaining.",
+    trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x16 && gb_gold_panning_time_secs() >= 20 && trigger_when(gb_gold_panning_nuggets() == 9 && prev(gb_gold_panning_nuggets()) == 8)) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x23 && gbc_gold_panning_time() >= 20 && trigger_when(gbc_gold_panning_nuggets() == 9 && prev(gbc_gold_panning_nuggets()) == 8)), type = "missable")
 
 // PREVIOUS ACHIEVEMENTS
 
