@@ -81,6 +81,9 @@ function gb_swim_time_100() {
     return whole + frac
 }
 
+function gbc_swim_time_100() => byte(0xc0fd) + byte(0xc0fe) * 10 + byte(0xc0ff) * 100 + byte(0xc100) * 1000
+function gbc_swim_finished() => byte(0xc11c) == 0x01 && prev(byte(0xc11c)) == 0x00
+
 function gb_boat_lap() => byte(0xdfb1)
 function gb_boat_lap1_secs() => bcd(byte(0xdfb3))
 function gb_boat_lap1_frac() => byte(0xdfb4)
@@ -708,6 +711,7 @@ leaderboard("[GBC] Mako Islands Hurdle Race", description = "Get the best time i
     cancel = always_false(),
     submit = always_true(),
     value = gbc_hurdle_time_100(),
+    lower_is_better = true,
     format = "FIXED2")
 
 leaderboard("[GB] Mako Islands Hurdle Race", description = "Get the best time in the Mako Islands hurdle race minigame.",
@@ -715,6 +719,7 @@ leaderboard("[GB] Mako Islands Hurdle Race", description = "Get the best time in
     cancel = always_false(),
     submit = always_true(),
     value = gb_hurdle_time_100(),
+    lower_is_better = true,
     format = "FIXED2")
 
 leaderboard("[GB] Mako Islands Swim Race", description = "Get the best time in the Mako Islands swim race minigame.",
@@ -722,6 +727,15 @@ leaderboard("[GB] Mako Islands Swim Race", description = "Get the best time in t
     cancel = always_false(),
     submit = always_true(),
     value = gb_swim_time_100(),
+    lower_is_better = true,
+    format = "FIXED2")
+
+leaderboard("[GBC] Mako Islands Swim Race", description = "Get the best time in the Mako Islands swim race minigame.",
+    start = gbc() && gbc_in_game() && gbc_map_screen() == 0x3d && gbc_swim_finished(),
+    cancel = always_false(),
+    submit = always_true(),
+    value = gbc_swim_time_100(),
+    lower_is_better = true,
     format = "FIXED2")
 
 leaderboard("[GB] Mako Islands Boat Race", description = "Get the best time in the Mako Islands boat race.",
@@ -729,6 +743,7 @@ leaderboard("[GB] Mako Islands Boat Race", description = "Get the best time in t
     cancel = always_false(),
     submit = always_true(),
     value = gb_boat_total_time_100(),
+    lower_is_better = true,
     format = "MILLISECS")
 
 leaderboard("[GB] Mako Islands Shooting Game", description = "Get the best score in the Mako Islands shooting minigame.",
