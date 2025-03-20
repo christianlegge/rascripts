@@ -64,6 +64,12 @@ function gb_hurdle_time_100() {
     return whole + frac
 }
 
+function gbc_hurdle_time_100() => byte(0xc10a) + byte(0xc10b) * 10 + byte(0xc10c) * 100 + byte(0xc10d) * 1000
+function gbc_hurdle_distance() => word(0xc11e)
+function gbc_hurdle_finished() => byte(0xc130) == 0x01
+function gbc_hurdle_hundredths() => byte(0xc10a)
+function gbc_hurdle_speed() => byte(0xc11c)
+
 function gb_swim_distance() => word_be(0xdf76)
 function gb_swim_conker_time_secs() => bcd(byte(0xdf71))
 function gb_swim_conker_time_frac() => byte(0xdf72)
@@ -695,6 +701,13 @@ leaderboard ("[GB] Mako Islands Long Jump", description = "Get the best distance
     cancel = always_false(),
     submit = always_true(),
     value = gb_lj_distance_100(),
+    format = "FIXED2")
+
+leaderboard("[GBC] Mako Islands Hurdle Race", description = "Get the best time in the Mako Islands hurdle race minigame.",
+    start = gbc() && gbc_in_game() && gbc_map_screen() == 0x3c && gbc_hurdle_finished() && gbc_hurdle_speed() == 0x00 && prev(gbc_hurdle_speed()) > 0,
+    cancel = always_false(),
+    submit = always_true(),
+    value = gbc_hurdle_time_100(),
     format = "FIXED2")
 
 leaderboard("[GB] Mako Islands Hurdle Race", description = "Get the best time in the Mako Islands hurdle race minigame.",
