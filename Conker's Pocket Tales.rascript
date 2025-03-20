@@ -132,6 +132,12 @@ function gb_gold_panning_time_100() {
 function gbc_gold_panning_nuggets() => byte(0xc116)
 function gbc_gold_panning_time() => byte(0xc11b) + byte(0xc11c) * 10
 
+function gb_honker_health() => byte(0xdf78)
+function gb_conker_health_shootout() => byte(0xdf76)
+
+function gbc_honker_health() => byte(0xc13b)
+function gbc_conker_health_shootout() => byte(0xc139)
+
 // Permanent Flags
 //
 final_acorns_gb = [
@@ -935,6 +941,11 @@ achievement(title = "Gold Rush", points = 5,
     description = "Complete the Vultureville gold panning minigame with 20 or more seconds remaining.",
     trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x16 && gb_gold_panning_time_secs() >= 20 && trigger_when(gb_gold_panning_nuggets() == 9 && prev(gb_gold_panning_nuggets()) == 8)) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x23 && gbc_gold_panning_time() >= 20 && trigger_when(gbc_gold_panning_nuggets() == 9 && prev(gbc_gold_panning_nuggets()) == 8)), type = "missable")
+
+achievement(title = "Nice Shootin', Tex", points = 3,
+    description = "Beat Honker in the Vultureville shootout without taking a hit.",
+    trigger = (gb() && gb_in_game() && gb_map_screen() == 0x31 && gb_conker_health_shootout() == 0x09 && trigger_when(gb_honker_health() == 0 && prev(gb_honker_health()) == 1)) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x18 && gbc_conker_health_shootout() == 0x09 && trigger_when(gbc_honker_health() == 0 && prev(gbc_honker_health()) == 1)), type = "missable")
 
 // PREVIOUS ACHIEVEMENTS
 
