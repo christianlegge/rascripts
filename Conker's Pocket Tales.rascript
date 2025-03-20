@@ -489,8 +489,10 @@ gbc_maps = {
         0x3d: "Mako Islands",
         0x3e: "Mako Islands",
         0x3f: "Claw Swamp",
+        0x48: "Willow Woods",
         0x4a: "Mako Islands",
         0x4b: "Mako Islands",
+        0x4c: "Willow Woods",
         0x4d: "Mako Islands",
         0x4e: "Mako Islands",
         0x4f: "Claw Swamp",
@@ -707,12 +709,12 @@ if (gbc_maps[map_id] != "Final Dungeon") {
 }
 rich_presence_conditional_display(gb(), "[GB] Conker is out looking for Berri [🟦{0}/48] [✉️{1}/24] [🟥{2}/16] [{3}]", rich_presence_value("Blues", gb_blues()),
 rich_presence_value("Invites", gb_invites()),
-rich_presence_value("Map", gb_map_screen()),
-rich_presence_value("Reds", gb_reds()))
+rich_presence_value("Reds", gb_reds())
+rich_presence_value("Map", gb_map_screen()))
 rich_presence_conditional_display(gbc(), "[GBC] Conker is out looking for Berri [🟦{0}/48] [✉️{1}/24] [🟥{2}/16] [{3}]", rich_presence_value("Blues", gbc_blues()),
 rich_presence_value("Invites", gbc_invites()),
-rich_presence_value("Map", gbc_map_screen()),
-rich_presence_value("Reds", gbc_reds()))
+rich_presence_value("Reds", gbc_reds()),
+rich_presence_value("Map", gbc_map_screen()))
 rich_presence_display("Conker is out looking for Berri [{0}]", rich_presence_value("GBCIndicator", byte(0xff4d)))
 
 // Leaderboards
@@ -822,8 +824,8 @@ function rank_achievement(threshold, title, rank_name) {
         title = title,
         points = 5,
         description = "Achieve the " + rank_name + " rank.",
-        trigger = (gb() && prev(gb_in_game()) && gb_rank_score() >= threshold && collected_frame_gb()) ||
-            (gbc() && prev(gbc_in_game()) && gbc_rank_score() >= threshold && collected_frame_gbc())
+        trigger = (gb() && prev(gb_in_game()) && gb_rank_score() >= threshold && gb_rank_score() < threshold + 4 && collected_frame_gb()) ||
+            (gbc() && prev(gbc_in_game()) && gbc_rank_score() >= threshold && gbc_rank_score() < threshold + 4 && collected_frame_gbc())
     )
 }
 
