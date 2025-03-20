@@ -106,6 +106,12 @@ function gbc_boat_race_submit() => prev(word_be(0xc0fd)) == word_be(0xc0fd)
 function gb_mako_shooting_score() => bcd(byte(0xdf88)) * 100
 function gb_mako_shooting_endtimer() => byte(0xdfad)
 
+function gbc_mako_shooting_score() => byte(0xc157) * 1000 + byte(0xc158) * 100
+function gbc_mako_objects_left() => byte(0xc159)
+function gbc_mako_shooting_thrown() => byte(0xc15a)
+function gbc_mako_shooting_hits() => byte(0xc15b)
+function gbc_mako_shooting_endtimer() => word(0xc168)
+
 function gb_gold_panning_nuggets() => byte(0xdf79)
 function gb_gold_panning_time_secs() => bcd(byte(0xdf7b))
 function gb_gold_panning_time_frac() => byte(0xdf7c)
@@ -758,6 +764,13 @@ leaderboard("[GB] Mako Islands Boat Race", description = "Get the best time in t
     value = gb_boat_total_time_100(),
     lower_is_better = true,
     format = "MILLISECS")
+
+leaderboard("[GBC] Mako Islands Shooting Game", description = "Get the best score in the Mako Islands shooting minigame.",
+    start = gbc() && gbc_in_game() && gbc_map_screen() == 0x3b && gbc_mako_shooting_endtimer() == 0x00 && prev(gbc_mako_shooting_endtimer()) > 0 && (gbc_mako_shooting_thrown() == 0x18 || gbc_mako_shooting_thrown() == 0x19),
+    cancel = always_false(),
+    submit = always_true(),
+    value = gbc_mako_shooting_score(),
+    format = "VALUE")
 
 leaderboard("[GB] Mako Islands Shooting Game", description = "Get the best score in the Mako Islands shooting minigame.",
     start = gb() && gb_in_game() && gb_map_screen() == 0x57 && gb_mako_shooting_endtimer() == 0x01 && prev(gb_mako_shooting_endtimer()) == 0x02,
