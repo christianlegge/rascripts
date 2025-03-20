@@ -25,6 +25,9 @@ function gb_invites() => bcd(byte(0xffae))
 function gb_berri() => bit7(0xc201)
 function gb_berri_and_acorns() => bitcount(0xc201)
 
+function gbc_escape_timer_seconds() => byte(0xce43) + byte(0xce45) * 60
+function gb_escape_timer_seconds() => byte(0xffb4) + byte(0xffb3) * 60
+
 // Minigame stuff
 //
 function gb_targets_left() => byte(0xdf7c)
@@ -778,6 +781,21 @@ leaderboard("[GB] Mako Islands Shooting Game", description = "Get the best score
     submit = always_true(),
     value = gb_mako_shooting_score(),
     format = "VALUE")
+
+leaderboard("[GBC] Quick Escape", description = "Escape the final dungeon with the most time remaining.",
+   start = gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end(),
+    cancel = always_false(),
+    submit = always_true(),
+    value = gbc_escape_timer_seconds(),
+    format = "SECS")
+
+leaderboard("[GB] Quick Escape", description = "Escape the final dungeon with the most time remaining.",
+    start = gb() && gb_in_game() && gb_map_screen() == 0x5b && gb_berri() > prev(gb_berri()),
+    cancel = !gb() || !gb_in_game() || gb_berri() == 0,
+    submit = gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end(),
+    value = gb_escape_timer_seconds(),
+    format = "SECS")
+
 
 // Achievements
 //
