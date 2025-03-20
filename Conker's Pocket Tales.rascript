@@ -75,9 +75,10 @@ function gb_hurdle_time_100() {
     return whole + frac
 }
 
+function gbc_hurdle_time_secs() => byte(0xc10c) + byte(0xc10d) * 10
 function gbc_hurdle_time_100() => byte(0xc10a) + byte(0xc10b) * 10 + byte(0xc10c) * 100 + byte(0xc10d) * 1000
 function gbc_hurdle_distance() => word(0xc11e)
-function gbc_hurdle_finished() => byte(0xc130) == 0x01
+function gbc_hurdle_finished() => byte(0xc130) == 0x01 || byte(0xc130) == 0x02
 function gbc_hurdle_hundredths() => byte(0xc10a)
 function gbc_hurdle_speed() => byte(0xc11c)
 
@@ -965,6 +966,11 @@ achievement(title = "Backwards BLJ", points = 25,
     description = "Attain a distance of 6.00m or higher in the Mako Islands long jump.",
     trigger = (gbc() && gbc_in_game() && gbc_map_screen() == 0x3e && gbc_lj_jumping() == 0x01 && gbc_lj_distance_100() > 0 && prev_gbc_lj_distance_100() == gbc_lj_distance_100() && gbc_lj_distance_meters() >= 6) ||
     (gb() && gb_in_game() && gb_map_screen() == 0x56 && gb_lj_landed() && gb_lj_distance_meters() >= 6), type = "missable")
+
+achievement(title = "The Fastest Squirrel Alive", points = 10,
+    description = "Perform well enough in the Mako Islands hurdle race to earn bonus energy.",
+    trigger = (gbc() && gbc_in_game() && gbc_map_screen() == 0x3c && gbc_hurdle_finished() && gbc_hurdle_speed() == 0x00 && prev(gbc_hurdle_speed()) > 0 && gbc_hurdle_time_secs() <= 30) ||
+    (gb() && gb_in_game() && gb_map_screen() == 0x55 && gb_hurdle_distance() >= 0x918 && prev(gb_hurdle_conker_time_raw()) == 0 && gb_hurdle_conker_time_raw() != 0 && gb_hurdle_conker_time_secs() <= 21), type = "missable")
 
 // PREVIOUS ACHIEVEMENTS
 
