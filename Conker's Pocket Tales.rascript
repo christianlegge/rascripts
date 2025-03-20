@@ -942,6 +942,11 @@ achievement(title = "You Already Know How to Use that Thing, Huh?", points = 10,
     trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x03 && trigger_when(gb_targets_left() == 0x80 && prev(gb_targets_left()) == 0x1) && gb_target_time_seconds() >= 15 ) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x0a && trigger_when(gbc_targets_left() == 0 && prev(gbc_targets_left()) == 1) && gbc_target_time_seconds() >= 17), type = "missable")
 
+achievement(title = "Not My First Rodeo", points = 10,
+    description = "Complete the Krow Keep target practice within the target time (3 seconds on GBC, 7 seconds on GB).",
+    trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x4a && trigger_when(gb_targets_left() == 0x80 && prev(gb_targets_left()) == 0x1) && gb_target_time_seconds() >= 7 ) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x34 && trigger_when(gbc_targets_left() == 0 && prev(gbc_targets_left()) == 1) && gbc_target_time_seconds() >= 3), type = "missable")
+
 achievement(title = "Gold Rush", points = 5,
     description = "Complete the Vultureville gold panning minigame with 20 or more seconds remaining.",
     trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x16 && gb_gold_panning_time_secs() >= 20 && trigger_when(gb_gold_panning_nuggets() == 9 && prev(gb_gold_panning_nuggets()) == 8)) ||
