@@ -42,6 +42,10 @@ function gb_target_time_remaining_100() {
     return max_of(measured(whole + frac_hundreds, when = frac != 0x00),
 }
 
+function gbc_targets_left() => byte(0xc081)
+function gbc_target_time_seconds() => byte(0xc0d5)
+function gbc_target_time_frac() => byte(0xc0d4)
+
 function gb_lj_distance_meters() => byte(0xdf88)
 function gb_lj_distance_frac() => byte(0xdf89)
 function gb_lj_landed() => byte(0xdf7e) == 0x02 && prev(byte(0xdf7e)) == 0x01
@@ -918,6 +922,11 @@ achievement(title = "Conkered!", points = 25,
         (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end() && gbc_shebang()),
     type = "win_condition"
 )
+
+achievement(title = "You Already Know How to Use that Thing, Huh?", points = 10, id = 506805,
+    description = "Complete the Willow Woods target practice within the target time (15 seconds on GBC, 17 seconds on GB).",
+    trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x03 && trigger_when(gb_targets_left() == 0x80 && prev(gb_targets_left()) == 0x1) && gb_target_time_seconds() >= 15 ) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x0a && trigger_when(gbc_targets_left() == 0 && prev(gbc_targets_left()) == 1) && gbc_target_time_seconds() >= 17), type = "missable")
 
 // PREVIOUS ACHIEVEMENTS
 
