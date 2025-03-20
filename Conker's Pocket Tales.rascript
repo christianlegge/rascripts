@@ -489,6 +489,7 @@ gbc_maps = {
         0x3d: "Mako Islands",
         0x3e: "Mako Islands",
         0x3f: "Claw Swamp",
+        0x46: "Willow Woods",
         0x48: "Willow Woods",
         0x4a: "Mako Islands",
         0x4b: "Mako Islands",
@@ -935,8 +936,7 @@ achievement(title = "Berri Alive", points = 10,
 achievement(title = "Conkered!", points = 25,
     description = "Save all the acorns and Berri with all the collectibles to earn the Whole Shebang rating.",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end() && gb_shebang()) ||
-        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end() && gbc_shebang()),
-    type = "win_condition"
+        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end() && gbc_shebang())
 )
 
 achievement(title = "You Already Know How to Use that Thing, Huh?", points = 10, id = 506805,
