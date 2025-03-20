@@ -972,6 +972,11 @@ achievement(title = "The Fastest Squirrel Alive", points = 10,
     trigger = (gbc() && gbc_in_game() && gbc_map_screen() == 0x3c && gbc_hurdle_finished() && gbc_hurdle_speed() == 0x00 && prev(gbc_hurdle_speed()) > 0 && gbc_hurdle_time_secs() <= 30) ||
     (gb() && gb_in_game() && gb_map_screen() == 0x55 && gb_hurdle_distance() >= 0x918 && prev(gb_hurdle_conker_time_raw()) == 0 && gb_hurdle_conker_time_raw() != 0 && gb_hurdle_conker_time_secs() <= 21), type = "missable")
 
+achievement(title = "Conker Ledecky", points = 10,
+    description = "Perform well enough in the Mako Islands swimming race to earn bonus energy.",
+    trigger = (gbc() && gbc_in_game() && gbc_map_screen() == 0x3d && gbc_swim_finished() && gbc_swim_time_100() < 6100) ||
+    (gb() && gb_in_game() && gb_map_screen() == 0x54 && gb_swim_distance() >= 0x9db && prev(gb_swim_conker_time_raw()) == 0 && gb_swim_conker_time_raw() != 0 && gb_swim_time_100() < 4500), type = "missable")
+
 // PREVIOUS ACHIEVEMENTS
 
 achievement(
