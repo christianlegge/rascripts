@@ -98,6 +98,11 @@ function gb_boat_total_time_100() {
     return whole1 + frac1 + whole2 + frac2
 }
 
+function gbc_boat_time() => word_be(0xc0fd) - 0xa001
+function gbc_boat_race_start() => prev(word_be(0xc0fd)) == 0xa001 && word_be(0xc0fd) > 0xa001
+function gbc_boat_race_cancel() => prev(word_be(0xc0fd)) > 0xa90f
+function gbc_boat_race_submit() => prev(word_be(0xc0fd)) == word_be(0xc0fd)
+
 function gb_mako_shooting_score() => bcd(byte(0xdf88)) * 100
 function gb_mako_shooting_endtimer() => byte(0xdfad)
 
@@ -737,6 +742,14 @@ leaderboard("[GBC] Mako Islands Swim Race", description = "Get the best time in 
     value = gbc_swim_time_100(),
     lower_is_better = true,
     format = "FIXED2")
+
+leaderboard("[GBC] Mako Islands Boat Race", description = "Get the best time in the Mako Islands boat race.",
+    start = gbc() && gbc_in_game() && gbc_map_screen() == 0x02 && gbc_boat_race_start(),
+    cancel = !gbc() || !gbc_in_game() || gbc_map_screen() != 0x02 || gbc_boat_race_cancel(),
+    submit = gbc() && gbc_in_game() && gbc_map_screen() == 0x02 && prev(gbc_map_screen()) == 0x02 && gbc_boat_race_submit(),
+    value = gbc_boat_time(),
+    lower_is_better = true,
+    format = "FRAMES")
 
 leaderboard("[GB] Mako Islands Boat Race", description = "Get the best time in the Mako Islands boat race.",
     start = gb() && gb_in_game() && gb_map_screen() == 0x6a && gb_boat_lap() == 0x02 && prev(gb_boat_lap()) == 0x01,
