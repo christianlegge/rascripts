@@ -59,6 +59,7 @@ function gb_lj_distance_100() {
     return whole * 100 + frac * 100 / 16
 }
 
+function gbc_lj_distance_meters() => byte(0xc12f)
 function gbc_lj_distance_100() => byte(0xc12d) + byte(0xc12e) * 10 + byte(0xc12f) * 100
 function prev_gbc_lj_distance_100() => prev(byte(0xc12d)) + prev(byte(0xc12e)) * 10 + prev(byte(0xc12f)) * 100
 function gbc_lj_jumping() => byte(0xc131)
@@ -959,6 +960,11 @@ achievement(title = "Have a Plan to Crack Every Nut You Meet", points = 10,
     description = "Perform well enough to earn bonus energy in the Mako Islands shooting minigame.",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x57 && gb_mako_shooting_endtimer() == 0x01 && prev(gb_mako_shooting_endtimer()) == 0x02 && gb_mako_shooting_score() == 9400) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x3b && gbc_mako_shooting_endtimer() == 0x00 && prev(gbc_mako_shooting_endtimer()) > 0 && gbc_mako_shooting_hits() == 0x19 ), type = "missable")
+
+achievement(title = "Backwards BLJ", points = 25,
+    description = "Attain a distance of 6.00m or higher in the Mako Islands long jump.",
+    trigger = (gbc() && gbc_in_game() && gbc_map_screen() == 0x3e && gbc_lj_jumping() == 0x01 && gbc_lj_distance_100() > 0 && prev_gbc_lj_distance_100() == gbc_lj_distance_100() && gbc_lj_distance_meters() >= 6) ||
+    (gb() && gb_in_game() && gb_map_screen() == 0x56 && gb_lj_landed() && gb_lj_distance_meters() >= 6), type = "missable")
 
 // PREVIOUS ACHIEVEMENTS
 
