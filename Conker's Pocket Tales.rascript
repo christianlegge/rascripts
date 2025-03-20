@@ -35,8 +35,8 @@ function gb_target_time_remaining_100() {
     whole = gb_target_time_seconds() * 100
     frac = prev(gb_target_time_frac())
     frac_hundreds = (60 - frac) * 100 / 60
-    return max_of(measured(whole + frac_hundreds, when = frac != 0x00),
     measured(whole, when = frac == 0x00))
+    return max_of(measured(whole + frac_hundreds, when = frac != 0x00),
 }
 
 function gb_lj_distance_meters() => byte(0xdf88)
@@ -48,6 +48,10 @@ function gb_lj_distance_100() {
     frac = gb_lj_distance_frac()
     return whole * 100 + frac * 100 / 16
 }
+
+function gbc_lj_distance_100() => byte(0xc12d) + byte(0xc12e) * 10 + byte(0xc12f) * 100
+function prev_gbc_lj_distance_100() => prev(byte(0xc12d)) + prev(byte(0xc12e)) * 10 + prev(byte(0xc12f)) * 100
+function gbc_lj_jumping() => byte(0xc131)
 
 function gb_hurdle_distance() => word_be(0xdf76)
 function gb_hurdle_conker_time_secs() => bcd(byte(0xdf71))
@@ -85,6 +89,18 @@ function gb_boat_total_time_100() {
     return whole1 + frac1 + whole2 + frac2
 }
 
+function gb_mako_shooting_score() => bcd(byte(0xdf88)) * 100
+function gb_mako_shooting_endtimer() => byte(0xdfad)
+
+function gb_gold_panning_nuggets() => byte(0xdf79)
+function gb_gold_panning_time_secs() => bcd(byte(0xdf7b))
+function gb_gold_panning_time_frac() => byte(0xdf7c)
+
+function gb_gold_panning_time_100() {
+    whole = gb_gold_panning_time_secs() * 100
+    frac = gb_gold_panning_time_frac() * 100 / 60
+    return whole + frac
+}
 
 // Permanent Flags
 //
@@ -667,6 +683,13 @@ leaderboard("[GB] Willow Woods Target Practice", description = "Get the best tim
     value = gb_target_time_remaining_100(),
     format = "FIXED2")
 
+leaderboard("[GBC] Mako Islands Long Jump", description = "Get the best distance in the Mako Islands long jump minigame.",
+    start = gbc() && gbc_in_game() && gbc_map_screen() == 0x3e && gbc_lj_jumping() == 0x01 && gbc_lj_distance_100() > 0 && prev_gbc_lj_distance_100() == gbc_lj_distance_100(),
+    cancel = always_false(),
+    submit = always_true(),
+    value = gbc_lj_distance_100(),
+    format = "FIXED2")
+
 leaderboard ("[GB] Mako Islands Long Jump", description = "Get the best distance in the Mako Islands long jump minigame.",
     start = gb() && gb_in_game() && gb_map_screen() == 0x56 && gb_lj_landed(),
     cancel = always_false(),
@@ -694,6 +717,13 @@ leaderboard("[GB] Mako Islands Boat Race", description = "Get the best time in t
     submit = always_true(),
     value = gb_boat_total_time_100(),
     format = "MILLISECS")
+
+leaderboard("[GB] Mako Islands Shooting Game", description = "Get the best score in the Mako Islands shooting minigame.",
+    start = gb() && gb_in_game() && gb_map_screen() == 0x57 && gb_mako_shooting_endtimer() == 0x01 && prev(gb_mako_shooting_endtimer()) == 0x02,
+    cancel = always_false(),
+    submit = always_true(),
+    value = gb_mako_shooting_score(),
+    format = "VALUE")
 
 // Achievements
 //
