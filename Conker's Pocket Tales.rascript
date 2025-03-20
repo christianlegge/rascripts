@@ -46,6 +46,9 @@ function gbc_targets_left() => byte(0xc081)
 function gbc_target_time_seconds() => byte(0xc0d5)
 function gbc_target_time_frac() => byte(0xc0d4)
 
+function gbc_cup_correct() => byte(0xc154)
+function gb_cup_correct() => byte(0xdf70)
+
 function gb_lj_distance_meters() => byte(0xdf88)
 function gb_lj_distance_frac() => byte(0xdf89)
 function gb_lj_landed() => byte(0xdf7e) == 0x02 && prev(byte(0xdf7e)) == 0x01
@@ -946,6 +949,11 @@ achievement(title = "Nice Shootin', Tex", points = 3,
     description = "Beat Honker in the Vultureville shootout without taking a hit.",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x31 && gb_conker_health_shootout() == 0x09 && trigger_when(gb_honker_health() == 0 && prev(gb_honker_health()) == 1)) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x18 && gbc_conker_health_shootout() == 0x09 && trigger_when(gbc_honker_health() == 0 && prev(gbc_honker_health()) == 1)), type = "missable")
+
+achievement(title = "Nothing Gets Past You", points = 3,
+    description = "Correctly guess where the pea is every time in the Krow Keep cup game.",
+    trigger = (gb() && gb_in_game() && gb_map_screen() == 0x4b && gb_cup_correct() == 3 && prev(gb_cup_correct() == 2)) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x35 && gbc_cup_correct() == 0x0b && prev(gbc_cup_correct()) == 0x08), type = "missable")
 
 // PREVIOUS ACHIEVEMENTS
 
