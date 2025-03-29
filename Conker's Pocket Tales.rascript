@@ -511,7 +511,8 @@ gbc_maps = {
 }
 
 function gb_end() => bit6(0xc21f) == 1
-function gbc_end() => byte(0xc5cb) == 1
+function gbc_music() => byte(0xc566)
+function gbc_end_music() => gbc_music() == 0x06 && prev(gbc_music()) == 0x05
 
 function world_blues_gb(map_id) {
     if gb_maps[map_id] == "Willow Woods" {
@@ -804,7 +805,7 @@ leaderboard("[GB] Mako Islands Shooting Game", description = "Get the best score
     format = "VALUE")
 
 leaderboard("[GBC] Quick Escape", description = "Escape the final dungeon with the most time remaining.",
-   start = gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end(),
+   start = gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && gbc_end_music(),
     cancel = always_false(),
     submit = always_true(),
     value = gbc_escape_timer_seconds(),
@@ -929,14 +930,14 @@ all_optional_achievement(aztec_optional_flags_gb, aztec_optional_flags_gbc, "Tem
 achievement(title = "Berri Alive", points = 10,
     description = "Enter the end portal in the final dungeon and save Berri!",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end()) ||
-        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end()),
+        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && gbc_end_music()),
     type = "win_condition"
 )
 
 achievement(title = "Conkered!", points = 25,
     description = "Save all the acorns and Berri with all the collectibles to earn the Whole Shebang rating.",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end() && gb_shebang()) ||
-        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && prev(!gbc_end()) && gbc_end() && gbc_shebang())
+        (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && gbc_end_music() && gbc_shebang())
 )
 
 achievement(title = "You Already Know How to Use that Thing, Huh?", points = 10, id = 506805,
