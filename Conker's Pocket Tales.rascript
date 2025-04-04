@@ -677,7 +677,7 @@ function collected_frame_gbc() {
 }
 
 function all_blues_trigger(gb_bit_array, gbc_bit_array, map_screen) {
-        return  ( measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
+        return   (measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
             ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && sum_of(gbc_bit_array, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
             ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == map_screen)
 }
@@ -722,7 +722,7 @@ if (gbc_maps[map_id] != "Final Dungeon") {
 }
 rich_presence_conditional_display(gb(), "[GB] Conker is out looking for Berri [🟦{0}/48] [✉️{1}/24] [🟥{2}/16] [{3}]", rich_presence_value("Blues", gb_blues()),
 rich_presence_value("Invites", gb_invites()),
-rich_presence_value("Reds", gb_reds())
+rich_presence_value("Reds", gb_reds()),
 rich_presence_value("Map", gb_map_screen()))
 rich_presence_conditional_display(gbc(), "[GBC] Conker is out looking for Berri [🟦{0}/48] [✉️{1}/24] [🟥{2}/16] [{3}]", rich_presence_value("Blues", gbc_blues()),
 rich_presence_value("Invites", gbc_invites()),
@@ -833,12 +833,12 @@ leaderboard("[GB] Quick Escape", description = "Escape the final dungeon with th
 // Achievements
 //
 
-achievement(title = "I See a Saw, a Saw I See", desc = "Obtain the Saw.", points = 3,
+achievement(title = "I See a Saw, a Saw I See", description = "Obtain the Saw.", points = 3,
     trigger = gbc_collect_object(0x4b, 0x06) ||
     gb() && prev(gb_in_game()) && bit6(0xc20c) > prev(bit6(0xc20c)) 
 )
 
-achievement(title = "Rock Smash", desc = "Obtain the Pickaxe.", points = 3,
+achievement(title = "Rock Smash", description = "Obtain the Pickaxe.", points = 3,
     trigger = gbc_collect_object(0x3f, 0x1e) ||
     gb() && prev(gb_in_game()) && bit5(0xc20d) > prev(bit5(0xc20d)) 
 )
@@ -880,9 +880,9 @@ rank_achievement(64, "Death From Above", "Treetop Terror")
 rank_achievement(80, "Birthday Boy", "Birthday Bonanza")
 
 
-all_blues_achievement(willow_blues_gb, willow_blues_gbc, 0x08, "Anti-Hsstamean", "Willow Woods")
-all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, 0x51, "For the Birds", "Vultureville")
-all_blues_achievement(krow_blues_gb, krow_blues_gbc, 0x61, "Keep Waldorf Down", "Krow Keep")
+// all_blues_achievement(willow_blues_gb, willow_blues_gbc, 0x08, "Anti-Hsstamean", "Willow Woods")
+// all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, 0x51, "For the Birds", "Vultureville")
+// all_blues_achievement(krow_blues_gb, krow_blues_gbc, 0x61, "Keep Waldorf Down", "Krow Keep")
 all_blues_achievement(mako_blues_gb, mako_blues_gbc, 0x02, "Wave Race: Squirrel Storm", "Mako Islands")
 all_blues_achievement(claw_blues_gb, claw_blues_gbc, 0x60, "Fiending for More Box Puzzles", "Claw Swamp")
 all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, 0x62, "Stronger than a Graveler", "Aztec Temple")
@@ -1052,9 +1052,9 @@ achievement(
 
 achievement(
     title = "East-Side Farm-Yard", points = 10, type="progression",
-    description = "Collect enough Presents to enter the Old Barn.",
+    description = "Collect all of the Blue Presents in Willow Woods.",
     id = 12694, badge = "12590", published = "2014-09-10 4:42:36 AM", modified = "2020-07-05 7:03:30 AM",
-    trigger = gbc_blues() == 8
+    trigger = all_blues_trigger(willow_blues_gb, willow_blues_gbc, 0x08)
 )
 
 achievement(
@@ -1109,9 +1109,9 @@ achievement(
 
 achievement(
     title = "Jaunter back to Cools-Ville.", points = 10, type="progression",
-    description = "Collect enough Presents to leave Vulture-Ville and Enter Krow Keep.",
+    description = "Collect all of the Blue Presents in Vultureville.",
     id = 12702, badge = "12617", published = "2014-09-10 4:43:16 AM", modified = "2020-07-05 7:03:11 AM",
-    trigger = gbc_blues() == 16
+    trigger = all_blues_trigger(vulture_blues_gb, vulture_blues_gbc, 0x51)
 )
 
 achievement(
@@ -1129,10 +1129,10 @@ achievement(
 )
 
 achievement(
-    title = "Next Venue", points = 10,
-    description = "Collect enough Presents to leave Krow Keep.",
+    title = "Next Venue", points = 10, type = "progression",
+    description = "Collect all of the Blue Presents in Krow Keep.",
     id = 15669, badge = "15233", published = "2014-10-16 6:52:43 AM", modified = "2020-07-05 7:02:40 AM",
-    trigger = gbc_blues() == 24
+    trigger = all_blues_trigger(krow_blues_gb, krow_blues_gbc, 0x61)
 )
 
 achievement(
