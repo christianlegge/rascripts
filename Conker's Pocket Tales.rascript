@@ -28,6 +28,10 @@ function gb_berri_and_acorns() => bitcount(0xc201)
 function gbc_escape_timer_seconds() => byte(0xce43) + byte(0xce45) * 60
 function gb_escape_timer_seconds() => byte(0xffb4) + byte(0xffb3) * 60
 
+function gbc_collect_object(mapscreen, idx) {
+    return gbc() && gbc_in_game() && byte(0xce40) == mapscreen && bit7(0xc900 + idx) > prev(bit7(0xc900 + idx))
+}
+
 // Minigame stuff
 //
 function gb_targets_left() => byte(0xdf7c)
@@ -672,6 +676,13 @@ function collected_frame_gbc() {
     )
 }
 
+function all_blues_trigger(gb_bit_array, gbc_bit_array, map_screen) {
+        return  ( measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
+            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && sum_of(gbc_bit_array, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
+            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == map_screen)
+}
+
+
 // Rich Presence
 //
 
@@ -821,6 +832,17 @@ leaderboard("[GB] Quick Escape", description = "Escape the final dungeon with th
 
 // Achievements
 //
+
+achievement(title = "I See a Saw, a Saw I See", desc = "Obtain the Saw.", points = 3,
+    trigger = gbc_collect_object(0x4b, 0x06) ||
+    gb() && prev(gb_in_game()) && bit6(0xc20c) > prev(bit6(0xc20c)) 
+)
+
+achievement(title = "Rock Smash", desc = "Obtain the Pickaxe.", points = 3,
+    trigger = gbc_collect_object(0x3f, 0x1e) ||
+    gb() && prev(gb_in_game()) && bit5(0xc20d) > prev(bit5(0xc20d)) 
+)
+
 function rank_achievement(threshold, title, rank_name) {
     achievement(
         title = title,
@@ -836,9 +858,7 @@ function all_blues_achievement(gb_bit_array, gbc_bit_array, map_screen, title, n
         title = title,
         points = 5,
         description = "Collect all of the Blue Presents in " + name + ".",
-        trigger = ( measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
-            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && sum_of(gbc_bit_array, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
-            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == map_screen),
+        trigger = all_blues_trigger(gb_bit_array, gbc_bit_array, map_screen),
         type = "progression"
     )
 }
@@ -1019,7 +1039,8 @@ achievement(
     title = "Side-Arm", points = 10,
     description = "Obtain the Slingshot in the Windmill.",
     id = 12697, badge = "12592", published = "2014-09-10 4:43:02 AM", modified = "2014-11-05 7:23:11 PM",
-    trigger = has_slingshot() == 1
+    trigger = gbc_collect_object(0x0b, 0x00) ||
+        gb() && prev(gb_in_game()) && bit5(0xc20c) > prev(bit5(0xc20c))
 )
 
 achievement(
@@ -1072,10 +1093,11 @@ achievement(
 )
 
 achievement(
-    title = "Scuuuuuuuba", points = 10, type="progression",
-    description = "Defeat the Lords of Vulture-Ville.",
+    title = "Scuuuuuuuba", points = 10,
+    description = "Obtain the Swim Mask.",
     id = 12706, badge = "12954", published = "2014-09-10 4:43:33 AM", modified = "2020-07-05 7:03:02 AM",
-    trigger = scuba_mask() == 1
+    trigger = gbc_collect_object(0x03, 0x16) ||
+        gb() && prev(gb_in_game()) && bit2(0xc20d) > prev(bit2(0xc20d))
 )
 
 achievement(
