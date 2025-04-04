@@ -634,7 +634,7 @@ function gbc_map_screen() => byte(0xce40)
 
 function in_game_flag() => byte(0x00C55B)
 function gbc_in_game() => in_game_flag() == 0x01
-function gb_in_game_flag() => byte(0x00C5B2)
+function gb_in_game_flag() => byte(0x00c712)
 function gb_in_game() => gb_in_game_flag() != 0x00
 
 function gb_reds() {
@@ -947,14 +947,14 @@ for flag in aztec_reds_gbc {
 }
 all_optional_achievement(aztec_optional_flags_gb, aztec_optional_flags_gbc, "Temple Topper", "Aztec Temple")
 
-achievement(title = "Berri Alive", points = 10,
+achievement(title = "Berri Alive", points = 25,
     description = "Enter the end portal in the final dungeon and save Berri!",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end()) ||
         (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && gbc_end_music()),
     type = "win_condition"
 )
 
-achievement(title = "Conkered!", points = 25,
+achievement(title = "Conkered!", points = 50,
     description = "Save all the acorns and Berri with all the collectibles to earn the Whole Shebang rating.",
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x5b && prev(!gb_end()) && gb_end() && gb_shebang()) ||
         (gbc() && gbc_in_game() && gbc_map_screen() == 0x05 && gbc_end_music() && gbc_shebang())
@@ -990,7 +990,7 @@ achievement(title = "Have a Plan to Crack Every Nut You Meet", points = 10,
     trigger = (gb() && gb_in_game() && gb_map_screen() == 0x57 && gb_mako_shooting_endtimer() == 0x01 && prev(gb_mako_shooting_endtimer()) == 0x02 && gb_mako_shooting_score() == 9400) ||
     (gbc() && gbc_in_game() && gbc_map_screen() == 0x3b && gbc_mako_shooting_endtimer() == 0x00 && prev(gbc_mako_shooting_endtimer()) > 0 && gbc_mako_shooting_hits() == 0x19 ), type = "missable")
 
-achievement(title = "Backwards BLJ", points = 25,
+achievement(title = "Backwards BLJ", points = 50,
     description = "Attain a distance of 6.00m or higher in the Mako Islands long jump.",
     trigger = (gbc() && gbc_in_game() && gbc_map_screen() == 0x3e && gbc_lj_jumping() == 0x01 && gbc_lj_distance_100() > 0 && prev_gbc_lj_distance_100() == gbc_lj_distance_100() && gbc_lj_distance_meters() >= 6) ||
     (gb() && gb_in_game() && gb_map_screen() == 0x56 && gb_lj_landed() && gb_lj_distance_meters() >= 6), type = "missable")
