@@ -1011,7 +1011,8 @@ achievement(
     title = "Present Collect!", points = 5,
     description = "Retrieve your first [Stolen Present].",
     id = 12693, badge = "12588", published = "2014-09-10 4:42:33 AM", modified = "2014-11-05 7:21:29 PM",
-    trigger = gbc_blues() == 1
+    trigger = gbc() && prev(gbc_in_game()) && gbc_blues() == 1 && prev(gbc_blues()) == 0 ||
+        gb() && prev(gb_in_game()) && gb_blues() == 1 && prev(gb_blues()) == 0
 )
 
 achievement(
@@ -1061,7 +1062,8 @@ achievement(
     title = "Lost in the Mail", points = 10,
     description = "Collect 1 Party Invitation.",
     id = 12696, badge = "12596", published = "2014-09-10 4:42:41 AM", modified = "2014-11-05 7:22:02 PM",
-    trigger = gbc_invites() == 1
+    trigger = gbc() && prev(gbc_in_game()) && gbc_invites() == 1 && prev(gbc_invites()) == 0 ||
+        gb() && prev(gb_in_game()) && gb_invites() == 1 && prev(gb_invites()) == 0
 )
 
 achievement(
@@ -1118,7 +1120,8 @@ achievement(
     title = "A \"Special\" Gift", points = 10,
     description = "Find one Red Present.",
     id = 12707, badge = "12609", published = "2014-09-10 4:43:37 AM", modified = "2019-10-12 1:05:01 PM",
-    trigger = gbc_reds() == 1
+    trigger = gbc() && prev(gbc_in_game()) && gbc_reds() == 1 && prev(gbc_reds()) == 0 ||
+        gb() && prev(gb_in_game()) && gb_reds() == 1 && prev(gb_reds()) == 0
 )
 
 achievement(
