@@ -29,7 +29,7 @@ function gbc_escape_timer_seconds() => byte(0xce43) + byte(0xce45) * 60
 function gb_escape_timer_seconds() => byte(0xffb4) + byte(0xffb3) * 60
 
 function gbc_collect_object(mapscreen, idx) {
-    return gbc() && gbc_in_game() && byte(0xce40) == mapscreen && bit7(0xc900 + idx) > prev(bit7(0xc900 + idx))
+    return gbc() && prev(gbc_in_game()) && byte(0xce40) == mapscreen && bit6(0xc900 + idx) == 1 && bit7(0xc900 + idx) > prev(bit7(0xc900 + idx))
 }
 
 // Minigame stuff
