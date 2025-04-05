@@ -1009,7 +1009,7 @@ achievement(title = "Conker Ledecky", points = 10,
 
 achievement(
     title = "Present Collect!", points = 5,
-    description = "Retrieve your first [Stolen Present].",
+    description = "Obtain your first Blue Present.",
     id = 12693, badge = "12588", published = "2014-09-10 4:42:33 AM", modified = "2014-11-05 7:21:29 PM",
     trigger = gbc() && prev(gbc_in_game()) && gbc_blues() == 1 && prev(gbc_blues()) == 0 ||
         gb() && prev(gb_in_game()) && gb_blues() == 1 && prev(gb_blues()) == 0
@@ -1060,7 +1060,7 @@ achievement(
 
 achievement(
     title = "Lost in the Mail", points = 10,
-    description = "Collect 1 Party Invitation.",
+    description = "Obtain your first Party Invite.",
     id = 12696, badge = "12596", published = "2014-09-10 4:42:41 AM", modified = "2014-11-05 7:22:02 PM",
     trigger = gbc() && prev(gbc_in_game()) && gbc_invites() == 1 && prev(gbc_invites()) == 0 ||
         gb() && prev(gb_in_game()) && gb_invites() == 1 && prev(gb_invites()) == 0
@@ -1110,7 +1110,7 @@ achievement(
 )
 
 achievement(
-    title = "Jaunter back to Cools-Ville.", points = 10, type="progression",
+    title = "Saunter Back to Coolsville", points = 10, type="progression",
     description = "Collect all of the Blue Presents in Vultureville.",
     id = 12702, badge = "12617", published = "2014-09-10 4:43:16 AM", modified = "2020-07-05 7:03:11 AM",
     trigger = all_blues_trigger(vulture_blues_gb, vulture_blues_gbc, 0x51)
@@ -1118,7 +1118,7 @@ achievement(
 
 achievement(
     title = "A \"Special\" Gift", points = 10,
-    description = "Find one Red Present.",
+    description = "Obtain your first Red Present.",
     id = 12707, badge = "12609", published = "2014-09-10 4:43:37 AM", modified = "2019-10-12 1:05:01 PM",
     trigger = gbc() && prev(gbc_in_game()) && gbc_reds() == 1 && prev(gbc_reds()) == 0 ||
         gb() && prev(gb_in_game()) && gb_reds() == 1 && prev(gb_reds()) == 0
