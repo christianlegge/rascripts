@@ -1152,7 +1152,9 @@ achievement(
     title = "Next Venue", points = 10, type = "progression",
     description = "Collect all of the Blue Presents in Krow Keep.",
     id = 15669, badge = "15233", published = "2014-10-16 6:52:43 AM", modified = "2020-07-05 7:02:40 AM",
-    trigger = all_blues_trigger(krow_blues_gb, krow_blues_gbc, 0x61)
+    trigger = (measured(sum_of(krow_blues_gb, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(krow_blues_gb, x => prev(x)) == 7) ||
+            ( gbc() && all_of(krow_blues_gbc, el => el == 1) && sum_of(krow_blues_gbc, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
+            ( gbc() && all_of(krow_blues_gbc, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && __ornext( gbc_map_screen() == 0x58 || gbc_map_screen() == 0x61 ))
 )
 
 achievement(
