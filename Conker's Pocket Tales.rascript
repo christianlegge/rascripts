@@ -292,6 +292,14 @@ claw_blues_gbc = [
     bit1(0xc3f7) // boss
 ]
 
+claw_blues_gbc_alt = [
+    bit4(0xc3bd), bit6(0xc3bd),
+    bit0(0xc3c2), bit2(0xc3c2),
+    bit4(0xc3c9), bit6(0xc3c9),
+    bit2(0xc3cf),
+    bit0(0xc3f7)
+]
+
 aztec_blues_gbc = [
     bit0(0xc31c), bit3(0xc31c), bit5(0xc31c),
     bit6(0xc323),
@@ -869,7 +877,7 @@ function all_optional_achievement(gb_bit_array, gbc_bit_array, title, name) {
         points = 5,
         description = "Collect all of the Party Invites and Special Presents in " + name + ".",
         trigger = ( measured(sum_of(gb_bit_array, _ => _) == length(gb_bit_array), when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == length(gb_bit_array) - 1) ||
-                  ( measured(sum_of(gbc_bit_array, _ => _) == length(gbc_bit_array), when = gbc() && gbc_in_game()) && sum_of(gbc_bit_array, x => prev(x)) == length(gbc_bit_array) - 1)
+                  ( measured(sum_of(gbc_bit_array, _ => _) == length(gbc_bit_array), when = gbc() && gbc_in_game()) && sum_of(gbc_bit_array, x => prev(x)) < length(gbc_bit_array) && sum_of(gbc_bit_array, x => prev(x)) > 0)
     )
 }
 
@@ -884,8 +892,17 @@ rank_achievement(80, "Birthday Boy", "Birthday Bonanza")
 // all_blues_achievement(vulture_blues_gb, vulture_blues_gbc, 0x51, "For the Birds", "Vultureville")
 // all_blues_achievement(krow_blues_gb, krow_blues_gbc, 0x61, "Keep Waldorf Down", "Krow Keep")
 all_blues_achievement(mako_blues_gb, mako_blues_gbc, 0x02, "Wave Race: Squirrel Storm", "Mako Islands")
-all_blues_achievement(claw_blues_gb, claw_blues_gbc, 0x60, "Fiending for More Box Puzzles", "Claw Swamp")
+// all_blues_achievement(claw_blues_gb, claw_blues_gbc, 0x60, "Fiending for More Box Puzzles", "Claw Swamp")
 all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, 0x62, "Stronger than a Graveler", "Aztec Temple")
+
+achievement(title = "Fiending for More Box Puzzles", points = 5,
+    description = "Collect all of the Blue Presents in Claw Swamp.",
+    trigger = (measured(sum_of(claw_blues_gb, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(claw_blues_gb, x => prev(x)) == 7) ||
+            ( gbc() && gbc_in_game() && all_of(claw_blues_gbc, el => el == 1) && sum_of(claw_blues_gbc, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
+            ( gbc() && gbc_in_game() && all_of(claw_blues_gbc, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == 0x60) ||
+            ( gbc() && gbc_in_game() && all_of(claw_blues_gbc_alt, el => el == 1)&& gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == 0x60 ),
+    type = "progression"
+)
 
 willow_optional_flags_gb = willow_invites_gb
 for flag in willow_reds_gb {
@@ -962,8 +979,8 @@ achievement(title = "Conkered!", points = 50,
 
 achievement(title = "You Already Know How to Use that Thing, Huh?", points = 10, id = 506805,
     description = "Complete the Willow Woods target practice within the target time (15 seconds on GBC, 17 seconds on GB).",
-    trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x03 && trigger_when(gb_targets_left() == 0x80 && prev(gb_targets_left()) == 0x1) && gb_target_time_seconds() >= 15 ) ||
-    (gbc() && gbc_in_game() && gbc_map_screen() == 0x0a && trigger_when(gbc_targets_left() == 0 && prev(gbc_targets_left()) == 1) && gbc_target_time_seconds() >= 17), type = "missable")
+    trigger = ( gb() && gb_in_game() && gb_map_screen() == 0x03 && trigger_when(gb_targets_left() == 0x80 && prev(gb_targets_left()) == 0x1) && gb_target_time_seconds() >= 17 ) ||
+    (gbc() && gbc_in_game() && gbc_map_screen() == 0x0a && trigger_when(gbc_targets_left() == 0 && prev(gbc_targets_left()) == 1) && gbc_target_time_seconds() >= 15), type = "missable")
 
 achievement(title = "Not My First Rodeo", points = 10,
     description = "Complete the Krow Keep target practice within the target time (3 seconds on GBC, 7 seconds on GB).",
