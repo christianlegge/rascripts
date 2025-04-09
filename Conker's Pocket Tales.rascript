@@ -643,7 +643,8 @@ function gbc_map_screen() => byte(0xce40)
 function in_game_flag() => byte(0x00C55B)
 function gbc_in_game() => in_game_flag() == 0x01
 function gb_in_game_flag() => byte(0x00c712)
-function gb_in_game() => gb_in_game_flag() != 0x00
+function gb_in_game() => gb_map_screen() != 0xff && dword(0xffa6) != 0x06060606
+function prev_gb_in_game() => prev(gb_map_screen()) != 0xff && prev(dword(0xffa6)) != 0x06060606
 
 function gb_reds() {
     return sum_of(willow_reds_gb, _ => _) + sum_of(vulture_reds_gb, _ => _) + sum_of(krow_reds_gb, _ => _) + sum_of(mako_reds_gb, _ => _) + sum_of(claw_reds_gb, _ => _) + sum_of(aztec_reds_gb, _ => _)
@@ -684,11 +685,25 @@ function collected_frame_gbc() {
     )
 }
 
-function all_blues_trigger(gb_bit_array, gbc_bit_array, map_screen) {
-        return   (measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) ||
-            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && sum_of(gbc_bit_array, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
-            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == map_screen)
+function all_blues_flags_gb(gb_bit_array) {
+    return (measured(sum_of(gb_bit_array, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(gb_bit_array, x => prev(x)) == 7) 
 }
+
+function all_blues_flags_gbc(gbc_bit_array, map_screen) {
+    return ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && sum_of(gbc_bit_array, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
+            ( gbc() && gbc_in_game() && all_of(gbc_bit_array, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && gbc_map_screen() == map_screen)
+
+}
+
+function all_blues_trigger(gb_bit_array, gbc_bit_array, map_screen) {
+        return all_blues_flags_gb(gb_bit_array) || all_blues_flags_gbc(gbc_bit_array, map_screen)
+}
+
+function all_blues_trigger_fix(gb_bit_array, amount) {
+        return all_blues_flags_gb(gb_bit_array) || (gbc() && gbc_in_game() && gbc_blues() == amount && prev(gbc_blues()) == amount - 1)
+}
+
+
 
 
 // Rich Presence
@@ -843,12 +858,12 @@ leaderboard("[GB] Quick Escape", description = "Escape the final dungeon with th
 
 achievement(title = "I See a Saw, a Saw I See", description = "Obtain the Saw.", points = 3,
     trigger = gbc_collect_object(0x4b, 0x06) ||
-    gb() && prev(gb_in_game()) && bit6(0xc20c) > prev(bit6(0xc20c)) 
+    gb() && prev_gb_in_game() && bit6(0xc20c) > prev(bit6(0xc20c)) 
 )
 
 achievement(title = "Rock Smash", description = "Obtain the Pickaxe.", points = 3,
     trigger = gbc_collect_object(0x3f, 0x1e) ||
-    gb() && prev(gb_in_game()) && bit5(0xc20d) > prev(bit5(0xc20d)) 
+    gb() && prev_gb_in_game() && bit5(0xc20d) > prev(bit5(0xc20d)) 
 )
 
 function rank_achievement(threshold, title, rank_name) {
@@ -856,7 +871,7 @@ function rank_achievement(threshold, title, rank_name) {
         title = title,
         points = 5,
         description = "Achieve the " + rank_name + " rank.",
-        trigger = (gb() && prev(gb_in_game()) && gb_rank_score() >= threshold && gb_rank_score() < threshold + 4 && collected_frame_gb()) ||
+        trigger = (gb() && prev_gb_in_game() && gb_rank_score() >= threshold && gb_rank_score() < threshold + 4 && collected_frame_gb()) ||
             (gbc() && prev(gbc_in_game()) && gbc_rank_score() >= threshold && gbc_rank_score() < threshold + 4 && collected_frame_gbc())
     )
 }
@@ -867,6 +882,16 @@ function all_blues_achievement(gb_bit_array, gbc_bit_array, map_screen, title, n
         points = 5,
         description = "Collect all of the Blue Presents in " + name + ".",
         trigger = all_blues_trigger(gb_bit_array, gbc_bit_array, map_screen),
+        type = "progression"
+    )
+}
+
+function all_blues_achievement_fix(gb_bit_array, amount, title, name) {
+    achievement(
+        title = title,
+        points = 5,
+        description = "Collect all of the Blue Presents in " + name + ".",
+        trigger = all_blues_trigger_fix(gb_bit_array, amount),
         type = "progression"
     )
 }
@@ -893,7 +918,7 @@ rank_achievement(80, "Birthday Boy", "Birthday Bonanza")
 // all_blues_achievement(krow_blues_gb, krow_blues_gbc, 0x61, "Keep Waldorf Down", "Krow Keep")
 all_blues_achievement(mako_blues_gb, mako_blues_gbc, 0x02, "Wave Race: Squirrel Storm", "Mako Islands")
 // all_blues_achievement(claw_blues_gb, claw_blues_gbc, 0x60, "Fiending for More Box Puzzles", "Claw Swamp")
-all_blues_achievement(aztec_blues_gb, aztec_blues_gbc, 0x62, "Stronger than a Graveler", "Aztec Temple")
+all_blues_achievement_fix(aztec_blues_gb, 48, "Stronger than a Graveler", "Aztec Temple")
 
 achievement(title = "Fiending for More Box Puzzles", points = 5,
     description = "Collect all of the Blue Presents in Claw Swamp.",
@@ -1029,7 +1054,7 @@ achievement(
     description = "Obtain your first Blue Present.",
     id = 12693, badge = "12588", published = "2014-09-10 4:42:33 AM", modified = "2014-11-05 7:21:29 PM",
     trigger = gbc() && prev(gbc_in_game()) && gbc_blues() == 1 && prev(gbc_blues()) == 0 ||
-        gb() && prev(gb_in_game()) && gb_blues() == 1 && prev(gb_blues()) == 0
+        gb() && prev_gb_in_game() && gb_blues() == 1 && prev(gb_blues()) == 0
 )
 
 achievement(
@@ -1058,7 +1083,7 @@ achievement(
     description = "Obtain the Slingshot in the Windmill.",
     id = 12697, badge = "12592", published = "2014-09-10 4:43:02 AM", modified = "2014-11-05 7:23:11 PM",
     trigger = gbc_collect_object(0x0b, 0x00) ||
-        gb() && prev(gb_in_game()) && bit5(0xc20c) > prev(bit5(0xc20c))
+        gb() && prev_gb_in_game() && bit5(0xc20c) > prev(bit5(0xc20c))
 )
 
 achievement(
@@ -1072,7 +1097,7 @@ achievement(
     title = "East-Side Farm-Yard", points = 10, type="progression",
     description = "Collect all of the Blue Presents in Willow Woods.",
     id = 12694, badge = "12590", published = "2014-09-10 4:42:36 AM", modified = "2020-07-05 7:03:30 AM",
-    trigger = all_blues_trigger(willow_blues_gb, willow_blues_gbc, 0x08)
+    trigger = all_blues_trigger_fix(willow_blues_gb, 8)
 )
 
 achievement(
@@ -1080,7 +1105,7 @@ achievement(
     description = "Obtain your first Party Invite.",
     id = 12696, badge = "12596", published = "2014-09-10 4:42:41 AM", modified = "2014-11-05 7:22:02 PM",
     trigger = gbc() && prev(gbc_in_game()) && gbc_invites() == 1 && prev(gbc_invites()) == 0 ||
-        gb() && prev(gb_in_game()) && gb_invites() == 1 && prev(gb_invites()) == 0
+        gb() && prev_gb_in_game() && gb_invites() == 1 && prev(gb_invites()) == 0
 )
 
 achievement(
@@ -1116,7 +1141,7 @@ achievement(
     description = "Obtain the Swim Mask.",
     id = 12706, badge = "12954", published = "2014-09-10 4:43:33 AM", modified = "2020-07-05 7:03:02 AM",
     trigger = gbc_collect_object(0x03, 0x16) ||
-        gb() && prev(gb_in_game()) && bit2(0xc20d) > prev(bit2(0xc20d))
+        gb() && prev_gb_in_game() && bit2(0xc20d) > prev(bit2(0xc20d))
 )
 
 achievement(
@@ -1130,7 +1155,7 @@ achievement(
     title = "Saunter Back to Coolsville", points = 10, type="progression",
     description = "Collect all of the Blue Presents in Vultureville.",
     id = 12702, badge = "12617", published = "2014-09-10 4:43:16 AM", modified = "2020-07-05 7:03:11 AM",
-    trigger = all_blues_trigger(vulture_blues_gb, vulture_blues_gbc, 0x51)
+    trigger = all_blues_trigger_fix(vulture_blues_gb, 16)
 )
 
 achievement(
@@ -1138,7 +1163,7 @@ achievement(
     description = "Obtain your first Red Present.",
     id = 12707, badge = "12609", published = "2014-09-10 4:43:37 AM", modified = "2019-10-12 1:05:01 PM",
     trigger = gbc() && prev(gbc_in_game()) && gbc_reds() == 1 && prev(gbc_reds()) == 0 ||
-        gb() && prev(gb_in_game()) && gb_reds() == 1 && prev(gb_reds()) == 0
+        gb() && prev_gb_in_game() && gb_reds() == 1 && prev(gb_reds()) == 0
 )
 
 achievement(
@@ -1152,9 +1177,7 @@ achievement(
     title = "Next Venue", points = 10, type = "progression",
     description = "Collect all of the Blue Presents in Krow Keep.",
     id = 15669, badge = "15233", published = "2014-10-16 6:52:43 AM", modified = "2020-07-05 7:02:40 AM",
-    trigger = (measured(sum_of(krow_blues_gb, _ => _) == 8, when = gb() && gb_in_game()) && sum_of(krow_blues_gb, x => prev(x)) == 7) ||
-            ( gbc() && all_of(krow_blues_gbc, el => el == 1) && sum_of(krow_blues_gbc, x => prev(x)) == 7 && gbc_blues() % 8 == 0) || 
-            ( gbc() && all_of(krow_blues_gbc, el => el == 1) && gbc_blues() % 8 == 0 && prev(gbc_blues()) % 8 == 7 && __ornext( gbc_map_screen() == 0x58 || gbc_map_screen() == 0x61 ))
+    trigger = all_blues_trigger_fix(krow_blues_gb, 24)
 )
 
 achievement(
