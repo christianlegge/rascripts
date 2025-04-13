@@ -12,6 +12,12 @@ region_check = {
     "EU": ascii_string_equals(0x73f70, " grP", 4)
 }
 
+world_npcs = {
+    "US": 0xa0990,
+    "JP": 0x9e7a0,
+    "EU": 0x9f100
+}
+
 mario_x_pos = {
     "US": float(0x740bc),
     "JP": float(0x10f1b0),
@@ -157,12 +163,23 @@ mt_rugged_seed = {
     "EU": bit4(0xd8439)
 }
 
+buzzar_defeated = {
+    "US": bit4(0xdbcc8),
+    "JP": bit4(0xdbca8),
+    "EU": bit4(0xd8438)
+}
+
+
 function unsigned_lt(a, b) {
     if (b >= 0x80) {
         return a >= 0x80 && a < b
     } else {
         return a >= 0x80 || a < b
     }
+}
+
+function check_npc(list, num, cmp) {
+    return any_of(range(0, num), idx => cmp(tbyte(list + 4*idx)))
 }
 
 // Achievements
@@ -188,6 +205,15 @@ achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while
 achievement("Parakarryless Seed", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
     trigger = any_of(regions, r => 
         region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] > prev(mt_rugged_seed[r]))
+    )
+)
+
+achievement("Buzzar Skip", "Cross Buzzar's bridge and enter Dry Dry Desert without alerting him.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(area_id[r] == 8 && prev(map_id[r] == 2) && map_id[r] == 4) && 
+        buzzar_defeated[r] == 0 && trigger_when(area_id[r] == 10 && map_id[r] == 49) &&
+        never(region_check[r] && area_id[r] == 8 && map_id[r] != 4) && never(region_check[r] && area_id[r] != 8 && area_id[r] != 10) &&
+        check_npc(world_npcs[r], 12, addr => never(byte(addr + 0xa7) == 1 && bit0(addr + 2) > prev(bit0(addr + 2))))
     )
 )
 
