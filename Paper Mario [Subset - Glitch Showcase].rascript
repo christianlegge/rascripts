@@ -169,6 +169,69 @@ buzzar_defeated = {
     "EU": bit4(0xd8438)
 }
 
+map_flag_0 = {
+    "US": dword(0x2dbc70),
+    "JP": dword(0x2dbc70),
+    "EU": dword(0x2e1f50)
+}
+
+function game_flag(bit_index) {
+    byte_index = bit_index / 8
+    bit_in_byte = bit_index % 8
+    if (bit_in_byte == 0) {
+        return {
+            "US": bit0(0xdbc70 + byte_index),
+            "JP": bit0(0xdbc50 + byte_index),
+            "EU": bit0(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 1) {
+        return {
+            "US": bit1(0xdbc70 + byte_index),
+            "JP": bit1(0xdbc50 + byte_index),
+            "EU": bit1(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 2) {
+        return {
+            "US": bit2(0xdbc70 + byte_index),
+            "JP": bit2(0xdbc50 + byte_index),
+            "EU": bit2(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 3) {
+        return {
+            "US": bit3(0xdbc70 + byte_index),
+            "JP": bit3(0xdbc50 + byte_index),
+            "EU": bit3(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 4) {
+        return {
+            "US": bit4(0xdbc70 + byte_index),
+            "JP": bit4(0xdbc50 + byte_index),
+            "EU": bit4(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 5) {
+        return {
+            "US": bit5(0xdbc70 + byte_index),
+            "JP": bit5(0xdbc50 + byte_index),
+            "EU": bit5(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 6) {
+        return {
+            "US": bit6(0xdbc70 + byte_index),
+            "JP": bit6(0xdbc50 + byte_index),
+            "EU": bit6(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 7) {
+        return {
+            "US": bit7(0xdbc70 + byte_index),
+            "JP": bit7(0xdbc50 + byte_index),
+            "EU": bit7(0xd83e0 + byte_index)
+        }
+    }
+}
+
+artifact_obtained = game_flag(0x374)
+artifact_block = game_flag(0x37F)
+
 
 function unsigned_lt(a, b) {
     if (b >= 0x80) {
@@ -232,6 +295,15 @@ achievement("Outpost Jump", "On the east screen of Dry Dry Outpost, enter the ro
     )
 )
 
+achievement("Artifact Jump", "Obtain the Artifact in Dry Dry Ruins without hitting the switch or breaking the block.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && never(region_check[r] && map_flag_0[r] != prev(map_flag_0[r])) && 
+        artifact_obtained[r] == 0 && artifact_block[r] == 0 &&
+        once(region_check[r] && area_id[r] == 11 && map_id[r] == 6 && prev(map_id[r] != 6)) &&
+        never(region_check[r] && area_id[r] != 11) && never(region_check[r] && map_id[r] != 6) &&
+        trigger_when(artifact_obtained[r] > prev(artifact_obtained[r]))
+    )
+)
 
 
 // Leaderboards
