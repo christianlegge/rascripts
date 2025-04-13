@@ -155,6 +155,12 @@ achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs be
     )
 )
 
+achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
+    trigger = any_of(regions, r => 
+        region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && area_id[r] == 0x0 && map_id[r] == 13 && unsigned_lt(story_progress[r], 0x9c)
+    )
+)
+
 // Leaderboards
 
 
