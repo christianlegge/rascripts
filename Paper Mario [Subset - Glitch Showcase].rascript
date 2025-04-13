@@ -30,6 +30,24 @@ mario_z_pos = {
     "EU": float(0x713d4)
 }
 
+current_partner = {
+    "US": byte(0x10f2a1),
+    "JP": byte(0x10f461),
+    "EU": byte(0x10dda1)
+}
+
+acting_partner = {
+    "US": byte(0x10ebb0),
+    "JP": byte(0x10ed70),
+    "EU": byte(0x10d6b0)
+}
+
+partner_action_state = {
+    "US": byte(0x10ebb3),
+    "JP": byte(0x10ed73),
+    "EU": byte(0x10d6b3)
+}
+
 area_id = {
     "US": word(tbyte(0x7419c) + 0x8a),
     "JP": word(tbyte(0x7417c) + 0x8a),
@@ -133,6 +151,12 @@ prologue_stone_block = {
     "EU": bit6(0xd83e6)
 }
 
+mt_rugged_seed = {
+    "US": bit4(0xdbcc9),
+    "JP": bit4(0xdbca9),
+    "EU": bit4(0xd8439)
+}
+
 function unsigned_lt(a, b) {
     if (b >= 0x80) {
         return a >= 0x80 && a < b
@@ -158,6 +182,12 @@ achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs be
 achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && trigger_when(area_id[r] == 0x0 && map_id[r] == 13) && unsigned_lt(story_progress[r], 0x9c)
+    )
+)
+
+achievement("Parakarryless Seed", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
+    trigger = any_of(regions, r => 
+        region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] > prev(mt_rugged_seed[r]))
     )
 )
 
