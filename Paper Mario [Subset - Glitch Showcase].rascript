@@ -204,7 +204,7 @@ achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while
 
 achievement("Parakarryless Seed", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
     trigger = any_of(regions, r => 
-        region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] > prev(mt_rugged_seed[r]))
+        region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] == 1) && prev(mt_rugged_seed[r]) == 0
     )
 )
 
