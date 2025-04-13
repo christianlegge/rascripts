@@ -298,10 +298,10 @@ achievement("Outpost Jump", "On the east screen of Dry Dry Outpost, enter the ro
 achievement("Artifact Jump", "Obtain the Artifact in Dry Dry Ruins without hitting the switch or breaking the block.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && never(region_check[r] && map_flag_0[r] != prev(map_flag_0[r])) && 
-        artifact_obtained[r] == 0 && artifact_block[r] == 0 &&
+        prev(artifact_obtained[r] == 0) && artifact_block[r] == 0 &&
         once(region_check[r] && area_id[r] == 11 && map_id[r] == 6 && prev(map_id[r] != 6)) &&
         never(region_check[r] && area_id[r] != 11) && never(region_check[r] && map_id[r] != 6) &&
-        trigger_when(artifact_obtained[r] > prev(artifact_obtained[r]))
+        trigger_when(artifact_obtained[r] == 1)
     )
 )
 
