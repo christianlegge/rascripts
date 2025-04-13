@@ -2,6 +2,8 @@
 // #MinimumVersion = 1.3
 // #ID = 33114
 
+debug = true
+
 regions = [ "US", "JP", "EU" ]
 
 region_check = {
@@ -131,11 +133,25 @@ prologue_stone_block = {
     "EU": bit6(0xd83e6)
 }
 
+function unsigned_lt(a, b) {
+    if (b >= 0x80) {
+        return a >= 0x80 && a < b
+    } else {
+        return a >= 0x80 || a < b
+    }
+}
+
 // Achievements
 
 achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking the stone block.", points = 2,
     trigger = any_of(regions, r => 
         region_check[r] && prologue_stone_block[r] == 0 && prologue_repel_gel[r] > prev(prologue_repel_gel[r]) && map_id[r] == 0x02 && area_id[r] == 0x00
+    )
+)
+
+achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs before clearing them.", points = 5,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 0x01 && entry_id[r] == 0x02 && map_id[r] == 0x03 && unsigned_lt(story_progress[r], 0xb4) && mario_x_pos[r] > 80 && prev(air_falling[r] == 1) && air_falling[r] == 0
     )
 )
 
@@ -154,11 +170,35 @@ rp_hp_eu = rich_presence_value("HP", current_hp["EU"])
 rp_max_hp_us = rich_presence_value("Max HP", max_hp["US"])
 rp_max_hp_jp = rich_presence_value("Max HP", max_hp["JP"])
 rp_max_hp_eu = rich_presence_value("Max HP", max_hp["EU"])
+rp_area_id_us = rich_presence_value("Area ID", area_id["US"])
+rp_area_id_jp = rich_presence_value("Area ID", area_id["JP"])
+rp_area_id_eu = rich_presence_value("Area ID", area_id["EU"])
+rp_entry_id_us = rich_presence_value("Entry ID", entry_id["US"])
+rp_entry_id_jp = rich_presence_value("Entry ID", entry_id["JP"])
+rp_entry_id_eu = rich_presence_value("Entry ID", entry_id["EU"])
+rp_map_id_us = rich_presence_value("Map ID", map_id["US"])
+rp_map_id_jp = rich_presence_value("Map ID", map_id["JP"])
+rp_map_id_eu = rich_presence_value("Map ID", map_id["EU"])
+rp_story_progress_us = rich_presence_value("Story Progress", story_progress["US"])
+rp_story_progress_jp = rich_presence_value("Story Progress", story_progress["JP"])
+rp_story_progress_eu = rich_presence_value("Story Progress", story_progress["EU"])
 
-rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}]", 
-    area_id_lookup_us, rp_hp_us, rp_max_hp_us)
-rich_presence_conditional_display(region_check["JP"], "Mario is exploring {0} [♥{1}/{2}]",
-    area_id_lookup_jp, rp_hp_jp, rp_max_hp_jp)
-rich_presence_conditional_display(region_check["EU"], "Mario is exploring {0} [♥{1}/{2}]",
-    area_id_lookup_eu, rp_hp_eu, rp_max_hp_eu)
+
+if (!debug) {
+    rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}]", 
+        area_id_lookup_us, rp_hp_us, rp_max_hp_us)
+    rich_presence_conditional_display(region_check["JP"], "Mario is exploring {0} [♥{1}/{2}]",
+        area_id_lookup_jp, rp_hp_jp, rp_max_hp_jp)
+    rich_presence_conditional_display(region_check["EU"], "Mario is exploring {0} [♥{1}/{2}]",
+        area_id_lookup_eu, rp_hp_eu, rp_max_hp_eu)
+}
+else {
+    rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}], [Story Progress: {6}]",
+        area_id_lookup_us, rp_hp_us, rp_max_hp_us, rp_area_id_us, rp_entry_id_us, rp_map_id_us, rp_story_progress_us)
+    rich_presence_conditional_display(region_check["JP"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}] [Story Progress: {6}]",
+        area_id_lookup_jp, rp_hp_jp, rp_max_hp_jp, rp_area_id_jp, rp_entry_id_jp, rp_map_id_jp, rp_story_progress_jp)
+    rich_presence_conditional_display(region_check["EU"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}] [Story Progress: {6}]",
+        area_id_lookup_eu, rp_hp_eu, rp_max_hp_eu, rp_area_id_eu, rp_entry_id_eu, rp_map_id_eu, rp_story_progress_eu)
+}
+
 rich_presence_display("Glitching Paper Mario")
