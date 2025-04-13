@@ -119,6 +119,30 @@ area_id_values = {
     0x1B: "Debug rooms"
 }
 
+prologue_repel_gel = {
+    "US": bit4(0xdbc76),
+    "JP": bit4(0xdbc56),
+    "EU": bit4(0xd83e6)
+}
+
+prologue_stone_block = {
+    "US": bit6(0xdbc76),
+    "JP": bit6(0xdbc56),
+    "EU": bit6(0xd83e6)
+}
+
+// Achievements
+
+achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking the stone block.", points = 2,
+    trigger = any_of(regions, r => 
+        region_check[r] && prologue_stone_block[r] == 0 && prologue_repel_gel[r] > prev(prologue_repel_gel[r]) && map_id[r] == 0x02 && area_id[r] == 0x00
+    )
+)
+
+// Leaderboards
+
+
+
 // Rich Presence
 
 area_id_lookup_us = rich_presence_lookup("Area", area_id["US"], area_id_values)
