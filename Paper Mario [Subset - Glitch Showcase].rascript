@@ -217,6 +217,23 @@ achievement("Buzzar Skip", "Cross Buzzar's bridge and enter Dry Dry Desert witho
     )
 )
 
+achievement("Rock Climb", "On the third screen of Mt. Rugged, enter from the lower left entrance and exit on the upper left.", points = 1,
+    trigger = any_of(regions, r =>
+        region_check[r] && prev(entry_id[r]) == 0 && prev(map_id[r] == 1) && area_id[r] == 8 &&
+        trigger_when(map_id[r] == 3)
+    )
+)
+
+achievement("Outpost Jump", "On the east screen of Dry Dry Outpost, enter the rooftop house without entering through the rightmost door.", points = 2,
+    trigger = any_of(regions, r =>
+        region_check[r] && never(region_check[r] && mario_x_pos[r] >= 225.0 && mario_z_pos[r] <= -63.0) && 
+        never(region_check[r] && area_id[r] != 9) && never(region_check[r] && map_id[r] != 1) && once(prev(map_id[r] == 0) && map_id[r] == 1) &&
+        trigger_when(mario_y_pos[r] == 140.0 && prev(mario_z_pos[r]) >= -180.0 && mario_z_pos[r] <= -180.0 && mario_x_pos[r] >= -430.0 && mario_x_pos[r] <= -350.0)
+    )
+)
+
+
+
 // Leaderboards
 
 
