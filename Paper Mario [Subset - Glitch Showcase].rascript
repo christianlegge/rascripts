@@ -151,13 +151,13 @@ achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking t
 
 achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs before clearing them.", points = 5,
     trigger = any_of(regions, r => 
-        region_check[r] && area_id[r] == 0x01 && entry_id[r] == 0x02 && map_id[r] == 0x03 && unsigned_lt(story_progress[r], 0xb4) && mario_x_pos[r] > 80 && prev(air_falling[r] == 1) && air_falling[r] == 0
+        region_check[r] && area_id[r] == 0x01 && trigger_when(entry_id[r] == 0x02) && __ornext(map_id[r] == 0x02 || map_id[r] == 0x03) && trigger_when(map_id[r] == 0x03) && unsigned_lt(story_progress[r], 0xb4) && trigger_when(mario_x_pos[r] > 80 && prev(air_falling[r] == 1) && air_falling[r] == 0)
     )
 )
 
 achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
     trigger = any_of(regions, r => 
-        region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && area_id[r] == 0x0 && map_id[r] == 13 && unsigned_lt(story_progress[r], 0x9c)
+        region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && trigger_when(area_id[r] == 0x0 && map_id[r] == 13) && unsigned_lt(story_progress[r], 0x9c)
     )
 )
 
