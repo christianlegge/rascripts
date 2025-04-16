@@ -301,6 +301,16 @@ function check_npc(list, num, cmp) {
     return any_of(range(0, num), idx => cmp(tbyte(list + 4*idx)))
 }
 
+function lzs(story, area, map, cutscene_map, exit_map) {
+    return any_of(regions, r =>
+        region_check[r] && trigger_when(prior(story_progress[r] == story) && story_progress[r] == story+1) &&
+        __ornext(prev(story_progress[r] == story) || prev(area_id[r] == 0)) &&
+        __ornext(map_id[r] == exit_map || map_id[r] == map) && area_id[r] == area &&
+        trigger_when(prev(area_id[r] == 0)) && prev(map_id[r] == cutscene_map) && trigger_when(map_id[r] == exit_map)
+    )
+}
+
+
 // Achievements
 
 achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking the stone block.", points = 2,
@@ -384,12 +394,7 @@ achievement("Slow Go Early", "Obtain Slow Go without pressing any of the stairca
 )
 
 achievement("Chapter 2 LZS", "Touch Mamar's Star Spirit card without activating the cutscene.", points = 10,
-    trigger = any_of(regions, r =>
-        region_check[r] && trigger_when(prior(story_progress[r] == 200) && story_progress[r] == 201) &&
-        __ornext(prev(story_progress[r] == 200) || prev(area_id[r] == 0)) &&
-        __ornext(map_id[r] == 16 || map_id[r] == 14) && area_id[r] == 11 &&
-        trigger_when(prev(area_id[r] == 0)) && prev(map_id[r] == 14) && trigger_when(map_id[r] == 16)
-    )
+    trigger = lzs(200, 11, 14, 14, 16)
 )
 
 achievement("Record Skip", "Obtain the Weight in Boo's Mansion without playing the Record.", points = 10,
@@ -399,6 +404,10 @@ achievement("Record Skip", "Obtain the Weight in Boo's Mansion without playing t
         never(region_check[r] && area_id[r] != 13) && never(region_check[r] && map_id[r] != 6) &&
         never(region_check[r] && mf13[r] != prev(mf13[r])) 
     )
+)
+
+achievement("Chapter 3 LZS", "Touch Skolar's Star Spirit card without activating the cutscene.", points = 10,
+    trigger = any_of([1, 11], el => lzs(0xf0, 14, 4, 14, el))
 )
 
 
