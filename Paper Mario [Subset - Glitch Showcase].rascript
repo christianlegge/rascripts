@@ -169,10 +169,58 @@ buzzar_defeated = {
     "EU": bit4(0xd8438)
 }
 
-map_flag_0 = {
-    "US": dword(0x2dbc70),
-    "JP": dword(0x2dbc70),
-    "EU": dword(0x2e1f50)
+function map_flag(bit_index) {
+    byte_index = bit_index / 8
+    bit_in_byte = bit_index % 8
+    if (bit_in_byte == 0) {
+        return {
+            "US": bit0(0x2dbc70 + byte_index),
+            "JP": bit0(0x2dbc70 + byte_index),
+            "EU": bit0(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 1) {
+        return {
+            "US": bit1(0x2dbc70 + byte_index),
+            "JP": bit1(0x2dbc70 + byte_index),
+            "EU": bit1(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 2) {
+        return {
+            "US": bit2(0x2dbc70 + byte_index),
+            "JP": bit2(0x2dbc70 + byte_index),
+            "EU": bit2(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 3) {
+        return {
+            "US": bit3(0x2dbc70 + byte_index),
+            "JP": bit3(0x2dbc70 + byte_index),
+            "EU": bit3(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 4) {
+        return {
+            "US": bit4(0x2dbc70 + byte_index),
+            "JP": bit4(0x2dbc70 + byte_index),
+            "EU": bit4(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 5) {
+        return {
+            "US": bit5(0x2dbc70 + byte_index),
+            "JP": bit5(0x2dbc70 + byte_index),
+            "EU": bit5(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 6) {
+        return {
+            "US": bit6(0x2dbc70 + byte_index),
+            "JP": bit6(0x2dbc70 + byte_index),
+            "EU": bit6(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 7) {
+        return {
+            "US": bit7(0x2dbc70 + byte_index),
+            "JP": bit7(0x2dbc70 + byte_index),
+            "EU": bit7(0x2e1f50 + byte_index)
+        }
+    }
 }
 
 function game_flag(bit_index) {
@@ -231,6 +279,12 @@ function game_flag(bit_index) {
 
 artifact_obtained = game_flag(0x374)
 artifact_block = game_flag(0x37F)
+slow_go_chest = game_flag(0x385)
+super_hammer_chest = game_flag(0x384)
+super_hammer_block = game_flag(0x380)
+
+mf0 = map_flag(0)
+mf1 = map_flag(1)
 
 
 function unsigned_lt(a, b) {
@@ -297,11 +351,33 @@ achievement("Outpost Jump", "On the east screen of Dry Dry Outpost, enter the ro
 
 achievement("Artifact Jump", "Obtain the Artifact in Dry Dry Ruins without hitting the switch or breaking the block.", points = 3,
     trigger = any_of(regions, r =>
-        region_check[r] && never(region_check[r] && map_flag_0[r] != prev(map_flag_0[r])) && 
+        region_check[r] && never(region_check[r] && mf0[r] != prev(mf0[r])) && 
         prev(artifact_obtained[r] == 0) && artifact_block[r] == 0 &&
         once(region_check[r] && area_id[r] == 11 && map_id[r] == 6 && prev(map_id[r] != 6)) &&
         never(region_check[r] && area_id[r] != 11) && never(region_check[r] && map_id[r] != 6) &&
         trigger_when(artifact_obtained[r] == 1)
+    )
+)
+
+achievement("Super Hammer Puzzle Skip", "Obtain the Super Hammer without breaking the block and without pressing any of the staircase switches.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 7) && map_id[r] == 8) &&
+        prev(super_hammer_chest[r] == 0) && trigger_when(super_hammer_chest[r] == 1) &&
+        never(region_check[r] && mf0[r] != prev(mf0[r])) &&
+        never(region_check[r] && mf1[r] != prev(mf1[r])) &&
+        never(super_hammer_block[r] == 1) &&
+        never(region_check[r] && map_id[r] != 8) && never(region_check[r] && area_id[r] != 11)
+    )
+)
+
+
+achievement("Slow Go Early", "Obtain Slow Go without pressing any of the staircase switches.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 7) && map_id[r] == 8) &&
+        prev(slow_go_chest[r] == 0) && trigger_when(slow_go_chest[r] == 1) &&
+        never(region_check[r] && mf0[r] != prev(mf0[r])) &&
+        never(region_check[r] && mf1[r] != prev(mf1[r])) &&
+        never(region_check[r] && map_id[r] != 8) && never(region_check[r] && area_id[r] != 11)
     )
 )
 
