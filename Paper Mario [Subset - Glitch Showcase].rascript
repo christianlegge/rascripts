@@ -282,9 +282,11 @@ artifact_block = game_flag(0x37F)
 slow_go_chest = game_flag(0x385)
 super_hammer_chest = game_flag(0x384)
 super_hammer_block = game_flag(0x380)
+record_chest = game_flag(0x3D2)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
+mf13 = map_flag(13)
 
 
 function unsigned_lt(a, b) {
@@ -387,6 +389,15 @@ achievement("Chapter 2 LZS", "Touch Mamar's Star Spirit card without activating 
         __ornext(prev(story_progress[r] == 200) || prev(area_id[r] == 0)) &&
         __ornext(map_id[r] == 16 || map_id[r] == 14) && area_id[r] == 11 &&
         trigger_when(prev(area_id[r] == 0)) && prev(map_id[r] == 14) && trigger_when(map_id[r] == 16)
+    )
+)
+
+achievement("Record Skip", "Obtain the Weight in Boo's Mansion without playing the Record.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] != 0x6) && map_id[r] == 0x6) &&
+        prev(record_chest[r] == 0) && trigger_when(record_chest[r] == 1) &&
+        never(region_check[r] && area_id[r] != 13) && never(region_check[r] && map_id[r] != 6) &&
+        never(region_check[r] && mf13[r] != prev(mf13[r])) 
     )
 )
 
