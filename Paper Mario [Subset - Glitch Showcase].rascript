@@ -406,6 +406,14 @@ achievement("Record Skip", "Obtain the Weight in Boo's Mansion without playing t
     )
 )
 
+achievement("Stanley Save", "Reach the screen beyond the Boos' village in Gusty Gulch without watching Tubba Blubba eat Stanley.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && prev(map_id[r] == 3) && entry_id[r] == 0 &&
+        area_id[r] == 14 && trigger_when(map_id[r] == 0) &&
+        unsigned_lt(story_progress[r], 0xdf)
+    )
+)
+
 achievement("Chapter 3 LZS", "Touch Skolar's Star Spirit card without activating the cutscene.", points = 10,
     trigger = any_of([1, 11], el => lzs(0xf0, 14, 4, 14, el))
 )
