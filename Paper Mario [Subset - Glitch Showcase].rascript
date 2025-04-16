@@ -381,6 +381,15 @@ achievement("Slow Go Early", "Obtain Slow Go without pressing any of the stairca
     )
 )
 
+achievement("Chapter 2 LZS", "Touch Mamar's Star Spirit card without activating the cutscene.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && trigger_when(prior(story_progress[r] == 200) && story_progress[r] == 201) &&
+        __ornext(prev(story_progress[r] == 200) || prev(area_id[r] == 0)) &&
+        __ornext(map_id[r] == 16 || map_id[r] == 14) && area_id[r] == 11 &&
+        trigger_when(prev(area_id[r] == 0)) && prev(map_id[r] == 14) && trigger_when(map_id[r] == 16)
+    )
+)
+
 
 // Leaderboards
 
