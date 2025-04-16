@@ -428,6 +428,14 @@ achievement("Spike Room", "Obtain the Castle Key in Tubba's Castle's spike room 
     )
 )
 
+achievement("Chapter 4 Early", "Enter Shy Guy's Toybox without Bow and without revealing the door.", points = 4,
+    trigger = any_of(regions, r =>
+        region_check[r] && unsigned_lt(story_progress[r], 0xf6) &&
+        prev(area_id[r] == 1) && prev(map_id[r] == 0x5) &&
+        trigger_when(area_id[r] == 0 && map_id[r] == 13)
+    )
+)
+
 // Leaderboards
 
 
