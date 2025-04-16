@@ -18,6 +18,12 @@ world_npcs = {
     "EU": 0x9f100
 }
 
+max_star_power = {
+    "US": byte(0x10f51d),
+    "JP": byte(0x10f6dd),
+    "EU": byte(0x10e01d)
+}
+
 mario_x_pos = {
     "US": float(0x740bc),
     "JP": float(0x10f1b0),
@@ -433,6 +439,13 @@ achievement("Chapter 4 Early", "Enter Shy Guy's Toybox without Bow and without r
         region_check[r] && unsigned_lt(story_progress[r], 0xf6) &&
         prev(area_id[r] == 1) && prev(map_id[r] == 0x5) &&
         trigger_when(area_id[r] == 0 && map_id[r] == 13)
+    )
+)
+
+achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && prev(story_progress[r] == 0x56) && story_progress[r] == 0x57 &&
+        prev(area_id[r] == 21) && prev(map_id[r] == 23) && max_star_power[r] == 0
     )
 )
 
