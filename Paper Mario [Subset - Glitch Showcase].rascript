@@ -295,6 +295,13 @@ mf0 = map_flag(0)
 mf1 = map_flag(1)
 mf13 = map_flag(13)
 
+ch1_beatkoopabros = game_flag(0x297)
+ch2_beattutankoopa = game_flag(0x386)
+ch3_mysticalkey = game_flag(0x42F)
+ch4_bombedwall = game_flag(0x459)
+ch5_intruderalert2 = game_flag(0x51E)
+ch6_placedbean = game_flag(0x55C)
+ch7_palacekeyused = game_flag(0x5F0)
 
 function unsigned_lt(a, b) {
     if (b >= 0x80) {
@@ -317,6 +324,14 @@ function lzs(story, area, map, cutscene_map, exit_map) {
     )
 }
 
+function rac(story, area, map, yes_flags, no_flags) {
+    return any_of(regions, r =>
+        region_check[r] && prev(area_id[r] == area) && prev(map_id[r] == map) &&
+        prev(story_progress[r] == story) && story_progress[r] == story+1 &&
+        all_of(yes_flags, flag => flag[r] == 1) &&
+        any_of(no_flags, flag => flag[r] == 0) 
+    )
+}
 
 // Achievements
 
@@ -447,6 +462,30 @@ achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any o
         region_check[r] && prev(story_progress[r] == 0x56) && story_progress[r] == 0x57 &&
         prev(area_id[r] == 21) && prev(map_id[r] == 23) && max_star_power[r] == 0
     )
+)
+
+achievement("Reverse All Cards II", "Touch Klevar's Star Spirit card having only completed Chapter 7 previously.", points = 10,
+    trigger = rac(0x00, 0x00, 0x00, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2])
+)
+
+achievement("Reverse All Cards III", "Touch Misstar's Star Spirit card having only completed Chapters 6 and 7 previously.", points = 10,
+    trigger = rac(0x00, 0x00, 0x00, [ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall])
+)
+
+achievement("Reverse All Cards IV", "Touch Muskular's Star Spirit card having only completed Chapters 5 through 7 previously.", points = 10,
+    trigger = rac(0x00, 0x00, 0x00, [ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey])
+)
+
+achievement("Reverse All Cards V", "Touch Skolar's Star Spirit card having only completed Chapters 4 through 7 previously.", points = 10,
+    trigger = rac(0x00, 0x00, 0x00, [ch4_bombedwall, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa])
+)
+
+achievement("Reverse All Cards VI", "Touch Mamar's Star Spirit card having only completed Chapters 3 through 7 previously.", points = 10,
+    trigger = rac(0x00, 0x00, 0x00, [ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros])
+)
+
+achievement("Reverse All Cards VII", "Touch Eldstar's Star Spirit card having completed Chapters 2 through 7 previously.", points = 10,
+    trigger = rac(0x00, 0x00, 0x00, [ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [])
 )
 
 // Leaderboards
