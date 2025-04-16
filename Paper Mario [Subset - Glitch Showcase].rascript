@@ -283,6 +283,7 @@ slow_go_chest = game_flag(0x385)
 super_hammer_chest = game_flag(0x384)
 super_hammer_block = game_flag(0x380)
 record_chest = game_flag(0x3D2)
+spike_room_chest = game_flag(0x421)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -418,6 +419,14 @@ achievement("Chapter 3 LZS", "Touch Skolar's Star Spirit card without activating
     trigger = any_of([1, 11], el => lzs(0xf0, 14, 4, 14, el))
 )
 
+achievement("Spike Room", "Obtain the Castle Key in Tubba's Castle's spike room without using Bow.", points = 3,
+    trigger  = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] != 12) && map_id[r] == 12) &&
+        never(region_check[r] && area_id[r] != 15) && never(region_check[r] && map_id[r] != 12) &&
+        prev(spike_room_chest[r] == 0) && trigger_when(spike_room_chest[r] == 1) &&
+        never(region_check[r] && acting_partner[r] == 0x09 && partner_action_state[r] == 0x01)
+    )
+)
 
 // Leaderboards
 
