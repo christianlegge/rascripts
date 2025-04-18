@@ -315,6 +315,7 @@ toybox_blue_switch = game_flag(0x44D)
 ultra_hammer_chest = game_flag(0x523)
 yellow_plant_fed = game_flag(0x554)
 bubble_plant_fed = game_flag(0x584)
+sun_tower_rock = game_flag(0x579)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -639,6 +640,26 @@ achievement("Yellow Berry Skip", "Reach the area beyond the Yellow Plant's gate 
         ((trigger_when(mario_y_pos[r] >= 0.0 && mario_z_pos[r] <= 137.0 && prev(mario_x_pos[r]) < -530.0 && mario_x_pos[r] >= -530.0)) ||
         (trigger_when(mario_y_pos[r] >= 0.0 && mario_z_pos[r] <= 137.0 && prev(mario_z_pos[r]) > 137.0 && mario_x_pos[r] >= -530.0)))
     )
+)
+
+achievement("Laki-less Puff Puff Machine", "Without obtaining Lakilester, destroy the Puff Puff Machine in Flower Fields and return to the main area.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 19 &&
+        story_progress[r] == 53 && has_laki[r] == 0 &&
+        prev(map_id[r] == 11) && map_id[r] == 0x0
+    )
+)
+
+achievement("Sun Tower Skip", "Speak to the Sun in Flower Fields without blowing up the rock to fix the staircase.", points = 25,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 19 && map_id[r] == 10 &&
+        sun_tower_rock[r] == 0 &&
+        prev(story_progress[r] != 50) && trigger_when(story_progress[r] == 50)
+    )
+)
+
+achievement("Chapter 6 LZS", "Touch Klevar's Star Spirit card without activating the cutscene.", points = 50,
+    trigger = lzs(0x38, 19, 15, 14, 14)
 )
 
 achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
