@@ -120,6 +120,12 @@ current_boots = {
     "EU": byte(0x10dd93)
 }
 
+has_laki = {
+    "US": byte(0x10f290 + 0x57),
+    "JP": byte(0x10f450 + 0x57),
+    "EU": byte(0x10dd90 + 0x57)
+}
+
 area_id_values = {
     0x00: "Goomba Village",
     0x01: "Toad Town",
@@ -307,6 +313,8 @@ anti_guy_chest = game_flag(0x49F)
 dictionary_chest = game_flag(0x47B)
 toybox_blue_switch = game_flag(0x44D)
 ultra_hammer_chest = game_flag(0x523)
+yellow_plant_fed = game_flag(0x554)
+bubble_plant_fed = game_flag(0x584)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -599,6 +607,37 @@ achievement("Peach Warp", "After completing Chapter 5, trigger the volcano escap
         region_check[r] && area_id[r] == 18 && trigger_when(prev(map_id[r] == 14) && map_id[r] == 15) &&
         unsigned_gt(story_progress[r], 0x25) &&
         __ornext(map_id[r] == 12 || map_id[r] == 13 || map_id[r] == 14 || map_id[r] == 15)
+    )
+)
+
+achievement("Early Laki", "Reach Lakilester without feeding the Bubble Plant.", points = 25,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 19 && trigger_when(map_id[r] == 8 && has_laki[r] > prev(has_laki[r])) &&
+        __ornext(map_id[r] == 9 || map_id[r] == 10 || map_id[r] == 8 || map_id[r] == 0) &&
+        bubble_plant_fed[r] == 0
+    )
+)
+
+achievement("Dayzee Bypass", "Reach the Upgrade Block behind the Yellow Plant without walking to the right of the gate.", points = 2,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 0x0) && map_id[r] == 0x3 && entry_id[r] == 0) &&
+        never(region_check[r] && mario_x_pos[r] >= -600.0 && mario_x_pos[r] < -500.0) &&
+        never(region_check[r] && area_id[r] != 19) &&
+        never(region_check[r] && map_id[r] != 3) &&
+        ((trigger_when(mario_y_pos[r] >= 50.0 && mario_z_pos[r] <= -72.9 && prev(acting_partner[r] == 0x8) && acting_partner[r] == 0x0)) ||
+        (trigger_when(mario_y_pos[r] >= 50.0 && mario_z_pos[r] <= -73.0 && prev(mario_z_pos[r]) > 73.0 && acting_partner[r] == 0x0)))
+    )
+)
+
+achievement("Yellow Berry Skip", "Reach the area beyond the Yellow Plant's gate in Flower Fields without feeding it or riding Lakilester.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 0x0) && map_id[r] == 0x3 && entry_id[r] == 0) &&
+        never(region_check[r] && acting_partner[r] == 0x08 && partner_action_state[r] == 0x01) &&
+        never(region_check[r] && area_id[r] != 19) &&
+        never(region_check[r] && map_id[r] != 3) &&
+        never(region_check[r] && yellow_plant_fed[r] == 1) &&
+        ((trigger_when(mario_y_pos[r] >= 0.0 && mario_z_pos[r] <= 137.0 && prev(mario_x_pos[r]) < -530.0 && mario_x_pos[r] >= -530.0)) ||
+        (trigger_when(mario_y_pos[r] >= 0.0 && mario_z_pos[r] <= 137.0 && prev(mario_z_pos[r]) > 137.0 && mario_x_pos[r] >= -530.0)))
     )
 )
 
