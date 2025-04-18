@@ -229,6 +229,14 @@ function map_flag(bit_index) {
     }
 }
 
+function map_var(idx) {
+    return {
+        "US": byte(0x2dbca8 + idx),
+        "JP": byte(0x2dbca8 + idx),
+        "EU": byte(0x2e1f88 + idx)
+    }
+}
+
 function game_flag(bit_index) {
     byte_index = bit_index / 8
     bit_in_byte = bit_index % 8
@@ -303,6 +311,8 @@ mf0 = map_flag(0)
 mf1 = map_flag(1)
 mf13 = map_flag(13)
 
+mv0 = map_var(0)
+
 ch1_beatkoopabros = game_flag(0x297)
 ch2_beattutankoopa = game_flag(0x386)
 ch3_mysticalkey = game_flag(0x42F)
@@ -375,6 +385,17 @@ achievement("Water Staircase Skip", "Reach the Koopa Bros. Fortress battlements 
         unsigned_lt(story_progress[r], 0xb0) &&
         koopa_fortress_door1[r] == 0 && koopa_fortress_door2[r] == 0 && koopa_fortress_door3[r] == 0 && koopa_fortress_door4[r] == 0 &&
         trigger_when(map_id[r] == 0x9)
+    )
+)
+
+achievement("Pie Jumps", "Cross the top of the room with 3 jail cells while only hitting the red switch once.", points = 2,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(prev(map_id[r] == 4) && map_id[r] == 3 && entry_id[r] == 3) &&
+        never(region_check[r] && area_id[r] != 7) &&
+        never(region_check[r] && map_id[r] != 2 && map_id[r] != 3) &&
+        never(region_check[r] && map_id[r] == 2 && entry_id[r] != 3) &&
+        never(repeated(2, region_check[r] && mv0[r] != prev(mv0[r]))) &&
+        trigger_when(prev(map_id[r] == 0x3) && map_id[r] == 0x2 && entry_id[r] == 3)
     )
 )
 
@@ -486,7 +507,7 @@ achievement("Blue Switch Jailbreak", "Pull the lever in Shy Guy's Toybox's Blue 
     trigger = any_of(regions, r =>
         region_check[r] && 
         never(region_check[r] && map_id[r] != 2 && toybox_blue_switch[r] == 0) &&
-        once(area_id == 16 && prev(map_id[r] != 0x2) && map_id[r] == 0x2 && entry_id[r] != 2 && toybox_blue_switch[r] == 0) &&
+        once(area_id[r] == 16 && prev(map_id[r] != 0x2) && map_id[r] == 0x2 && entry_id[r] != 2 && toybox_blue_switch[r] == 0) &&
         trigger_when(prev(map_id[r] == 0x2) && map_id[r] != 0x2 && toybox_blue_switch[r] == 1) 
     )
 )
