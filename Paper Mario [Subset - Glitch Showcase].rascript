@@ -316,6 +316,8 @@ ultra_hammer_chest = game_flag(0x523)
 yellow_plant_fed = game_flag(0x554)
 bubble_plant_fed = game_flag(0x584)
 sun_tower_rock = game_flag(0x579)
+warehouse_key = game_flag(0x5BA)
+warehouse_unlocked = game_flag(0x5BB)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -323,6 +325,15 @@ mf10 = map_flag(10)
 mf13 = map_flag(13)
 
 mv0 = map_var(0)
+
+ch1_started = game_flag(0x1)
+ch2_started = game_flag(0x2)
+ch3_started = game_flag(0x3)
+ch4_started = game_flag(0x4)
+ch5_started = game_flag(0x5)
+ch6_started = game_flag(0x6)
+ch7_started = game_flag(0x7)
+ch8_started = game_flag(0x8)
 
 ch1_beatkoopabros = game_flag(0x297)
 ch2_beattutankoopa = game_flag(0x386)
@@ -666,6 +677,22 @@ achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any o
     trigger = any_of(regions, r =>
         region_check[r] && prev(story_progress[r] == 0x56) && story_progress[r] == 0x57 &&
         prev(area_id[r] == 21) && prev(map_id[r] == 23) && max_star_power[r] == 0
+    )
+)
+
+achievement("? Bridge Without Ultra", "Reach Chapter 7 without Ultra Boots.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && prev(area_id[r] == 2) &&
+        __ornext(prev(map_id[r] == 13) || prev(map_id[r] == 18) || prev(map_id[r] == 17)) &&
+        current_boots[r] < 2 && prev(ch7_started[r] == 0) && trigger_when(ch7_started[r] == 1 && prev(map_id[r] == 13))
+    )
+)
+
+achievement("Murder Solved Early", "In Shiver City, speak to Herringway before witnessing Mayor Penguin's murder or obtaining the Warehouse Key.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && unsigned_lt(prev(story_progress[r]), 0x3f) && trigger_when(story_progress[r] == 0x41) &&
+        warehouse_key[r] == 0 && warehouse_unlocked[r] == 0 &&
+        area_id[r] == 20 && map_id[r] == 10
     )
 )
 
