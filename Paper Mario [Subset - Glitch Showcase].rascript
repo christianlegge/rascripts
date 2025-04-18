@@ -283,6 +283,10 @@ function game_flag(bit_index) {
     }
 }
 
+koopa_fortress_door1 = game_flag(0x28A)
+koopa_fortress_door2 = game_flag(0x28B)
+koopa_fortress_door3 = game_flag(0x28C)
+koopa_fortress_door4 = game_flag(0x28D)
 artifact_obtained = game_flag(0x374)
 artifact_block = game_flag(0x37F)
 slow_go_chest = game_flag(0x385)
@@ -354,6 +358,23 @@ achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs be
 achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && trigger_when(area_id[r] == 0x0 && map_id[r] == 13) && unsigned_lt(story_progress[r], 0x9c)
+    )
+)
+
+achievement("Invisible Bridge Clip", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch.", points = 5,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 6 && prev(map_id[r] == 7) && entry_id[r] == 0 &&
+        unsigned_lt(story_progress[r], 0xa5) &&
+        trigger_when(map_id[r] == 0x8)
+    )
+)
+
+achievement("Water Staircase Skip", "Reach the Koopa Bros. Fortress battlements without unlocking any of its doors.", points = 3,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 7 && prev(map_id[r] == 0x1) && entry_id[r] == 0 &&
+        unsigned_lt(story_progress[r], 0xb0) &&
+        koopa_fortress_door1[r] == 0 && koopa_fortress_door2[r] == 0 && koopa_fortress_door3[r] == 0 && koopa_fortress_door4[r] == 0 &&
+        trigger_when(map_id[r] == 0x9)
     )
 )
 
