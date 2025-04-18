@@ -309,6 +309,7 @@ toybox_blue_switch = game_flag(0x44D)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
+mf10 = map_flag(10)
 mf13 = map_flag(13)
 
 mv0 = map_var(0)
@@ -538,6 +539,16 @@ achievement("Bowless Green Station", "In the room with the conveyor belts in Shy
 
 achievement("Chapter 4 LZS", "Touch Muskular's Star Spirit card without activating the cutscene.", points = 10,
     trigger = lzs(4, 16, 14, 14, 13)
+)
+
+achievement("Raph Skip", "Enter Mt. Lavalava without taking the zipline.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(area_id[r] == 17 && prev(map_id[r] != 20) && map_id[r] == 20 && entry_id[r] != 2) &&
+        never(region_check[r] && mf10[r] == 1) &&
+        never(region_check[r] && area_id[r] != 17 && area_id[r] != 18) &&
+        never(region_check[r] && area_id[r] == 17 && map_id[r] != 20) &&
+        trigger_when(prev(area_id[r] == 17) && area_id[r] == 18)
+    )
 )
 
 achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
