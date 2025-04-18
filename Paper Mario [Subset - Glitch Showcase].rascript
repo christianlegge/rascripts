@@ -331,6 +331,14 @@ function unsigned_lt(a, b) {
     }
 }
 
+function unsigned_gt(a, b) {
+    if (b >= 0x80) {
+        return a < 0x80 || a > b
+    } else {
+        return a < 0x80 && a > b
+    }
+}
+
 function check_npc(list, num, cmp) {
     return any_of(range(0, num), idx => cmp(tbyte(list + 4*idx)))
 }
@@ -566,6 +574,31 @@ achievement("Ultra Hammer Skip", "Reach the third zipline in Mt. Lavalava withou
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(story_progress[r], 0x1d) && 
         area_id[r] == 18 && prev(map_id[r] == 2) && trigger_when(map_id[r] == 8 && entry_id[r] == 0)
+    )
+)
+
+achievement("Volcano Jump", "Go from the upper left entrance in Mt. Lavalava's main room to the lower left exit without crossing to the right side of the room.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 0x1) && map_id[r] == 0x2) &&
+        never(region_check[r] && mario_x_pos[r] >= 0.0 && mario_x_pos[r] < 300.0) &&
+        never(region_check[r] && area_id[r] != 18) &&
+        never(region_check[r] && map_id[r] != 2 && map_id[r] != 4) &&
+        trigger_when(prev(map_id[r] == 0x2) && map_id[r] == 0x4)
+    )
+)
+
+achievement("Flarakarry", "Reach the room in Mt. Lavalava behind the boulder without smashing it.", points = 2,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 18 && prev(map_id[r] == 11) && trigger_when(map_id[r] == 12) &&
+        unsigned_lt(story_progress[r], 0x20)
+    )
+)
+
+achievement("Peach Warp", "After completing Chapter 5, trigger the volcano escape sequence again.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 18 && trigger_when(prev(map_id[r] == 14) && map_id[r] == 15) &&
+        unsigned_gt(story_progress[r], 0x25) &&
+        __ornext(map_id[r] == 12 || map_id[r] == 13 || map_id[r] == 14 || map_id[r] == 15)
     )
 )
 
