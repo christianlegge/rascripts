@@ -306,6 +306,7 @@ anti_guy_defeated = game_flag(0x451)
 anti_guy_chest = game_flag(0x49F)
 dictionary_chest = game_flag(0x47B)
 toybox_blue_switch = game_flag(0x44D)
+ultra_hammer_chest = game_flag(0x523)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -548,6 +549,23 @@ achievement("Raph Skip", "Enter Mt. Lavalava without taking the zipline.", point
         never(region_check[r] && area_id[r] != 17 && area_id[r] != 18) &&
         never(region_check[r] && area_id[r] == 17 && map_id[r] != 20) &&
         trigger_when(prev(area_id[r] == 17) && area_id[r] == 18)
+    )
+)
+
+achievement("Ultra Hammer Early", "Open the Ultra Hammer chest without using Parakarry or Lakilester while in the room.", points = 4,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(ultra_hammer_chest[r] == 0 && area_id[r] == 18 && prev(map_id[r] != 0x6) && map_id[r] == 0x6) &&
+        never(region_check[r] && area_id[r] != 18) && never(region_check[r] && map_id[r] != 6) &&
+        never(acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) &&
+        never(acting_partner[r] == 0x08 && partner_action_state[r] == 0x01) &&
+        trigger_when(ultra_hammer_chest[r] > prev(ultra_hammer_chest[r]))
+    )
+)
+
+achievement("Ultra Hammer Skip", "Reach the third zipline in Mt. Lavalava without breaking the Ultra Hammer block in front of the door.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && unsigned_lt(story_progress[r], 0x1d) && 
+        area_id[r] == 18 && prev(map_id[r] == 2) && trigger_when(map_id[r] == 8 && entry_id[r] == 0)
     )
 )
 
