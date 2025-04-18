@@ -486,7 +486,7 @@ achievement("Blue Switch Jailbreak", "Pull the lever in Shy Guy's Toybox's Blue 
     trigger = any_of(regions, r =>
         region_check[r] && 
         never(region_check[r] && map_id[r] != 2 && toybox_blue_switch[r] == 0) &&
-        once(prev(map_id[r] != 0x2) && map_id[r] == 0x2 && entry_id[r] != 2 && toybox_blue_switch[r] == 0) &&
+        once(area_id == 16 && prev(map_id[r] != 0x2) && map_id[r] == 0x2 && entry_id[r] != 2 && toybox_blue_switch[r] == 0) &&
         trigger_when(prev(map_id[r] == 0x2) && map_id[r] != 0x2 && toybox_blue_switch[r] == 1) 
     )
 )
