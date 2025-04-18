@@ -290,6 +290,10 @@ super_hammer_chest = game_flag(0x384)
 super_hammer_block = game_flag(0x380)
 record_chest = game_flag(0x3D2)
 spike_room_chest = game_flag(0x421)
+anti_guy_defeated = game_flag(0x451)
+anti_guy_chest = game_flag(0x49F)
+dictionary_chest = game_flag(0x47B)
+toybox_blue_switch = game_flag(0x44D)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -455,6 +459,43 @@ achievement("Chapter 4 Early", "Enter Shy Guy's Toybox without Bow and without r
         prev(area_id[r] == 1) && prev(map_id[r] == 0x5) &&
         trigger_when(area_id[r] == 0 && map_id[r] == 13)
     )
+)
+
+achievement("Blue Switch Jailbreak", "Pull the lever in Shy Guy's Toybox's Blue Station without arriving from the left on the train, then exit the area.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && 
+        never(region_check[r] && map_id[r] != 2 && toybox_blue_switch[r] == 0) &&
+        once(prev(map_id[r] != 0x2) && map_id[r] == 0x2 && entry_id[r] != 2 && toybox_blue_switch[r] == 0) &&
+        trigger_when(prev(map_id[r] == 0x2) && map_id[r] != 0x2 && toybox_blue_switch[r] == 1) 
+    )
+)
+
+achievement("Gourmet Guy Skip", "In Shy Guy's Toybox's Pink Station, pull the lever to fix the track without giving a cake to Gourmet Guy.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 16 && map_id[r] == 5 &&
+        unsigned_lt(prev(story_progress[r]), 0xfe) && trigger_when(story_progress[r] == 0xff)
+    )
+)
+
+achievement("Anti Guy Skip", "Open Anti Guy's chest while he's still guarding it.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 16 && map_id[r] == 12 &&
+        prev(anti_guy_chest[r] == 0) && trigger_when(anti_guy_chest[r] == 1) &&
+        anti_guy_defeated[r] == 0
+    )
+)
+
+achievement("Bowless Green Station", "In the room with the conveyor belts in Shy Guy's Toybox's Green Station, get the Dictionary and exit the room without using Bow.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && never(region_check[r] && area_id[r] != 16) && once(prev(map_id[r] == 0x7) && map_id[r] == 0x8 && dictionary_chest[r] == 0) &&
+        never(region_check[r] && map_id[r] != 8 && dictionary_chest[r] == 0) && 
+        trigger_when(prev(map_id[r] == 0x8) && map_id[r] == 0x7 && dictionary_chest[r] == 1) &&
+        never(region_check[r] && acting_partner[r] == 0x09 && partner_action_state[r] == 0x01)
+    )
+)
+
+achievement("Chapter 4 LZS", "Touch Muskular's Star Spirit card without activating the cutscene.", points = 10,
+    trigger = lzs(4, 16, 14, 14, 13)
 )
 
 achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
