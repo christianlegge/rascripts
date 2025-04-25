@@ -340,6 +340,10 @@ koopa_fortress_door3 = game_flag(0x28C)
 koopa_fortress_door4 = game_flag(0x28D)
 artifact_obtained = game_flag(0x374)
 ruins_key4 = game_flag(0x377)
+ruins_door1 = game_flag(0x366)
+ruins_door2 = game_flag(0x369)
+ruins_door3 = game_flag(0x36d)
+ruins_door4 = game_flag(0x378)
 artifact_block = game_flag(0x37F)
 slow_go_chest = game_flag(0x385)
 super_hammer_chest = game_flag(0x384)
@@ -609,6 +613,21 @@ achievement("Slow Go Early", "Obtain Slow Go without pressing any of the stairca
         never(region_check[r] && mf0[r] != prev(mf0[r])) &&
         never(region_check[r] && mf1[r] != prev(mf1[r])) &&
         never(region_check[r] && map_id[r] != 8) && never(region_check[r] && area_id[r] != 11)
+    )
+)
+
+achievement("Chapter 2 Clippy", "Reach the room beyond the any of the locked doors in Dry Dry Ruins without unlocking that door.", points = 5,
+    trigger = any_of(regions, r =>
+        any_of([
+            [ruins_door1, 1, 2, 0],
+            [ruins_door2, 3, 6, 1],
+            [ruins_door3, 6, 7, 2],
+            [ruins_door4, 10, 11, 0]
+        ], door_info =>
+            region_check[r] && area_id[r] == 11 &&
+            prev(map_id[r]) == door_info[1] && map_id[r] == door_info[2] && entry_id[r] == door_info[3] &&
+            door_info[0][r] == 0 
+        )
     )
 )
 
