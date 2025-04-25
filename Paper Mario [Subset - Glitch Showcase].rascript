@@ -401,7 +401,7 @@ achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while
     )
 )
 
-achievement("Invisible Bridge Clip", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch.", points = 5,
+achievement("Invisible Bridge Clip", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without using LZS.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 6 && prev(map_id[r] == 7) && entry_id[r] == 0 &&
         unsigned_lt(story_progress[r], 0xa5) &&
@@ -580,12 +580,13 @@ achievement("Raph Skip", "Enter Mt. Lavalava without taking the zipline.", point
     )
 )
 
-achievement("Ultra Hammer Early", "Open the Ultra Hammer chest without using Parakarry or Lakilester while in the room.", points = 4,
+achievement("Ultra Hammer Early", "Open the Ultra Hammer chest without using Parakarry or Lakilester while in the room and without riding Sushie.", points = 4,
     trigger = any_of(regions, r =>
         region_check[r] && once(ultra_hammer_chest[r] == 0 && area_id[r] == 18 && prev(map_id[r] != 0x6) && map_id[r] == 0x6) &&
         never(region_check[r] && area_id[r] != 18) && never(region_check[r] && map_id[r] != 6) &&
         never(acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) &&
         never(acting_partner[r] == 0x08 && partner_action_state[r] == 0x01) &&
+        never(acting_partner[r] == 0x07 && partner_action_state[r] == 0x01) &&
         trigger_when(ultra_hammer_chest[r] > prev(ultra_hammer_chest[r]))
     )
 )
