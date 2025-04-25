@@ -12,6 +12,24 @@ region_check = {
     "EU": ascii_string_equals(0x73f70, " grP", 4)
 }
 
+battle_state = {
+    "US": byte(0xdc070 - 8),
+    "JP": byte(0xdc050 - 8),
+    "EU": byte(0xd87e0 - 8)
+}
+
+battle_status = {
+    "US": byte(0xdc070),
+    "JP": byte(0xdc050),
+    "EU": byte(0xd87e0)
+}
+
+first_enemy_type = {
+    "US": byte(tbyte(0xdc070 + 0xe0) + 0x135),
+    "JP": byte(tbyte(0xdc050 + 0xe0) + 0x135),
+    "EU": byte(tbyte(0xd87e0 + 0xe0) + 0x135)
+}
+
 world_npcs = {
     "US": 0xa0990,
     "JP": 0x9e7a0,
@@ -413,11 +431,26 @@ achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking t
     )
 )
 
+achievement("Refight Goomba King", "After defeating Goomba King, fight him again.", points = 3,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 0x00 && map_id[r] == 0x09 &&
+        trigger_when(first_enemy_type[r] == 146 && battle_state[r] != 0) && prev(first_enemy_type[r] != 146) &&
+        unsigned_gt(story_progress[r], 0x8f)
+    )
+)
+
 achievement("Jr. Skip", "Obtain the Hammer and exit the Playground without fighting Jr. Troopa.", points = 25, 
     trigger = any_of(regions, r => 
         region_check[r] && __ornext(map_id[r] == 0x03 || map_id[r] == 0x02) && area_id[r] == 0 &&
         story_progress[r] == 0x88 && trigger_when(prev(current_hammer[r]) == 0xff && current_hammer[r] == 0x00) &&
         trigger_when(map_id[r] == 0x02)
+    )
+)
+
+achievement("Retrigger Prologue", "After completing the Prologue, fight Jr. Troopa in the playground again.", points = 25, 
+    trigger = any_of(regions, r => 
+        region_check[r] && map_id[r] == 0x03 && area_id[r] == 0 &&
+        trigger_when(story_progress[r] == 0x8a) && unsigned_gt(prev(story_progress[r]), 0x98)
     )
 )
 
@@ -836,6 +869,7 @@ rp_map_id_eu = rich_presence_value("Map ID", map_id["EU"])
 rp_story_progress_us = rich_presence_value("Story Progress", story_progress["US"])
 rp_story_progress_jp = rich_presence_value("Story Progress", story_progress["JP"])
 rp_story_progress_eu = rich_presence_value("Story Progress", story_progress["EU"])
+rp_first_enemy_type = rich_presence_value("First Enemy Type", byte(tbyte(0xdc070 + 0xe0) + 0x135))
 
 
 if (!debug) {
@@ -847,8 +881,8 @@ if (!debug) {
         area_id_lookup_eu, rp_hp_eu, rp_max_hp_eu)
 }
 else {
-    rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}], [Story Progress: {6}]",
-        area_id_lookup_us, rp_hp_us, rp_max_hp_us, rp_area_id_us, rp_entry_id_us, rp_map_id_us, rp_story_progress_us)
+    rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}], [Story Progress: {6}] [First Enemy Type: {7}]",
+        area_id_lookup_us, rp_hp_us, rp_max_hp_us, rp_area_id_us, rp_entry_id_us, rp_map_id_us, rp_story_progress_us, rp_first_enemy_type)
     rich_presence_conditional_display(region_check["JP"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}] [Story Progress: {6}]",
         area_id_lookup_jp, rp_hp_jp, rp_max_hp_jp, rp_area_id_jp, rp_entry_id_jp, rp_map_id_jp, rp_story_progress_jp)
     rich_presence_conditional_display(region_check["EU"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}] [Story Progress: {6}]",
