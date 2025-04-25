@@ -24,6 +24,19 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+
+game_status = {
+    "US": tbyte(0x7419c),
+    "JP": tbyte(0x7417c),
+    "EU": tbyte(0x714ac)
+}
+
+shop_addr = {
+    "US": tbyte(game_status["US"] + 0x144),
+    "JP": tbyte(game_status["JP"] + 0x144),
+    "EU": tbyte(game_status["EU"] + 0x144)
+}
+
 first_enemy_type = {
     "US": byte(tbyte(0xdc070 + 0xe0) + 0x135),
     "JP": byte(tbyte(0xdc050 + 0xe0) + 0x135),
@@ -138,6 +151,12 @@ current_boots = {
     "EU": byte(0x10dd93)
 }
 
+coins = {
+    "US": word(0x10f29e),
+    "JP": word(0x10f45e),
+    "EU": word(0x10dd9e)
+}
+
 has_kooper = {
     "US": byte(0x10f290 + 0x27),
     "JP": byte(0x10f450 + 0x27),
@@ -154,6 +173,50 @@ has_laki = {
     "US": byte(0x10f290 + 0x57),
     "JP": byte(0x10f450 + 0x57),
     "EU": byte(0x10dd90 + 0x57)
+}
+
+item_inv = {
+    "US": byte(0x10f290 + 0x1b4),
+    "JP": byte(0x10f450 + 0x1b4),
+    "EU": byte(0x10dd90 + 0x1b4)
+}
+
+function prev_item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return prev(word(0x10f290 + 0x1b4 + i*2))
+    } else if (region == "JP") {
+        return prev(word(0x10f450 + 0x1b4 + i*2))
+    } else if (region == "EU") {
+        return prev(word(0x10dd90 + 0x1b4 + i*2))
+    }
+}
+
+function item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return word(0x10f290 + 0x1b4 + i*2)
+    } else if (region == "JP") {
+        return word(0x10f450 + 0x1b4 + i*2)
+    } else if (region == "EU") {
+        return word(0x10dd90 + 0x1b4 + i*2)
+    }
+}
+
+badge_inv = {
+    "US": byte(0x10f290 + 0xb4),
+    "JP": byte(0x10f450 + 0xb4),
+    "EU": byte(0x10dd90 + 0xb4)
 }
 
 function prev_badge_slot(region, i) {
@@ -485,7 +548,7 @@ achievement("Early Star Piece", "In Prologue and with Goompa as your partner, ob
         never(region_check[r] && current_partner[r] != 5) &&
         never(region_check[r] && area_id[r] != 0) && never(region_check[r] && map_id[r] != 4) &&
         never(region_check[r] && mario_x_pos[r] >= 600.0 && mario_x_pos[r] < 700.0) &&
-        prev(playground_starpiece[r] == 0) && trigger_when(playground_starpiece[r] == 1))
+        prev(playground_starpiece[r] == 0) && trigger_when(playground_starpiece[r] == 1)
     )
 )
 
@@ -877,6 +940,17 @@ achievement("Murder Solved Early", "In Shiver City, speak to Herringway before w
         area_id[r] == 20 && map_id[r] == 10
     )
 )
+
+achievement("Inventory Overflow", "Sell a badge to a shop.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && any_of(range(0, 9), idx =>
+            prev_item_slot(r, idx) >= 0xe0 && prev_item_slot(r, idx) <= 0x154 &&
+            dword(shop_addr[r] + 0xc) == idx &&
+            coins[r] > prev(coins[r])
+        )
+    )
+)
+
 
 achievement("Reverse All Cards II", "Touch Klevar's Star Spirit card having only completed Chapter 7 previously.", points = 10,
     trigger = rac(0x38, 19, 15, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2])
