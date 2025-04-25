@@ -120,6 +120,18 @@ current_boots = {
     "EU": byte(0x10dd93)
 }
 
+has_kooper = {
+    "US": byte(0x10f290 + 0x27),
+    "JP": byte(0x10f450 + 0x27),
+    "EU": byte(0x10dd90 + 0x27)
+}
+
+has_bombette = {
+    "US": byte(0x10f290 + 0x2f),
+    "JP": byte(0x10f450 + 0x2f),
+    "EU": byte(0x10dd90 + 0x2f)
+}
+
 has_laki = {
     "US": byte(0x10f290 + 0x57),
     "JP": byte(0x10f450 + 0x57),
@@ -298,6 +310,12 @@ function game_flag(bit_index) {
 }
 
 playground_starpiece = game_flag(0x04a)
+fpplus_bombwall = game_flag(0x241)
+fpplus_koopa_chest = game_flag(0x282)
+smash_charge = game_flag(0x27e)
+koopa_fortress_key2 = game_flag(0x288)
+koopa_fortress_key3_bombwall = game_flag(0x291)
+koopa_fortress_key3 = game_flag(0x287)
 koopa_fortress_door1 = game_flag(0x28A)
 koopa_fortress_door2 = game_flag(0x28B)
 koopa_fortress_door3 = game_flag(0x28C)
@@ -358,6 +376,10 @@ function unsigned_gt(a, b) {
     } else {
         return a < 0x80 && a > b
     }
+}
+
+function encode_area_map(r) {
+    return area_id[r] * 256 + map_id[r]
 }
 
 function check_npc(list, num, cmp) {
@@ -437,6 +459,23 @@ achievement("Water Staircase Skip", "Reach the Koopa Bros. Fortress battlements 
     )
 )
 
+achievement("FP Plus Early", "Obtain the FP Plus above Koopa Bros. Fortress without blowing up the wall to reach the pipe.", points = 10,
+    trigger = any_of(regions, r => 
+        region_check[r] &&
+        __ornext(encode_area_map(r) == 0x0700 || encode_area_map(r) == 0x0608) &&
+        fpplus_bombwall[r] == 0 && prev(fpplus_koopa_chest[r] == 0) && 
+        trigger_when(fpplus_koopa_chest[r] == 1)
+    )
+)
+
+achievement("Staircase Skip", "In Koopa Bros. Fortress, recruit Bombette before obtaining the second Fortress Key.", points = 3,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 7 && __ornext(map_id[r] == 0x4 || map_id[r] == 0x5 || map_id[r] == 0x6) &&
+        unsigned_lt(story_progress[r], 0xaa) &&
+        koopa_fortress_key2[r] == 0 && prev(has_bombette[r] == 0) && trigger_when(has_bombette[r] == 1)
+    )
+)
+
 achievement("Pie Jumps", "Cross the top of the room with 3 jail cells while only hitting the red switch once.", points = 2,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 4) && map_id[r] == 3 && entry_id[r] == 3) &&
@@ -445,6 +484,27 @@ achievement("Pie Jumps", "Cross the top of the room with 3 jail cells while only
         never(region_check[r] && map_id[r] == 2 && entry_id[r] != 3) &&
         never(repeated(2, region_check[r] && mv0[r] != prev(mv0[r]))) &&
         trigger_when(prev(map_id[r] == 0x3) && map_id[r] == 0x2 && entry_id[r] == 3)
+    )
+)
+
+achievement("Smash Charge KSJ", "Obtain the Smash Charge badge in Koopa Bros. Fortress from the platform below.", points = 3,
+    trigger = any_of(regions, r => 
+        region_check[r] &&
+        never(region_check[r] && has_kooper[r] == 0) &&
+        never(region_check[r] && area_id[r] != 7) &&
+        never(region_check[r] && map_id[r] != 1) &&
+        never(region_check[r] && prev(smash_charge[r] == 1)) &&
+        once(mario_y_pos[r] >= 399.0 && mario_y_pos[r] < 401.0 && mario_x_pos[r] < -100.0) &&
+        never(region_check[r] && mario_x_pos[r] > 100.0 && mario_y_pos[r] > 450.0) &&
+        trigger_when(smash_charge[r] == 1)
+    )
+)
+
+achievement("Right Fortress Jail Key", "Obtain the Fortress Key in the rightmost cell in the room with the red switches without blowing up the wall, then exit the area.", points = 5,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 7 && prev(map_id[r]) == 3 &&
+        trigger_when(__ornext(map_id[r] == 0x2 || map_id[r] == 0x4)) &&
+        koopa_fortress_key3_bombwall[r] == 0 && trigger_when(koopa_fortress_key3[r] == 1)
     )
 )
 
