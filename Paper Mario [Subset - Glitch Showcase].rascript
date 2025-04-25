@@ -321,6 +321,7 @@ koopa_fortress_door2 = game_flag(0x28B)
 koopa_fortress_door3 = game_flag(0x28C)
 koopa_fortress_door4 = game_flag(0x28D)
 artifact_obtained = game_flag(0x374)
+ruins_key4 = game_flag(0x377)
 artifact_block = game_flag(0x37F)
 slow_go_chest = game_flag(0x385)
 super_hammer_chest = game_flag(0x384)
@@ -511,6 +512,14 @@ achievement("Right Fortress Jail Key", "Obtain the Fortress Key in the rightmost
 achievement("Parakarryless Seed", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
     trigger = any_of(regions, r => 
         region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] == 1) && prev(mt_rugged_seed[r]) == 0
+    )
+)
+
+achievement("Sand Clip", "After completing Chapter 2, obtain the Ruins Key under the sand to the right of the statue room.", points = 5,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 11 && __ornext(map_id[r] == 11 || map_id[r] == 15) &&
+        unsigned_gt(story_progress[r], 0xc5) && has_laki[r] == 1 && current_hammer[r] >= 0x01 &&
+        prev(ruins_key4[r] == 0) && trigger_when(ruins_key4[r] == 1)
     )
 )
 
