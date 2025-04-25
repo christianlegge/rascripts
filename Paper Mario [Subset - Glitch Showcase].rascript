@@ -156,6 +156,26 @@ has_laki = {
     "EU": byte(0x10dd90 + 0x57)
 }
 
+function prev_badge_slot(region, i) {
+    if (region == "US") {
+        return prev(word(0x10f290 + 0xb4 + i*2))
+    } else if (region == "JP") {
+        return prev(word(0x10f450 + 0xb4 + i*2))
+    } else if (region == "EU") {
+        return prev(word(0x10dd90 + 0xb4 + i*2))
+    }
+}
+
+function badge_slot(region, i) {
+    if (region == "US") {
+        return word(0x10f290 + 0xb4 + i*2)
+    } else if (region == "JP") {
+        return word(0x10f450 + 0xb4 + i*2)
+    } else if (region == "EU") {
+        return word(0x10dd90 + 0xb4 + i*2)
+    }
+}
+
 area_id_values = {
     0x00: "Goomba Village",
     0x01: "Toad Town",
@@ -355,6 +375,7 @@ anti_guy_chest = game_flag(0x49F)
 dictionary_chest = game_flag(0x47B)
 toybox_blue_switch = game_flag(0x44D)
 ultra_hammer_chest = game_flag(0x523)
+happyflower_tree = game_flag(0x566)
 yellow_plant_fed = game_flag(0x554)
 bubble_plant_fed = game_flag(0x584)
 sun_tower_rock = game_flag(0x579)
@@ -755,6 +776,14 @@ achievement("Flarakarry", "Reach the room in Mt. Lavalava behind the boulder wit
     )
 )
 
+achievement("Lava Piranha OOB", "First Strike Lava Piranha.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 18 && map_id[r] == 13 && battle_state[r] < 3 &&
+        unsigned_lt(story_progress[r], 0x23) &&
+        trigger_when(prev(battle_state[r] == 1) && battle_state[r] == 2 && first_enemy_type[r] == 179)
+    )
+)
+
 achievement("Peach Warp", "After completing Chapter 5, trigger the volcano escape sequence again.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 18 && trigger_when(prev(map_id[r] == 14) && map_id[r] == 15) &&
@@ -779,6 +808,18 @@ achievement("Dayzee Bypass", "Reach the Upgrade Block behind the Yellow Plant wi
         never(region_check[r] && map_id[r] != 3) &&
         ((trigger_when(mario_y_pos[r] >= 50.0 && mario_z_pos[r] <= -72.9 && prev(acting_partner[r] == 0x8) && acting_partner[r] == 0x0)) ||
         (trigger_when(mario_y_pos[r] >= 50.0 && mario_z_pos[r] <= -73.0 && prev(mario_z_pos[r]) > 73.0 && acting_partner[r] == 0x0)))
+    )
+)
+
+achievement("Badge Dupe", "Obtain more than one Happy Flower badge from the trees in Flower Fields.", points = 1,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        once(area_id[r] == 19 && map_id[r] == 4 && prev(map_id[r] != 4) && happyflower_tree[r] == 0) &&
+        trigger_when(tally_of(range(0, 127), 2, idx => 
+            once(badge_slot(r, idx) == 0x141)
+        )) &&
+        never(region_check[r] && area_id[r] != 19) &&
+        never(region_check[r] && map_id[r] != 4)
     )
 )
 
