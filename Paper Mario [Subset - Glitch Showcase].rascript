@@ -297,6 +297,7 @@ function game_flag(bit_index) {
     }
 }
 
+playground_starpiece = game_flag(0x04a)
 koopa_fortress_door1 = game_flag(0x28A)
 koopa_fortress_door2 = game_flag(0x28B)
 koopa_fortress_door3 = game_flag(0x28C)
@@ -386,6 +387,24 @@ function rac(story, area, map, yes_flags, no_flags) {
 achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking the stone block.", points = 2,
     trigger = any_of(regions, r => 
         region_check[r] && prologue_stone_block[r] == 0 && prologue_repel_gel[r] > prev(prologue_repel_gel[r]) && map_id[r] == 0x02 && area_id[r] == 0x00
+    )
+)
+
+achievement("Jr. Skip", "Obtain the Hammer and exit the Playground without fighting Jr. Troopa.", points = 25, 
+    trigger = any_of(regions, r => 
+        region_check[r] && __ornext(map_id[r] == 0x03 || map_id[r] == 0x02) && area_id[r] == 0 &&
+        story_progress[r] == 0x88 && trigger_when(prev(current_hammer[r]) == 0xff && current_hammer[r] == 0x00) &&
+        trigger_when(map_id[r] == 0x02)
+    )
+)
+
+achievement("Early Star Piece", "In Prologue and with Goompa as your partner, obtain the Star Piece on the ledge without walking to the right of the tree.", points = 10,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(prev(map_id[r] == 0x02) && map_id[r] == 0x04) &&
+        never(region_check[r] && current_partner[r] != 5) &&
+        never(region_check[r] && area_id[r] != 0) && never(region_check[r] && map_id[r] != 4) &&
+        never(region_check[r] && mario_x_pos[r] >= 600.0 && mario_x_pos[r] < 700.0) &&
+        prev(playground_starpiece[r] == 0) && trigger_when(playground_starpiece[r] == 1))
     )
 )
 
