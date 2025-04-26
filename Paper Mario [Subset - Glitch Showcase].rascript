@@ -481,8 +481,11 @@ function game_flag(bit_index) {
 }
 
 playground_starpiece = game_flag(0x04a)
+toadtown_starpiece = game_flag(0x12d)
 bluehouse_unlock = game_flag(0x83)
 toytrain = game_flag(0x121)
+sewer_ch5_blooper = game_flag(0x1af)
+sewer_ch5_pipe = game_flag(0x78e)
 ultraboots_chest = game_flag(0x1a7)
 ultraboots_block = game_flag(0x18e)
 fpplus_bombwall = game_flag(0x241)
@@ -512,6 +515,8 @@ anti_guy_defeated = game_flag(0x451)
 anti_guy_chest = game_flag(0x49F)
 dictionary_chest = game_flag(0x47B)
 toybox_blue_switch = game_flag(0x44D)
+toybox_red_barricade = game_flag(0x459)
+dizzy_stomp_chest = game_flag(0x52c)
 ultra_hammer_chest = game_flag(0x523)
 happyflower_tree = game_flag(0x566)
 yellow_plant_fed = game_flag(0x554)
@@ -691,6 +696,30 @@ achievement("Early Whale", "After Fuzzipede has been defeated and without Jr. Tr
     )
 )
 
+achievement("Sushie-less Toad Town Star Piece", "Collect the Star Piece in Toad Town's gate district without riding Sushie.", points = 4,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(area_id[r] == 1 && prev(map_id[r] != 1) && map_id[r] == 0x01) &&
+        never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x07) &&
+        never(region_check[r] && area_id[r] != 1) &&
+        never(region_check[r] && map_id[r] != 1) &&
+        never(region_check[r] && prev(toadtown_starpiece[r] == 1)) &&
+        trigger_when(toadtown_starpiece[r] == 1)
+    )
+)
+
+achievement("Island Pipe Blooper Skip", "After entering from the left side of the room, activate and enter the Chapter 5 warp pipe in Toad Town Tunnels without fighting the Blooper.", points = 10,
+    trigger = any_of(regions, r => 
+        region_check[r] &&
+        once(area_id[r] == 2 && prev(map_id[r] != 0x07) && map_id[r] == 0x07 && sewer_ch5_pipe[r] == 0) &&
+        never(region_check[r] && entry_id[r] != 2 && entry_id[r] != 0 && entry_id[r] != 3) &&
+        never(region_check[r] && sewer_ch5_blooper[r] == 1) &&
+        never(region_check[r] && area_id[r] != 2 && area_id[r] != 17) &&
+        never(region_check[r] && area_id[r] == 2 && map_id[r] != 7) &&
+        never(region_check[r] && area_id[r] == 17 && map_id[r] != 3) &&
+        trigger_when(sewer_ch5_pipe[r] == 1 && area_id[r] == 17 && map_id[r] == 0x03)
+    )
+)
+
 achievement("Clippy Boots", "Open the Ultra Boots chest without breaking the Ultra Hammer block to get into the room.", points = 10,
     trigger = any_of(regions, r => 
         region_check[r] &&
@@ -703,6 +732,28 @@ achievement("Clippy Boots", "Open the Ultra Boots chest without breaking the Ult
 achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && trigger_when(area_id[r] == 0x0 && map_id[r] == 13) && unsigned_lt(story_progress[r], 0x9c)
+    )
+)
+
+achievement("Pleasant Path Clippy", "On the second screen of Pleasant Path, cross from the left entrance to the right exit without jumping or using Parakarry.", points = 5,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(prev(map_id[r] == 0x4) && map_id[r] == 0x5) &&
+        never(region_check[r] && area_id[r] != 6) &&
+        never(region_check[r] && map_id[r] != 5 && map_id[r] != 6) &&
+        never(region_check[r] && jump_ascent[r] == 1) &&
+        never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x04) &&
+        trigger_when(map_id[r] == 0x6)
+    )
+)
+
+achievement("Kooper Skip", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without riding Lakilester.", points = 25,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(prev(map_id[r] == 0x6) && map_id[r] == 0x7) &&
+        never(region_check[r] && area_id[r] != 6) &&
+        never(region_check[r] && map_id[r] != 7 && map_id[r] != 8) &&
+        never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x08) &&
+        unsigned_lt(story_progress[r], 0xa5) &&
+        trigger_when(map_id[r] == 0x8)
     )
 )
 
@@ -775,6 +826,15 @@ achievement("Right Fortress Jail Key", "Obtain the Fortress Key in the rightmost
 achievement("Parakarryless Seed", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
     trigger = any_of(regions, r => 
         region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] == 1) && prev(mt_rugged_seed[r]) == 0
+    )
+)
+
+achievement("Early Ruins", "Enter Dry Dry Ruins before placing the Pulse Stone.", points = 2,
+    trigger = any_of(regions, r => 
+        region_check[r] && trigger_when(area_id[r] == 11 && map_id[r] == 0x00) &&
+        __ornext(has_laki[r] == 1 || current_boots[r] == 0x02) &&
+        prev(area_id[r] == 10) && prev(map_id[r] == 0x02) &&
+        unsigned_lt(story_progress[r], 0xc2)
     )
 )
 
@@ -857,6 +917,14 @@ achievement("Chapter 2 Clippy", "Reach the room beyond the any of the locked doo
     )
 )
 
+achievement("Ruins Stone Skip", "Reach Tutankoopa without solving the stone puzzle.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 11 && prev(map_id[r] == 10) &&
+        unsigned_lt(story_progress[r], 0xc7) &&
+        trigger_when(map_id[r] == 16)
+    )
+)
+
 achievement("Chapter 2 LZS", "Touch Mamar's Star Spirit card without activating the cutscene.", points = 10,
     trigger = lzs(200, 11, 14, 14, 16)
 )
@@ -875,6 +943,18 @@ achievement("Stanley Save", "Reach the screen beyond the Boos' village in Gusty 
         region_check[r] && prev(map_id[r] == 3) && entry_id[r] == 0 &&
         area_id[r] == 14 && trigger_when(map_id[r] == 0) &&
         unsigned_lt(story_progress[r], 0xdf)
+    )
+)
+
+achievement("Gusty Gulch Clippy", "Go from the Boo's village in Gusty Gulch to Tubba Blubba's Castle without jumping or using Parakarry.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 0x3) && map_id[r] == 0x0) &&
+        never(region_check[r] && area_id[r] != 14 && area_id[r] != 15) &&
+        never(region_check[r] && area_id[r] == 14 && map_id[r] != 0 && map_id[r] != 2) &&
+        never(region_check[r] && area_id[r] == 15 && map_id[r] != 0) &&
+        never(region_check[r] && jump_ascent[r] == 1) &&
+        never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x04) &&
+        trigger_when(prev(area_id[r] == 14) && area_id[r] == 15 && map_id[r] == 0x0)
     )
 )
 
@@ -929,6 +1009,13 @@ achievement("Bowless Green Station", "In the room with the conveyor belts in Shy
         never(region_check[r] && map_id[r] != 8 && dictionary_chest[r] == 0) && 
         trigger_when(prev(map_id[r] == 0x8) && map_id[r] == 0x7 && dictionary_chest[r] == 1) &&
         never(region_check[r] && acting_partner[r] == 0x09 && partner_action_state[r] == 0x01)
+    )
+)
+
+achievement("Red Barricade Skip", "Reach General Guy without blowing up the wall in Shy Guy's Toybox.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 16 && trigger_when(map_id[r] == 13) &&
+        prev(map_id[r] == 1) && toybox_red_barricade[r] == 0
     )
 )
 
