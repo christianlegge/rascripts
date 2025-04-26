@@ -941,6 +941,39 @@ achievement("Murder Solved Early", "In Shiver City, speak to Herringway before w
     )
 )
 
+achievement("Snowmen Skip", "Without opening the door and without riding Sushie, enter the door past the snowmen in Shiver Region.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && unsigned_lt(prev(story_progress[r]), 0x4a) &&
+        prev(map_id[r] == 3) && trigger_when(map_id[r] == 6) &&
+        area_id[r] == 20 && acting_partner[r] != 0x07 && has_laki[r] == 1
+    )
+)
+
+achievement("Mirror Clip", "Enter the main hall on one side of the mirror and exit on the other side.", points = 3,
+    trigger = any_of(regions, r =>
+        any_of([0, 1, 2], prev_entry =>
+            any_of([
+                [0, 2],
+                [3, 0],
+                [13, 3],
+                [10, 3]
+            ], next_info =>
+                region_check[r] && area_id[r] == 21 && prev(map_id[r]) == 1 &&
+                prev(entry_id[r] == prev_entry) && has_laki[r] == 1 &&
+                trigger_when(map_id[r] == next_info[0] && entry_id[r] == next_info[1])
+            )
+        )
+    )
+)
+
+achievement("Small Statue Skip", "Enter the room underneath the large statue in Crystal Palace without moving it out of the way.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 21 && prev(map_id[r] == 17) &&
+        unsigned_lt(story_progress[r], 0x54) &&
+        trigger_when(map_id[r] == 27)
+    )
+)
+
 achievement("Inventory Overflow", "Sell a badge to a shop.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && any_of(range(0, 9), idx =>
