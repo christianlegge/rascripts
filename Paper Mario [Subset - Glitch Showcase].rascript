@@ -187,6 +187,38 @@ item_inv = {
     "EU": byte(0x10dd90 + 0x1b4)
 }
 
+function key_item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return word(0x10f290 + 0x74 + i*2)
+    } else if (region == "JP") {
+        return word(0x10f450 + 0x74 + i*2)
+    } else if (region == "EU") {
+        return word(0x10dd90 + 0x74 + i*2)
+    }
+}
+
+function prev_key_item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return prev(word(0x10f290 + 0x74 + i*2))
+    } else if (region == "JP") {
+        return prev(word(0x10f450 + 0x74 + i*2))
+    } else if (region == "EU") {
+        return prev(word(0x10dd90 + 0x74 + i*2))
+    }
+}
+
 function prev_item_slot(region, i) {
     if (i % 2 == 0) {
         i = i + 1
@@ -418,6 +450,9 @@ function game_flag(bit_index) {
 
 playground_starpiece = game_flag(0x04a)
 bluehouse_unlock = game_flag(0x83)
+toytrain = game_flag(0x121)
+ultraboots_chest = game_flag(0x1a7)
+ultraboots_block = game_flag(0x18e)
 fpplus_bombwall = game_flag(0x241)
 fpplus_koopa_chest = game_flag(0x282)
 smash_charge = game_flag(0x27e)
@@ -438,6 +473,7 @@ artifact_block = game_flag(0x37F)
 slow_go_chest = game_flag(0x385)
 super_hammer_chest = game_flag(0x384)
 super_hammer_block = game_flag(0x380)
+bubulb_seed3 = game_flag(0x3A2)
 record_chest = game_flag(0x3D2)
 spike_room_chest = game_flag(0x421)
 anti_guy_defeated = game_flag(0x451)
@@ -575,6 +611,59 @@ achievement("Blue House Skip", "After entering from another Toad Town screen, go
         never(region_check[r] && area_id[r] != 1 && area_id[r] != 2) &&
         never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x08) &&
         trigger_when(area_id[r] == 2 && map_id[r] == 12)
+    )
+)
+
+achievement("Early Train", "Obtain the Toy Train without turning in the Storeroom Key, then exit the area.", points = 4,
+    trigger = any_of(regions, r => 
+        region_check[r] && 
+        once(unsigned_lt(story_progress[r], 0xf9) && prev(toytrain[r] == 0) && toytrain[r] == 1) &&
+        never(region_check[r] && area_id[r] != 1) &&
+        prev(map_id[r] == 5) && __ornext(map_id[r] == 6 || map_id[r] == 3) &&
+        never(region_check[r] && map_id[r] != 5 && map_id[r] != 6 && map_id[r] != 3)
+    )
+)
+
+achievement("Whalebreak", "After Jr. Troopa has been defeated near the whale and while he is still in the area, enter the whale's mouth again.", points = 10,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(area_id[r] == 1 && prev(map_id[r] != 0x06) && map_id[r] == 0x06) &&
+        unsigned_gt(prev(story_progress[r]), 0x9) && 
+        never(region_check[r] && mario_y_pos[r] <= -50.0) &&
+        never(region_check[r] && area_id[r] != 1 && area_id[r] != 3) &&
+        never(region_check[r] && area_id[r] == 1 && map_id[r] != 6) &&
+        story_progress[r] == 9
+    )
+)
+
+achievement("Seed Dupe", "Obtain a second Magical Seed from the Forever Forest Bub-ulb.", points = 3,
+    trigger = any_of(regions, r => 
+        region_check[r] && area_id[r] == 12 && map_id[r] == 3 &&
+        tally_of(range(0, 31), 2, idx => 
+            once(key_item_slot(r, idx) == 0x002d)
+        ) &&
+        never(region_check[r] && area_id[r] != 12) &&
+        never(region_check[r] && map_id[r] != 3) &&
+        bubulb_seed3[r] == 1 && prev(bubulb_seed3[r] == 0)
+    )
+)
+
+achievement("Early Whale", "After Fuzzipede has been defeated and without Jr. Troopa in the area, enter the whale's mouth again without using Bombette.", points = 25,
+    trigger = any_of(regions, r => 
+        region_check[r] && once(area_id[r] == 1 && prev(map_id[r] == 0x05) && map_id[r] == 0x06) &&
+        unsigned_gt(prev(story_progress[r]), 0x9) && 
+        never(region_check[r] && acting_partner[r] == 0x03 && partner_action_state[r] == 0x01) &&
+        never(region_check[r] && area_id[r] != 1 && area_id[r] != 3) &&
+        never(region_check[r] && area_id[r] == 1 && map_id[r] != 6) &&
+        trigger_when(story_progress[r] == 9)
+    )
+)
+
+achievement("Clippy Boots", "Open the Ultra Boots chest without breaking the Ultra Hammer block to get into the room.", points = 10,
+    trigger = any_of(regions, r => 
+        region_check[r] &&
+        area_id[r] == 2 && __ornext(map_id[r] == 21 || map_id[r] == 20) &&
+        ultraboots_block[r] == 0 && has_laki[r] == 1 &&
+        prev(ultraboots_chest[r] == 0) && trigger_when(ultraboots_chest[r] == 1)
     )
 )
 
