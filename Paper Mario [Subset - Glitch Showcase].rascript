@@ -417,6 +417,7 @@ function game_flag(bit_index) {
 }
 
 playground_starpiece = game_flag(0x04a)
+bluehouse_unlock = game_flag(0x83)
 fpplus_bombwall = game_flag(0x241)
 fpplus_koopa_chest = game_flag(0x282)
 smash_charge = game_flag(0x27e)
@@ -561,6 +562,19 @@ achievement("Early Star Piece", "In Prologue and with Goompa as your partner, ob
 achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs before clearing them.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 0x01 && trigger_when(entry_id[r] == 0x02) && __ornext(map_id[r] == 0x02 || map_id[r] == 0x03) && trigger_when(map_id[r] == 0x03) && unsigned_lt(story_progress[r], 0xb4) && trigger_when(mario_x_pos[r] > 80 && prev(air_falling[r] == 1) && air_falling[r] == 0)
+    )
+)
+
+achievement("Blue House Skip", "After entering from another Toad Town screen, go down the pipe in the blue house without unlocking the door or riding Lakilester.", points = 10,
+    trigger = any_of(regions, r => 
+        region_check[r] &&
+        once(area_id[r] == 0x01 && prev(map_id[r] != 0x03) && map_id[r] == 0x03) &&
+        never(region_check[r] && entry_id[r] > 3) &&
+        never(bluehouse_unlock[r] == 1) &&
+        never(region_check[r] && area_id[r] == 1 && map_id[r] != 3) &&
+        never(region_check[r] && area_id[r] != 1 && area_id[r] != 2) &&
+        never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x08) &&
+        trigger_when(area_id[r] == 2 && map_id[r] == 12)
     )
 )
 
