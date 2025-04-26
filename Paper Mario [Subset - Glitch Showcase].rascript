@@ -163,6 +163,14 @@ coins = {
     "EU": word(0x10dd9e)
 }
 
+
+has_goombario = {
+    "US": byte(0x10f290 + 0x1f),
+    "JP": byte(0x10f450 + 0x1f),
+    "EU": byte(0x10dd90 + 0x1f)
+}
+
+
 has_kooper = {
     "US": byte(0x10f290 + 0x27),
     "JP": byte(0x10f450 + 0x27),
@@ -173,6 +181,30 @@ has_bombette = {
     "US": byte(0x10f290 + 0x2f),
     "JP": byte(0x10f450 + 0x2f),
     "EU": byte(0x10dd90 + 0x2f)
+}
+
+has_parakarry = {
+    "US": byte(0x10f290 + 0x37),
+    "JP": byte(0x10f450 + 0x37),
+    "EU": byte(0x10dd90 + 0x37)
+}
+
+has_bow = {
+    "US": byte(0x10f290 + 0x5f),
+    "JP": byte(0x10f450 + 0x5f),
+    "EU": byte(0x10dd90 + 0x5f)
+}
+
+has_watt = {
+    "US": byte(0x10f290 + 0x47),
+    "JP": byte(0x10f450 + 0x47),
+    "EU": byte(0x10dd90 + 0x47)
+}
+
+has_sushie = {
+    "US": byte(0x10f290 + 0x4f),
+    "JP": byte(0x10f450 + 0x4f),
+    "EU": byte(0x10dd90 + 0x4f)
 }
 
 has_laki = {
@@ -487,6 +519,7 @@ bubble_plant_fed = game_flag(0x584)
 sun_tower_rock = game_flag(0x579)
 warehouse_key = game_flag(0x5BA)
 warehouse_unlocked = game_flag(0x5BB)
+finalbowser = game_flag(0x1fd)
 
 mf0 = map_flag(0)
 mf1 = map_flag(1)
@@ -1151,6 +1184,31 @@ achievement("Inventory Overflow", "Sell a badge to a shop.", points = 10,
             dword(shop_addr[r] + 0xc) == idx &&
             coins[r] > prev(coins[r])
         )
+    )
+)
+
+achievement("No Action Commands", "Beat Final Bowser without the Lucky Star and all 7 Star Spirits.", points = 50,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
+        ch1_beatkoopabros[r] == 1 && ch2_beattutankoopa[r] == 1 && ch3_mysticalkey[r] == 1 &&
+        ch4_bombedwall[r] == 1 && ch5_intruderalert2[r] == 1 && ch6_placedbean[r] == 1 &&
+        ch7_palacekeyused[r] == 1 &&
+        all_of(range(0, 31), idx =>
+            key_item_slot(r, idx) != 7
+        ) &&
+        prev(finalbowser[r] == 0) && finalbowser[r] == 1
+    )
+)
+
+
+achievement("Any% No ACE", "Beat Final Bowser without saving any Star Spirits and with your only partners being Goombario, Bombette, Sushie and Lakilester.", points = 50,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
+        has_goombario[r] == 1 && has_bombette[r] == 1 && has_sushie[r] == 1 && has_laki[r] == 1 &&
+        has_kooper[r] == 0 && has_parakarry[r] == 0 && has_watt[r] == 0 && has_bow[r] == 0 &&
+        ch1_beatkoopabros[r] == 0 && ch2_beattutankoopa[r] == 0 && ch3_mysticalkey[r] == 0 &&
+        ch4_bombedwall[r] == 0 && ch6_placedbean[r] == 0 && ch7_palacekeyused[r] == 0 &&
+        prev(finalbowser[r] == 0) && finalbowser[r] == 1
     )
 )
 
