@@ -972,6 +972,33 @@ achievement("Mirror Clip", "Enter the main hall on one side of the mirror and ex
     )
 )
 
+achievement("Chapter 7 Sushie Glitch", "Ride Sushie from Shiver City, past the snowmen and up the mountain past the blue switch, up the stairs, then exit on foot through the right exit.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && 
+        once(
+            prev(map_id[r] == 3) && map_id[r] == 6 &&
+            acting_partner[r] == 0x07 && partner_action_state[r] == 0x01
+        ) &&
+        never(region_check[r] && area_id[r] != 20) &&
+        never(region_check[r] && map_id[r] != 6 && map_id[r] != 7) &&
+        map_id[r] == 7 && partner_action_state[r] == 0
+    )
+)
+
+achievement("Ice Staircase Skip", "Enter Crystal Palace without raising the staircase with the Star Stone.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && prev(area_id[r] == 20) && prev(map_id[r] == 9) &&
+        unsigned_lt(story_progress[r], 0x4d) && trigger_when(area_id[r] == 21 && map_id[r] == 0)
+    )
+)
+
+achievement("Star Stone Late", "After raising the ice staircase in Shiver Region, re-enter the Sanctuary.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 20 && prev(map_id[r] == 9) &&
+        unsigned_gt(story_progress[r], 0x4c) && trigger_when(map_id[r] == 11)
+    )
+)
+
 achievement("Shovel Jump", "In the west screen of Shiver City, jump from the handle of the shovel to the ledge of the house.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] &&
