@@ -983,10 +983,8 @@ achievement("Shovel Jump", "In the west screen of Shiver City, jump from the han
         never(region_check[r] && map_id[r] != 0) &&
         never(region_check[r] && area_id[r] != 20) &&
         never(region_check[r] && mario_y_pos[r] < 25.0) &&
-        trigger_when(
-            mario_y_pos[r] >= 80.0 && jump_ascent[r] == 0 && air_falling[r] == 0 &&
-            prev(jump_byte[r] > 1)
-        )
+        mario_y_pos[r] >= 80.0 && jump_ascent[r] == 0 && air_falling[r] == 0 &&
+        prev(jump_byte[r] > 1)
     )
 )
 
