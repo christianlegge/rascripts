@@ -115,6 +115,12 @@ story_progress = {
     "EU": byte(0xd84e3)
 }
 
+jump_byte = {
+    "US": byte(0x10efc8),
+    "JP": byte(0x10f188),
+    "EU": byte(0x10dac8)
+}
+
 jump_ascent = {
     "US": bit1(0x10efc8),
     "JP": bit1(0x10f188),
@@ -966,11 +972,37 @@ achievement("Mirror Clip", "Enter the main hall on one side of the mirror and ex
     )
 )
 
+achievement("Shovel Jump", "In the west screen of Shiver City, jump from the handle of the shovel to the ledge of the house.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        once(
+            mario_x_pos[r] >= -120.0 && mario_x_pos[r] <= -60.0 &&
+            mario_y_pos[r] >= 25.0 && mario_y_pos[r] <= 80.0 &&
+            mario_z_pos[r] <= -50.0 && jump_ascent[r] == 0 && air_falling[r] == 0
+        ) &&
+        never(region_check[r] && map_id[r] != 0) &&
+        never(region_check[r] && area_id[r] != 20) &&
+        never(region_check[r] && mario_y_pos[r] < 25.0) &&
+        trigger_when(
+            mario_y_pos[r] >= 80.0 && jump_ascent[r] == 0 && air_falling[r] == 0 &&
+            prev(jump_byte[r] > 1)
+        )
+    )
+)
+
 achievement("Small Statue Skip", "Enter the room underneath the large statue in Crystal Palace without moving it out of the way.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 21 && prev(map_id[r] == 17) &&
         unsigned_lt(story_progress[r], 0x54) &&
         trigger_when(map_id[r] == 27)
+    )
+)
+
+achievement("Kooper Puzzle Skip", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 2,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 21 && prev(map_id[r] == 15) &&
+        trigger_when(map_id[r] == 16) &&
+        unsigned_lt(story_progress[r], 0x52)
     )
 )
 
