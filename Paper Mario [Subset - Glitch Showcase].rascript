@@ -1134,6 +1134,16 @@ achievement("Kooper Puzzle Skip", "In Crystal Palace, escape from the Duplighost
     )
 )
 
+achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 49) && map_id[r] == 47) &&
+        never(region_check[r] && battle_state[r] != 0) &&
+        never(region_check[r] && area_id[r] != 22) &&
+        never(region_check[r] && map_id[r] == 49) &&
+        trigger_when(map_id[r] == 37)
+    )
+)
+
 achievement("Inventory Overflow", "Sell a badge to a shop.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && any_of(range(0, 9), idx =>
