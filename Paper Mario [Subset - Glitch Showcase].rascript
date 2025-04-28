@@ -593,6 +593,7 @@ function rac(story, area, map, yes_flags, no_flags) {
 }
 
 // Achievements
+// Prologue
 
 achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking the stone block.", points = 2,
     trigger = any_of(regions, r => 
@@ -600,7 +601,7 @@ achievement("Cream Cheese", "Obtain the Repel Gel in Prologue without breaking t
     )
 )
 
-achievement("Refight Goomba King", "After defeating Goomba King, fight him again.", points = 3,
+achievement("Beating a Dead Horse", "After defeating Goomba King, fight him again.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 0x00 && map_id[r] == 0x09 &&
         trigger_when(first_enemy_type[r] == 146 && battle_state[r] != 0) && prev(first_enemy_type[r] != 146) &&
@@ -608,7 +609,7 @@ achievement("Refight Goomba King", "After defeating Goomba King, fight him again
     )
 )
 
-achievement("Jr. Skip", "Obtain the Hammer and exit the Playground without fighting Jr. Troopa.", points = 25, 
+achievement("Grab and Go", "Obtain the Hammer and exit the Playground without fighting Jr. Troopa.", points = 25, 
     trigger = any_of(regions, r => 
         region_check[r] && __ornext(map_id[r] == 0x03 || map_id[r] == 0x02) && area_id[r] == 0 &&
         story_progress[r] == 0x88 && trigger_when(prev(current_hammer[r]) == 0xff && current_hammer[r] == 0x00) &&
@@ -616,14 +617,14 @@ achievement("Jr. Skip", "Obtain the Hammer and exit the Playground without fight
     )
 )
 
-achievement("Retrigger Prologue", "After completing the Prologue, fight Jr. Troopa in the playground again.", points = 25, 
+achievement("Once More, from the Top", "After completing the Prologue, fight Jr. Troopa in the playground again.", points = 25, 
     trigger = any_of(regions, r => 
         region_check[r] && map_id[r] == 0x03 && area_id[r] == 0 &&
         trigger_when(story_progress[r] == 0x8a) && unsigned_gt(prev(story_progress[r]), 0x98)
     )
 )
 
-achievement("Early Star Piece", "In Prologue and with Goompa as your partner, obtain the Star Piece on the ledge without walking to the right of the tree.", points = 10,
+achievement("Hey Old Man, Check This Out!", "In Prologue and with Goompa as your partner, obtain the Star Piece on the ledge without walking to the right of the tree.", points = 10,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 0x02) && map_id[r] == 0x04) &&
         never(region_check[r] && current_partner[r] != 5) &&
@@ -633,13 +634,13 @@ achievement("Early Star Piece", "In Prologue and with Goompa as your partner, ob
     )
 )
 
-achievement("Log Skip", "Reach the southern area of Toad Town beyond the logs before clearing them.", points = 5,
+achievement("No Hard Hat Required", "Reach the southern area of Toad Town beyond the logs before clearing them.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 0x01 && trigger_when(entry_id[r] == 0x02) && __ornext(map_id[r] == 0x02 || map_id[r] == 0x03) && trigger_when(map_id[r] == 0x03) && unsigned_lt(story_progress[r], 0xb4) && trigger_when(mario_x_pos[r] > 80 && prev(air_falling[r] == 1) && air_falling[r] == 0)
     )
 )
 
-achievement("Blue House Skip", "After entering from another Toad Town screen, go down the pipe in the blue house without unlocking the door or riding Lakilester.", points = 10,
+achievement("Breaking and Entering", "After entering from another Toad Town screen, go down the pipe in the blue house without unlocking the door or riding Lakilester.", points = 10,
     trigger = any_of(regions, r => 
         region_check[r] &&
         once(area_id[r] == 0x01 && prev(map_id[r] != 0x03) && map_id[r] == 0x03) &&
@@ -652,7 +653,7 @@ achievement("Blue House Skip", "After entering from another Toad Town screen, go
     )
 )
 
-achievement("Early Train", "Obtain the Toy Train without turning in the Storeroom Key, then exit the area.", points = 4,
+achievement("The Great Train Robbery", "Obtain the Toy Train without turning in the Storeroom Key, then exit the area.", points = 4,
     trigger = any_of(regions, r => 
         region_check[r] && 
         once(unsigned_lt(story_progress[r], 0xf9) && prev(toytrain[r] == 0) && toytrain[r] == 1) &&
@@ -673,7 +674,7 @@ achievement("Whalebreak", "After Jr. Troopa has been defeated near the whale and
     )
 )
 
-achievement("Seed Dupe", "Obtain a second Magical Seed from the Forever Forest Bub-ulb.", points = 3,
+achievement("Bountiful Harvest", "Obtain a second Magical Seed from the Forever Forest Bub-ulb.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 12 && map_id[r] == 3 &&
         tally_of(range(0, 31), 2, idx => 
@@ -685,7 +686,7 @@ achievement("Seed Dupe", "Obtain a second Magical Seed from the Forever Forest B
     )
 )
 
-achievement("Early Whale", "After Fuzzipede has been defeated and without Jr. Troopa in the area, enter the whale's mouth again without using Bombette.", points = 25,
+achievement("Back to the Belly", "After Fuzzipede has been defeated and without Jr. Troopa in the area, enter the whale's mouth again without using Bombette.", points = 25,
     trigger = any_of(regions, r => 
         region_check[r] && once(area_id[r] == 1 && prev(map_id[r] == 0x05) && map_id[r] == 0x06) &&
         unsigned_gt(prev(story_progress[r]), 0x9) && 
@@ -696,7 +697,7 @@ achievement("Early Whale", "After Fuzzipede has been defeated and without Jr. Tr
     )
 )
 
-achievement("Sushie-less Toad Town Star Piece", "Collect the Star Piece in Toad Town's gate district without riding Sushie.", points = 4,
+achievement("Hop the Fence", "Collect the Star Piece in Toad Town's gate district without riding Sushie.", points = 4,
     trigger = any_of(regions, r => 
         region_check[r] && once(area_id[r] == 1 && prev(map_id[r] != 1) && map_id[r] == 0x01) &&
         never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x07) &&
@@ -707,7 +708,7 @@ achievement("Sushie-less Toad Town Star Piece", "Collect the Star Piece in Toad 
     )
 )
 
-achievement("Island Pipe Blooper Skip", "After entering from the left side of the room, activate and enter the Chapter 5 warp pipe in Toad Town Tunnels without fighting the Blooper.", points = 10,
+achievement("Save the Animals", "After entering from the left side of the room, activate and enter the Chapter 5 warp pipe in Toad Town Tunnels without fighting the Blooper.", points = 10,
     trigger = any_of(regions, r => 
         region_check[r] &&
         once(area_id[r] == 2 && prev(map_id[r] != 0x07) && map_id[r] == 0x07 && sewer_ch5_pipe[r] == 0) &&
@@ -729,13 +730,15 @@ achievement("Clippy Boots", "Open the Ultra Boots chest without breaking the Ult
     )
 )
 
-achievement("Black Toad Skip", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
+// Chapter 1
+
+achievement("I Wonder Who Those Fellas Are... Well, See Ya", "Begin Chapter 1 without speaking to Merlon while the black Toads are blocking the path.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && prev(area_id[r]) == 0x1 && prev(map_id[r]) == 0x2 && trigger_when(area_id[r] == 0x0 && map_id[r] == 13) && unsigned_lt(story_progress[r], 0x9c)
     )
 )
 
-achievement("Pleasant Path Clippy", "On the second screen of Pleasant Path, cross from the left entrance to the right exit without jumping or using Parakarry.", points = 5,
+achievement("A Pleasant Crawl", "On the second screen of Pleasant Path, cross from the left entrance to the right exit without jumping or using Parakarry.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 0x4) && map_id[r] == 0x5) &&
         never(region_check[r] && area_id[r] != 6) &&
@@ -746,7 +749,7 @@ achievement("Pleasant Path Clippy", "On the second screen of Pleasant Path, cros
     )
 )
 
-achievement("Kooper Skip", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without riding Lakilester.", points = 25,
+achievement("When You Can't Go Over, Go Under", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without riding Lakilester.", points = 50,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 0x6) && map_id[r] == 0x7) &&
         never(region_check[r] && area_id[r] != 6) &&
@@ -757,7 +760,7 @@ achievement("Kooper Skip", "In Pleasant Path, on the screen to the right of Koop
     )
 )
 
-achievement("Invisible Bridge Clip", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without using LZS.", points = 5,
+achievement("The Emperor's New Bridge", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without using LZS.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 6 && prev(map_id[r] == 7) && entry_id[r] == 0 &&
         unsigned_lt(story_progress[r], 0xa5) &&
@@ -765,7 +768,7 @@ achievement("Invisible Bridge Clip", "In Pleasant Path, on the screen to the rig
     )
 )
 
-achievement("Water Staircase Skip", "Reach the Koopa Bros. Fortress battlements without unlocking any of its doors.", points = 3,
+achievement("Express Elevator", "Reach the Koopa Bros. Fortress battlements without unlocking any of its doors.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 7 && prev(map_id[r] == 0x1) && entry_id[r] == 0 &&
         unsigned_lt(story_progress[r], 0xb0) &&
@@ -774,7 +777,7 @@ achievement("Water Staircase Skip", "Reach the Koopa Bros. Fortress battlements 
     )
 )
 
-achievement("FP Plus Early", "Obtain the FP Plus above Koopa Bros. Fortress without blowing up the wall to reach the pipe.", points = 10,
+achievement("Theft Is Okay, but I Draw the Line at Vandalism", "Obtain the FP Plus above Koopa Bros. Fortress without blowing up the wall to reach the pipe.", points = 10,
     trigger = any_of(regions, r => 
         region_check[r] &&
         __ornext(encode_area_map(r) == 0x0700 || encode_area_map(r) == 0x0608) &&
@@ -783,7 +786,7 @@ achievement("FP Plus Early", "Obtain the FP Plus above Koopa Bros. Fortress with
     )
 )
 
-achievement("Staircase Skip", "In Koopa Bros. Fortress, recruit Bombette before obtaining the second Fortress Key.", points = 3,
+achievement("Out on Good Behavior", "In Koopa Bros. Fortress, recruit Bombette before obtaining the second Fortress Key.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 7 && __ornext(map_id[r] == 0x4 || map_id[r] == 0x5 || map_id[r] == 0x6) &&
         unsigned_lt(story_progress[r], 0xaa) &&
@@ -791,7 +794,7 @@ achievement("Staircase Skip", "In Koopa Bros. Fortress, recruit Bombette before 
     )
 )
 
-achievement("Pie Jumps", "Cross the top of the room with 3 jail cells while only hitting the red switch once.", points = 2,
+achievement("Around the Outside", "Cross the top of the room with 3 jail cells while only hitting the red switch once.", points = 2,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 4) && map_id[r] == 3 && entry_id[r] == 3) &&
         never(region_check[r] && area_id[r] != 7) &&
@@ -802,7 +805,7 @@ achievement("Pie Jumps", "Cross the top of the room with 3 jail cells while only
     )
 )
 
-achievement("Smash Charge KSJ", "Obtain the Smash Charge badge in Koopa Bros. Fortress from the platform below.", points = 3,
+achievement("Reach Up and Touch Something", "Obtain the Smash Charge badge in Koopa Bros. Fortress from the platform below.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] &&
         never(region_check[r] && has_kooper[r] == 0) &&
@@ -815,7 +818,7 @@ achievement("Smash Charge KSJ", "Obtain the Smash Charge badge in Koopa Bros. Fo
     )
 )
 
-achievement("Right Fortress Jail Key", "Obtain the Fortress Key in the rightmost cell in the room with the red switches without blowing up the wall, then exit the area.", points = 5,
+achievement("Prison Break-In", "Obtain the Fortress Key in the rightmost cell in the room with the red switches without blowing up the wall, then exit the area.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 7 && prev(map_id[r]) == 3 &&
         trigger_when(__ornext(map_id[r] == 0x2 || map_id[r] == 0x4)) &&
@@ -823,13 +826,15 @@ achievement("Right Fortress Jail Key", "Obtain the Fortress Key in the rightmost
     )
 )
 
-achievement("Parakarryless Seed", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
+// Chapter 2
+
+achievement("Taking Root", "Obtain the Magical Seed from the Bub-ulb in Mt. Rugged without using Parakarry.", points = 25,
     trigger = any_of(regions, r => 
         region_check[r] && never(region_check[r] && area_id[r] != 8) && never(region_check[r] && map_id[r] != 2) && once(prev(map_id[r]) != 2 && map_id[r] == 2) && never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) && trigger_when(mt_rugged_seed[r] == 1) && prev(mt_rugged_seed[r]) == 0
     )
 )
 
-achievement("Early Ruins", "Enter Dry Dry Ruins before placing the Pulse Stone.", points = 2,
+achievement("Mystic Ruins", "Enter Dry Dry Ruins before placing the Pulse Stone.", points = 2,
     trigger = any_of(regions, r => 
         region_check[r] && trigger_when(area_id[r] == 11 && map_id[r] == 0x00) &&
         __ornext(has_laki[r] == 1 || current_boots[r] == 0x02) &&
@@ -838,7 +843,7 @@ achievement("Early Ruins", "Enter Dry Dry Ruins before placing the Pulse Stone."
     )
 )
 
-achievement("Sand Clip", "After completing Chapter 2, obtain the Ruins Key under the sand to the right of the statue room.", points = 5,
+achievement("Archaeological Dig", "After completing Chapter 2, obtain the Ruins Key under the sand to the right of the statue room.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 11 && __ornext(map_id[r] == 11 || map_id[r] == 15) &&
         unsigned_gt(story_progress[r], 0xc5) && has_laki[r] == 1 && current_hammer[r] >= 0x01 &&
@@ -846,7 +851,7 @@ achievement("Sand Clip", "After completing Chapter 2, obtain the Ruins Key under
     )
 )
 
-achievement("Buzzar Skip", "Cross Buzzar's bridge and enter Dry Dry Desert without alerting him.", points = 3,
+achievement("Maybe He Doesn't See Us", "Cross Buzzar's bridge and enter Dry Dry Desert without alerting him.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && once(area_id[r] == 8 && prev(map_id[r] == 2) && map_id[r] == 4) && 
         buzzar_defeated[r] == 0 && trigger_when(area_id[r] == 10 && map_id[r] == 49) &&
@@ -855,14 +860,14 @@ achievement("Buzzar Skip", "Cross Buzzar's bridge and enter Dry Dry Desert witho
     )
 )
 
-achievement("Rock Climb", "On the third screen of Mt. Rugged, enter from the lower left entrance and exit on the upper left.", points = 1,
+achievement("Mario, Use Rock Climb", "On the third screen of Mt. Rugged, enter from the lower left entrance and exit on the upper left.", points = 1,
     trigger = any_of(regions, r =>
         region_check[r] && prev(entry_id[r]) == 0 && prev(map_id[r] == 1) && area_id[r] == 8 &&
         trigger_when(map_id[r] == 3)
     )
 )
 
-achievement("Outpost Jump", "On the east screen of Dry Dry Outpost, enter the rooftop house without entering through the rightmost door.", points = 2,
+achievement("Mario Auditore", "On the east screen of Dry Dry Outpost, enter the rooftop house without entering through the rightmost door.", points = 2,
     trigger = any_of(regions, r =>
         region_check[r] && never(region_check[r] && mario_x_pos[r] >= 225.0 && mario_z_pos[r] <= -63.0) && 
         never(region_check[r] && area_id[r] != 9) && never(region_check[r] && map_id[r] != 1) && once(prev(map_id[r] == 0) && map_id[r] == 1) &&
@@ -870,7 +875,7 @@ achievement("Outpost Jump", "On the east screen of Dry Dry Outpost, enter the ro
     )
 )
 
-achievement("Artifact Jump", "Obtain the Artifact in Dry Dry Ruins without hitting the switch or breaking the block.", points = 3,
+achievement("Maybe It's Booby Trapped", "Obtain the Artifact in Dry Dry Ruins without hitting the switch or breaking the block.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && never(region_check[r] && mf0[r] != prev(mf0[r])) && 
         prev(artifact_obtained[r] == 0) && artifact_block[r] == 0 &&
@@ -880,7 +885,7 @@ achievement("Artifact Jump", "Obtain the Artifact in Dry Dry Ruins without hitti
     )
 )
 
-achievement("Super Hammer Puzzle Skip", "Obtain the Super Hammer without breaking the block and without pressing any of the staircase switches.", points = 5,
+achievement("Best Not to Disturb Them", "Obtain the Super Hammer without breaking the block and without pressing any of the staircase switches.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 7) && map_id[r] == 8) &&
         prev(super_hammer_chest[r] == 0) && trigger_when(super_hammer_chest[r] == 1) &&
@@ -892,7 +897,7 @@ achievement("Super Hammer Puzzle Skip", "Obtain the Super Hammer without breakin
 )
 
 
-achievement("Slow Go Early", "Obtain Slow Go without pressing any of the staircase switches.", points = 10,
+achievement("Chest Hop", "Obtain Slow Go without pressing any of the staircase switches.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 7) && map_id[r] == 8) &&
         prev(slow_go_chest[r] == 0) && trigger_when(slow_go_chest[r] == 1) &&
@@ -902,7 +907,7 @@ achievement("Slow Go Early", "Obtain Slow Go without pressing any of the stairca
     )
 )
 
-achievement("Chapter 2 Clippy", "Reach the room beyond the any of the locked doors in Dry Dry Ruins without unlocking that door.", points = 5,
+achievement("Ruined Key", "Reach the room beyond the any of the locked doors in Dry Dry Ruins without unlocking that door.", points = 5,
     trigger = any_of(regions, r =>
         any_of([
             [ruins_door1, 1, 2, 0],
@@ -917,7 +922,7 @@ achievement("Chapter 2 Clippy", "Reach the room beyond the any of the locked doo
     )
 )
 
-achievement("Ruins Stone Skip", "Reach Tutankoopa without solving the stone puzzle.", points = 5,
+achievement("Sneak Attack", "Reach Tutankoopa without solving the stone puzzle.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 11 && prev(map_id[r] == 10) &&
         unsigned_lt(story_progress[r], 0xc7) &&
@@ -925,11 +930,13 @@ achievement("Ruins Stone Skip", "Reach Tutankoopa without solving the stone puzz
     )
 )
 
-achievement("Chapter 2 LZS", "Touch Mamar's Star Spirit card without activating the cutscene.", points = 10,
+achievement("Watch Your Head", "Touch Mamar's Star Spirit card without activating the cutscene.", points = 10,
     trigger = lzs(200, 11, 14, 14, 16)
 )
 
-achievement("Record Skip", "Obtain the Weight in Boo's Mansion without playing the Record.", points = 10,
+// Chapter 3
+
+achievement("Get Outta the Way", "Obtain the Weight in Boo's Mansion without playing the Record.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] != 0x6) && map_id[r] == 0x6) &&
         prev(record_chest[r] == 0) && trigger_when(record_chest[r] == 1) &&
@@ -946,7 +953,7 @@ achievement("Stanley Save", "Reach the screen beyond the Boos' village in Gusty 
     )
 )
 
-achievement("Gusty Gulch Clippy", "Go from the Boo's village in Gusty Gulch to Tubba Blubba's Castle without jumping or using Parakarry.", points = 10,
+achievement("A Gusty Crawl", "Go from the Boo's village in Gusty Gulch to Tubba Blubba's Castle without jumping or using Parakarry.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 0x3) && map_id[r] == 0x0) &&
         never(region_check[r] && area_id[r] != 14 && area_id[r] != 15) &&
@@ -958,11 +965,11 @@ achievement("Gusty Gulch Clippy", "Go from the Boo's village in Gusty Gulch to T
     )
 )
 
-achievement("Chapter 3 LZS", "Touch Skolar's Star Spirit card without activating the cutscene.", points = 10,
+achievement("Hopping in the Breeze", "Touch Skolar's Star Spirit card without activating the cutscene.", points = 10,
     trigger = any_of([1, 11], el => lzs(0xf0, 14, 4, 14, el))
 )
 
-achievement("Spike Room", "Obtain the Castle Key in Tubba's Castle's spike room without using Bow.", points = 3,
+achievement("Hot Stepper", "Obtain the Castle Key in Tubba's Castle's spike room without using Bow.", points = 3,
     trigger  = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] != 12) && map_id[r] == 12) &&
         never(region_check[r] && area_id[r] != 15) && never(region_check[r] && map_id[r] != 12) &&
@@ -971,7 +978,9 @@ achievement("Spike Room", "Obtain the Castle Key in Tubba's Castle's spike room 
     )
 )
 
-achievement("Chapter 4 Early", "Enter Shy Guy's Toybox without Bow and without revealing the door.", points = 4,
+// Chapter 4
+
+achievement("Play Time is Now", "Enter Shy Guy's Toybox without Bow and without revealing the door.", points = 4,
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(story_progress[r], 0xf6) &&
         prev(area_id[r] == 1) && prev(map_id[r] == 0x5) &&
@@ -979,7 +988,7 @@ achievement("Chapter 4 Early", "Enter Shy Guy's Toybox without Bow and without r
     )
 )
 
-achievement("Blue Switch Jailbreak", "Pull the lever in Shy Guy's Toybox's Blue Station without arriving from the left on the train, then exit the area.", points = 5,
+achievement("I Never Thought About Going Left", "Pull the lever in Shy Guy's Toybox's Blue Station without arriving from the left on the train, then exit the area.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && 
         never(region_check[r] && map_id[r] != 2 && toybox_blue_switch[r] == 0) &&
@@ -988,14 +997,14 @@ achievement("Blue Switch Jailbreak", "Pull the lever in Shy Guy's Toybox's Blue 
     )
 )
 
-achievement("Gourmet Guy Skip", "In Shy Guy's Toybox's Pink Station, pull the lever to fix the track without giving a cake to Gourmet Guy.", points = 5,
+achievement("On a Diet", "In Shy Guy's Toybox's Pink Station, pull the lever to fix the track without giving a cake to Gourmet Guy.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 16 && map_id[r] == 5 &&
         unsigned_lt(prev(story_progress[r]), 0xfe) && trigger_when(story_progress[r] == 0xff)
     )
 )
 
-achievement("Anti Guy Skip", "Open Anti Guy's chest while he's still guarding it.", points = 5,
+achievement("Anti-Anti Guy", "Open Anti Guy's chest while he's still guarding it.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 16 && map_id[r] == 12 &&
         prev(anti_guy_chest[r] == 0) && trigger_when(anti_guy_chest[r] == 1) &&
@@ -1003,7 +1012,7 @@ achievement("Anti Guy Skip", "Open Anti Guy's chest while he's still guarding it
     )
 )
 
-achievement("Bowless Green Station", "In the room with the conveyor belts in Shy Guy's Toybox's Green Station, get the Dictionary and exit the room without using Bow.", points = 10,
+achievement("No Wallhacks Allowed", "In the room with the conveyor belts in Shy Guy's Toybox's Green Station, get the Dictionary and exit the room without using Bow.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && never(region_check[r] && area_id[r] != 16) && once(prev(map_id[r] == 0x7) && map_id[r] == 0x8 && dictionary_chest[r] == 0) &&
         never(region_check[r] && map_id[r] != 8 && dictionary_chest[r] == 0) && 
@@ -1012,18 +1021,20 @@ achievement("Bowless Green Station", "In the room with the conveyor belts in Shy
     )
 )
 
-achievement("Red Barricade Skip", "Reach General Guy without blowing up the wall in Shy Guy's Toybox.", points = 5,
+achievement("Must Be Load-Bearing", "Reach General Guy without blowing up the wall in Shy Guy's Toybox.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 16 && trigger_when(map_id[r] == 13) &&
         prev(map_id[r] == 1) && toybox_red_barricade[r] == 0
     )
 )
 
-achievement("Chapter 4 LZS", "Touch Muskular's Star Spirit card without activating the cutscene.", points = 10,
+achievement("Jumping for Joy", "Touch Muskular's Star Spirit card without activating the cutscene.", points = 10,
     trigger = lzs(4, 16, 14, 14, 13)
 )
 
-achievement("Raph Skip", "Enter Mt. Lavalava without taking the zipline.", points = 5,
+// Chapter 5
+
+achievement("The Yoshi Kids Will Be Fine, Probably", "Enter Mt. Lavalava without taking the zipline.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && once(area_id[r] == 17 && prev(map_id[r] != 20) && map_id[r] == 20 && entry_id[r] != 2) &&
         never(region_check[r] && mf10[r] == 1) &&
@@ -1033,7 +1044,7 @@ achievement("Raph Skip", "Enter Mt. Lavalava without taking the zipline.", point
     )
 )
 
-achievement("Ultra Hammer Early", "Open the Ultra Hammer chest without using Parakarry or Lakilester while in the room and without riding Sushie.", points = 4,
+achievement("Quick Dip", "Open the Ultra Hammer chest without using Parakarry or Lakilester while in the room and without riding Sushie.", points = 4,
     trigger = any_of(regions, r =>
         region_check[r] && once(ultra_hammer_chest[r] == 0 && area_id[r] == 18 && prev(map_id[r] != 0x6) && map_id[r] == 0x6) &&
         never(region_check[r] && area_id[r] != 18) && never(region_check[r] && map_id[r] != 6) &&
@@ -1044,14 +1055,14 @@ achievement("Ultra Hammer Early", "Open the Ultra Hammer chest without using Par
     )
 )
 
-achievement("Ultra Hammer Skip", "Reach the third zipline in Mt. Lavalava without breaking the Ultra Hammer block in front of the door.", points = 10,
+achievement("Swords into Plowshares", "Reach the third zipline in Mt. Lavalava without breaking the Ultra Hammer block in front of the door.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(story_progress[r], 0x1d) && 
         area_id[r] == 18 && prev(map_id[r] == 2) && trigger_when(map_id[r] == 8 && entry_id[r] == 0)
     )
 )
 
-achievement("Volcano Jump", "Go from the upper left entrance in Mt. Lavalava's main room to the lower left exit without crossing to the right side of the room.", points = 10,
+achievement("Short Way Down", "Go from the upper left entrance in Mt. Lavalava's main room to the lower left exit without crossing to the right side of the room.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 0x1) && map_id[r] == 0x2) &&
         never(region_check[r] && mario_x_pos[r] >= 0.0 && mario_x_pos[r] < 300.0) &&
@@ -1068,7 +1079,7 @@ achievement("Flarakarry", "Reach the room in Mt. Lavalava behind the boulder wit
     )
 )
 
-achievement("Lava Piranha OOB", "First Strike Lava Piranha.", points = 10,
+achievement("Catch Him Off Guard", "First Strike Lava Piranha.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 18 && map_id[r] == 13 && battle_state[r] < 3 &&
         unsigned_lt(story_progress[r], 0x23) &&
@@ -1076,7 +1087,7 @@ achievement("Lava Piranha OOB", "First Strike Lava Piranha.", points = 10,
     )
 )
 
-achievement("Peach Warp", "After completing Chapter 5, trigger the volcano escape sequence again.", points = 5,
+achievement("This Volcano Sure Is Active", "After completing Chapter 5, trigger the volcano escape sequence again.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 18 && trigger_when(prev(map_id[r] == 14) && map_id[r] == 15) &&
         unsigned_gt(story_progress[r], 0x25) &&
@@ -1084,7 +1095,9 @@ achievement("Peach Warp", "After completing Chapter 5, trigger the volcano escap
     )
 )
 
-achievement("Early Laki", "Reach Lakilester without feeding the Bubble Plant.", points = 25,
+// Chapter 6
+
+achievement("Squeak by the Bubble", "Reach Lakilester without feeding the Bubble Plant.", points = 25,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 19 && trigger_when(map_id[r] == 8 && has_laki[r] > prev(has_laki[r])) &&
         __ornext(map_id[r] == 9 || map_id[r] == 10 || map_id[r] == 8 || map_id[r] == 0) &&
@@ -1092,7 +1105,7 @@ achievement("Early Laki", "Reach Lakilester without feeding the Bubble Plant.", 
     )
 )
 
-achievement("Dayzee Bypass", "Reach the Upgrade Block behind the Yellow Plant without walking to the right of the gate.", points = 2,
+achievement("Dayzed and Confused", "Reach the Upgrade Block behind the Yellow Plant without walking to the right of the gate.", points = 2,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 0x0) && map_id[r] == 0x3 && entry_id[r] == 0) &&
         never(region_check[r] && mario_x_pos[r] >= -600.0 && mario_x_pos[r] < -500.0) &&
@@ -1103,7 +1116,7 @@ achievement("Dayzee Bypass", "Reach the Upgrade Block behind the Yellow Plant wi
     )
 )
 
-achievement("Badge Dupe", "Obtain more than one Happy Flower badge from the trees in Flower Fields.", points = 1,
+achievement("Be Fruitful and Multiply", "Obtain more than one Happy Flower badge from the trees in Flower Fields.", points = 1,
     trigger = any_of(regions, r =>
         region_check[r] &&
         once(area_id[r] == 19 && map_id[r] == 4 && prev(map_id[r] != 4) && happyflower_tree[r] == 0) &&
@@ -1115,7 +1128,7 @@ achievement("Badge Dupe", "Obtain more than one Happy Flower badge from the tree
     )
 )
 
-achievement("Yellow Berry Skip", "Reach the area beyond the Yellow Plant's gate in Flower Fields without feeding it or riding Lakilester.", points = 10,
+achievement("What Are You Gonna Do, Run After Me?", "Reach the area beyond the Yellow Plant's gate in Flower Fields without feeding it or riding Lakilester.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 0x0) && map_id[r] == 0x3 && entry_id[r] == 0) &&
         never(region_check[r] && acting_partner[r] == 0x08 && partner_action_state[r] == 0x01) &&
@@ -1127,7 +1140,7 @@ achievement("Yellow Berry Skip", "Reach the area beyond the Yellow Plant's gate 
     )
 )
 
-achievement("Laki-less Puff Puff Machine", "Without obtaining Lakilester, destroy the Puff Puff Machine in Flower Fields and return to the main area.", points = 10,
+achievement("This One's for Lakilulu", "Without obtaining Lakilester, destroy the Puff Puff Machine in Flower Fields and return to the main area.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 19 &&
         story_progress[r] == 53 && has_laki[r] == 0 &&
@@ -1135,7 +1148,7 @@ achievement("Laki-less Puff Puff Machine", "Without obtaining Lakilester, destro
     )
 )
 
-achievement("Sun Tower Skip", "Speak to the Sun in Flower Fields without blowing up the rock to fix the staircase.", points = 25,
+achievement("Peace Tower", "Speak to the Sun in Flower Fields without blowing up the rock to fix the staircase.", points = 25,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 19 && map_id[r] == 10 &&
         sun_tower_rock[r] == 0 &&
@@ -1143,18 +1156,13 @@ achievement("Sun Tower Skip", "Speak to the Sun in Flower Fields without blowing
     )
 )
 
-achievement("Chapter 6 LZS", "Touch Klevar's Star Spirit card without activating the cutscene.", points = 50,
+achievement("Skipping through the Clouds", "Touch Klevar's Star Spirit card without activating the cutscene.", points = 50,
     trigger = lzs(0x38, 19, 15, 14, 14)
 )
 
-achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
-    trigger = any_of(regions, r =>
-        region_check[r] && prev(story_progress[r] == 0x56) && story_progress[r] == 0x57 &&
-        prev(area_id[r] == 21) && prev(map_id[r] == 23) && max_star_power[r] == 0
-    )
-)
+// Chapter 7
 
-achievement("? Bridge Without Ultra", "Reach Chapter 7 without Ultra Boots.", points = 5,
+achievement("Old Boot Goofin'", "Reach Chapter 7 without Ultra Boots.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && prev(area_id[r] == 2) &&
         __ornext(prev(map_id[r] == 13) || prev(map_id[r] == 18) || prev(map_id[r] == 17)) &&
@@ -1162,7 +1170,7 @@ achievement("? Bridge Without Ultra", "Reach Chapter 7 without Ultra Boots.", po
     )
 )
 
-achievement("Murder Solved Early", "In Shiver City, speak to Herringway before witnessing Mayor Penguin's murder or obtaining the Warehouse Key.", points = 3,
+achievement("Something's Wrong, I Can Feel It", "In Shiver City, speak to Herringway before witnessing Mayor Penguin's murder or obtaining the Warehouse Key.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(prev(story_progress[r]), 0x3f) && trigger_when(story_progress[r] == 0x41) &&
         warehouse_key[r] == 0 && warehouse_unlocked[r] == 0 &&
@@ -1170,7 +1178,7 @@ achievement("Murder Solved Early", "In Shiver City, speak to Herringway before w
     )
 )
 
-achievement("Snowmen Skip", "Without opening the door and without riding Sushie, enter the door past the snowmen in Shiver Region.", points = 3,
+achievement("If You're Cold, They're Cold", "Without opening the door and without riding Sushie, enter the door past the snowmen in Shiver Region.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(prev(story_progress[r]), 0x4a) &&
         prev(map_id[r] == 3) && trigger_when(map_id[r] == 6) &&
@@ -1178,7 +1186,7 @@ achievement("Snowmen Skip", "Without opening the door and without riding Sushie,
     )
 )
 
-achievement("Mirror Clip", "Enter the main hall on one side of the mirror and exit on the other side.", points = 3,
+achievement("You Are Traveling through Another Dimension", "Enter the main hall on one side of the mirror and exit on the other side.", points = 3,
     trigger = any_of(regions, r =>
         any_of([0, 1, 2], prev_entry =>
             any_of([
@@ -1195,7 +1203,7 @@ achievement("Mirror Clip", "Enter the main hall on one side of the mirror and ex
     )
 )
 
-achievement("Chapter 7 Sushie Glitch", "Ride Sushie from Shiver City, past the snowmen and up the mountain past the blue switch, up the stairs, then exit on foot through the right exit.", points = 10,
+achievement("Fish Scales", "Ride Sushie from Shiver City, past the snowmen and up the mountain past the blue switch, up the stairs, then exit on foot through the right exit.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && 
         once(
@@ -1208,14 +1216,14 @@ achievement("Chapter 7 Sushie Glitch", "Ride Sushie from Shiver City, past the s
     )
 )
 
-achievement("Ice Staircase Skip", "Enter Crystal Palace without raising the staircase with the Star Stone.", points = 5,
+achievement("Non-Star-ter", "Enter Crystal Palace without raising the staircase with the Star Stone.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && prev(area_id[r] == 20) && prev(map_id[r] == 9) &&
         unsigned_lt(story_progress[r], 0x4d) && trigger_when(area_id[r] == 21 && map_id[r] == 0)
     )
 )
 
-achievement("Star Stone Late", "After raising the ice staircase in Shiver Region, re-enter the Sanctuary.", points = 5,
+achievement("I Think I Left My Coat", "After raising the ice staircase in Shiver Region, re-enter the Sanctuary.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 20 && prev(map_id[r] == 9) &&
         unsigned_gt(story_progress[r], 0x4c) && trigger_when(map_id[r] == 11)
@@ -1238,7 +1246,7 @@ achievement("Shovel Jump", "In the west screen of Shiver City, jump from the han
     )
 )
 
-achievement("Small Statue Skip", "Enter the room underneath the large statue in Crystal Palace without moving it out of the way.", points = 5,
+achievement("Save Your Strength", "Enter the room underneath the large statue in Crystal Palace without moving it out of the way.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 21 && prev(map_id[r] == 17) &&
         unsigned_lt(story_progress[r], 0x54) &&
@@ -1246,13 +1254,15 @@ achievement("Small Statue Skip", "Enter the room underneath the large statue in 
     )
 )
 
-achievement("Kooper Puzzle Skip", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 2,
+achievement("Not Worth the Effort to Bonk You", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 2,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 21 && prev(map_id[r] == 15) &&
         trigger_when(map_id[r] == 16) &&
         unsigned_lt(story_progress[r], 0x52)
     )
 )
+
+// Chapter 8
 
 achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles.", points = 5,
     trigger = any_of(regions, r =>
@@ -1264,7 +1274,9 @@ achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters,
     )
 )
 
-achievement("Inventory Overflow", "Sell a badge to a shop.", points = 10,
+// Miscellaneous
+
+achievement("Exotic Wares", "Sell a badge to a shop.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && any_of(range(0, 9), idx =>
             prev_item_slot(r, idx) >= 0xe0 && prev_item_slot(r, idx) <= 0x154 &&
@@ -1274,7 +1286,9 @@ achievement("Inventory Overflow", "Sell a badge to a shop.", points = 10,
     )
 )
 
-achievement("No Action Commands", "Beat Final Bowser without the Lucky Star and all 7 Star Spirits.", points = 50,
+// Full Game Runs
+
+achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star and all 7 Star Spirits.", points = 50,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
         ch1_beatkoopabros[r] == 1 && ch2_beattutankoopa[r] == 1 && ch3_mysticalkey[r] == 1 &&
@@ -1288,7 +1302,7 @@ achievement("No Action Commands", "Beat Final Bowser without the Lucky Star and 
 )
 
 
-achievement("Any% No ACE", "Beat Final Bowser without saving any Star Spirits and with your only partners being Goombario, Bombette, Sushie and Lakilester.", points = 50,
+achievement("Whirlwind Tour", "Beat Final Bowser without saving any Star Spirits and with your only partners being Goombario, Bombette, Sushie and Lakilester.", points = 50,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
         has_goombario[r] == 1 && has_bombette[r] == 1 && has_sushie[r] == 1 && has_laki[r] == 1 &&
@@ -1299,6 +1313,12 @@ achievement("Any% No ACE", "Beat Final Bowser without saving any Star Spirits an
     )
 )
 
+achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && prev(story_progress[r] == 0x56) && story_progress[r] == 0x57 &&
+        prev(area_id[r] == 21) && prev(map_id[r] == 23) && max_star_power[r] == 0
+    )
+)
 
 achievement("Reverse All Cards II", "Touch Klevar's Star Spirit card having only completed Chapter 7 previously.", points = 10,
     trigger = rac(0x38, 19, 15, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2])
