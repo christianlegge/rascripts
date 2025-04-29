@@ -524,6 +524,10 @@ bubble_plant_fed = game_flag(0x584)
 sun_tower_rock = game_flag(0x579)
 warehouse_key = game_flag(0x5BA)
 warehouse_unlocked = game_flag(0x5BB)
+bowserjail_bombwall = game_flag(0x616)
+shutofflava = game_flag(0x614)
+floodroom_bombwall = game_flag(0x631)
+floodroom_passage = game_flag(0x636)
 finalbowser = game_flag(0x1fd)
 
 mf0 = map_flag(0)
@@ -1263,6 +1267,29 @@ achievement("Not Worth the Effort to Bonk You", "In Crystal Palace, escape from 
 )
 
 // Chapter 8
+
+achievement("I Await Your Swift Return", "After being jailed in Bowser's Castle, re-enter through the front door without draining the lava.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 22 && prev(map_id[r]) == 23 &&
+        shutofflava[r] == 0 && bowserjail_bombwall[r] == 1 && map_id[r] == 25
+    )
+)
+
+achievement("Cloud Strife", "Enter the door in the lava moat in Bowser's Castle before being jailed.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 22 && prev(map_id[r]) == 23 &&
+        shutofflava[r] == 0 && bowserjail_bombwall[r] == 0 && map_id[r] == 6
+    )
+)
+
+achievement("Deep-Sea Diving", "In the room with changing water levels in Bowser's Castle, unlock the door without blowing up the wall or opening the secret hallway.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 22 &&
+        __ornext(prev(map_id[r] == 48) || prev(map_id[r] == 49)) &&
+        trigger_when( prev(map_id[r] == 49) && map_id[r] == 47) &&
+        floodroom_bombwall[r] == 0 && floodroom_passage[r] == 0
+    )
+)
 
 achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles.", points = 5,
     trigger = any_of(regions, r =>
