@@ -1048,6 +1048,16 @@ achievement("The Yoshi Kids Will Be Fine, Probably", "Enter Mt. Lavalava without
     )
 )
 
+achievement("Seared Seafood", "Using Sushie to cross the lava, open the Dizzy Stomp chest in Mt. Lavalava.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        once(prev(map_id[r] == 5) && acting_partner[r] == 0x07 && partner_action_state[r] == 0x01) &&
+        never(prev(dizzy_stomp_chest[r] != 0)) && trigger_when(dizzy_stomp_chest[r] == 1) &&
+        never(region_check[r] && area_id[r] != 18) &&
+        never(region_check[r] && map_id[r] != 7)
+    )
+)
+
 achievement("Quick Dip", "Open the Ultra Hammer chest without using Parakarry or Lakilester while in the room and without riding Sushie.", points = 4,
     trigger = any_of(regions, r =>
         region_check[r] && once(ultra_hammer_chest[r] == 0 && area_id[r] == 18 && prev(map_id[r] != 0x6) && map_id[r] == 0x6) &&
@@ -1258,7 +1268,15 @@ achievement("Save Your Strength", "Enter the room underneath the large statue in
     )
 )
 
-achievement("Not Worth the Effort to Bonk You", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 2,
+achievement("Platonic Friendship", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Bombette without revealing any of them.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 21 && prev(map_id[r] == 6) &&
+        trigger_when(map_id[r] == 8) &&
+        unsigned_lt(story_progress[r], 80)
+    )
+)
+
+achievement("Not Worth the Effort to Bonk You", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 21 && prev(map_id[r] == 15) &&
         trigger_when(map_id[r] == 16) &&
