@@ -24,6 +24,12 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+player_animation = {
+    "US": byte(0x10f080),
+    "JP": byte(0x10f240),
+    "EU": byte(0x10db80)
+}
+
 time_freeze = {
     "US": dword(0x9a5d8),
     "JP": dword(0x9a5b8),
@@ -539,6 +545,7 @@ bowserjail_bombwall = game_flag(0x616)
 shutofflava = game_flag(0x614)
 floodroom_bombwall = game_flag(0x631)
 floodroom_passage = game_flag(0x636)
+peachcastle_mettoad = game_flag(0x1f9)
 finalbowser = game_flag(0x1fd)
 
 mf0 = map_flag(0)
@@ -1327,6 +1334,14 @@ achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters,
         never(region_check[r] && area_id[r] != 22) &&
         never(region_check[r] && map_id[r] == 49) &&
         trigger_when(map_id[r] == 37)
+    )
+)
+
+achievement("Scooch Over, I'm Tired", "Take a nap in Peach's Castle without freeing the Toad from the wardrobe.", points = 2,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 4 && map_id[r] == 14 &&
+        mario_y_pos[r] >= 29.0 && mario_y_pos[r] <= 31.0 &&
+        (prev(player_animation[r] == 0x2) && player_animation[r] == 0x1d)
     )
 )
 
