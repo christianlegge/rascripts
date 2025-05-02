@@ -24,6 +24,25 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+selected_move_category = {
+    "US": byte(0xdc070 + 0x17b),
+    "JP": byte(0xdc050 + 0x17b),
+    "EU": byte(0xd87e0 + 0x17b)
+}
+
+selected_move_id = {
+    "US": word(0xdc070 + 0x17e),
+    "JP": word(0xdc050 + 0x17e),
+    "EU": word(0xd87e0 + 0x17e)
+}
+
+enemy_actors_start = {
+    "US": 0xdc070 + 0xe0,
+    "JP": 0xdc050 + 0xe0,
+    "EU": 0xd87e0 + 0xe0
+}
+
+
 player_animation = {
     "US": byte(0x10f080),
     "JP": byte(0x10f240),
@@ -65,6 +84,38 @@ first_enemy_type = {
     "JP": byte(tbyte(0xdc050 + 0xe0) + 0x135),
     "EU": byte(tbyte(0xd87e0 + 0xe0) + 0x135)
 }
+
+function enemy_type(n, region) {
+    if (region == "US") {
+        return byte(tbyte(enemy_actors_start["US"] + n*4) + 0x135)
+    } else if (region == "JP") {
+        return byte(tbyte(enemy_actors_start["JP"] + n*4) + 0x135)
+    } else if (region == "EU") {
+        return byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x135)
+    }
+}
+
+function enemy_prev_current_hp(n, region) {
+    if (region == "US") {
+        return prev(byte(tbyte(enemy_actors_start["US"] + n*4) + 0x1bb))
+    } else if (region == "JP") {
+        return prev(byte(tbyte(enemy_actors_start["JP"] + n*4) + 0x1bb))
+    } else if (region == "EU") {
+        return prev(byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x1bb))
+    }
+}
+
+
+function enemy_current_hp(n, region) {
+    if (region == "US") {
+        return byte(tbyte(enemy_actors_start["US"] + n*4) + 0x1bb)
+    } else if (region == "JP") {
+        return byte(tbyte(enemy_actors_start["JP"] + n*4) + 0x1bb)
+    } else if (region == "EU") {
+        return byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x1bb)
+    }
+}
+
 
 world_npcs = {
     "US": 0xa0990,
@@ -1194,6 +1245,16 @@ achievement("Peace Tower", "Speak to the Sun in Flower Fields without blowing up
     )
 )
 
+achievement("One Little Slap", "Crash the game by using Bow on Huff N. Puff.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 19 && map_id[r] == 15 &&
+        enemy_type(0, r) == 186 && all_of(range(1, 23), idx =>
+            dword(enemy_actors_start[r] + idx*4) == 0x00000000
+        ) && enemy_prev_current_hp(0, r) == 1 && enemy_current_hp(0, r) == 0 &&
+        selected_move_category[r] == 6 && selected_move_id[r] == 0xb3
+    )
+)
+
 achievement("Skipping through the Clouds", "Touch Klevar's Star Spirit card without activating the cutscene.", points = 50,
     trigger = lzs(0x38, 19, 15, 14, 14)
 )
@@ -1384,6 +1445,13 @@ achievement("Beauty Sleep", "Take a nap as Peach.", points = 10,
 )
 
 // Full Game Runs
+
+achievement("Awesomely Cool Endeavor", "View the end screen without defeating Final Bowser.", points = 100,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 0 && map_id[r] == 10 && prev(map_id[r] != 10) &&
+        finalbowser[r] == 0
+    )
+)
 
 achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star and all 7 Star Spirits.", points = 50,
     trigger = any_of(regions, r =>
