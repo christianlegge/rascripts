@@ -24,6 +24,17 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+time_freeze = {
+    "US": dword(0x9a5d8),
+    "JP": dword(0x9a5b8),
+    "EU": dword(0x969ac)
+}
+
+picking_up_item = {
+    "US": word(0x1565a6),
+    "JP": word(0x15b526),
+    "EU": word(0x155166)
+}
 
 game_status = {
     "US": tbyte(0x7419c),
@@ -1328,6 +1339,18 @@ achievement("Exotic Wares", "Sell a badge to a shop.", points = 10,
             dword(shop_addr[r] + 0xc) == idx &&
             coins[r] > prev(coins[r])
         )
+    )
+)
+
+achievement("Free Range Farming", "Grab an item from a Li'l Oink without scaring them away.", points = 2,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] != 0x4) && map_id[r] == 0x4) &&
+        trigger_when(region_check[r] && mario_x_pos[r] >= 270.0 && mario_x_pos[r] <= 590.0 &&
+            mario_z_pos[r] >= -260.0 && mario_z_pos[r] <= -100.0 && picking_up_item[r] == 1) &&
+        never(region_check[r] && mario_x_pos[r] >= 270.0 && mario_x_pos[r] <= 590.0 &&
+            mario_z_pos[r] >= -260.0 && mario_z_pos[r] <= -100.0 && time_freeze[r] == 1) &&
+        never(region_check[r] && area_id[r] != 1) &&
+        never(region_check[r] && map_id[r] != 4)
     )
 )
 
