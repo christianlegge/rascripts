@@ -54,6 +54,12 @@ shop_addr = {
     "EU": tbyte(game_status["EU"] + 0x144)
 }
 
+is_peach = {
+    "US": bit0(game_status["US"] + 0x7d),
+    "JP": bit0(game_status["JP"] + 0x7d),
+    "EU": bit0(game_status["EU"] + 0x7d)
+}
+
 first_enemy_type = {
     "US": byte(tbyte(0xdc070 + 0xe0) + 0x135),
     "JP": byte(tbyte(0xdc050 + 0xe0) + 0x135),
@@ -1366,6 +1372,14 @@ achievement("Free Range Farming", "Grab an item from a Li'l Oink without scaring
             mario_z_pos[r] >= -260.0 && mario_z_pos[r] <= -100.0 && time_freeze[r] == 1) &&
         never(region_check[r] && area_id[r] != 1) &&
         never(region_check[r] && map_id[r] != 4)
+    )
+)
+
+achievement("Beauty Sleep", "Take a nap as Peach.", points = 10,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 4 && map_id[r] == 14 &&
+        is_peach[r] == 1 &&
+        (prev(player_animation[r] == 0x2) && player_animation[r] == 0x1d)
     )
 )
 
