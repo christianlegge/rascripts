@@ -24,6 +24,12 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+move_argument = {
+    "US": word(0xdc070 + 0x178),
+    "JP": word(0xdc050 + 0x178),
+    "EU": word(0xd87e0 + 0x178)
+}
+
 selected_move_category = {
     "US": byte(0xdc070 + 0x17b),
     "JP": byte(0xdc050 + 0x17b),
@@ -217,6 +223,12 @@ current_hp = {
     "US": byte(0x10f291),
     "JP": byte(0x10f451),
     "EU": byte(0x10dd91)
+}
+
+current_fp = {
+    "US": byte(0x10f296),
+    "JP": byte(0x10f456),
+    "EU": byte(0x10dd96)
 }
 
 current_hammer = {
@@ -1427,6 +1439,14 @@ achievement("Scooch Over, I'm Tired", "Take a nap in Peach's Castle without free
 )
 
 // Miscellaneous
+
+achievement("Potent Edible", "Heal 30 or more FP from eating an Electro Pop.", points = 1,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        selected_move_category[r] == 2 && move_argument[r] == 0xcc &&
+        current_fp[r] - prev(current_fp[r]) >= 30
+    )
+)
 
 achievement("Exotic Wares", "Sell a badge to a shop.", points = 10,
     trigger = any_of(regions, r =>
