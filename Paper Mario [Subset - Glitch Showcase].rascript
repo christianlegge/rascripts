@@ -24,6 +24,12 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+battle_player_actor = {
+    "US": tbyte(0xdc070 + 0xd8),
+    "JP": tbyte(0xdc050 + 0xd8),
+    "EU": tbyte(0xd87e0 + 0xd8)
+}
+
 move_argument = {
     "US": word(0xdc070 + 0x178),
     "JP": word(0xdc050 + 0x178),
@@ -121,7 +127,6 @@ function enemy_current_hp(n, region) {
         return byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x1bb)
     }
 }
-
 
 world_npcs = {
     "US": 0xa0990,
@@ -370,9 +375,9 @@ function item_slot(region, i) {
 }
 
 badge_inv = {
-    "US": byte(0x10f290 + 0xb4),
-    "JP": byte(0x10f450 + 0xb4),
-    "EU": byte(0x10dd90 + 0xb4)
+    "US": (0x10f290 + 0xb4),
+    "JP": (0x10f450 + 0xb4),
+    "EU": (0x10dd90 + 0xb4)
 }
 
 function prev_badge_slot(region, i) {
@@ -393,6 +398,10 @@ function badge_slot(region, i) {
     } else if (region == "EU") {
         return word(0x10dd90 + 0xb4 + i*2)
     }
+}
+
+function equipped_badge(r, id) {
+    return __ornext(any_of(range(0, 63), i => word(badge_inv[r] + 340 + i*2) == id))
 }
 
 area_id_values = {
@@ -1445,6 +1454,16 @@ achievement("Potent Edible", "Heal 30 or more FP from eating an Electro Pop.", p
         region_check[r] &&
         selected_move_category[r] == 2 && move_argument[r] == 0xcc &&
         current_fp[r] - prev(current_fp[r]) >= 30
+    )
+)
+
+achievement("Feeling Foul", "Have a Repel Gel or Volt Shroom last only one turn.", points = 1,
+    trigger = any_of(regions, r =>
+        region_check[r] && equipped_badge(r, 0xf2) &&
+        selected_move_category[r] == 2 && __ornext(move_argument[r] == 0x97 || move_argument[r] == 0x8b) &&
+        __ornext(any_of([0x210, 0x21a], off =>
+            byte(battle_player_actor[r] + off) > prev(byte(battle_player_actor[r] + off))
+        ))
     )
 )
 
