@@ -305,9 +305,9 @@ has_laki = {
 }
 
 item_inv = {
-    "US": byte(0x10f290 + 0x1b4),
-    "JP": byte(0x10f450 + 0x1b4),
-    "EU": byte(0x10dd90 + 0x1b4)
+    "US": (0x10f290 + 0x1b4),
+    "JP": (0x10f450 + 0x1b4),
+    "EU": (0x10dd90 + 0x1b4)
 }
 
 function key_item_slot(region, i) {
@@ -672,6 +672,10 @@ function encode_area_map(r) {
 
 function check_npc(list, num, cmp) {
     return any_of(range(0, num), idx => cmp(tbyte(list + 4*idx)))
+}
+
+function all_inv_slots(r, cmp) {
+    return all_of(range(0, 9), idx => cmp(word(item_inv[r] + 2*idx)))
 }
 
 function lzs(story, area, map, cutscene_map, exit_map) {
@@ -1062,6 +1066,18 @@ achievement("A Gusty Crawl", "Go from the Boo's village in Gusty Gulch to Tubba 
         never(region_check[r] && jump_ascent[r] == 1) &&
         never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x04) &&
         trigger_when(prev(area_id[r] == 14) && area_id[r] == 15 && map_id[r] == 0x0)
+    )
+)
+
+achievement("Rationing Made Easy", "Get healed from an item without consuming it.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        has_laki[r] == 1 &&
+        once(current_hp[r] > prev(current_hp[r])) &&
+        never(region_check[r] && map_id[r] != prev(map_id[r]) && map_id[r] != 0) &&
+        all_inv_slots(r, slot => never(slot != prev(slot))) &&
+        never(region_check[r] && area_id[r] != 15) &&
+        map_id[r] == 0
     )
 )
 
