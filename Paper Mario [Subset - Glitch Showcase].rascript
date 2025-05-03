@@ -1394,12 +1394,26 @@ achievement("Deep-Sea Diving", "In the room with changing water levels in Bowser
     )
 )
 
-achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles.", points = 5,
+achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles and without jumping over them.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 49) && map_id[r] == 47) &&
+        dword(world_npcs[r] + 18*4) != 0 &&
         never(region_check[r] && battle_state[r] != 0) &&
         never(region_check[r] && area_id[r] != 22) &&
         never(region_check[r] && map_id[r] == 49) &&
+        never(region_check[r] && mario_x_pos[r] > -350.0 && mario_x_pos[r] <= -300.0 && mario_y_pos[r] < 400.0) &&
+        trigger_when(map_id[r] == 37)
+    )
+)
+
+achievement("Thread the Needle", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles and without clipping under the floor.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] && once(prev(map_id[r] == 49) && map_id[r] == 47) &&
+        dword(world_npcs[r] + 18*4) != 0 &&
+        never(region_check[r] && battle_state[r] != 0) &&
+        never(region_check[r] && area_id[r] != 22) &&
+        never(region_check[r] && map_id[r] == 49) &&
+        never(region_check[r] && mario_y_pos[r] < -100.0) &&
         trigger_when(map_id[r] == 37)
     )
 )
