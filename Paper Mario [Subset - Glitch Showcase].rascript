@@ -24,6 +24,12 @@ battle_status = {
     "EU": byte(0xd87e0)
 }
 
+can_flee_battle = {
+    "US": bit5(0xdc070 + 0x4),
+    "JP": bit5(0xdc050 + 0x4),
+    "EU": bit5(0xd87e0 + 0x4)
+}
+
 battle_player_actor = {
     "US": tbyte(0xdc070 + 0xd8),
     "JP": tbyte(0xdc050 + 0xd8),
@@ -54,6 +60,11 @@ enemy_actors_start = {
     "EU": 0xd87e0 + 0xe0
 }
 
+changing_map = {
+    "US": bit4(0x10f080 - 0xb2),
+    "JP": bit4(0x10f240 - 0xb2),
+    "EU": bit4(0x10db80 - 0xb2)
+}
 
 player_animation = {
     "US": byte(0x10f080),
@@ -1168,6 +1179,21 @@ achievement("Jumping for Joy", "Touch Muskular's Star Spirit card without activa
 )
 
 // Chapter 5
+
+achievement("Intimidation Tactics", "Clear the Piranha Plants to the left of Raphael's tree without defeating them in a fight.", points = 1,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        once(prev(map_id[r] == 14) && map_id[r] == 15 && story_progress[r] == 0x12) &&
+        never(region_check[r] && area_id[r] != 17) &&
+        never(region_check[r] && map_id[r] != 15 && map_id[r] != 14) &&
+        never(repeated(100, region_check[r] && map_id[r] == 15 && battle_state[r] != 0 && can_flee_battle[r] == 0)) &&
+        all_of(range(0, 5), i =>
+            never(region_check[r] && prev(changing_map[r] == 0) &&
+            prev(dword(world_npcs[r] + 4*i) != 0) && dword(world_npcs[r] + 4*i) == 0)
+        ) &&
+        trigger_when(story_progress[r] == 0x13 && prev(map_id[r] == 14) && map_id[r] == 15)
+    )
+)
 
 achievement("The Yoshi Kids Will Be Fine, Probably", "Enter Mt. Lavalava without taking the zipline.", points = 5,
     trigger = any_of(regions, r =>
