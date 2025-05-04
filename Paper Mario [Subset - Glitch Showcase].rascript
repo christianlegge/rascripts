@@ -1463,6 +1463,17 @@ achievement("Scooch Over, I'm Tired", "Take a nap in Peach's Castle without free
     )
 )
 
+achievement("See You There, Bro", "After defeating Final Bowser and recovering the Star Rod, reach Peach's Castle without talking to Luigi in Toad Town.", points = 1,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 1 && map_id[r] == 2 &&
+        prev(map_id[r] == 1) && story_progress[r] == 0x60 &&
+        check_npc(world_npcs[r], 24, addr =>
+            byte(addr + 0xa7) == 0x19 &&
+            byte(addr + 0x28) == 0
+        )
+    )
+)
+
 // Miscellaneous
 
 achievement("Potent Edible", "Heal 30 or more FP from eating an Electro Pop.", points = 1,
