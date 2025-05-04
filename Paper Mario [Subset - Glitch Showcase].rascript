@@ -1614,11 +1614,11 @@ achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star a
 )
 
 
-achievement("Whirlwind Tour", "Beat Final Bowser without saving any Star Spirits and with your only partners being Goombario, Bombette, Sushie and Lakilester.", points = 50,
+achievement("Whirlwind Tour", "Beat Final Bowser without saving any Star Spirits and with your only partners being Goombario, Kooper, Bombette, Sushie and Lakilester.", points = 50,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
         has_goombario[r] == 1 && has_bombette[r] == 1 && has_sushie[r] == 1 && has_laki[r] == 1 &&
-        has_kooper[r] == 0 && has_parakarry[r] == 0 && has_watt[r] == 0 && has_bow[r] == 0 &&
+        has_kooper[r] == 1 && has_parakarry[r] == 0 && has_watt[r] == 0 && has_bow[r] == 0 &&
         ch1_beatkoopabros[r] == 0 && ch2_beattutankoopa[r] == 0 && ch3_mysticalkey[r] == 0 &&
         ch4_bombedwall[r] == 0 && ch6_placedbean[r] == 0 && ch7_palacekeyused[r] == 0 &&
         prev(finalbowser[r] == 0) && finalbowser[r] == 1
