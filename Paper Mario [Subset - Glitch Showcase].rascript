@@ -12,6 +12,12 @@ region_check = {
     "EU": ascii_string_equals(0x73f70, " grP", 4)
 }
 
+sprite_instances = {
+    "US": 0x2dfa48,
+    "JP": 0x113598,
+    "EU": 0x2e5d3c
+}
+
 battle_state = {
     "US": byte(0xdc070 - 8),
     "JP": byte(0xdc050 - 8),
@@ -1348,6 +1354,22 @@ achievement("Old Boot Goofin'", "Reach Chapter 7 without Ultra Boots.", points =
         region_check[r] && prev(area_id[r] == 2) &&
         __ornext(prev(map_id[r] == 13) || prev(map_id[r] == 18) || prev(map_id[r] == 17)) &&
         current_boots[r] < 2 && prev(ch7_started[r] == 0) && trigger_when(ch7_started[r] == 1 && prev(map_id[r] == 13))
+    )
+)
+
+achievement("Quick Change", "Change Herringway to a normal Bumpty during the murder sequence or change the innkeeper Toad to a normal one.", points = 1,
+    trigger = any_of(regions, r =>
+        (region_check[r] && area_id[r] == 20 && map_id[r] == 0 &&
+        check_npc(world_npcs[r], 16, npc =>
+            byte(npc + 0xa7) == 0x04 &&
+            dword(sprite_instances[r] + 0x14 * byte(npc + 0x24)) == 0x9a &&
+            prev(dword(sprite_instances[r] + 0x14 * byte(npc + 0x24))) != 0x9a)) ||
+        (region_check[r] && area_id[r] == 20 && map_id[r] == 1 &&
+        check_npc(world_npcs[r], 8, npc =>
+            byte(npc + 0xa7) == 0x01 &&
+            dword(sprite_instances[r] + 0x14 * byte(npc + 0x24)) == 0x83 &&
+            prev(dword(sprite_instances[r] + 0x14 * byte(npc + 0x24))) != 0x83)
+        )
     )
 )
 
