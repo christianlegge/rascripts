@@ -606,6 +606,7 @@ super_hammer_block = game_flag(0x380)
 bubulb_seed3 = game_flag(0x3A2)
 record_chest = game_flag(0x3D2)
 spike_room_chest = game_flag(0x421)
+yakkey_chest = game_flag(0x42f)
 anti_guy_defeated = game_flag(0x451)
 anti_guy_chest = game_flag(0x49F)
 dictionary_chest = game_flag(0x47B)
@@ -1091,6 +1092,24 @@ achievement("Hot Stepper", "Obtain the Castle Key in Tubba's Castle's spike room
         never(region_check[r] && area_id[r] != 15) && never(region_check[r] && map_id[r] != 12) &&
         prev(spike_room_chest[r] == 0) && trigger_when(spike_room_chest[r] == 1) &&
         never(region_check[r] && acting_partner[r] == 0x09 && partner_action_state[r] == 0x01)
+    )
+)
+
+achievement("Yakkey Trickshot", "Have Tubba Blubba enter his room and get on the bed while talking to Yakkey.", points = 5,
+    trigger = any_of(regions, r =>
+        region_check[r] &&
+        once(unsigned_lt(story_progress[r], 226) && yakkey_chest[r] > prev(yakkey_chest[r])) &&
+        never(region_check[r] && area_id[r] != 15) &&
+        never(region_check[r] && map_id[r] != 0x1 && map_id[r] != 18) &&
+        prev(map_id[r] == 18) && map_id[r] == 1
+    )
+)
+
+achievement("Quick Escape", "After obtaining the Mystical Key in Tubba's Castle, leave the castle by falling off the bridge above the main room.", points = 3,
+    trigger = any_of(regions, r =>
+        region_check[r] && area_id[r] == 15 && trigger_when(prev(map_id[r] == 1) && prev(entry_id[r] == 4)) &&
+        has_parakarry[r] == 1 && prev(map_id[r] != 0) &&
+        story_progress[r] == 228 && trigger_when(map_id[r] == 0)
     )
 )
 
