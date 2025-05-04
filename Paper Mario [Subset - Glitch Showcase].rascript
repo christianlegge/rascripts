@@ -1457,7 +1457,7 @@ achievement("Save Your Strength", "Enter the room underneath the large statue in
     )
 )
 
-achievement("Platonic Friendship", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Bombette without revealing any of them.", points = 3,
+achievement("Platonic Friendship", "[JP] In Crystal Palace, escape from the Duplighosts who are trying to impersonate Bombette without revealing any of them.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 21 && prev(map_id[r] == 6) &&
         trigger_when(map_id[r] == 8) &&
@@ -1465,7 +1465,7 @@ achievement("Platonic Friendship", "In Crystal Palace, escape from the Duplighos
     )
 )
 
-achievement("Not Worth the Effort to Bonk You", "In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 3,
+achievement("Not Worth the Effort to Bonk You", "[JP] In Crystal Palace, escape from the Duplighosts who are trying to impersonate Kooper without revealing any of them.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 21 && prev(map_id[r] == 15) &&
         trigger_when(map_id[r] == 16) &&
