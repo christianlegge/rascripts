@@ -532,9 +532,9 @@ function map_flag(bit_index) {
 
 function map_var(idx) {
     return {
-        "US": byte(0x2dbca8 + idx),
-        "JP": byte(0x2dbca8 + idx),
-        "EU": byte(0x2e1f88 + idx)
+        "US": dword(0x2dbca8 + idx),
+        "JP": dword(0x2dbca8 + idx),
+        "EU": dword(0x2e1f88 + idx)
     }
 }
 
@@ -936,7 +936,7 @@ achievement("Reach Up and Touch Something", "Obtain the Smash Charge badge in Ko
         never(region_check[r] && prev(smash_charge[r] == 1)) &&
         once(mario_y_pos[r] >= 399.0 && mario_y_pos[r] < 401.0 && mario_x_pos[r] < -100.0) &&
         never(region_check[r] && mario_x_pos[r] > 100.0 && mario_y_pos[r] > 450.0) &&
-        trigger_when(smash_charge[r] == 1)
+        prev(smash_charge[r] == 0) && trigger_when(smash_charge[r] == 1)
     )
 )
 
@@ -1132,7 +1132,7 @@ achievement("Quick Escape", "After obtaining the Mystical Key in Tubba's Castle,
 
 // Chapter 4
 
-achievement("Play Time is Now", "Enter Shy Guy's Toybox without Bow and without revealing the door.", points = 4,
+achievement("Play Time Is Now", "Enter Shy Guy's Toybox without Bow and without revealing the door.", points = 4,
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(story_progress[r], 0xf6) &&
         prev(area_id[r] == 1) && prev(map_id[r] == 0x5) &&
@@ -1232,7 +1232,7 @@ achievement("Quick Dip", "Open the Ultra Hammer chest without using Parakarry or
     )
 )
 
-achievement("Swords into Plowshares", "Reach the third zipline in Mt. Lavalava without breaking the Ultra Hammer block in front of the door.", points = 10,
+achievement("Swords Into Plowshares", "Reach the third zipline in Mt. Lavalava without breaking the Ultra Hammer block in front of the door.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(story_progress[r], 0x1d) && 
         area_id[r] == 18 && prev(map_id[r] == 2) && trigger_when(map_id[r] == 8 && entry_id[r] == 0)
@@ -1343,7 +1343,7 @@ achievement("One Little Slap", "Crash the game by using Bow on Huff N. Puff.", p
     )
 )
 
-achievement("Skipping through the Clouds", "Touch Klevar's Star Spirit card without activating the cutscene.", points = 50,
+achievement("Skipping Through the Clouds", "Touch Klevar's Star Spirit card without activating the cutscene.", points = 50,
     trigger = lzs(0x38, 19, 15, 14, 14)
 )
 
@@ -1389,7 +1389,7 @@ achievement("If You're Cold, They're Cold", "Without opening the door and withou
     )
 )
 
-achievement("You Are Traveling through Another Dimension", "Enter the main hall on one side of the mirror and exit on the other side.", points = 3,
+achievement("You Are Traveling Through Another Dimension", "Enter the main hall on one side of the mirror and exit on the other side.", points = 3,
     trigger = any_of(regions, r =>
         any_of([0, 1, 2], prev_entry =>
             any_of([
