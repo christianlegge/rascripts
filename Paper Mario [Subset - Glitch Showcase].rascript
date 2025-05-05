@@ -672,13 +672,13 @@ function unsigned_lt(a, b) {
     if (b >= 0x80) {
         return a >= 0x80 && a < b
     } else {
-        return a >= 0x80 || a < b
+        return __ornext(a >= 0x80 || a < b)
     }
 }
 
 function unsigned_gt(a, b) {
     if (b >= 0x80) {
-        return a < 0x80 || a > b
+        return __ornext(a < 0x80 || a > b)
     } else {
         return a < 0x80 && a > b
     }
