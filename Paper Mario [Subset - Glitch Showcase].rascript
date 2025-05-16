@@ -861,6 +861,7 @@ achievement("Back to the Belly", "After Fuzzipede has been defeated and without 
 achievement("Hop the Fence", "Collect the Star Piece in Toad Town's gate district without riding Sushie.", points = 4,
     trigger = any_of(regions, r => 
         region_check[r] && once(area_id[r] == 1 && prev(map_id[r] != 1) && map_id[r] == 0x01) &&
+        in_game[r] &&
         never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x07) &&
         never(region_check[r] && area_id[r] != 1) &&
         never(region_check[r] && map_id[r] != 1) &&
