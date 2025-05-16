@@ -928,11 +928,24 @@ achievement("When You Can't Go Over, Go Under", "In Pleasant Path, on the screen
     )
 )
 
+// NEED TO ADD ALWAYS_FALSE CLAUSE TO RESET ALTS
 achievement("The Emperor's New Bridge", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without using LZS.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 6 && prev(map_id[r] == 7) && entry_id[r] == 0 &&
         unsigned_lt(story_progress[r], 0xa5) &&
-        trigger_when(map_id[r] == 0x8)
+        trigger_when(map_id[r] == 0x8) &&
+        trigger_when(repeated(4, mario_x_pos[r] >= -200.0 && mario_x_pos[r] <= 0.0 &&
+            jump_ascent[r] == 0 && prev(jump_ascent[r] == 0) &&
+            air_falling[r] == 0 && prev(air_falling[r] == 0) &&
+            never(prev(map_id[r]) != 7) && never(mario_x_pos[r] <= -250.0)
+        ))
+    ) ||
+    any_of(regions, r => 
+        disable_when(repeated(4, region_check[r] && jump_ascent[r] == 0 && prev(jump_ascent[r] == 0) &&
+            air_falling[r] == 0 && prev(air_falling[r] == 0)
+        ),
+        until = prev(map_id[r]) != 7 || mario_x_pos[r] <= -250.0) &&
+        never(region_check[r] && jump_ascent[r] == 1)
     )
 )
 
