@@ -24,6 +24,12 @@ sprite_instances = {
     "EU": 0x2e5d3c
 }
 
+world_triggers = {
+    "US": 0x159190,
+    "JP": 0x15e110,
+    "EU": 0x157d60
+}
+
 battle_state = {
     "US": byte(0xdc070 - 8),
     "JP": byte(0xdc050 - 8),
@@ -1699,6 +1705,29 @@ achievement("Reverse All Cards VII", "Touch Eldstar's Star Spirit card having co
 // Leaderboards
 
 
+leaderboard("LZS Jumps", "Get the most jumps in LZS before taking the loading zone.",
+    start = any_of(regions, r =>
+        region_check[r] && jump_ascent[r] > prev(jump_ascent[r]) &&
+        any_of(range(0, 63), idx =>
+            dword(world_triggers[r] + idx*4) != 0x00000000 &&
+            bit1(tbyte(world_triggers[r] + idx*4)) == 1
+        )
+    ),
+    cancel = any_of(regions, r =>
+        region_check[r] && repeated(8, jump_ascent[r] == 0 && prev(jump_ascent[r]) == 0 &&
+        air_falling[r] == 0 && prev(air_falling[r]) == 0) &&
+        never(jump_ascent[r] == 1)
+    ),
+    submit = any_of(regions, r =>
+        region_check[r] && 
+        (area_id[r] != prev(area_id[r]) || map_id[r] != prev(map_id[r]))
+    ),
+    value = max_of(
+        repeated(0, region_check["US"] && area_id["US"] == prev(area_id["US"]) && map_id["US"] == prev(map_id["US"]) && jump_ascent["US"] > prev(jump_ascent["US"])),
+        repeated(0, region_check["JP"] && area_id["JP"] == prev(area_id["JP"]) && map_id["JP"] == prev(map_id["JP"]) && jump_ascent["JP"] > prev(jump_ascent["JP"])),
+        repeated(0, region_check["EU"] && area_id["EU"] == prev(area_id["EU"]) && map_id["EU"] == prev(map_id["EU"]) && jump_ascent["EU"] > prev(jump_ascent["EU"]))
+    )
+)
 
 // Rich Presence
 
