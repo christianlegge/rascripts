@@ -648,13 +648,14 @@ ultraboots_block = game_flag(0x18e)
 fpplus_bombwall = game_flag(0x241)
 fpplus_koopa_chest = game_flag(0x282)
 smash_charge = game_flag(0x27e)
+koopa_fortress_key1 = game_flag(0x285)
 koopa_fortress_key2 = game_flag(0x288)
 koopa_fortress_key3_bombwall = game_flag(0x291)
 koopa_fortress_key3 = game_flag(0x287)
 koopa_fortress_door1 = game_flag(0x28A)
-koopa_fortress_door2 = game_flag(0x28B)
+koopa_fortress_door2 = game_flag(0x28D)
 koopa_fortress_door3 = game_flag(0x28C)
-koopa_fortress_door4 = game_flag(0x28D)
+koopa_fortress_door4 = game_flag(0x28B)
 artifact_obtained = game_flag(0x374)
 ruins_key4 = game_flag(0x377)
 ruins_door1 = game_flag(0x366)
@@ -784,7 +785,7 @@ achievement("Grab and Go", "Obtain the Hammer and exit the Playground without fi
     )
 )
 
-achievement("Once More, from the Top", "After completing the Prologue, fight Jr. Troopa in the playground again.", points = 25, 
+achievement("Once More, from the Top", "[US/JP] After completing the Prologue, fight Jr. Troopa in the playground again.", points = 25, 
     trigger = any_of(regions, r => 
         region_check[r] && map_id[r] == 0x03 && area_id[r] == 0 &&
         trigger_when(story_progress[r] == 0x8a) && unsigned_gt(prev(story_progress[r]), 0x98)
@@ -970,8 +971,8 @@ achievement("Theft Is Okay, but I Draw the Line at Vandalism", "Obtain the FP Pl
 achievement("Out on Good Behavior", "In Koopa Bros. Fortress, recruit Bombette before obtaining the second Fortress Key.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 7 && __ornext(map_id[r] == 0x4 || map_id[r] == 0x5 || map_id[r] == 0x6) &&
-        unsigned_lt(story_progress[r], 0xaa) &&
-        koopa_fortress_key2[r] == 0 && prev(has_bombette[r] == 0) && trigger_when(has_bombette[r] == 1)
+        koopa_fortress_key1[r] == 1 && koopa_fortress_key2[r] == 0 && koopa_fortress_door2[r] == 0 &&
+        prev(has_bombette[r] == 0) && trigger_when(has_bombette[r] == 1)
     )
 )
 
@@ -986,7 +987,7 @@ achievement("Around the Outside", "Cross the top of the room with 3 jail cells w
     )
 )
 
-achievement("Reach Up and Touch Something", "Obtain the Smash Charge badge in Koopa Bros. Fortress from the platform below.", points = 3,
+achievement("Reach Up and Touch Something", "[US/JP] Obtain the Smash Charge badge in Koopa Bros. Fortress from the platform below.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] &&
         never(region_check[r] && has_kooper[r] == 0) &&
@@ -1002,6 +1003,7 @@ achievement("Reach Up and Touch Something", "Obtain the Smash Charge badge in Ko
 achievement("Prison Break-In", "Obtain the Fortress Key in the rightmost cell in the room with the red switches without blowing up the wall, then exit the area.", points = 5,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 7 && prev(map_id[r]) == 3 &&
+        has_laki[r] == 1 &&
         trigger_when(__ornext(map_id[r] == 0x2 || map_id[r] == 0x4)) &&
         koopa_fortress_key3_bombwall[r] == 0 && trigger_when(koopa_fortress_key3[r] == 1)
     )
@@ -1548,7 +1550,7 @@ achievement("Cloud Strife", "Enter the door in the lava moat in Bowser's Castle 
     )
 )
 
-achievement("Deep-Sea Diving", "In the room with changing water levels in Bowser's Castle, unlock the door without blowing up the wall or opening the secret hallway.", points = 5,
+achievement("Deep-Sea Diving", "[US/JP] In the room with changing water levels in Bowser's Castle, unlock the door without blowing up the wall or opening the secret hallway.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 22 &&
         __ornext(prev(map_id[r] == 48) || prev(map_id[r] == 49)) &&
@@ -1654,7 +1656,7 @@ achievement("Beauty Sleep", "Take a nap as Peach.", points = 10,
 
 achievement("Awesomely Cool Endeavor", "View the end screen without defeating Final Bowser.", points = 100,
     trigger = any_of(regions, r =>
-        region_check[r] && area_id[r] == 0 && map_id[r] == 10 && prev(map_id[r] != 10) &&
+        region_check[r] && area_id[r] == 0 && map_id[r] == 0x10 && prev(map_id[r] != 0x10) &&
         finalbowser[r] == 0
     )
 )
