@@ -2,7 +2,7 @@
 // #MinimumVersion = 1.3
 // #ID = 33114
 
-debug = true
+debug = false
 
 regions = [ "US", "JP", "EU" ]
 
@@ -10,6 +10,12 @@ region_check = {
     "US": ascii_string_equals(0x77bd0, " grP", 4),
     "JP": ascii_string_equals(0x77ba0, " grP", 4),
     "EU": ascii_string_equals(0x73f70, " grP", 4)
+}
+
+in_game = {
+    "US": word(0xa094a) == 1,
+    "JP": word(0x9e75a) == 1,
+    "EU": word(0x9f0aa) == 1
 }
 
 sprite_instances = {
@@ -241,6 +247,18 @@ max_hp = {
     "EU": byte(0x10dd90)
 }
 
+max_fp = {
+    "US": byte(0x10f295),
+    "JP": byte(0x10f455),
+    "EU": byte(0x10dd95)
+}
+
+max_bp = {
+    "US": byte(0x10f29b),
+    "JP": byte(0x10f45b),
+    "EU": byte(0x10dd9b)
+}
+
 current_hp = {
     "US": byte(0x10f291),
     "JP": byte(0x10f451),
@@ -251,6 +269,12 @@ current_fp = {
     "US": byte(0x10f296),
     "JP": byte(0x10f456),
     "EU": byte(0x10dd96)
+}
+
+mario_level = {
+    "US": byte(0x10f29a),
+    "JP": byte(0x10f45a),
+    "EU": byte(0x10dd9a)
 }
 
 current_hammer = {
@@ -450,6 +474,21 @@ area_id_values = {
     0x19: "Mini Game House",
     0x1A: "Game Over screen",
     0x1B: "Debug rooms"
+}
+
+partner_values = {
+    0x00: "is",
+    0x01: "and Goombario are",
+    0x02: "and Kooper are",
+    0x03: "and Bombette are",
+    0x04: "and Parakarry are",
+    0x05: "and Goompa are",
+    0x06: "and Watt are",
+    0x07: "and Sushie are",
+    0x08: "and Lakilester are",
+    0x09: "and Bow are",
+    0x0A: "and Goombaria are",
+    0x0B: "and Twink are"
 }
 
 prologue_repel_gel = {
@@ -1665,34 +1704,57 @@ achievement("Reverse All Cards VII", "Touch Eldstar's Star Spirit card having co
 area_id_lookup_us = rich_presence_lookup("Area", area_id["US"], area_id_values)
 area_id_lookup_jp = rich_presence_lookup("Area", area_id["JP"], area_id_values)
 area_id_lookup_eu = rich_presence_lookup("Area", area_id["EU"], area_id_values)
-rp_hp_us = rich_presence_value("HP", current_hp["US"])
-rp_hp_jp = rich_presence_value("HP", current_hp["JP"])
-rp_hp_eu = rich_presence_value("HP", current_hp["EU"])
-rp_max_hp_us = rich_presence_value("Max HP", max_hp["US"])
-rp_max_hp_jp = rich_presence_value("Max HP", max_hp["JP"])
-rp_max_hp_eu = rich_presence_value("Max HP", max_hp["EU"])
-rp_area_id_us = rich_presence_value("Area ID", area_id["US"])
-rp_area_id_jp = rich_presence_value("Area ID", area_id["JP"])
-rp_area_id_eu = rich_presence_value("Area ID", area_id["EU"])
-rp_entry_id_us = rich_presence_value("Entry ID", entry_id["US"])
-rp_entry_id_jp = rich_presence_value("Entry ID", entry_id["JP"])
-rp_entry_id_eu = rich_presence_value("Entry ID", entry_id["EU"])
-rp_map_id_us = rich_presence_value("Map ID", map_id["US"])
-rp_map_id_jp = rich_presence_value("Map ID", map_id["JP"])
-rp_map_id_eu = rich_presence_value("Map ID", map_id["EU"])
-rp_story_progress_us = rich_presence_value("Story Progress", story_progress["US"])
-rp_story_progress_jp = rich_presence_value("Story Progress", story_progress["JP"])
-rp_story_progress_eu = rich_presence_value("Story Progress", story_progress["EU"])
-rp_first_enemy_type = rich_presence_value("First Enemy Type", byte(tbyte(0xdc070 + 0xe0) + 0x135))
+partner_lookup_us = rich_presence_lookup("Partner", current_partner["US"], partner_values)
+partner_lookup_jp = rich_presence_lookup("Partner", current_partner["JP"], partner_values)
+partner_lookup_eu = rich_presence_lookup("Partner", current_partner["EU"], partner_values)
+rp_hp_us = rich_presence_value("Number", current_hp["US"])
+rp_hp_jp = rich_presence_value("Number", current_hp["JP"])
+rp_hp_eu = rich_presence_value("Number", current_hp["EU"])
+rp_max_hp_us = rich_presence_value("Number", max_hp["US"])
+rp_max_hp_jp = rich_presence_value("Number", max_hp["JP"])
+rp_max_hp_eu = rich_presence_value("Number", max_hp["EU"])
+rp_fp_us = rich_presence_value("Number", current_fp["US"])
+rp_fp_jp = rich_presence_value("Number", current_fp["JP"])
+rp_fp_eu = rich_presence_value("Number", current_fp["EU"])
+rp_max_fp_us = rich_presence_value("Number", max_fp["US"])
+rp_max_fp_jp = rich_presence_value("Number", max_fp["JP"])
+rp_max_fp_eu = rich_presence_value("Number", max_fp["EU"])
+rp_bp_us = rich_presence_value("Number", max_bp["US"])
+rp_bp_jp = rich_presence_value("Number", max_bp["JP"])
+rp_bp_eu = rich_presence_value("Number", max_bp["EU"])
+rp_level_us = rich_presence_value("Number", mario_level["US"])
+rp_level_jp = rich_presence_value("Number", mario_level["JP"])
+rp_level_eu = rich_presence_value("Number", mario_level["EU"])
+rp_area_id_us = rich_presence_value("Number", area_id["US"])
+rp_area_id_jp = rich_presence_value("Number", area_id["JP"])
+rp_area_id_eu = rich_presence_value("Number", area_id["EU"])
+rp_entry_id_us = rich_presence_value("Number", entry_id["US"])
+rp_entry_id_jp = rich_presence_value("Number", entry_id["JP"])
+rp_entry_id_eu = rich_presence_value("Number", entry_id["EU"])
+rp_map_id_us = rich_presence_value("Number", map_id["US"])
+rp_map_id_jp = rich_presence_value("Number", map_id["JP"])
+rp_map_id_eu = rich_presence_value("Number", map_id["EU"])
+rp_story_progress_us = rich_presence_value("Number", story_progress["US"])
+rp_story_progress_jp = rich_presence_value("Number", story_progress["JP"])
+rp_story_progress_eu = rich_presence_value("Number", story_progress["EU"])
+rp_first_enemy_type = rich_presence_value("Number", byte(tbyte(0xdc070 + 0xe0) + 0x135))
 
+rp_string = "Mario {7} exploring {0} at level {6} [♥{1}/{2}] [🌼{3}/{4}] [BP: {5}]" 
+title_string = "Mario is on the title screen"
 
 if (!debug) {
-    rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}]", 
-        area_id_lookup_us, rp_hp_us, rp_max_hp_us)
-    rich_presence_conditional_display(region_check["JP"], "Mario is exploring {0} [♥{1}/{2}]",
-        area_id_lookup_jp, rp_hp_jp, rp_max_hp_jp)
-    rich_presence_conditional_display(region_check["EU"], "Mario is exploring {0} [♥{1}/{2}]",
-        area_id_lookup_eu, rp_hp_eu, rp_max_hp_eu)
+    rich_presence_conditional_display(region_check["US"] && !in_game["US"], title_string)
+    rich_presence_conditional_display(region_check["JP"] && !in_game["JP"], title_string)
+    rich_presence_conditional_display(region_check["EU"] && !in_game["EU"], title_string)
+    rich_presence_conditional_display(region_check["US"], rp_string,
+        area_id_lookup_us, rp_hp_us, rp_max_hp_us, rp_fp_us, rp_max_fp_us, rp_bp_us, rp_level_us,
+        partner_lookup_us)
+    rich_presence_conditional_display(region_check["JP"], rp_string,
+        area_id_lookup_jp, rp_hp_jp, rp_max_hp_jp, rp_fp_jp, rp_max_fp_jp, rp_bp_jp, rp_level_jp,
+        partner_lookup_jp)
+    rich_presence_conditional_display(region_check["EU"], rp_string,
+        area_id_lookup_eu, rp_hp_eu, rp_max_hp_eu, rp_fp_eu, rp_max_fp_eu, rp_bp_eu, rp_level_eu,
+        partner_lookup_eu)
 }
 else {
     rich_presence_conditional_display(region_check["US"], "Mario is exploring {0} [♥{1}/{2}] [Area ID: {3}] [Entry ID: {4}] [Map ID: {5}], [Story Progress: {6}] [First Enemy Type: {7}]",
