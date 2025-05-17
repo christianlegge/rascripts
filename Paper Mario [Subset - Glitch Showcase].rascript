@@ -679,6 +679,7 @@ dizzy_stomp_chest = game_flag(0x52c)
 ultra_hammer_chest = game_flag(0x523)
 happyflower_tree = game_flag(0x566)
 yellow_plant_fed = game_flag(0x554)
+yellow_plant_superblock = game_flag(0x57a)
 bubble_plant_fed = game_flag(0x584)
 sun_tower_rock = game_flag(0x579)
 warehouse_key = game_flag(0x5BA)
@@ -842,7 +843,7 @@ achievement("Whalebreak", "After Jr. Troopa has been defeated near the whale and
     )
 )
 
-achievement("Bountiful Harvest", "Obtain a second Magical Seed from the Forever Forest Bub-ulb.", points = 3,
+achievement("Bountiful Harvest", "Expend the Forever Forest Bub-ulb of his Magical Seed after obtaining at least one additional seed from him.", points = 3,
     trigger = any_of(regions, r => 
         region_check[r] && area_id[r] == 12 && map_id[r] == 3 &&
         tally_of(range(0, 31), 2, idx => 
@@ -1343,14 +1344,13 @@ achievement("Squeak by the Bubble", "Reach Lakilester without feeding the Bubble
     )
 )
 
-achievement("Dayzed and Confused", "Reach the Upgrade Block behind the Yellow Plant without walking to the right of the gate.", points = 2,
+achievement("Dayzed and Confused", "Reach the Upgrade Block behind the Yellow Plant and upgrade a partner without walking to the right of the gate.", points = 2,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 0x0) && map_id[r] == 0x3 && entry_id[r] == 0) &&
         never(region_check[r] && mario_x_pos[r] >= -600.0 && mario_x_pos[r] < -500.0) &&
         never(region_check[r] && area_id[r] != 19) &&
         never(region_check[r] && map_id[r] != 3) &&
-        ((trigger_when(mario_y_pos[r] >= 50.0 && mario_z_pos[r] <= -72.9 && prev(acting_partner[r] == 0x8) && acting_partner[r] == 0x0)) ||
-        (trigger_when(mario_y_pos[r] >= 50.0 && mario_z_pos[r] <= -73.0 && prev(mario_z_pos[r]) > 73.0 && acting_partner[r] == 0x0)))
+        prev(yellow_plant_superblock[r] == 0) && trigger_when(yellow_plant_superblock[r] == 1)
     )
 )
 
@@ -1687,10 +1687,7 @@ achievement("Whirlwind Tour", "Beat Final Bowser without saving any Star Spirits
 )
 
 achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
-    trigger = any_of(regions, r =>
-        region_check[r] && prev(story_progress[r] == 0x56) && story_progress[r] == 0x57 &&
-        prev(area_id[r] == 21) && prev(map_id[r] == 23) && max_star_power[r] == 0
-    )
+    trigger = rac(0x56, 21, 23, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch6_placedbean])
 )
 
 achievement("Reverse All Cards II", "Touch Klevar's Star Spirit card having only completed Chapter 7 previously.", points = 10,
