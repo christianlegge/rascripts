@@ -1480,7 +1480,7 @@ achievement("Fish Scales", "Ride Sushie from Shiver City, past the snowmen and u
     )
 )
 
-achievement("Non-Star-ter", "Enter Crystal Palace without raising the staircase with the Star Stone.", points = 5,
+achievement("Non-Star-ter", "[JP] Enter Crystal Palace without raising the staircase with the Star Stone.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && prev(area_id[r] == 20) && prev(map_id[r] == 9) &&
         unsigned_lt(story_progress[r], 0x4d) && trigger_when(area_id[r] == 21 && map_id[r] == 0)
