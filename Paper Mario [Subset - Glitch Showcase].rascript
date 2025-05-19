@@ -951,11 +951,11 @@ achievement("The Emperor's New Bridge", "In Pleasant Path, on the screen to the 
     )
 )
 
-achievement("Express Elevator", "Reach the Koopa Bros. Fortress battlements without unlocking any of its doors.", points = 3,
+achievement("Express Elevator", "Reach the Koopa Bros. Fortress battlements after entering the first room from the front door.", points = 5,
     trigger = any_of(regions, r => 
-        region_check[r] && area_id[r] == 7 && prev(map_id[r] == 0x1) && entry_id[r] == 0 &&
+        region_check[r] && area_id[r] == 7 && prev(map_id[r] == 0x1) && prev(entry_id[r] == 0) &&
+        has_laki[r] == 1 &&
         unsigned_lt(story_progress[r], 0xb0) &&
-        koopa_fortress_door1[r] == 0 && koopa_fortress_door2[r] == 0 && koopa_fortress_door3[r] == 0 && koopa_fortress_door4[r] == 0 &&
         trigger_when(map_id[r] == 0x9)
     )
 )
