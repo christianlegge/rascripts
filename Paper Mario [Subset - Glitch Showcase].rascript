@@ -919,11 +919,12 @@ achievement("A Pleasant Crawl", "On the second screen of Pleasant Path, cross fr
     )
 )
 
-achievement("When You Can't Go Over, Go Under", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without riding Lakilester.", points = 100,
+achievement("When You Can't Go Over, Go Under", "In Pleasant Path, on the screen to the right of Koopa Village, cross the river and exit the screen without hitting the blue switch and without riding Sushie or Lakilester.", points = 100,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 0x6) && map_id[r] == 0x7) &&
         never(region_check[r] && area_id[r] != 6) &&
         never(region_check[r] && map_id[r] != 7 && map_id[r] != 8) &&
+        never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x07) &&
         never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x08) &&
         unsigned_lt(story_progress[r], 0xa5) &&
         trigger_when(map_id[r] == 0x8)
