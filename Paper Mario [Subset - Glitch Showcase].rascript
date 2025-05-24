@@ -247,6 +247,12 @@ air_falling = {
     "EU": bit2(0x10dac8)
 }
 
+player_input_disabled = {
+    "US": bit5(0x10efc9),
+    "JP": bit5(0x10f189),
+    "EU": bit5(0x10dac9)
+}
+
 max_hp = {
     "US": byte(0x10f290),
     "JP": byte(0x10f450),
@@ -836,7 +842,9 @@ achievement("Whalebreak", "After Jr. Troopa has been defeated near the whale and
     trigger = any_of(regions, r => 
         region_check[r] && once(area_id[r] == 1 && prev(map_id[r] != 0x06) && map_id[r] == 0x06) &&
         unsigned_gt(prev(story_progress[r]), 0x9) && 
-        never(region_check[r] && mario_y_pos[r] <= -50.0) &&
+        check_npc(world_npcs[r], 20, npc =>
+            byte(npc + 0xa7) == 0x04
+        ) &&
         never(region_check[r] && area_id[r] != 1 && area_id[r] != 3) &&
         never(region_check[r] && area_id[r] == 1 && map_id[r] != 6) &&
         story_progress[r] == 9
@@ -1156,7 +1164,7 @@ achievement("Rationing Made Easy", "Get healed from an item without consuming it
         has_laki[r] == 1 &&
         once(current_hp[r] > prev(current_hp[r])) &&
         never(region_check[r] && map_id[r] != prev(map_id[r]) && map_id[r] != 0) &&
-        all_inv_slots(r, slot => never(slot != prev(slot))) &&
+        all_inv_slots(r, slot => never(region_check[r] && slot != prev(slot))) &&
         never(region_check[r] && area_id[r] != 15) &&
         map_id[r] == 0
     )
@@ -1688,19 +1696,19 @@ achievement("Whirlwind Tour", "Beat Final Bowser without saving any Star Spirits
 )
 
 achievement("Reverse All Cards I", "Touch Kalmar's Star Spirit card before any of the other ones.", points = 10,
-    trigger = rac(0x56, 21, 23, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch6_placedbean])
+    trigger = rac(0x56, 21, 23, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch4_bombedwall, ch6_placedbean])
 )
 
 achievement("Reverse All Cards II", "Touch Klevar's Star Spirit card having only completed Chapter 7 previously.", points = 10,
-    trigger = rac(0x38, 19, 15, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall])
+    trigger = rac(0x38, 19, 15, [ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch4_bombedwall])
 )
 
 achievement("Reverse All Cards III", "Touch Misstar's Star Spirit card having only completed Chapters 6 and 7 previously.", points = 10,
-    trigger = rac(0x23, 18, 13, [ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall])
+    trigger = rac(0x23, 18, 13, [ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch4_bombedwall])
 )
 
 achievement("Reverse All Cards IV", "Touch Muskular's Star Spirit card having only completed Chapters 5 through 7 previously.", points = 10,
-    trigger = rac(4, 16, 14, [ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch3_mysticalkey])
+    trigger = rac(4, 16, 14, [ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa])
 )
 
 achievement("Reverse All Cards V", "Touch Skolar's Star Spirit card having only completed Chapters 4 through 7 previously.", points = 10,
@@ -1727,9 +1735,14 @@ leaderboard("LZS Jumps", "Get the most jumps in LZS before taking the loading zo
         )
     ),
     cancel = any_of(regions, r =>
+        (
         region_check[r] && repeated(8, jump_ascent[r] == 0 && prev(jump_ascent[r]) == 0 &&
-        air_falling[r] == 0 && prev(air_falling[r]) == 0) &&
-        never(jump_ascent[r] == 1)
+        air_falling[r] == 0 && prev(air_falling[r]) == 0 && never(jump_ascent[r] == 1))
+        )
+        ||
+        (
+        region_check[r] && jump_ascent[r] == 1 && prev(jump_ascent[r]) == 0 && player_input_disabled[r] == 1
+        )
     ),
     submit = any_of(regions, r =>
         region_check[r] && 
