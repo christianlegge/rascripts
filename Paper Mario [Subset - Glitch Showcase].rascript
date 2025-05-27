@@ -1207,7 +1207,8 @@ achievement("Play Time Is Now", "Enter Shy Guy's Toybox without Bow and without 
     trigger = any_of(regions, r =>
         region_check[r] && unsigned_lt(story_progress[r], 0xf6) &&
         prev(area_id[r] == 1) && prev(map_id[r] == 0x5) &&
-        trigger_when(area_id[r] == 0 && map_id[r] == 13)
+        (trigger_when(area_id[r] == 0 && map_id[r] == 13) ||
+         trigger_when(area_id[r] == 0x10 && map_id[r] == 0x2))
     )
 )
 
