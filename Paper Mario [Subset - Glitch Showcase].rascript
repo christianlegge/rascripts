@@ -716,6 +716,7 @@ ch8_started = game_flag(0x8)
 ch1_beatkoopabros = game_flag(0x297)
 ch2_beattutankoopa = game_flag(0x386)
 ch3_mysticalkey = game_flag(0x42F)
+ch4_fryingpanchest = game_flag(0x476)
 ch4_bombedwall = game_flag(0x459)
 ch5_intruderalert2 = game_flag(0x51E)
 ch6_placedbean = game_flag(0x55C)
@@ -1675,7 +1676,7 @@ achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star a
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
         ch1_beatkoopabros[r] == 1 && ch2_beattutankoopa[r] == 1 && ch3_mysticalkey[r] == 1 &&
-        ch4_bombedwall[r] == 1 && ch5_intruderalert2[r] == 1 && ch6_placedbean[r] == 1 &&
+        ch5_intruderalert2[r] == 1 && ch6_placedbean[r] == 1 &&
         ch7_palacekeyused[r] == 1 &&
         all_of(range(0, 31), idx =>
             key_item_slot(r, idx) != 7
@@ -1713,15 +1714,15 @@ achievement("Reverse All Cards IV", "Touch Muskular's Star Spirit card having on
 )
 
 achievement("Reverse All Cards V", "Touch Skolar's Star Spirit card having only completed Chapters 4 through 7 previously.", points = 10,
-    trigger = rac(240, 14, 4, [ch4_bombedwall, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa])
+    trigger = rac(240, 14, 4, [ch4_fryingpanchest, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa])
 )
 
 achievement("Reverse All Cards VI", "Touch Mamar's Star Spirit card having only completed Chapters 3 through 7 previously.", points = 10,
-    trigger = rac(200, 11, 14, [ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros])
+    trigger = rac(200, 11, 14, [ch3_mysticalkey, ch4_fryingpanchest, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros])
 )
 
 achievement("Reverse All Cards VII", "Touch Eldstar's Star Spirit card having completed Chapters 2 through 7 previously.", points = 10,
-    trigger = rac(178, 7, 10, [ch2_beattutankoopa, ch3_mysticalkey, ch4_bombedwall, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [])
+    trigger = rac(178, 7, 10, [ch2_beattutankoopa, ch3_mysticalkey, ch4_fryingpanchest, ch5_intruderalert2, ch6_placedbean, ch7_palacekeyused], [])
 )
 
 // Leaderboards
