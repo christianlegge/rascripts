@@ -1198,7 +1198,7 @@ achievement("Quick Escape", "After obtaining the Mystical Key in Tubba's Castle,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 15 && trigger_when(prev(map_id[r] == 1) && prev(entry_id[r] == 4)) &&
         has_parakarry[r] == 1 && prev(map_id[r] != 0) &&
-        story_progress[r] == 228 && trigger_when(map_id[r] == 0)
+        story_progress[r] == 228 && trigger_when(map_id[r] == 0 && entry_id[r] == 1)
     )
 )
 
@@ -1411,7 +1411,7 @@ achievement("One Little Slap", "Crash the game by using Bow on Huff N. Puff.", p
         enemy_type(0, r) == 186 && all_of(range(1, 23), idx =>
             dword(enemy_actors_start[r] + idx*4) == 0x00000000
         ) && enemy_prev_current_hp(0, r) == 1 && enemy_current_hp(0, r) == 0 &&
-        selected_move_category[r] == 6 && selected_move_id[r] == 0xb3
+        selected_move_category[r] == 6 && selected_move_id[r] >= 0xb3 && selected_move_id[r] <= 0xb5
     )
 )
 
