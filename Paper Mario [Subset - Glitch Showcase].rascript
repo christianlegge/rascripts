@@ -1557,7 +1557,8 @@ achievement("I Await Your Swift Return", "After being jailed in Bowser's Castle,
 achievement("Cloud Strife", "Enter the door in the lava moat in Bowser's Castle before being jailed.", points = 3,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 22 && prev(map_id[r]) == 23 &&
-        shutofflava[r] == 0 && bowserjail_bombwall[r] == 0 && map_id[r] == 6
+        shutofflava[r] == 0 && bowserjail_bombwall[r] == 0 && map_id[r] == 6 &&
+        entry_id[r] == 3
     )
 )
 
