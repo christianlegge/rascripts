@@ -1288,7 +1288,7 @@ achievement("Seared Seafood", "Using Sushie to cross the lava, open the Dizzy St
     trigger = any_of(regions, r =>
         region_check[r] &&
         once(prev(map_id[r] == 5) && acting_partner[r] == 0x07 && partner_action_state[r] == 0x01) &&
-        never(prev(dizzy_stomp_chest[r] != 0)) && trigger_when(dizzy_stomp_chest[r] == 1) &&
+        never(region_check[r] && prev(dizzy_stomp_chest[r] != 0)) && trigger_when(dizzy_stomp_chest[r] == 1) &&
         never(region_check[r] && area_id[r] != 18) &&
         never(region_check[r] && map_id[r] != 7)
     )
