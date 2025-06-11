@@ -453,6 +453,49 @@ scenario_dict = {
         0x10: "Lost Cause"
 }
 
+first_batter_addr = 0xd350
+batter_struct_size = 0x22
+
+function human_batter_name(n) {
+    return first_batter_addr + n * batter_struct_size
+}
+
+function human_batter_doubles(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x14)
+}
+
+function human_batter_hits(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x15)
+}
+
+function human_batter_home_runs(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x16)
+}
+
+function human_batter_triples(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x17)
+}
+
+function human_batter_at_bats(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x18)
+}
+
+function human_batter_walks(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x19)
+}
+
+function human_batter_rbis(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x1A)
+}
+
+function human_batter_singles(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x1B)
+}
+
+function human_batter_strikeouts(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x1d)
+}
+
 // Achievements
 
 function gb_achievement(title, scenario_name, points, idx) {
@@ -528,4 +571,16 @@ achievement(
         human_runs() >= 11 &&
         computer_runs() <= 9 &&
         gfd()
+)
+
+achievement(
+    title = "This Day in History V: The Veteran",
+    description = "In a home game as the Baltimore Orioles, hit a home run with Cal Ripken Jr. during or after the 5th inning.",
+    points = 4,
+    trigger =
+        sp() &&
+        phome() &&
+        human_team() == 0x00 && // Orioles
+        current_inning() >= 5 &&
+        any_of(range(0, 8), n => ascii_string_equals(human_batter_name(n), "aC~liRkpne") && trigger_when(human_batter_home_runs(n) > prev(human_batter_home_runs(n))))
 )
