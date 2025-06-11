@@ -264,6 +264,9 @@ function phome() => for_1_player_which_team_is_human_controlling() == 0x01
 // $CF87: [8-bit] Current inning
 function current_inning() => byte(0x00CF87)
 
+function top() => byte(0xd039) == 0x01
+function bottom() => byte(0xd039) == 0x00
+
 // $D047: replay?
 function replay() => byte(0x00D047)
 
@@ -342,18 +345,10 @@ function gfd() => game_finished() == 0x01 && prev(game_finished()) == 0x00
 function computer_team() => byte(0x00D04B)
 
 // $D04E: [8-bit] Away team runs, Home Run Derby player 1 score
-function away_team_runs() => byte(0x00D04E)
+function human_runs() => byte(0x00D04E)
 
 // $D051: [8-bit] Home team runs
-function home_team_runs() => byte(0x00D051)
-
-function pwin() {
-    return (
-        away_team_runs() > home_team_runs() && paway()
-    ) || (
-        home_team_runs() > away_team_runs() && phome()
-    )
-}
+function computer_runs() => byte(0x00D051)
 
 // $D064: [8-bit] Runner on first
 //        0x00 = No
@@ -468,7 +463,7 @@ function gb_achievement(title, scenario_name, points, idx) {
                         sp() &&
                         game_breakers_scenario() == idx &&
                         game_mode() == 0x02 && // Game Breakers
-                        pwin() &&
+                        human_runs() > computer_runs() &&
                         gfd(),
                 type = "progression"
     )
@@ -490,7 +485,7 @@ achievement(
     trigger =
         sp() &&
         game_mode() == 0x00 && // Playball
-        pwin() &&
+        human_runs() > computer_runs() &&
         gfd(),
     type = "progression"
 )
@@ -502,7 +497,20 @@ achievement(
     trigger =
         sp() &&
         game_mode() == 0x01 && // Home Run Derby
-        away_team_runs() >= 11 &&
+        human_runs() >= 11 &&
+        home_run_derby_finished() == 0x01 &&
+        prev(home_run_derby_finished()) == 0x00,
+    type = "progression"
+)
+
+achievement(
+    title = "Gold Glove",
+    description = "Finish a Defense Practice with at least 16 points.",
+    points = 10,
+    trigger =
+        sp() &&
+        game_mode() == 0x01 && // Home Run Derby
+        human_runs() >= 16 &&
         home_run_derby_finished() == 0x01 &&
         prev(home_run_derby_finished()) == 0x00,
     type = "progression"
@@ -517,7 +525,7 @@ achievement(
         phome() &&
         human_team() == 0x0B && // Rockies
         computer_team() == 0x0E && // Mets
-        home_team_runs() >= 11 &&
-        away_team_runs() <= 9 &&
+        human_runs() >= 11 &&
+        computer_runs() <= 9 &&
         gfd()
 )
