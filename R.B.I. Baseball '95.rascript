@@ -377,7 +377,7 @@ function computer_team_current_batter_lineup_spot_0_indexed() => byte(0x00D73A)
 
 // $D73B: [8-bit] Human team current batter lineup spot (0-indexed)
 //        (If 0- or 2-player, away team)
-function human_team_current_batter_lineup_spot_0_indexed() => byte(0x00D73B)
+function human_batter() => byte(0x00D73B)
 
 // $D787: [8-bit] Pitcher has started windup
 //        0x00 = No
@@ -573,6 +573,18 @@ achievement(
         gfd()
 )
 
+
+achievement(
+    title = "This Day in History IV: Edge of Glory",
+    description = "In a home game as the Colorado Rockies, record a hit with Andrés Galarraga during or after the 9th inning.",
+    points = 2,
+    trigger =
+        sp() &&
+        phome() &&
+        human_team() == 0x0B && // Rockies
+        current_inning() >= 9 &&
+        any_of(range(0, 8), n => human_batter() == n && ascii_string_equals(human_batter_name(n), "aGalrrga") && trigger_when(human_batter_hits(n) > prev(human_batter_hits(n))))
+)
 achievement(
     title = "This Day in History V: The Veteran",
     description = "In a home game as the Baltimore Orioles, hit a home run with Cal Ripken Jr. during or after the 5th inning.",
@@ -582,5 +594,5 @@ achievement(
         phome() &&
         human_team() == 0x00 && // Orioles
         current_inning() >= 5 &&
-        any_of(range(0, 8), n => ascii_string_equals(human_batter_name(n), "aC~liRkpne") && trigger_when(human_batter_home_runs(n) > prev(human_batter_home_runs(n))))
+        any_of(range(0, 8), n => human_batter() == n && ascii_string_equals(human_batter_name(n), "aC~liRkpne") && trigger_when(human_batter_home_runs(n) > prev(human_batter_home_runs(n))))
 )
