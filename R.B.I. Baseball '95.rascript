@@ -573,6 +573,17 @@ achievement(
         gfd()
 )
 
+achievement(
+    title = "This Day in History III: Drunk Tank",
+    description = "In a home game as the Los Angeles Dodgers, defeat the St. Louis Cardinals.",
+    points = 2,
+    trigger =
+        sp() &&
+        phome() &&
+        human_team() == 0x13 && // Dodgers
+        computer_team() == 0x1A && // Cardinals
+        gfd()
+)
 
 achievement(
     title = "This Day in History IV: Edge of Glory",
@@ -585,6 +596,7 @@ achievement(
         current_inning() >= 9 &&
         any_of(range(0, 8), n => human_batter() == n && ascii_string_equals(human_batter_name(n), "aGalrrga") && trigger_when(human_batter_hits(n) > prev(human_batter_hits(n))))
 )
+
 achievement(
     title = "This Day in History V: The Veteran",
     description = "In a home game as the Baltimore Orioles, hit a home run with Cal Ripken Jr. during or after the 5th inning.",
