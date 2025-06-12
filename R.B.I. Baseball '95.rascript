@@ -217,6 +217,8 @@ function defense_mode() => byte(0x00CF21)
 //        0x05 = 162 Game Season
 function series_type() => byte(0x00CF22)
 
+function stance() => byte(0xcf67)
+
 // $CF23: [8-bit] Game mode
 //        0x00 = Playball
 //        0x01 = Home Run Derby
@@ -613,6 +615,21 @@ achievement(
         human_runs() > computer_runs() &&
         gfd(),
     type = "progression"
+)
+
+achievement(
+    title = "From Rutschman with Love",
+    description = "Finish a Home Run Derby with at least 8 points after hitting a home run from both sides of the plate.",
+    points = 5,
+    trigger =
+        never(!sp()) &&
+        never(game_mode() != 0x01) && // Home Run Derby
+        never(human_runs() == 0) &&
+        human_runs() >= 8 &&
+        once(stance() == 0x01 && human_runs() > prev(human_runs())) &&
+        once(stance() == 0x02 && human_runs() > prev(human_runs())) &&
+        home_run_derby_finished() == 0x01 &&
+        prev(home_run_derby_finished()) == 0x00
 )
 
 achievement(
