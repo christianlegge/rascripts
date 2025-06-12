@@ -345,6 +345,7 @@ function gfd() => game_finished() == 0x01 && prev(game_finished()) == 0x00
 //        0x1B = Giants
 //        0x1C = AL All-Stars
 //        0x1D = NL All-Stars
+//        0x46 = Time Warner
 function computer_team() => byte(0x00D04B)
 
 // $D04E: [8-bit] Away team runs, Home Run Derby player 1 score
@@ -625,6 +626,19 @@ achievement(
         home_run_derby_finished() == 0x01 &&
         prev(home_run_derby_finished()) == 0x00,
     type = "progression"
+)
+
+achievement(
+    title = "Pennant King",
+    description = "Finish undefeated in a Play Division series.",
+    points = 10,
+    trigger =
+        sp() &&
+        game_mode() == 0x00 && // Playball
+        series_type() == 0x02 && // Play Division
+        human_runs() > computer_runs() &&
+        computer_team() == 0x46 && // Time Warner
+        gfd()
 )
 
 achievement(
