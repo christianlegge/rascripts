@@ -374,6 +374,8 @@ function away_team_at_bats() => byte(0x00D072)
 // $D076: [8-bit] Away team hits
 function away_team_hits() => byte(0x00D076)
 
+function computer_hits() => byte(0x00d079)
+
 // $D73A: [8-bit] Computer team current batter lineup spot (0-indexed)
 //        (If 0- or 2-player, home team)
 function computer_team_current_batter_lineup_spot_0_indexed() => byte(0x00D73A)
@@ -457,7 +459,15 @@ scenario_dict = {
 }
 
 first_batter_addr = 0xd350
+first_computer_batter_addr = 0xd460
 batter_struct_size = 0x22
+
+first_pitcher_addr = 0xd088
+pitcher_struct_size = 0x20
+
+function human_pitch_stamina(n) {
+    return byte(first_pitcher_addr + n * pitcher_struct_size + 0x13)
+}
 
 function human_batter_name(n) {
     return first_batter_addr + n * batter_struct_size
@@ -499,6 +509,10 @@ function human_batter_strikeouts(n) {
     return byte(first_batter_addr + n * batter_struct_size + 0x1d)
 }
 
+function computer_batter_strikeouts(n) {
+    return byte(first_computer_batter_addr + n * batter_struct_size + 0x1d)
+}
+
 function human_stolen_bases() => byte(0x6106)
 
 // Achievements
@@ -527,6 +541,16 @@ for scenario in scenario_dict {
 }
 
 achievement(
+    title = "K",
+    description = "Strike out a batter.",
+    points = 1,
+    trigger =
+        sp() &&
+        human_pitching() &&
+        __ornext(any_of(range(0, 8), n => computer_batter_strikeouts(n) > prev(computer_batter_strikeouts(n))))
+)
+
+achievement(
     title = "Smoked It",
     description = "Hit a home run outside of Home Run Derby.",
     points = 4,
@@ -545,6 +569,20 @@ achievement(
         sp() &&
         human_batting() &&
         human_stolen_bases() > prev(human_stolen_bases())
+)
+
+achievement(
+    title = "Perfect Inning",
+    description = "End an inning on 9 or less pitches without recording any hits or balls.",
+    points = 5,
+    trigger =
+        sp() &&
+        once(current_inning() > prev(current_inning())) &&
+        never(human_batting()) &&
+        never(tally(9, pitcher_has_started_windup() > prev(pitcher_has_started_windup()))) &&
+        never(balls() > 0) &&
+        never(computer_hits() > prev(computer_hits())) &&
+        trigger_when(outs() == 3)
 )
 
 achievement(
