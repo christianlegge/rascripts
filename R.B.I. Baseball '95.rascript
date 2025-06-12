@@ -267,6 +267,9 @@ function current_inning() => byte(0x00CF87)
 function top() => byte(0xd039) == 0x01
 function bottom() => byte(0xd039) == 0x00
 
+function human_batting() => byte(0x00cf41) != byte(0xd039) && byte(0x00cf41) <= 0x01 && byte(0xd039) <= 0x01
+function human_pitching() => byte(0x00cf41) == byte(0xd039) && byte(0x00cf41) <= 0x01 && byte(0xd039) <= 0x01
+
 // $D047: replay?
 function replay() => byte(0x00D047)
 
@@ -496,6 +499,8 @@ function human_batter_strikeouts(n) {
     return byte(first_batter_addr + n * batter_struct_size + 0x1d)
 }
 
+function human_stolen_bases() => byte(0x6106)
+
 // Achievements
 
 function gb_achievement(title, scenario_name, points, idx) {
@@ -520,6 +525,44 @@ for scenario in scenario_dict {
         idx = scenario
     )
 }
+
+achievement(
+    title = "Smoked It",
+    description = "Hit a home run outside of Home Run Derby.",
+    points = 4,
+    trigger =
+        sp() &&
+        human_batting() &&
+        all_of(range(0, 8), n => prev(human_batter_home_runs(n)) == 0) &&
+        __ornext(any_of(range(0, 8), n => human_batter_home_runs(n) == 1))
+)
+
+achievement(
+    title = "I'll Be Having That",
+    description = "Successfully steal a base.",
+    points = 1,
+    trigger =
+        sp() &&
+        human_batting() &&
+        human_stolen_bases() > prev(human_stolen_bases())
+)
+
+achievement(
+    title = "The Cycle",
+    description = "In one game and one session, hit a single, double, triple, and home run.",
+    points = 10,
+    trigger =
+        sp() &&
+        human_batting() &&
+        sum_of(range(0, 8), n => human_batter_singles(n)) >= 1 &&
+        sum_of(range(0, 8), n => human_batter_doubles(n)) >= 1 &&
+        sum_of(range(0, 8), n => human_batter_triples(n)) >= 1 &&
+        sum_of(range(0, 8), n => human_batter_home_runs(n)) >= 1 &&
+        (sum_of(range(0, 8), n => prev(human_batter_singles(n))) == 0 ||
+        sum_of(range(0, 8), n => prev(human_batter_doubles(n))) == 0 ||
+        sum_of(range(0, 8), n => prev(human_batter_triples(n))) == 0 ||
+        sum_of(range(0, 8), n => prev(human_batter_home_runs(n))) == 0)
+)
 
 achievement(
     title = "Play Ball",
@@ -582,6 +625,7 @@ achievement(
         phome() &&
         human_team() == 0x13 && // Dodgers
         computer_team() == 0x1A && // Cardinals
+        human_runs() > computer_runs() &&
         gfd()
 )
 
