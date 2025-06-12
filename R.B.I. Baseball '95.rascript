@@ -230,6 +230,8 @@ function stance() => byte(0xcf67)
 //        0x07 = Defense Practice
 function game_mode() => byte(0x00CF23)
 
+function game() => __ornext(game_mode() == 0x00 || game_mode() == 0x02 || game_mode() == 0x03)
+
 // $CF24: [8-bit] Difficulty
 //        0x00 = Hard
 //        0x01 = Medium
@@ -549,6 +551,7 @@ achievement(
     points = 1,
     trigger =
         sp() &&
+        game() &&
         human_pitching() &&
         __ornext(any_of(range(0, 8), n => computer_batter_strikeouts(n) > prev(computer_batter_strikeouts(n))))
 )
@@ -559,6 +562,7 @@ achievement(
     points = 4,
     trigger =
         sp() &&
+        game() &&
         human_batting() &&
         all_of(range(0, 8), n => prev(human_batter_home_runs(n)) == 0) &&
         __ornext(any_of(range(0, 8), n => human_batter_home_runs(n) == 1))
@@ -570,6 +574,7 @@ achievement(
     points = 1,
     trigger =
         sp() &&
+        game() &&
         human_batting() &&
         human_stolen_bases() > prev(human_stolen_bases())
 )
@@ -579,7 +584,8 @@ achievement(
     description = "End an inning on 9 or less pitches without recording any hits or balls.",
     points = 5,
     trigger =
-        sp() &&
+        never(!sp()) &&
+        never(!game()) &&
         once(current_inning() > prev(current_inning())) &&
         never(human_batting()) &&
         never(tally(9, pitcher_has_started_windup() > prev(pitcher_has_started_windup()))) &&
@@ -594,6 +600,7 @@ achievement(
     points = 10,
     trigger =
         sp() &&
+        game() &&
         human_batting() &&
         sum_of(range(0, 8), n => human_batter_singles(n)) >= 1 &&
         sum_of(range(0, 8), n => human_batter_doubles(n)) >= 1 &&
@@ -677,6 +684,7 @@ achievement(
     points = 5,
     trigger =
         sp() &&
+        game() &&
         phome() &&
         human_team() == 0x0B && // Rockies
         computer_team() == 0x0E && // Mets
@@ -691,6 +699,7 @@ achievement(
     points = 2,
     trigger =
         sp() &&
+        game() &&
         phome() &&
         human_team() == 0x13 && // Dodgers
         computer_team() == 0x1A && // Cardinals
@@ -704,6 +713,7 @@ achievement(
     points = 2,
     trigger =
         sp() &&
+        game() &&
         phome() &&
         human_team() == 0x0B && // Rockies
         current_inning() >= 9 &&
@@ -716,6 +726,7 @@ achievement(
     points = 4,
     trigger =
         sp() &&
+        game() &&
         phome() &&
         human_team() == 0x00 && // Orioles
         current_inning() >= 5 &&
