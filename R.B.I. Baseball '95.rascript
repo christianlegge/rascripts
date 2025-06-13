@@ -230,7 +230,7 @@ function stance() => byte(0xcf67)
 //        0x07 = Defense Practice
 function game_mode() => byte(0x00CF23)
 
-function game() => __ornext(game_mode() == 0x00 || game_mode() == 0x02 || game_mode() == 0x03)
+function game() => __ornext((game_mode() == 0x00 && human_team() != computer_team()) || game_mode() == 0x02 || game_mode() == 0x03)
 
 // $CF24: [8-bit] Difficulty
 //        0x00 = Hard
@@ -671,7 +671,8 @@ achievement(
     points = 10,
     trigger =
         sp() &&
-        game_mode() == 0x01 && // Home Run Derby
+        game_mode() == 0x00 &&
+        human_team() == 0x02 && computer_team() == 0x02 &&
         human_runs() >= 16 &&
         home_run_derby_finished() == 0x01 &&
         prev(home_run_derby_finished()) == 0x00,
