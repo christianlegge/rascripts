@@ -4,6 +4,7 @@
 function human_wins() => byte(0xd037)
 function human_games() => byte(0xd036)
 
+function camera() => byte(0xd7b2)
 // $CD18: [8-bit] Game Breakers scenario
 //        0x00 = Silver Platter
 //        0x01 = Score
@@ -235,6 +236,8 @@ function defense_mode() => byte(0x00CF21)
 function series_type() => byte(0x00CF22)
 
 function world_series() => byte(0x97ce) == 1
+
+function last_fielded_position() => byte(0xd7a7)
 
 function stance() => byte(0xcf67)
 
@@ -497,6 +500,14 @@ function human_batter_name(n) {
     return first_batter_addr + n * batter_struct_size
 }
 
+function human_batter_cur_pos(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x0a)
+}
+
+function human_batter_natural_pos(n) {
+    return byte(first_batter_addr + n * batter_struct_size + 0x12)
+}
+
 function human_batter_doubles(n) {
     return byte(first_batter_addr + n * batter_struct_size + 0x14)
 }
@@ -706,6 +717,20 @@ achievement(
 )
 
 achievement(
+    title = "Comedy of Errors",
+    description = "In a single session, start and win a Best of Seven series while none of your position players are at their default position.",
+    points = 5,
+    trigger =
+        sp() &&
+        game_mode() == 0x00 && // Playball
+        series_type() == 0x01 && // Play Division
+        (human_games() == 0 || (once(human_games() == 1 && prev(human_games()) == 0))) && 
+        any_of(range(0, 13), n => never(human_games() > prev(human_games()) && human_batter_cur_pos(n) != 0 && human_batter_cur_pos(n) == human_batter_natural_pos(n))) &&
+        all_of(range(0, 13), n => human_batter_cur_pos(n) == 0 || human_batter_cur_pos(n) != human_batter_natural_pos(n)) &&
+        trigger_when(human_wins() == 4 && prev(human_wins()) == 3)
+)
+
+achievement(
     title = "Pennant King",
     description = "Finish undefeated in a Play Division series.",
     points = 10,
@@ -729,6 +754,19 @@ achievement(
         any_of(range(0, 0x45), n => leading_league(n)) &&
         trigger_when(human_games() == 69 && prev(human_games()) == 68)
 )
+
+achievement(
+    title = "October Baseball",
+    description = "Finish an 80 game season with a winning record.",
+    points = 25,
+    trigger = 
+        sp() &&
+        game_mode() == 0x00 && // Playball
+        series_type() == 0x04 && // 80 Game Season
+        human_wins() > 40 &&
+        human_games() == 80 && prev(human_games()) == 79
+)
+
 
 achievement(
     title = "Fall Classic",
@@ -772,6 +810,21 @@ achievement(
         human_runs() >= 11 &&
         computer_runs() <= 9 &&
         gfd()
+)
+
+achievement(
+    title = "This Day in History II: Comeback Kid",
+    description = "In a home game as the Seattle Mariners, record a fly out with Ken Griffey Jr.",
+    points = 1,
+    trigger =
+        sp() &&
+        game() &&
+        phome() &&
+        human_team() == 0x15 && // Mariners
+        human_pitching() &&
+        trigger_when(camera() != 0) &&
+        any_of(range(6, 8), n => bit(n - 1, 0xd3c0) == 0x01 && trigger_when(last_fielded_position() == n)) &&
+        trigger_when(outs() > prev(outs()))
 )
 
 achievement(
