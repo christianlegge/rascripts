@@ -768,8 +768,37 @@ achievement(
         any_of(range(0, 8), n => human_batter() == n && ascii_string_equals(human_batter_name(n), "aC~liRkpne") && trigger_when(human_batter_home_runs(n) > prev(human_batter_home_runs(n))))
 )
 
+// Leaderboards
+
+leaderboard(
+    title = "Home Run Derby High Score",
+    description = "Get the highest score in a Home Run Derby (max 20).",
+    start =
+        sp() &&
+        game_mode() == 0x01 && // Home Run Derby
+        home_run_derby_finished() == 0x01 &&
+        prev(home_run_derby_finished()) == 0x00,
+    cancel = always_false(),
+    submit = always_true(),
+    value = human_runs()
+)
+
+leaderboard(
+    title = "Defense Practice High Score",
+    description = "Get the highest score in a Defense Practice (max 20).",
+    start =
+        sp() &&
+        game_mode() == 0x00 &&
+        human_team() == 0x02 && computer_team() == 0x02 &&
+        home_run_derby_finished() == 0x01 &&
+        prev(home_run_derby_finished()) == 0x00,
+    cancel = always_false(),
+    submit = always_true(),
+    value = human_runs()
+)
+
 // Rich Presence
-//
+
 rp_human_team = rich_presence_lookup("Team", human_team(), team_lookup, "Unknown Team")
 rp_computer_team = rich_presence_lookup("Team", computer_team(), team_lookup, "Unknown Team")
 rp_home_away = rich_presence_lookup("Home/Away", for_1_player_which_team_is_human_controlling(), {
@@ -964,6 +993,5 @@ rich_presence_conditional_display(
      "[{0}]",
     rp_gamemode
 )
-
 
 rich_presence_display("Playing R.B.I. Baseball '95")
