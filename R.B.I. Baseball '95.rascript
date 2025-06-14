@@ -1,6 +1,9 @@
 // R.B.I. Baseball '95
 // #ID = 16803
 
+function human_wins() => byte(0xd037)
+function human_games() => byte(0xd036)
+
 // $CD18: [8-bit] Game Breakers scenario
 //        0x00 = Silver Platter
 //        0x01 = Score
@@ -25,6 +28,20 @@ function game_breakers_scenario() => byte(0x00CD18)
 //        0x00 = Yes
 //        0x01 = No
 function errors_setting() => byte(0x00CDF1)
+
+first_win_addr = 0xce05
+function beating_condition(human, computer) {
+    if human == computer {
+        return always_true()
+    }
+    else {
+        return human_wins() > byte(first_win_addr + computer * 2)
+    }
+}
+
+function leading_league(id) {
+    return human_team() == id && all_of(range(0, 27), n => beating_condition(id, n))
+}
 
 // $CE04: [8-bit] Season standings - Orioles losses
 function season_standings_orioles_losses() => byte(0x00CE04)
@@ -216,6 +233,8 @@ function defense_mode() => byte(0x00CF21)
 //        0x04 = 80 Game Season
 //        0x05 = 162 Game Season
 function series_type() => byte(0x00CF22)
+
+function world_series() => byte(0x97ce) == 1
 
 function stance() => byte(0xcf67)
 
@@ -698,6 +717,33 @@ achievement(
         computer_team() == 0x46 && // Time Warner
         gfd()
 )
+
+achievement(
+    title = "League Leaders",
+    description = "Finish a Play All Teams series with a better record than any of the others.",
+    points = 25,
+    trigger =
+        sp() &&
+        game_mode() == 0x00 && // Playball
+        series_type() == 0x03 && // Play All Teams
+        any_of(range(0, 0x45), n => leading_league(n)) &&
+        trigger_when(human_games() == 69 && prev(human_games()) == 68)
+)
+
+achievement(
+    title = "Fall Classic",
+    description = "Win the World Series following a 162 game season to become the champions.",
+    points = 50,
+    trigger = 
+        sp() &&
+        game_mode() == 0x00 && // Playball
+        series_type() == 0x05 && // 162 Game Season
+        world_series() &&
+        human_runs() > computer_runs() &&
+        human_wins() == 4 && prev(human_wins()) == 3,
+    type = "progression"
+)
+
 
 achievement(
     title = "Gold Glove",
