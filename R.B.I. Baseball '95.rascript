@@ -230,7 +230,7 @@ function stance() => byte(0xcf67)
 //        0x07 = Defense Practice
 function game_mode() => byte(0x00CF23)
 
-function game() => __ornext((game_mode() == 0x00 && human_team() != computer_team()) || game_mode() == 0x02 || game_mode() == 0x03)
+function game() => __ornext((game_mode() == 0x00) || game_mode() == 0x02 || game_mode() == 0x03) && human_team() != computer_team()
 
 // $CF24: [8-bit] Difficulty
 //        0x00 = Hard
@@ -520,6 +520,40 @@ function computer_batter_strikeouts(n) {
 
 function human_stolen_bases() => byte(0x6106)
 
+team_lookup = {
+    0x00: "Orioles",
+    0x01: "Angels",
+    0x02: "Cubs",
+    0x03: "Braves",
+    0x04: "Red Sox",
+    0x05: "White Sox",
+    0x06: "Marlins",
+    0x07: "Reds",
+    0x08: "Indians",
+    0x09: "Royals",
+    0x0A: "Expos",
+    0x0B: "Rockies",
+    0x0C: "Tigers",
+    0x0D: "Twins",
+    0x0E: "Mets",
+    0x0F: "Astros",
+    0x10: "Brewers",
+    0x11: "Athletics",
+    0x12: "Phillies",
+    0x13: "Dodgers",
+    0x14: "Yankees",
+    0x15: "Mariners",
+    0x16: "Pirates",
+    0x17: "Padres",
+    0x18: "Blue Jays",
+    0x19: "Rangers",
+    0x1A: "Cardinals",
+    0x1B: "Giants",
+    0x1C: "AL All-Stars",
+    0x1D: "NL All-Stars",
+    0x46: "Time Warner"
+}
+
 // Achievements
 
 function gb_achievement(title, scenario_name, points, idx) {
@@ -733,3 +767,203 @@ achievement(
         current_inning() >= 5 &&
         any_of(range(0, 8), n => human_batter() == n && ascii_string_equals(human_batter_name(n), "aC~liRkpne") && trigger_when(human_batter_home_runs(n) > prev(human_batter_home_runs(n))))
 )
+
+// Rich Presence
+//
+rp_human_team = rich_presence_lookup("Team", human_team(), team_lookup, "Unknown Team")
+rp_computer_team = rich_presence_lookup("Team", computer_team(), team_lookup, "Unknown Team")
+rp_home_away = rich_presence_lookup("Home/Away", for_1_player_which_team_is_human_controlling(), {
+    0x00: "@",
+    0x01: "vs."
+}, "vs.")
+rp_top_bottom = rich_presence_lookup("Top/Bottom", byte(0xd039), {
+    0x00: "Bottom",
+    0x01: "Top"
+}, "Unknown")
+rp_inning = rich_presence_lookup("Inning", current_inning(), {
+    0x01: "1st",
+    0x02: "2nd",
+    0x03: "3rd",
+    0x04: "4th",
+    0x05: "5th",
+    0x06: "6th",
+    0x07: "7th",
+    0x08: "8th",
+    0x09: "9th",
+    0x0A: "10th",
+    0x0B: "11th",
+    0x0C: "12th",
+    0x0D: "13th",
+    0x0E: "14th",
+    0x0F: "15th",
+    0x10: "16th",
+    0x11: "17th",
+    0x12: "18th",
+    0x13: "19th",
+    0x14: "20th",
+    0x15: "21st",
+    0x16: "22nd",
+    0x17: "23rd",
+    0x18: "24th",
+    0x19: "25th",
+    0x1A: "26th",
+    0x1B: "27th",
+    0x1C: "28th",
+    0x1D: "29th",
+    0x1E: "30th"
+}, "Unknown inning")
+rp_human_runs = rich_presence_macro("Number", human_runs())
+rp_computer_runs = rich_presence_macro("Number", computer_runs())
+rp_gamemode = rich_presence_lookup("Game Mode", game_mode(), {
+    0x00: "Playball",
+    0x01: "Home Run Derby",
+    0x02: "Game Breakers",
+    0x03: "Create Teams",
+    0x04: "Sound Test",
+    0x05: "Stadium Tour",
+    0x06: "View Teams",
+    0x07: "Defense Practice"
+}, "Unknown Game Mode")
+rp_series_type = rich_presence_lookup("Series Type", series_type(), {
+    0x00: "Single Game",
+    0x01: "Best of Seven",
+    0x02: "Play Division",
+    0x03: "Play All Teams",
+    0x04: "80 Game Season",
+    0x05: "162 Game Season"
+}, "Unknown Series Type")
+rp_multi = rich_presence_lookup("Multi", players_setting(), {
+    0x01: "2P",
+    0x02: "CPU"
+}, "Unknown Players Setting")
+function rp_ac(addr) => rich_presence_lookup("CustomASCII", byte(addr), {
+    0x41: "A",
+    0x42: "B",
+    0x43: "C",
+    0x44: "D",
+    0x45: "E",
+    0x46: "F",
+    0x47: "G",
+    0x48: "H",
+    0x49: "I",
+    0x4A: "J",
+    0x4B: "K",
+    0x4C: "L",
+    0x4D: "M",
+    0x4E: "N",
+    0x4F: "O",
+    0x50: "P",
+    0x51: "Q",
+    0x52: "R",
+    0x53: "S",
+    0x54: "T",
+    0x55: "U",
+    0x56: "V",
+    0x57: "W",
+    0x58: "X",
+    0x59: "Y",
+    0x5A: "Z",
+    0x20: " ",
+    0x2E: ".",
+    0x61: "a",
+    0x62: "b",
+    0x63: "c",
+    0x64: "d",
+    0x65: "e",
+    0x66: "f",
+    0x67: "g",
+    0x68: "h",
+    0x69: "i",
+    0x6A: "j",
+    0x6B: "k",
+    0x6C: "l",
+    0x6D: "m",
+    0x6E: "n",
+    0x6F: "o",
+    0x70: "p",
+    0x71: "q",
+    0x72: "r",
+    0x73: "s",
+    0x74: "t",
+    0x75: "u",
+    0x76: "v",
+    0x77: "w",
+    0x78: "x",
+    0x79: "y",
+    0x7A: "z",
+    0x7E: " "
+}, "Unknown Character")
+rp_scenario = rich_presence_lookup("Scenario", game_breakers_scenario(), scenario_dict, "Unknown Scenario")
+
+rich_presence_conditional_display(
+    current_inning() > 0 && sp() && game() && game_mode() == 0x00, // Playball
+     "[Playball] [{0}] {1} {2} {3} {4}-{5} {6} {7}",
+    rp_series_type, rp_human_team, rp_home_away, rp_computer_team,
+    rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
+)
+
+rich_presence_conditional_display(
+     current_inning() > 0 &&sp() && game_mode() == 0x02,
+     "[Game Breakers] [{0}] {1} {2} {3} {4}-{5} {6} {7}",
+    rp_scenario, rp_human_team, rp_home_away, rp_computer_team,
+    rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
+)
+
+rich_presence_conditional_display(
+     current_inning() > 0 &&sp() && game(),
+     "[{0}] {1} {2} {3} {4}-{5} {6} {7}",
+    rp_gamemode, rp_human_team, rp_home_away, rp_computer_team,
+    rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
+)
+
+rich_presence_conditional_display(
+    current_inning() > 0 && game() && game_mode() == 0x00, // Playball
+     "[{0}] [Playball] [{1}] {2} @ {3} {4}-{5} {6} {7}",
+    rp_multi, rp_series_type, rp_human_team, rp_computer_team,
+    rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
+)
+
+rich_presence_conditional_display(
+     current_inning() > 0 &&game_mode() == 0x02, // Game Breakers
+     "[{0}] [Game Breakers] [{1}] {2} @ {3} {4}-{5} {6} {7}",
+    rp_multi, rp_gamemode, rp_human_team, rp_computer_team,
+    rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
+)
+
+rich_presence_conditional_display(
+    current_inning() > 0 && game(),
+     "[{0}] [{1}] {2} @ {3} {4}-{5} {6} {7}",
+    rp_multi, rp_gamemode, rp_human_team, rp_computer_team,
+    rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
+)
+
+rich_presence_conditional_display(
+     game_mode() == 0x01 && home_run_derby_pitches_remaining() > 0, // Home Run Derby
+     "[Home Run Derby] {0}{1}{2}{3}{4}{5}{6}{7}{8}{9} | Score: {10}",
+     rp_ac(first_batter_addr +human_batter()*batter_struct_size + 0x01),
+     rp_ac(first_batter_addr +human_batter()*batter_struct_size + 0x00),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x03),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x02),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x05),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x04),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x07),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x06),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x09),
+    rp_ac(first_batter_addr + human_batter()*batter_struct_size +0x08),
+    rp_human_runs
+)
+
+rich_presence_conditional_display(
+     game_mode() == 0x00 && human_team() == 0x02 && computer_team() == 0x02, // Defense Practice
+     "[Defense Practice] Score: {0}",
+    rp_human_runs
+)
+
+rich_presence_conditional_display(
+     game_mode() >= 0x04,
+     "[{0}]",
+    rp_gamemode
+)
+
+
+rich_presence_display("Playing R.B.I. Baseball '95")
