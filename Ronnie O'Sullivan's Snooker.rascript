@@ -144,8 +144,8 @@ function potted_ball_legally(i)
     potted_bool == 0xff && prev(potted_bool) == 0x00
 }
 
-function our_ball_potted_once(i) => once(our_shot() && potted_ball_legally(i))
-function our_ball_respotted_once(i) => once(our_shot() && ball_got_respotted(i))
+function our_ball_potted_once(i) => once(!replay() && our_shot() && potted_ball_legally(i))
+function our_ball_respotted_once(i) => once(!replay() && our_shot() && ball_got_respotted(i))
 
 function any_hit_ball_on() 
 {
@@ -543,10 +543,10 @@ achievement(title = "Speed Potter", description = "Complete any of the Career mo
     disable_when(repeated(3601, timer_is_running()), until = (in_menu() || game_lost() || !in_career_practice())))
 
 achievement(title = "Ronnie Rainbow II", description = "Pot and re-spot each coloured ball at least once during a single break.", points = 10,
-    trigger = in_game() && !replay() && never(in_menu()) && never(their_shot()) && never(current_break() == 0 && prev(current_break() > 0)) && never(frame_started()) && all_of(range(1, 6), our_ball_potted_once) && all_of(range(1, 6), our_ball_respotted_once))
+    trigger = in_game() && never(in_menu()) && never(their_shot()) && never(!game_in_progress()) && never(current_break() == 0 && prev(current_break() > 0)) && all_of(range(1, 6), our_ball_potted_once) && measured(tally_of(range(1, 6), 6, our_ball_respotted_once)))
 
 achievement(title = "Ronnie Rainbow I", description = "Pot and re-spot each coloured ball at least once during a single frame.", points = 5,
-    trigger = in_game() && !replay() && never(in_menu()) && never(frame_started()) && all_of(range(1, 6), our_ball_potted_once) && all_of(range(1, 6), our_ball_respotted_once))
+    trigger = in_game() && !replay() && never(in_menu()) && never(!game_in_progress()) && all_of(range(1, 6), our_ball_potted_once) && measured(tally_of(range(1, 6), 6, our_ball_respotted_once)))
 
 achievement(title = "Fast Can Be Smooth Too", description = "Legally pot a ball while shooting at full power.", points = 3,
     trigger = in_game() && !replay() && our_shot() && shot_power() == 65536 && trigger_when(prev(player_score()) < player_score()))
