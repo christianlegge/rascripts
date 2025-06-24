@@ -167,6 +167,11 @@ tracks = [
     "Adelaide '92",
     "Kyalami '92",
     "Doningtonpark '93",
+    "Jacarepagua",
+    "Detroit",
+    "Paul Ricard",
+    "Osterreichring",
+    "Jerez",
     "Ibaraki",
     "Mt. Fuji",
     "Indy",
@@ -273,3 +278,25 @@ achievement("Psychological Advantage",
     type = "progression"
 )
 
+// Leaderboards
+
+function lap_lb(track, track_id) {
+    leaderboard(
+        title = track + " Best Lap Time",
+        description = "Get the fastest lap time on " + track + ".",
+        start = 
+            racing() &&
+            current_track_id() == track_id &&
+            prev(lap_time_seconds()) + prev(lap_time_minutes()) != 0 &&
+            current_lap() > prev(current_lap()),
+        cancel = always_false(),
+        submit = always_true(),
+        value = prev(lap_time_seconds()) * 100 + prev(lap_time_minutes()) * 6000 + prev(lap_time_milliseconds()) / 10 + 5,
+        format = "MILLISECS",
+        lower_is_better = true
+    )
+}
+
+for index in range(0, 28) {
+    lap_lb(tracks[index], index)
+}
