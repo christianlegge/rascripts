@@ -106,6 +106,8 @@ function demo() => byte(0x0099B2) == 0x01
 //          0x06 = F-1 World Championship Racing
 function game_mode() => byte(0x00D000)
 
+function wc_mode() => __ornext(game_mode() == 0x04 || game_mode() == 0x06) // F-1 World Championship Menus or Racing
+
 function exhibition() => game_mode() == 0x01
 
 // $00D02C: [8-bit] F-Mega mechanic
@@ -300,3 +302,77 @@ function lap_lb(track, track_id) {
 for index in range(0, 28) {
     lap_lb(tracks[index], index)
 }
+
+// Rich Presence
+
+rp_race_type = rich_presence_lookup("RaceType", f_mega_world_championship_race_type(), {
+    0x01: "Free Practice",
+    0x02: "Qualifier",
+    0x03: "Warm Up",
+    0x04: "Final Race"
+})
+rp_game_mode = rich_presence_lookup("GameMode", game_mode(), {
+    0x01: "Exhibition",
+    0x02: "Test Drive",
+    0x03: "Formula Mega",
+    0x04: "F-1 World Championship",
+    0x05: "Demo",
+    0x06: "F-1 World Championship"
+})
+rp_track = rich_presence_lookup("Track", current_track_id(), {
+    0x00: "Phoenix '91",
+    0x01: "Interlagos '92",
+    0x02: "Imola '92",
+    0x03: "Monaco '92",
+    0x04: "G. Villeneuve '92",
+    0x05: "H. Rodriguez '92",
+    0x06: "Magny Cours '92",
+    0x07: "Silverstone '92",
+    0x08: "Hockenheim '92",
+    0x09: "Hungaroring '92",
+    0x0A: "Spa '92",
+    0x0B: "Monza '92",
+    0x0C: "Estoril '92",
+    0x0D: "Catalonia '92",
+    0x0E: "Suzuka '92",
+    0x0F: "Adelaide '92",
+    0x10: "Kyalami '92",
+    0x11: "Doningtonpark '93",
+    0x12: "Jacarepagua",
+    0x13: "Detroit",
+    0x14: "Paul Ricard",
+    0x15: "Osterreichring",
+    0x16: "Jerez",
+    0x17: "Ibaraki",
+    0x18: "Mt. Fuji",
+    0x19: "Indy",
+    0x1A: "Kobe",
+    0x1B: "Tokyo",
+    0x1C: "Waikiki"
+})
+rp_exhibition_car = rich_presence_lookup("ExhibitionCar", exhibition_car_type(), {
+    0x00: "Cigar",
+    0x01: "Wedge",
+    0x02: "Wing",
+    0x03: "Turbo",
+    0x04: "90's"
+})
+rp_race_number = rich_presence_macro("Number", f_mega_current_race()+1)
+rp_grand_prix = rich_presence_lookup("GrandPrix", wc_gp(), {
+    0x00: "Pre 1st",
+    0x01: "Pre 2nd",
+    0x02: "Pre 3rd",
+    0x03: "Pre 4th",
+    0x04: "GP '91",
+    0x05: "GP '92",
+    0x06: "GP '93"
+})
+
+rich_presence_conditional_display(demo() || game_mode() == 5, "Watching the demo")
+rich_presence_conditional_display(game_mode() == 0x01, "Driving a {0} around {1} in Exhibition mode", rp_exhibition_car, rp_track)
+rich_presence_conditional_display(game_mode() == 0x02, "Taking a test drive on {0}", rp_track)
+rich_presence_conditional_display(game_mode() == 0x03 && f_mega_current_race() < 6, "Competing in round {0} on {1} in Formula-Mega", rp_race_number, rp_track)
+rich_presence_conditional_display(game_mode() == 0x03, "Competing in a Formula-Mega tournament")
+rich_presence_conditional_display(wc_mode() && f_mega_current_race() < 16, "Competing in round {0} on {1} in the {2} World Championship", rp_race_number, rp_track, rp_grand_prix)
+rich_presence_conditional_display(wc_mode(), "Competing in the {0} World Championship", rp_grand_prix)
+rich_presence_display("Playing F1 Circus CD")
