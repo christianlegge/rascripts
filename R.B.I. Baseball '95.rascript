@@ -486,7 +486,7 @@ scenario_dict = {
 }
 
 first_batter_addr = 0xd350
-first_computer_batter_addr = 0xd460
+first_computer_batter_addr = 0xd52c
 batter_struct_size = 0x22
 
 first_pitcher_addr = 0xd088
