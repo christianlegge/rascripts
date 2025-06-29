@@ -584,6 +584,8 @@ team_lookup = {
     0x46: "Time Warner"
 }
 
+function unchanging_gb_scenario() => byte(0xce97)
+
 // Achievements
 
 function gb_achievement(title, scenario_name, points, idx) {
@@ -592,7 +594,7 @@ function gb_achievement(title, scenario_name, points, idx) {
                 points = points,
                 trigger =
                         sp() &&
-                        game_breakers_scenario() == idx &&
+                        unchanging_gb_scenario() == idx &&
                         game_mode() == 0x02 && // Game Breakers
                         human_runs() > computer_runs() &&
                         gfd(),
@@ -1021,7 +1023,7 @@ function rp_ac(addr) => rich_presence_lookup("CustomASCII", byte(addr), {
     0x7A: "z",
     0x7E: " "
 }, "Unknown Character")
-rp_scenario = rich_presence_lookup("Scenario", game_breakers_scenario(), scenario_dict, "Unknown Scenario")
+rp_scenario = rich_presence_lookup("Scenario", unchanging_gb_scenario(), scenario_dict, "Unknown Scenario")
 
 rich_presence_conditional_display(
     current_inning() > 0 && sp() && game() && game_mode() == 0x00, // Playball
