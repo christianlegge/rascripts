@@ -293,8 +293,8 @@ function current_inning() => byte(0x00CF87)
 function top() => byte(0xd039) == 0x01
 function bottom() => byte(0xd039) == 0x00
 
-function human_batting() => byte(0x00cf41) != byte(0xd039) && byte(0x00cf41) <= 0x01 && byte(0xd039) <= 0x01
-function human_pitching() => byte(0x00cf41) == byte(0xd039) && byte(0x00cf41) <= 0x01 && byte(0xd039) <= 0x01
+function human_batting() => ((game_mode() == 0x02 && top()) || (game_mode() != 0x02 && byte(0x00cf41) != byte(0xd039))) && byte(0x00cf41) <= 0x01 && byte(0xd039) <= 0x01
+function human_pitching() => ((game_mode() == 0x02 && bottom()) || (game_mode() != 0x02 && byte(0x00cf41) == byte(0xd039))) && byte(0x00cf41) <= 0x01 && byte(0xd039) <= 0x01
 
 // $D047: replay?
 function replay() => byte(0x00D047)
@@ -652,8 +652,9 @@ achievement(
     trigger =
         never(!sp()) &&
         never(!game()) &&
-        once(current_inning() > prev(current_inning())) &&
-        never(human_batting()) &&
+        (once(byte(0xd039) != prev(byte(0xd039))) || once(current_inning() > prev(current_inning()))) &&
+        never(game_mode() == 0x02 && top()) &&
+        never(game_mode() != 0x02 && byte(0xcf41) != byte(0xd039)) &&
         never(tally(9, pitcher_has_started_windup() > prev(pitcher_has_started_windup()))) &&
         never(balls() > 0) &&
         never(computer_hits() > prev(computer_hits())) &&
