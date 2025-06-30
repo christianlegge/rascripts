@@ -290,6 +290,8 @@ function lap_lb(track, track_id) {
             racing() &&
             current_track_id() == track_id &&
             prev(lap_time_seconds()) + prev(lap_time_minutes()) != 0 &&
+            ((f_mega_world_championship_race_type() == 0x04 && current_lap() >= 1) || current_lap() >= 2) &&
+            current_lap() <= 0x7f &&
             current_lap() > prev(current_lap()),
         cancel = always_false(),
         submit = always_true(),
