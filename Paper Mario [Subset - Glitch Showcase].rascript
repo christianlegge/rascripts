@@ -1085,7 +1085,7 @@ achievement("Best Not to Disturb Them", "Obtain the Super Hammer without breakin
         prev(super_hammer_chest[r] == 0) && trigger_when(super_hammer_chest[r] == 1) &&
         never(region_check[r] && mf0[r] != prev(mf0[r])) &&
         never(region_check[r] && mf1[r] != prev(mf1[r])) &&
-        never(super_hammer_block[r] == 1) &&
+        never(region_check[r] && super_hammer_block[r] == 1) &&
         never(region_check[r] && map_id[r] != 8) && never(region_check[r] && area_id[r] != 11)
     )
 )
