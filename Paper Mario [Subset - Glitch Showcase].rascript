@@ -2,7 +2,7 @@
 // #MinimumVersion = 1.3
 // #ID = 33114
 
-debug = false
+debug = true
 
 regions = [ "US", "JP", "EU" ]
 
@@ -1421,11 +1421,12 @@ achievement("Skipping Through the Clouds", "Touch Klevar's Star Spirit card with
 
 // Chapter 7
 
-achievement("Old Boot Goofin'", "Reach Chapter 7 without Ultra Boots.", points = 5,
+achievement("Old Boot Goofin'", "Reach the Chapter 7 path from Toad Town Tunnels without Ultra Boots.", points = 5,
     trigger = any_of(regions, r =>
-        region_check[r] && prev(area_id[r] == 2) &&
-        __ornext(prev(map_id[r] == 13) || prev(map_id[r] == 18) || prev(map_id[r] == 17)) &&
-        current_boots[r] < 2 && prev(ch7_started[r] == 0) && trigger_when(ch7_started[r] == 1 && prev(map_id[r] == 13))
+        region_check[r] && area_id[r] == 2 &&
+        prev(map_id[r] == 17) && prev(entry_id[r] != 1) &&
+        ((trigger_when(map_id[r] == 18) && current_boots[r] == 1) ||
+            ((map_id[r] == 18) && current_boots[r] == 0))
     )
 )
 
