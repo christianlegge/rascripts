@@ -1635,7 +1635,7 @@ achievement("Feeling Foul", "Have a Repel Gel or Volt Shroom last only one turn.
     )
 )
 
-achievement("Exotic Wares", "Sell a badge to a shop.", points = 10,
+achievement("Exotic Wares", "Sell a badge to a shop for at least 1 coin.", points = 10,
     trigger = any_of(regions, r =>
         region_check[r] && any_of(range(0, 9), idx =>
             prev_item_slot(r, idx) >= 0xe0 && prev_item_slot(r, idx) <= 0x154 &&
