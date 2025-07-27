@@ -232,15 +232,31 @@ function actor_tile(index) {
     return byte(target_addr)
 }
 
+function ships_destroyed(count) {
+    return measured(
+        tally_of(range(0, 14), count, index => screen_shake() == 0 && actor_tile(index) == 0x0a && prev(actor_tile(index)) == 0x06)
+    )
+}
+
 achievement(
     title = "Master Procrastinator",
     description = "Destroy 5 ships in Zap Zap.",
     points = 3,
     trigger =
-        measured(
-            tally_of(range(0, 14), 5, index => screen_shake() == 0 && actor_tile(index) == 0x0a && prev(actor_tile(index)) == 0x06)
-        )
+        ships_destroyed(5)
         && never(current_screen() != 0x36)
+)
+
+// Leaderboards
+
+leaderboard(
+    title = "Zap Zap High Score",
+    description = "Destroy the most ships in Zap Zap.",
+    start = current_screen() == 0x36 && prev(current_screen() == 0x2F),
+    cancel = current_screen() != 0x36 && current_screen() != 0x31,
+    submit = current_screen() == 0x31 && prev(current_screen() == 0x36),
+    value = ships_destroyed(0),
+    format = "VALUE"
 )
 
 // Rich Presence
