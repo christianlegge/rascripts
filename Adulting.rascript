@@ -6,11 +6,11 @@ function interaction_id_you_are_currently_in_front_of_pressing_a_will_interact_a
 
 // $C0E2: [8-bit] Related to tiles for actor 1
 //        Changes from 0x06 to 0x0A when Zap Zap ship blows up
-function related_to_tiles_for_actor_1() => byte(0x00C0E2)
+function actor_1_tile() => byte(0x00C0E2)
 
 // $C110: [8-bit] Related to tiles for actor 2
 //        Changes from 0x06 to 0x0A when Zap Zap ship blows up
-function related_to_tiles_for_actor_2() => byte(0x00C110)
+function actor_2_tile() => byte(0x00C110)
 
 // $C259: [8-bit] Sprite animation info
 //        Ticks from 0x05 to 0x00 when first fish sighs
@@ -55,7 +55,7 @@ function cuss_timer() => byte(0x00C71D)
 
 // $C8EF: [8-bit] Related to screen shake
 //        Normally zero during Zap Zap, goes nonzero when ship is hit
-function related_to_screen_shake() => byte(0x00C8EF)
+function screen_shake() => byte(0x00C8EF)
 
 // $C919: [8-bit] Current interaction. Unique per screen
 //        0x00 = Not interacting
@@ -70,21 +70,21 @@ function related_to_screen_shake() => byte(0x00C8EF)
 //        0x0F = Far right car on street - interaction is broken and this value remains until new interaction
 //        0x10, 0x11 = Middle car on street
 //        0x15, 0x16 = Right car on street
-function current_interaction_unique_per_screen() => byte(0x00C919)
+function current_interaction() => byte(0x00C919)
 
 // $CBEE: [8-bit] X position on screen (measured in tiles)
 //        Neg-pos = left-right
 //        0x0C = Roommate's door
 //        0x41 = Cafe door
 //        0xFF = Non-gameplay screen (cutscenes, title)
-function x_position_on_screen_measured_in_tiles() => byte(0x00CBEE)
+function x_tile() => byte(0x00CBEE)
 
 // $CBEF: [8-bit] Y position on screen (measured in tiles)
 //        Neg-pos = up-down
 //        0x04 = Roommate's door
 //        0x0C = Cafe door
 //        0xFF = Non-gameplay screen (cutscenes, title)
-function y_position_on_screen_measured_in_tiles() => byte(0x00CBEF)
+function y_tile() => byte(0x00CBEF)
 
 // $CCBC: [8-bit] Inventory: Keys
 //        0x00 = No
@@ -179,6 +179,69 @@ function tried_to_e_file_before_resetting_router() => byte(0x00CCEA)
 //        0x00 = No
 //        0x01 = Yes
 function bought_pizza() => byte(0x00CCEC)
+
+// Achievements
+
+achievement(
+    title = "Back to Bed",
+    description = "Try to go back to bed.",
+    points = 1,
+    trigger = prev(current_interaction()) == 0x08
+        && current_interaction() == 0x00
+        && current_screen() == 0x06
+)
+
+function todo_task_achievement(title, description, task_bitflag, screen) {
+    achievement(
+        title = title,
+        description = description,
+        points = 1,
+        trigger = prev(task_bitflag) == 0
+            && task_bitflag == 1
+            && current_screen() == screen,
+        type = "progression"
+    )
+}
+
+todo_task_achievement("File Taxes", "File your tax return.", mailed_tax_return(), 5)
+todo_task_achievement("Caffeine Addict", "Buy coffee filters.", bought_coffee_filters(), 9)
+todo_task_achievement("Walk the Dog", "Take your dog for a walk.", took_dog_for_walk(), 6)
+todo_task_achievement("With Interest", "Return your overdue library book.", returned_library_book(), 0x11)
+
+roommate_interactions = [ 4, 5, 9 ]
+
+achievement(
+    title = "Roommate from Hell",
+    description = "Bother your roommate as much as possible.",
+    points = 3,
+    trigger =
+        all_of(roommate_interactions,
+            interaction => once(current_interaction() == interaction && prev(current_interaction() == 0))
+        )
+        && x_tile() == 0x0C && y_tile() == 0x04 && prev(y_tile() == 0x05)
+        && never(current_screen() != 8)
+)
+
+actor_1_tile() // 0xc0e2
+actor_2_tile() // 0xc110
+
+function actor_tile(index) {
+    first_actor = 0xc0e2
+    offset = 0xc110 - 0xc0e2
+    target_addr = first_actor + offset * index
+    return byte(target_addr)
+}
+
+achievement(
+    title = "Master Procrastinator",
+    description = "Destroy 5 ships in Zap Zap.",
+    points = 3,
+    trigger =
+        measured(
+            tally_of(range(0, 14), 5, index => screen_shake() == 0 && actor_tile(index) == 0x0a && prev(actor_tile(index)) == 0x06)
+        )
+        && never(current_screen() != 0x36)
+)
 
 // Rich Presence
 
