@@ -183,6 +183,23 @@ function bought_pizza() => byte(0x00CCEC)
 // Achievements
 
 achievement(
+    title = "Stress Relief",
+    description = "Express yourself.",
+    points = 1,
+    trigger = prev(cuss_timer() == 0) && cuss_timer() == 0x0a
+        && current_screen() != 0
+        && current_screen() != 2
+        && current_screen() < 0x12
+        && current_screen() > 0x2C
+        && current_screen() != 0x2F
+        && current_screen() != 0x31
+        && current_screen() != 0x35
+        && current_screen() != 0x36
+)
+
+
+
+achievement(
     title = "Back to Bed",
     description = "Try to go back to bed.",
     points = 1,
@@ -208,6 +225,14 @@ todo_task_achievement("Caffeine Addict", "Buy coffee filters.", bought_coffee_fi
 todo_task_achievement("Walk the Dog", "Take your dog for a walk.", took_dog_for_walk(), 6)
 todo_task_achievement("With Interest", "Return your overdue library book.", returned_library_book(), 0x11)
 
+achievement(
+    title = "Out of Spoons",
+    description = "Call your parents... well, maybe tomorrow.",
+    points = 2,
+    trigger = prev(current_screen()) == 0x1D && current_screen() == 0x1E
+        && brewed_coffee() == 0x01
+)
+
 roommate_interactions = [ 4, 5, 9 ]
 
 achievement(
@@ -221,6 +246,25 @@ achievement(
         && x_tile() == 0x0C && y_tile() == 0x04 && prev(y_tile() == 0x05)
         && never(current_screen() != 8)
 )
+
+achievement(
+    title = "Now, Who Fed You That?"
+    description = "Clean up after Lulu gets sick.",
+    points = 3,
+    trigger =
+        current_screen() == 6
+        && prev(cleaned_dog_puke()) == 0 && cleaned_dog_puke() == 1
+)
+
+achievement(
+    title = "Social Caterpillar",
+    description = "Strike up a conversation with everyone on the street.",
+    trigger = 
+        tally_of([7,8,9], 3, interaction =>
+            once(current_interaction() == interaction && prev(current_interaction() == 0))
+        ) && never(current_screen() != 5)
+)
+
 
 actor_1_tile() // 0xc0e2
 actor_2_tile() // 0xc110
