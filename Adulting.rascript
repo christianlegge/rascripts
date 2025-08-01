@@ -59,7 +59,7 @@ function screen_shake() => byte(0x00C8EF)
 
 // $C919: [8-bit] Current interaction. Unique per screen
 //        0x00 = Not interacting
-//        0x01 = Pizza behind counter
+//        0x01 = Pizza behind counter, talk to roommate
 //        0x02 = Library behind counter
 //        0x04 = Roommate pizza
 //        0x05 = Roommate phone
@@ -233,22 +233,23 @@ achievement(
         && brewed_coffee() == 0x01
 )
 
-roommate_interactions = [ 4, 5, 9 ]
+roommate_ids = [ 1, 4, 5, 9 ]
+roommate_interactions = array_map(roommate_ids,
+    interaction => once(current_interaction() == interaction && prev(current_interaction() == 0))
+)
+array_push(roommate_interactions, x_tile() == 0x0C && y_tile() == 0x04 && prev(y_tile() == 0x05))
 
 achievement(
     title = "Roommate from Hell",
     description = "Bother your roommate as much as possible.",
     points = 3,
     trigger =
-        all_of(roommate_interactions,
-            interaction => once(current_interaction() == interaction && prev(current_interaction() == 0))
-        )
-        && x_tile() == 0x0C && y_tile() == 0x04 && prev(y_tile() == 0x05)
+        tally(length(roommate_interactions), roommate_interactions)
         && never(current_screen() != 8)
 )
 
 achievement(
-    title = "Now, Who Fed You That?"
+    title = "Now, Who Fed You That?",
     description = "Clean up after Lulu gets sick.",
     points = 3,
     trigger =
@@ -259,12 +260,32 @@ achievement(
 achievement(
     title = "Social Caterpillar",
     description = "Strike up a conversation with everyone on the street.",
+    points = 2,
     trigger = 
         tally_of([7,8,9], 3, interaction =>
             once(current_interaction() == interaction && prev(current_interaction() == 0))
         ) && never(current_screen() != 5)
 )
 
+achievement(
+    title = "Noisemaker",
+    description = "Honk all the car horns on the street.",
+    points = 2,
+    trigger =
+        any_of([0xd, 0xe],
+            l => any_of([0x10, 0x11],
+                m => any_of([0x15, 0x16],
+                    r => (
+                        tally(3,
+                            once(current_interaction() == l && __ornext(prev(current_interaction()) == 0 || prev(current_interaction()) == 0xf)),
+                            once(current_interaction() == m && __ornext(prev(current_interaction()) == 0 || prev(current_interaction()) == 0xf)),
+                            once(current_interaction() == r && __ornext(prev(current_interaction()) == 0 || prev(current_interaction()) == 0xf))
+                        )
+                    )
+                )
+            )
+        ) && never(current_screen() != 5)
+)
 
 actor_1_tile() // 0xc0e2
 actor_2_tile() // 0xc110
