@@ -197,7 +197,14 @@ achievement(
         && current_screen() != 0x36
 )
 
-
+achievement(
+    title = "Me Too, Man",
+    description = "Commiserate with your pet fish.",
+    points = 1,
+    trigger = current_screen() == 0x29
+        && sprite_animation_info() == 0x00
+        && prev(sprite_animation_info()) == 0x05
+)
 
 achievement(
     title = "Back to Bed",
@@ -244,7 +251,7 @@ achievement(
     description = "Bother your roommate as much as possible.",
     points = 3,
     trigger =
-        tally(length(roommate_interactions), roommate_interactions)
+        measured(tally(length(roommate_interactions), roommate_interactions))
         && never(current_screen() != 8)
 )
 
@@ -262,9 +269,9 @@ achievement(
     description = "Strike up a conversation with everyone on the street.",
     points = 2,
     trigger = 
-        tally_of([7,8,9], 3, interaction =>
+        measured(tally_of([7,8,9], 3, interaction =>
             once(current_interaction() == interaction && prev(current_interaction() == 0))
-        ) && never(current_screen() != 5)
+        )) && never(current_screen() != 5)
 )
 
 achievement(
@@ -276,15 +283,41 @@ achievement(
             l => any_of([0x10, 0x11],
                 m => any_of([0x15, 0x16],
                     r => (
-                        tally(3,
+                        measured(tally(3,
                             once(current_interaction() == l && __ornext(prev(current_interaction()) == 0 || prev(current_interaction()) == 0xf)),
                             once(current_interaction() == m && __ornext(prev(current_interaction()) == 0 || prev(current_interaction()) == 0xf)),
                             once(current_interaction() == r && __ornext(prev(current_interaction()) == 0 || prev(current_interaction()) == 0xf))
-                        )
+                        ))
                     )
                 )
             )
         ) && never(current_screen() != 5)
+)
+
+achievement(
+    title = "Act Like You Belong",
+    description = "placeholder",
+    points = 3,
+    trigger =
+        tally_of([[0x2d, 1], [0x11, 2], [0x10, 1]], 3,
+            screen_interaction =>
+                once(current_screen() == screen_interaction[0]
+                    && current_interaction() == screen_interaction[1]
+                    && prev(current_interaction()) == 0
+                )
+        ) && never(current_screen() == 0)
+)
+
+achievement(
+    title = "Time to Get a Hat",
+    description = "
+    points = 1,
+    trigger = 
+        current_screen() == 0x34
+        && prev(current_screen() == 0x09)
+        && inventory_coffee_filters() == 1
+        && bought_coffee_filters() == 0,
+    type = "missable"
 )
 
 actor_1_tile() // 0xc0e2
