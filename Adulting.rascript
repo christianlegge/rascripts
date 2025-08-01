@@ -48,6 +48,8 @@ function sprite_animation_info() => byte(0x00C259)
 //        0x36 = Playing Zap Zap
 function current_screen() => byte(0x00C6AC)
 
+function roommate_left() => byte(0xcce8)
+
 // $C71D: [8-bit] Cuss timer
 //        0x00 = Not cussing
 //        Counts down from 0x0A when you press B
@@ -59,7 +61,7 @@ function screen_shake() => byte(0x00C8EF)
 
 // $C919: [8-bit] Current interaction. Unique per screen
 //        0x00 = Not interacting
-//        0x01 = Pizza behind counter, talk to roommate
+//        0x01 = Pizza behind counter, talk to roommate, call parents
 //        0x02 = Library behind counter
 //        0x04 = Roommate pizza
 //        0x05 = Roommate phone
@@ -160,6 +162,8 @@ function seen_lulu_vomit() => byte(0x00CCE3)
 //        0x01 = Yes
 function inventory_rug_cleaner() => byte(0x00CCE4)
 
+function bought_rug_cleaner() => byte(0xccdf)
+
 // $CCE5: [8-bit] Cleaned dog puke
 //        0x00 = No
 //        0x01 = Yes
@@ -189,8 +193,8 @@ achievement(
     trigger = prev(cuss_timer() == 0) && cuss_timer() == 0x0a
         && current_screen() != 0
         && current_screen() != 2
-        && current_screen() < 0x12
-        && current_screen() > 0x2C
+        && __ornext(current_screen() < 0x12
+        || current_screen() > 0x2C)
         && current_screen() != 0x2F
         && current_screen() != 0x31
         && current_screen() != 0x35
@@ -202,12 +206,12 @@ achievement(
     description = "Commiserate with your pet fish.",
     points = 1,
     trigger = current_screen() == 0x29
-        && sprite_animation_info() == 0x00
-        && prev(sprite_animation_info()) == 0x05
+        && trigger_when(sprite_animation_info() == 0x00
+        && prev(sprite_animation_info()) == 0x05)
 )
 
 achievement(
-    title = "Back to Bed",
+    title = "Five More Minutes",
     description = "Try to go back to bed.",
     points = 1,
     trigger = prev(current_interaction()) == 0x08
@@ -227,10 +231,32 @@ function todo_task_achievement(title, description, task_bitflag, screen) {
     )
 }
 
-todo_task_achievement("File Taxes", "File your tax return.", mailed_tax_return(), 5)
 todo_task_achievement("Caffeine Addict", "Buy coffee filters.", bought_coffee_filters(), 9)
-todo_task_achievement("Walk the Dog", "Take your dog for a walk.", took_dog_for_walk(), 6)
+todo_task_achievement("Walk the Dog", "Take your dog for a walk.", took_dog_for_walk(), 4)
 todo_task_achievement("With Interest", "Return your overdue library book.", returned_library_book(), 0x11)
+
+achievement(
+    title = "File Taxes",
+    description = "File your tax return.",
+    points = 1,
+    trigger = prev(mailed_tax_return()) == 0
+        && mailed_tax_return() == 1
+        && __ornext(current_screen() == 5 || current_screen() == 0x10),
+    type = "progression"
+)
+
+achievement(
+    title = "Adulting FTW",
+    description = "Accomplish (almost) everything on your to-do list.",
+    points = 3,
+    trigger =
+        current_screen() == 0x1e && prev(current_screen()) != 0x1e
+        && bought_coffee_filters() == 1
+        && mailed_tax_return() == 1
+        && took_dog_for_walk() == 1
+        && returned_library_book() == 1,
+    type = "win_condition"
+)
 
 achievement(
     title = "Out of Spoons",
@@ -252,7 +278,9 @@ achievement(
     points = 3,
     trigger =
         measured(tally(length(roommate_interactions), roommate_interactions))
-        && never(current_screen() != 8)
+        && never(roommate_left() == 1)
+        && never(current_screen() != 8),
+    type = "missable"
 )
 
 achievement(
@@ -270,12 +298,12 @@ achievement(
     points = 2,
     trigger = 
         measured(tally_of([7,8,9], 3, interaction =>
-            once(current_interaction() == interaction && prev(current_interaction() == 0))
+            once(current_interaction() == interaction && __ornext(prev(current_interaction() == 0) || prev(current_interaction() == 0xf)))
         )) && never(current_screen() != 5)
 )
 
 achievement(
-    title = "Noisemaker",
+    title = "Public Disturbance",
     description = "Honk all the car horns on the street.",
     points = 2,
     trigger =
@@ -299,24 +327,61 @@ achievement(
     description = "placeholder",
     points = 3,
     trigger =
-        tally_of([[0x2d, 1], [0x11, 2], [0x10, 1]], 3,
-            screen_interaction =>
-                once(current_screen() == screen_interaction[0]
-                    && current_interaction() == screen_interaction[1]
-                    && prev(current_interaction()) == 0
-                )
-        ) && never(current_screen() == 0)
+        measured(tally(3,
+            once(current_screen() == 0x2d
+                && current_interaction() == 1
+                && prev(current_interaction()) == 0),
+            once(current_screen() == 0x11
+                && current_interaction() == 2
+                && prev(current_interaction()) == 0),
+            once(current_screen() == 0x10
+                && x_tile() != 0x08
+                && y_tile() == 0x08
+                && prev(y_tile()) == 0x09)
+        )) && never(current_screen() == 0)
 )
 
 achievement(
-    title = "Time to Get a Hat",
-    description = "
+    title = "Here Comes the Pizza",
+    description = "placeholder",
     points = 1,
+    trigger =
+        bought_pizza() == 1
+        && prev(bought_pizza()) == 0
+        && current_screen() == 0x2d
+)
+
+achievement(
+    title = "placeholder",
+    description = "Contemplate buying a latte.",
+    points = 1,
+    trigger =
+        current_screen() == 0x35
+        && prev(current_screen()) == 0x05
+        && current_interaction() == 0,
+    type = "missable"
+)
+
+achievement(
+    title = "Crime Doesn't Pay",
+    description = "Get caught shoplifting and face the consequences.",
+    points = 3,
     trigger = 
         current_screen() == 0x34
         && prev(current_screen() == 0x09)
-        && inventory_coffee_filters() == 1
-        && bought_coffee_filters() == 0,
+        && ((inventory_coffee_filters() == 1
+        && bought_coffee_filters() == 0) || (inventory_rug_cleaner() == 1 && bought_rug_cleaner() == 0)),
+    type = "missable"
+)
+
+achievement(
+    title = "It Just So Happens...",
+    description = "Try to e-file your tax return with stamps in your inventory.",
+    points = 2,
+    trigger =
+        current_screen() == 0x1C
+        && prev(current_screen()) == 0x1B
+        && inventory_stamps() == 1,
     type = "missable"
 )
 
@@ -330,7 +395,7 @@ function actor_tile(index) {
     return byte(target_addr)
 }
 
-function ships_destroyed(count) {
+function aliens_destroyed(count) {
     return measured(
         tally_of(range(0, 14), count, index => screen_shake() == 0 && actor_tile(index) == 0x0a && prev(actor_tile(index)) == 0x06)
     )
@@ -338,69 +403,70 @@ function ships_destroyed(count) {
 
 achievement(
     title = "Master Procrastinator",
-    description = "Destroy 5 ships in Zap Zap.",
-    points = 3,
+    description = "Win a game of Zap Zap after destroying at least 5 aliens.",
+    points = 5,
     trigger =
-        ships_destroyed(5)
-        && never(current_screen() != 0x36)
+        aliens_destroyed(5)
+        && never(current_screen() != 0x36 && current_screen() != 0x30)
+        && trigger_when(prev(current_screen() == 0x36) && current_screen() == 0x30)
 )
 
 // Leaderboards
 
 leaderboard(
     title = "Zap Zap High Score",
-    description = "Destroy the most ships in Zap Zap.",
+    description = "Destroy the most aliens in Zap Zap.",
     start = current_screen() == 0x36 && prev(current_screen() == 0x2F),
-    cancel = current_screen() != 0x36 && current_screen() != 0x31,
-    submit = current_screen() == 0x31 && prev(current_screen() == 0x36),
-    value = ships_destroyed(0),
+    cancel = current_screen() != 0x36 && current_screen() != 0x31 && current_screen() != 0x30,
+    submit = __ornext(current_screen() == 0x31 || current_screen() == 0x30) && prev(current_screen() == 0x36),
+    value = aliens_destroyed(0),
     format = "VALUE"
 )
 
 // Rich Presence
 
 screen_names = {
-    0x00: "Boot",
-    0x01: "Dog park",
-    0x02: "Credits",
-    0x03: "To-do list",
-    0x04: "Dog park",
-    0x05: "Street",
-    0x06: "Bedroom",
-    0x07: "Kitchen",
-    0x08: "Living room",
-    0x09: "Grocery store",
-    0x0A: "Grocery store",
-    0x0B: "Grocery store",
-    0x0C: "Grocery store",
-    0x0D: "Grocery store",
-    0x0E: "Grocery store",
-    0x0F: "Grocery store",
-    0x10: "Post office",
-    0x11: "Library",
-    0x12: "Title screen",
-    0x13: "Title screen",
-    0x14: "Title screen",
-    0x15: "Title screen",
-    0x16: "Opening cutscene",
-    0x17: "Opening cutscene",
-    0x18: "Opening cutscene",
-    0x19: "Opening cutscene",
-    0x1A: "Trying to e-file",
-    0x1B: "Trying to e-file",
-    0x1C: "Good thing you bought stamps",
-    0x1D: "Trying to call parents",
-    0x1E: "End cutscene",
-    0x28: "Credits",
-    0x29: "Fish tank",
-    0x2A: "Inventory",
-    0x2B: "To-do list",
-    0x2C: "Inventory and bank (unused?)",
-    0x2D: "Pizza shop",
-    0x2F: "Zap Zap title",
-    0x31: "Zap Zap game over",
-    0x35: "Getting latte",
-    0x36: "Playing Zap Zap"
+    0x00: "in the Boot",
+    0x01: "in the dog park",
+    0x02: "in the credits",
+    0x03: "on the pause screen",
+    0x04: "in the dog park",
+    0x05: "in the street",
+    0x06: "in the bedroom (not like that)",
+    0x07: "in the kitchen",
+    0x08: "in the living room",
+    0x09: "in the grocery store",
+    0x0A: "in the grocery store",
+    0x0B: "in the grocery store",
+    0x0C: "in the grocery store",
+    0x0D: "in the grocery store",
+    0x0E: "in the grocery store",
+    0x0F: "in the grocery store",
+    0x10: "in the post office",
+    0x11: "in the library",
+    0x12: "on the title screen",
+    0x13: "on the title screen",
+    0x14: "on the title screen",
+    0x15: "on the title screen",
+    0x16: "in the opening cutscene",
+    0x17: "in the opening cutscene",
+    0x18: "in the opening cutscene",
+    0x19: "in the opening cutscene",
+    0x1A: "on the computer",
+    0x1B: "on the computer",
+    0x1C: "on the computer",
+    0x1D: "in the bedroom (not like that)",
+    0x1E: "in the end cutscene",
+    0x28: "in the credits",
+    0x29: "in the fish tank",
+    0x2A: "in the inventory",
+    0x2B: "on the to-do list",
+    0x2C: "in the inventory and bank (unused?)",
+    0x2D: "in the pizza shop",
+    0x2F: "while playing Zap Zap",
+    0x31: "while playing Zap Zap",
+    0x35: "in the coffee shop",
+    0x36: "while playing Zap Zap"
 }
 
 checkmark = {
@@ -408,7 +474,7 @@ checkmark = {
     0x01: "✓"
 }
 
-rp_screen = rich_presence_lookup("Screen", current_screen(), screen_names, "In game")
+rp_screen = rich_presence_lookup("Screen", current_screen(), screen_names, "and doing a great job")
 
 rp_file_taxes = rich_presence_lookup("Checked", mailed_tax_return(), checkmark)
 rp_returned_book = rich_presence_lookup("Checked", returned_library_book(), checkmark)
@@ -417,5 +483,5 @@ rp_walked_dog = rich_presence_lookup("Checked", took_dog_for_walk(), checkmark)
 
 rp_tasks = rich_presence_macro("Number", tasks_completed())
 
-rich_presence_conditional_display(current_screen() == 0 || (current_screen() >= 0x12 && current_screen() <= 0x15), "On the title screen")
-rich_presence_display("Current screen: {0} [{1}File Taxes] [{2}Coffee Filters] [{3}Walk Dog] [✗Call Parents] [{4}Return Book]", rp_screen, rp_file_taxes, rp_coffee_filters, rp_walked_dog, rp_returned_book)
+rich_presence_conditional_display(current_screen() == 0 || (current_screen() >= 0x12 && current_screen() <= 0x15), "Adulting on the title screen")
+rich_presence_display("Adulting {0} [{1}File Taxes] [{2}Coffee Filters] [{3}Walk Dog] [✗Call Parents] [{4}Return Book]", rp_screen, rp_file_taxes, rp_coffee_filters, rp_walked_dog, rp_returned_book)
