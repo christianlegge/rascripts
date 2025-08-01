@@ -50,6 +50,8 @@ function current_screen() => byte(0x00C6AC)
 
 function roommate_left() => byte(0xcce8)
 
+function dialogue_selection() => byte(0xcc06)
+
 // $C71D: [8-bit] Cuss timer
 //        0x00 = Not cussing
 //        Counts down from 0x0A when you press B
@@ -232,11 +234,11 @@ function todo_task_achievement(title, description, task_bitflag, screen) {
 }
 
 todo_task_achievement("Caffeine Addict", "Buy coffee filters.", bought_coffee_filters(), 9)
-todo_task_achievement("Walk the Dog", "Take your dog for a walk.", took_dog_for_walk(), 4)
+todo_task_achievement("Daily Duty", "Take your dog for a walk.", took_dog_for_walk(), 4)
 todo_task_achievement("With Interest", "Return your overdue library book.", returned_library_book(), 0x11)
 
 achievement(
-    title = "File Taxes",
+    title = "The Most Wonderful Time of the Year",
     description = "File your tax return.",
     points = 1,
     trigger = prev(mailed_tax_return()) == 0
@@ -259,11 +261,12 @@ achievement(
 )
 
 achievement(
-    title = "Out of Spoons",
+    title = "It's the Thought that Counts",
     description = "Call your parents... well, maybe tomorrow.",
     points = 2,
-    trigger = prev(current_screen()) == 0x1D && current_screen() == 0x1E
+    trigger = prev(current_interaction()) == 1 && current_interaction() == 0
         && brewed_coffee() == 0x01
+        && dialogue_selection() == 0
 )
 
 roommate_ids = [ 1, 4, 5, 9 ]
@@ -324,7 +327,7 @@ achievement(
 
 achievement(
     title = "Act Like You Belong",
-    description = "placeholder",
+    description = "Try to skip the line at three different establishments.",
     points = 3,
     trigger =
         measured(tally(3,
@@ -343,7 +346,7 @@ achievement(
 
 achievement(
     title = "Here Comes the Pizza",
-    description = "placeholder",
+    description = "Take a break to grab a bite to eat.",
     points = 1,
     trigger =
         bought_pizza() == 1
@@ -352,7 +355,7 @@ achievement(
 )
 
 achievement(
-    title = "placeholder",
+    title = "Breaking the Habit",
     description = "Contemplate buying a latte.",
     points = 1,
     trigger =
