@@ -267,6 +267,7 @@ achievement(
     trigger = prev(current_interaction()) == 1 && current_interaction() == 0
         && brewed_coffee() == 0x01
         && dialogue_selection() == 0
+        && current_screen() == 6
 )
 
 roommate_ids = [ 1, 4, 5, 9 ]
