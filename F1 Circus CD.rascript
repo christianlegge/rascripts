@@ -185,10 +185,14 @@ tracks = [
 // Achievements
 
 function exhibition_achievement(title, car, car_id) {
+    points = 2
+    if (car == "Cigar") {
+        points = 10
+    }
     achievement(
         title = title,
         description = "Win a race in Exhibition mode with the " + car + " type car.",
-        points = 1,
+        points = points,
         trigger = 
             !demo() && exhibition() &&
             position() == 0x01 && // 1st place
@@ -201,7 +205,7 @@ function exhibition_achievement(title, car, car_id) {
 achievement(
     title = "Grand Day Out",
     description = "Win a race in Exhibition mode.",
-    points = 1,
+    points = 3,
     trigger = 
         !demo() && exhibition() &&
         position() == 0x01 && // 1st place
@@ -227,7 +231,7 @@ achievement("Land Speed Record",
 
 achievement("Mr. Saturday",
     description = "Secure pole position in a Formula-Mega or World Championship qualifying round.",
-    points = 1,
+    points = 2,
     trigger =
         __ornext(game_mode() == 0x03 || game_mode() == 0x04) && // F-Mega
         f_mega_world_championship_race_type() == 0x02 &&
@@ -236,7 +240,7 @@ achievement("Mr. Saturday",
 
 achievement("Mega Alpha",
     description = "Win a Formula-Mega championship.",
-    points = 5,
+    points = 10,
     trigger =
         game_mode() == 0x03 && // F-Mega
         player_championship_ranking() == 1 &&
@@ -247,7 +251,7 @@ achievement("Mega Alpha",
 
 achievement("Underdog Story",
     description = "Win a Formula-Mega championship after winning all 6 races with the cheapest car and mechanic.",
-    points = 10,
+    points = 25,
     trigger =
         game_mode() == 0x03 && // F-Mega
         f_mega_mechanic() == 0x01 && // Friendship Mechanic
