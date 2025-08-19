@@ -186,7 +186,7 @@ tracks = [
 
 function exhibition_achievement(title, car, car_id) {
     points = 2
-    if (car == "Cigar") {
+    if (car == "Cigar" || car == "Wedge") {
         points = 10
     }
     achievement(
