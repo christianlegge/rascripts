@@ -235,11 +235,11 @@ function score() => byte(0x00086C)
 function lives_remaining() => byte(0x00086E)
 
 function lv_ach(preriv, curr, class, class_idx_pre) {
-return class_level() == class && prev(river()) == preriv && river() == curr && prev(level_idx()) == class_idx_pre && level_idx() == class_idx_pre + 4 && code_block() != 7
+    return class_level() == class && prev(river()) == preriv && river() == curr && prev(level_idx()) == class_idx_pre && level_idx() == class_idx_pre + 4 && code_block() != 7
 }
 
-function class_end_lv() {
-return always_false()
+function class_end_lv(preriv, preclass, class_idx_pre) {
+    return prev(class_level()) == preclass && class_level() == preclass + 1 && (river()) == preriv && (level_idx()) == class_idx_pre && code_block() != 7
 }
 
 achievement(
@@ -266,7 +266,7 @@ achievement(
     title = "Splashtastic Jurassic", points = 1,
     description = "TOOB down Jurassic",
     id = 86356, badge = "94412", published = "10/21/2019 9:57:43 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = class_end_lv()
+    trigger = class_end_lv(9, 0, 12)
 )
 
 achievement(
@@ -354,10 +354,19 @@ achievement(
 
 achievement(
     title = "White Wizard Rapids", points = 2,
-    description = "TOOB down Black Forrest",
+    description = "TOOB down Black Forest",
     id = 86367, badge = "94432", published = "10/21/2019 9:59:30 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 2) && once(music() == 0) && level_screens() == 22 && never(class_level() != 2) &&
               never(level_screens() == 19) && never(code_block() == 7)
+)
+
+achievement(
+    title = "...Mars? ...k", points = 2,
+    description = "TOOB down Canals of Mars",
+    id = 86370, badge = "94433", published = "10/21/2019 9:59:43 PM", modified = "10/24/2019 1:14:01 AM",
+    trigger = once(class_level() == 2) && once(level_screens() == 22) && once(music() == 3) &&
+              once(level_screens() == 15) && never(class_level() != 2) && never(level_screens() == 19) &&
+              never(level_screens() == 0) && never(code_block() == 7)
 )
 
 achievement(
@@ -373,15 +382,6 @@ achievement(
     description = "Reach Class 4",
     id = 86369, badge = "94416", published = "10/21/2019 9:59:40 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 2) && once(class_level() == 3) && never(level_screens() == 19) &&
-              never(level_screens() == 0) && never(code_block() == 7)
-)
-
-achievement(
-    title = "...Mars? ...k", points = 2,
-    description = "TOOB down Canals of Mars",
-    id = 86370, badge = "94433", published = "10/21/2019 9:59:43 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 2) && once(level_screens() == 22) && once(music() == 3) &&
-              once(level_screens() == 15) && never(class_level() != 2) && never(level_screens() == 19) &&
               never(level_screens() == 0) && never(code_block() == 7)
 )
 
@@ -577,7 +577,7 @@ achievement(
 
 achievement(
     title = "3-o-Grande", points = 4,
-    description = "TOOB down Rio Grande",
+    description = "TOOB down Rio Grande III",
     id = 86393, badge = "94456", published = "10/21/2019 10:01:06 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 6) && once(level_screens() == 39) && once(music() == 4) &&
               once(level_screens() == 22) && never(class_level() != 6) && never(level_screens() == 19) &&
