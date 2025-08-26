@@ -4,7 +4,7 @@
 // $0007: Pause On/Off
 //        0b = Pause
 //        0d = Play
-function pause_on_off() => byte(0x000007)
+function pause() => byte(0x000007)
 
 function patches() => byte(0x6e)
 
@@ -851,3 +851,11 @@ for riv in level_data {
         lv_lastclass_lb(riv, level_data[riv][0], level_data[riv][1], level_data[riv][2])
     }
 }
+
+leaderboard(title = "?", description = "Warp",
+    start = code_block() == 7 && prev(code_block()) != 7 && pause() == 0x0b,
+    cancel = always_false(),
+    submit = always_true(),
+    value = score(),
+    format = "SCORE"
+)
