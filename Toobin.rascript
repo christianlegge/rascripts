@@ -751,54 +751,62 @@ achievement(
 // Leaderboards
 
 level_data = {
-    "Colorado": [0, 0],
-    "Okefenokee": [3, 0],
-    "Rio Grande": [0xa, 0],
-    "Jurassic": [9, 0],
-    "Yukon": [5, 1],
-    "Nile": [8, 1],
-    "Cuprum": [6, 1],
-    "Mississippi": [0xe, 1],
-    "Nightmare": [0xd, 1],
-    "Brontosauri": [0x12, 2],
-    "Rio del Oro": [0x10, 2],
-    "Black Forest": [0x0b, 2],
-    "Canals of Mars": [0x0c, 2],
-    "Styx": [0x07, 2],
-    "Nevada": [0x0f, 3],
-    "Amazon": [1, 3],
-    "Argentum": [2, 3],
-    "American": [4, 3],
-    "Beach Party": [0x18, 3],
-    "Yukon II": [5, 4],
-    "Cuprum II": [6, 4],
-    "Okefenokee II": [3, 4],
-    "Styx II": [7, 4],
-    "Nile II": [8, 4],
-    "Brontosauri II": [0x12, 5],
-    "Rio Grande II": [0x0a, 5],
-    "Black Forest II": [0x0b, 5],
-    "Canals of Mars II": [0xc, 5],
-    "Nightmare II": [0xd, 5],
-    "Snake": [0x17, 6],
-    "Amazon II": [1, 6],
-    "Argentum II": [2, 6],
-    "Okefenokee III": [3, 6],
-    "Rio Grande III": [0xa, 6],
-    "Canals of Mars III": [0xc, 6],
-    "Nightmare III": [0xd, 6],
-    "Yukon III": [5, 7],
-    "Argentum III": [2, 7],
-    "Mississippi II": [0xe, 7],
-    "Styx III": [7, 7],
-    "Nile III": [8, 7],
-    "Rio Grande IV": [0xa, 8],
-    "Yukon IV": [5, 8],
-    "Brontosauri III": [0x12, 8],
-    "Black Forest III": [0xb, 8],
-    "Canals of Mars IV": [0xc, 8],
-    "American II": [4, 8],
-    "Beach Party II": [0x18, 8]
+    "Colorado": [0, 0, 3, 0],
+    "Okefenokee": [3, 0, 0xa, 4],
+    "Rio Grande": [0xa, 0, 9, 8],
+    "Jurassic": [9, 0, 12],
+
+    "Yukon": [5, 1, 8, 0],
+    "Nile": [8, 1, 6, 4],
+    "Cuprum": [6, 1, 0xe, 8],
+    "Mississippi": [0xe, 1, 0xd, 12],
+    "Nightmare": [0xd, 1, 16],
+
+    "Brontosauri": [0x12, 2, 0x10, 0],
+    "Rio del Oro": [0x10, 2, 0x0b, 4],
+    "Black Forest": [0x0b, 2, 0x0c, 8],
+    "Canals of Mars": [0x0c, 2, 0x07, 12],
+    "Styx": [0x07, 2, 16],
+
+    "Nevada": [0x0f, 3, 1, 0],
+    "Amazon": [1, 3, 2, 4],
+    "Argentum": [2, 3, 4, 8],
+    "American": [4, 3, 0x18, 12],
+    "Beach Party": [0x18, 3, 16],
+
+    "Yukon II": [5, 4, 6, 0],
+    "Cuprum II": [6, 4, 3, 4],
+    "Okefenokee II": [3, 4, 7, 8],
+    "Styx II": [7, 4, 8, 12],
+    "Nile II": [8, 4, 16],
+
+    "Brontosauri II": [0x12, 5, 0x0a, 0],
+    "Rio Grande II": [0x0a, 5, 0xb, 4],
+    "Black Forest II": [0x0b, 5, 0xc, 8],
+    "Canals of Mars II": [0xc, 5, 0xd, 12],
+    "Nightmare II": [0xd, 5, 16],
+
+    "Snake": [0x17, 6, 1, 0],
+    "Amazon II": [1, 6, 2, 4],
+    "Argentum II": [2, 6, 3, 8],
+    "Okefenokee III": [3, 6, 0xa, 12],
+    "Rio Grande III": [0xa, 6, 0xc, 16],
+    "Canals of Mars III": [0xc, 6, 0xd, 20],
+    "Nightmare III": [0xd, 6, 24],
+
+    "Yukon III": [5, 7, 2, 0],
+    "Argentum III": [2, 7, 0xe, 4],
+    "Mississippi II": [0xe, 7, 7, 8],
+    "Styx III": [7, 7, 8, 12],
+    "Nile III": [8, 7, 16],
+
+    "Rio Grande IV": [0xa, 8, 5, 0],
+    "Yukon IV": [5, 8, 0x12, 4],
+    "Brontosauri III": [0x12, 8, 0xb, 8],
+    "Black Forest III": [0xb, 8, 0xc, 12],
+    "Canals of Mars IV": [0xc, 8, 4, 16],
+    "American II": [4, 8, 0x18, 20],
+    "Beach Party II": [0x18, 8, 24]
 }
 
 leaderboard(title = "Beat the Game High Score", description = "Beat the game with the highest score",
@@ -809,15 +817,26 @@ leaderboard(title = "Beat the Game High Score", description = "Beat the game wit
     format = "SCORE"
 )
 
-function lv_speed_lb(rivname, rivid, class) {
+function lv_speed_lb(rivname, rivid, class, nextriv, classidxpre) {
     extra = always_true()
     if rivname == "Colorado" {
         extra = level_screens() == 0x20
     }
-    leaderboard(title = format("{0} Speedtoob", rivname), description = format("Enter a whirlpool in {0} as fast as possible", rivname),
+    leaderboard(title = format("{0} Speedtoob", rivname), description = format("Toob down {0} as fast as possible", rivname),
         start = class_level() == class && river() == rivid && prev(level_screens() == 0x11) && level_screens() != 0x11 && level_screens() != 0x13 && extra,
-        cancel = __ornext(patches() < prev(patches()) || patches() == 0xff || class_level() != class || river() != rivid || code_block() == 7 || level_screens() == 0x13),
-        submit = class_level() == class && river() == rivid && portal_hit_at_01() == 1 && prev(portal_hit_at_01()) != 1 && code_block() != 7 && patches() == prev(patches()),
+        cancel = __ornext(patches() < prev(patches()) || patches() == 0xff || class_level() != class || prev(river()) != rivid || code_block() == 7 || level_screens() == 0x13),
+        submit = lv_ach(rivid, nextriv, class, classidxpre),
+        value = always_true(),
+        format = "FRAMES",
+        lower_is_better = true
+    )
+}
+
+function lv_lastclass_lb(rivname, rivid, prevclass, previdx) {
+    leaderboard(title = format("{0} Speedtoob", rivname), description = format("Toob down {0} as fast as possible", rivname),
+        start = class_level() == prevclass && river() == rivid && prev(level_screens() == 0x11) && level_screens() != 0x11 && level_screens() != 0x13,
+        cancel = __ornext(patches() < prev(patches()) || patches() == 0xff || river() != rivid || code_block() == 7 || level_screens() == 0x13),
+        submit = class_end_lv(rivid, prevclass, previdx),
         value = always_true(),
         format = "FRAMES",
         lower_is_better = true
@@ -825,5 +844,10 @@ function lv_speed_lb(rivname, rivid, class) {
 }
 
 for riv in level_data {
-    lv_speed_lb(riv, level_data[riv][0], level_data[riv][1])
+    if (length(level_data[riv]) == 4) {
+        lv_speed_lb(riv, level_data[riv][0], level_data[riv][1], level_data[riv][2], level_data[riv][3])
+    }
+    else if (length(level_data[riv]) == 3) {
+        lv_lastclass_lb(riv, level_data[riv][0], level_data[riv][1], level_data[riv][2])
+    }
 }
