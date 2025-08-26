@@ -677,7 +677,7 @@ achievement(
 // )
 
 achievement(
-    title = "Yukon Do It (I'm So Sorry)", points = 5, type="progression",
+    title = "Yukon Do It (I'm so Sorry)", points = 5, type="progression",
     description = "Toob down Yukon III",
     id = 86397, badge = "94460", published = "10/21/2019 10:01:21 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(5, 2, 7, 0)
@@ -892,7 +892,7 @@ achievement(
 )
 
 achievement(
-    title = "Pick Up That Can",
+    title = "Pick up That Can",
     description = "Pick up a six-pack for \"unlimited\" cans",
     points = 1,
     trigger = level_screens() != 0x11 && level_screens() != 0x13 && class_level() <= 8 &&
@@ -910,7 +910,7 @@ achievement(
 )
 
 achievement(
-    title = "Crank Up the Tunes, Broseph",
+    title = "Crank up the Tunes, Broseph",
     description = "Hit the boombox in Beach Party to change the music",
     points = 3,
     trigger = music() == 0x0d && prev(music()) == 0x0c && code_block() != 7 &&
