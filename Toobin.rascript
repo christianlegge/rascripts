@@ -215,24 +215,14 @@ function music_high_keys_1() => byte(0x00058C)
 function music_high_keys_2() => byte(0x00058D)
 
 // $0869: Score
-//        10's
-function score() => byte(0x000869)
-
-// $086A: Score
-//        100's and 1000's
-//        {i.e. 35 = 3500}
-function score() => byte(0x00086A)
-
-// $086B: Score
-//        10,000's and 100,000's
-function score() => byte(0x00086B)
-
-// $086C: Score
-//        10,000,000's and 1,000,000's
-function score() => byte(0x00086C)
+//        32 bit bcd
+function score() => bcd(dword(0x000869))
 
 // $086E: Lives Remaining
 function lives_remaining() => byte(0x00086E)
+
+function beat_game() => portal_hit_at_01() == 1 && prev(portal_hit_at_01()) != 1 && class_level() == 8 &&
+                level_idx() == 24 && river() == 0x18 && code_block() != 7
 
 function lv_ach(preriv, curr, class, class_idx_pre) {
     return class_level() == class && prev(river()) == preriv && river() == curr && prev(level_idx()) == class_idx_pre && level_idx() == class_idx_pre + 4 && code_block() != 7
@@ -656,8 +646,7 @@ achievement(
     title = "Rock Out with Your Toob Sock Out", points = 25, type="win_condition",
     description = "Turn on the tunes to claim your trophy",
     id = 86410, badge = "94477", published = "10/21/2019 10:02:17 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = portal_hit_at_01() == 1 && prev(portal_hit_at_01()) != 1 && class_level() == 8 &&
-                level_idx() == 24 && river() == 0x18 && code_block() != 7
+    trigger = beat_game()
 )
 
 achievement(
@@ -756,3 +745,67 @@ achievement(
               disable_when(code_block() == 7) &&
               (always_false() || (never(level_screens() == 19)))
 )
+
+// Leaderboards
+
+level_data = {
+    "Colorado": [0, 3, 0, 0],
+    "Okefenokee": [3, 0xa, 0, 4],
+    "Rio Grande": [0xa, 9, 0, 8],
+    "Jurassic": [9, 0, 12],
+    "Yukon": [5, 8, 1, 0],
+    "Nile": [8, 6, 1, 4],
+    "Cuprum": [6, 0xe, 1, 8],
+    "Mississippi": [0xe, 0xd, 1, 12],
+    "Nightmare": [0xd, 1, 16],
+    "Brontosauri": [0x12, 0x10, 2, 0],
+    "Rio del Oro": [0x10, 0x0b, 2, 4],
+    "Black Forest": [0x0b, 0x0c, 2, 8],
+    "Canals of Mars": [0x0c, 0x07, 2, 12],
+    "Styx": [0x07, 2, 16],
+    "Nevada": [0x0f, 1, 3, 0],
+    "Amazon": [1, 2, 3, 4],
+    "Argentum": [2, 4, 3, 8],
+    "American": [4, 0x18, 3, 12],
+    "Beach Party": [0x18, 3, 16],
+    "Yukon II": [5, 6, 4, 0],
+    "Cuprum II": [6, 3, 4, 4],
+    "Okefenokee II": [3, 7, 4, 8],
+    "Styx II": [7, 8, 4, 12],
+    "Nile II": [8, 4, 16],
+    "Brontosauri II": [0x12, 0x0a, 5, 0],
+    "Rio Grande II": [0x0a, 0x0b, 5, 4],
+    "Black Forest II": [0x0b, 0x0c, 5, 8],
+    "Canals of Mars II": [0xc, 0x0d, 5, 12],
+    "Nightmare II": [0xd, 5, 16],
+    "Snake": [0x17, 1, 6, 0],
+    "Amazon II": [1, 2, 6, 4],
+    "Argentum II": [2, 3, 6, 8],
+    "Okefenokee III": [3, 0xa, 6, 12],
+    "Rio Grande III": [0xa, 0xc, 6, 16],
+    "Canals of Mars III": [0xc, 0xd, 6, 16],
+    "Nightmare III": [0xd, 6, 20],
+    "Yukon III": [5, 2, 7, 0],
+    "Argentum III": [2, 0xe, 7, 4],
+    "Mississippi II": [0xe, 7, 7, 8],
+    "Styx III": [7, 8, 7, 12],
+    "Nile III": [8, 7, 16],
+    "Rio Grande IV": [0xa, 5, 8, 0],
+    "Yukon IV": [5, 0x12, 8, 4],
+    "Brontosauri III": [0x12, 0x0b, 8, 8],
+    "Black Forest III": [0xb, 0xc, 8, 12],
+    "Canals of Mars IV": [0xc, 4, 8, 16],
+    "American II": [4, 0x18, 8, 20]
+}
+
+leaderboard(title = "Beat the Game High Score", description = "Beat the game with the highest score",
+start = beat_game(),
+cancel = always_false(),
+submit = always_true(),
+value = score(),
+format = "SCORE"
+)
+
+function lv_speed_lb(rivname, river, class) {
+
+}
