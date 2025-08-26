@@ -6,6 +6,8 @@
 //        0d = Play
 function pause_on_off() => byte(0x000007)
 
+function patches() => byte(0x6e)
+
 // $0013: X axis
 function x_axis() => byte(0x000013)
 
@@ -808,10 +810,14 @@ leaderboard(title = "Beat the Game High Score", description = "Beat the game wit
 )
 
 function lv_speed_lb(rivname, rivid, class) {
+    extra = always_true()
+    if rivname == "Colorado" {
+        extra = level_screens() == 0x20
+    }
     leaderboard(title = format("{0} Speedtoob", rivname), description = format("Enter a whirlpool in {0} as fast as possible", rivname),
-        start = class_level() == class && river() == rivid && prev(level_screens() == 0x11) && level_screens() != 0x11,
-        cancel = __ornext(class_level() != class || river() != rivid || code_block() == 7),
-        submit = class_level() == class && river() == rivid && portal_hit_at_01() == 1 && prev(portal_hit_at_01()) != 1 && code_block() != 7,
+        start = class_level() == class && river() == rivid && prev(level_screens() == 0x11) && level_screens() != 0x11 && level_screens() != 0x13 && extra,
+        cancel = __ornext(patches() < prev(patches()) || patches() == 0xff || class_level() != class || river() != rivid || code_block() == 7 || level_screens() == 0x13),
+        submit = class_level() == class && river() == rivid && portal_hit_at_01() == 1 && prev(portal_hit_at_01()) != 1 && code_block() != 7 && patches() == prev(patches()),
         value = always_true(),
         format = "FRAMES",
         lower_is_better = true
