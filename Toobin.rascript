@@ -6,6 +6,8 @@
 //        0d = Play
 function pause() => byte(0x000007)
 
+function letters() => bitcount(0x6d)
+
 function patches() => byte(0x6e)
 
 // $0013: X axis
@@ -218,7 +220,7 @@ function music_high_keys_2() => byte(0x00058D)
 
 // $0869: Score
 //        32 bit bcd
-function score() => bcd(dword(0x000869))
+function score() => bcd(dword(0x00069))
 
 // $086E: Lives Remaining
 function lives_remaining() => byte(0x0006E)
@@ -258,6 +260,8 @@ valid_prev_classes = {
  9:   [8]
 }
 
+function start_game() => class_level() == 0 && river() == 0 && prev(level_screens() == 0x11) && level_screens() == 0x20
+
 function deflateless(class) {
     class_idx = class - 1
     levels = class_levels[class]
@@ -270,7 +274,7 @@ function deflateless(class) {
                 river() == final_level && level_idx() == final_level_idx
 
     if (class == 1) {
-        checkpoint = class_level() == 0 && river() == 0 && prev(level_screens() == 0x11) && level_screens() == 0x20
+        checkpoint = start_game()
     }
     if (class == 9) {
         trig = beat_game()
@@ -771,13 +775,45 @@ achievement(
 
 achievement(
     title = "Ultimate Toob Dude", points = 50,
-    description = "Reach Class 9 without using a warp",
+    description = "Beat the game without using a Warp Zone",
     id = 86421, badge = "94480", published = "10/21/2019 10:04:08 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 1) && once(class_level() == 2) && once(class_level() == 3) &&
-              once(class_level() == 4) && once(class_level() == 5) && once(class_level() == 6) &&
-              once(class_level() == 7) && once(class_level() == 8) && once(music() == 12) && once(level_screens() == 32) &&
-              disable_when(code_block() == 7) &&
-              (always_false() || (never(level_screens() == 19)))
+    trigger = once(start_game()) && trigger_when(beat_game()) &&
+                never(code_block() == 7) &&
+                never(river() == 0x13) &&
+                never(river() == 0x14) &&
+                never(river() == 0x15) &&
+                never(lives_remaining() == 0xff && prev(lives_remaining()) == 0) &&
+                never(level_screens() == 0x13)
+
+)
+
+achievement(
+    title = "Patch Me Up",
+    description = "Trade in 3 letters for some extra patches",
+    points = 5,
+    trigger = level_screens() == 0x11 && prev(letters()) - (letters()) == 3 &&
+                lives_remaining() == 3 && prev(lives_remaining()) == 0xff
+)
+
+function score_delta() {
+    return
+        bcd(prev(low4(0x69))) * 1 +
+        bcd(prev(high4(0x69))) * 10 +
+        bcd(prev(low4(0x6a))) * 100 +
+        bcd(prev(high4(0x6a))) * 1000 +
+        bcd(prev(low4(0x6b))) * 10000 +
+        bcd(prev(high4(0x6b))) * 100000 +
+        bcd(prev(low4(0x6c))) * 1000000 +
+        bcd(prev(high4(0x6c))) * 10000000
+
+}
+
+achievement(
+    title = "Toobillionaire",
+    description = "Trade in all 7 letters for 1,000,000 points",
+    points = 10,
+    trigger = level_screens() == 0x11 && letters() == 0 && prev(letters()) == 7 &&
+                score() - score_delta() == 1000000
 )
 
 // Leaderboards
