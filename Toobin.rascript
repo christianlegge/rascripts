@@ -645,7 +645,7 @@ achievement(
 // )
 
 achievement(
-    title = "Rock Out with Your Toob Sock Out", points = 25, type="win_condition",
+    title = "Rock Out with Your Toob Sock Out", points = 1, type="win_condition",
     description = "Turn on the tunes to claim your trophy",
     id = 86410, badge = "94477", published = "10/21/2019 10:02:17 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = beat_game()
