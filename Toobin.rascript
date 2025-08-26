@@ -253,7 +253,8 @@ achievement(
     title = "Okidokiee Okefenokee", points = 1,
     description = "TOOB down Okefenokee",
     id = 86354, badge = "94410", published = "10/21/2019 9:57:32 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = lv_ach(3, 0xa, 0, 4))
+    trigger = lv_ach(3, 0xa, 0, 4)
+)
 
 achievement(
     title = "Relaxing on the Rio Grande", points = 1,
@@ -281,7 +282,8 @@ achievement(
     title = "Down on the Yukon", points = 1,
     description = "TOOB down Yukon",
     id = 86358, badge = "94425", published = "10/21/2019 9:58:52 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = lv_ach(5, 8, 1, 0))
+    trigger = lv_ach(5, 8, 1, 0)
+)
 
 achievement(
     title = "In de-Nile", points = 1,
@@ -309,6 +311,7 @@ achievement(
     description = "TOOB down Nightmare",
     id = 86362, badge = "94429", published = "10/21/2019 9:59:07 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(0xd, 1, 16)
+)
 
 // achievement(
 //     title = "Thrice a Toober", points = 5,
@@ -339,12 +342,14 @@ achievement(
     description = "TOOB down Rio Del Oro",
     id = 86366, badge = "94431", published = "10/21/2019 9:59:27 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x10, 0x0b, 2, 4)
+)
 
 achievement(
     title = "White Wizard Rapids", points = 2,
     description = "TOOB down Black Forest",
     id = 86367, badge = "94432", published = "10/21/2019 9:59:30 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0b, 0x0c, 2, 8)
+)
 
 achievement(
     title = "...Mars? ...k", points = 2,
@@ -358,6 +363,7 @@ achievement(
     description = "TOOB down Styx",
     id = 86368, badge = "94434", published = "10/21/2019 9:59:35 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(0x07, 2, 16)
+)
 
 // achievement(
 //     title = "4tified Toober", points = 5,
@@ -386,6 +392,7 @@ achievement(
     description = "TOOB down Argentum",
     id = 86373, badge = "94437", published = "10/21/2019 9:59:54 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(2, 4, 3, 8)
+)
 
 achievement(
     title = "Bald Eagles and Such", points = 2,
@@ -442,6 +449,7 @@ achievement(
     description = "TOOB down Nile II",
     id = 86381, badge = "94444", published = "10/21/2019 10:00:24 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(8, 4, 16)
+)
 
 // achievement(
 //     title = "Class 6?! You can get into R movies now", points = 10,
@@ -463,12 +471,14 @@ achievement(
     description = "TOOB down Rio Grande II",
     id = 86384, badge = "94446", published = "10/21/2019 10:00:34 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0a, 0x0b, 5, 4)
+)
 
 achievement(
     title = "Get Bent Ent!", points = 3,
     description = "TOOB down Black Forest II",
     id = 86385, badge = "94447", published = "10/21/2019 10:00:38 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0b, 0x0c, 5, 8)
+)
 
 achievement(
     title = "Martian Circus Tents?", points = 3,
@@ -482,6 +492,7 @@ achievement(
     description = "TOOB down Nightmare II",
     id = 86387, badge = "94449", published = "10/21/2019 10:00:45 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(0xd, 5, 16)
+)
 
 // achievement(
 //     title = "Toobin' in 7th Heaven", points = 10,
@@ -538,6 +549,7 @@ achievement(
     description = "TOOB down Nightmare III",
     id = 86395, badge = "94459", published = "10/21/2019 10:01:14 PM", modified = "11/22/2022 2:47:36 PM",
     trigger = class_end_lv(0xd, 6, 20)
+)
 
 // achievement(
 //     title = "Gr8 Toober Right Here", points = 10,
@@ -580,6 +592,7 @@ achievement(
     description = "TOOB down Nile III",
     id = 86401, badge = "94466", published = "10/21/2019 10:01:35 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(8, 7, 16)
+)
 
 // achievement(
 //     title = "The Gnarest of Gnar Toober", points = 10, type="progression",
@@ -608,24 +621,28 @@ achievement(
     description = "TOOB down Brontosauri III",
     id = 86405, badge = "94470", published = "10/21/2019 10:01:47 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x12, 0x0b, 8, 8)
+)
 
 achievement(
     title = "Don't Wiz in the River", points = 10, type="progression",
     description = "TOOB down Black Forest III",
     id = 86406, badge = "94474", published = "10/21/2019 10:01:50 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xb, 0xc, 8, 12)
+)
 
 achievement(
     title = "Mars Flota", points = 10, type="progression",
     description = "TOOB down Canals of Mars IV",
     id = 86407, badge = "94472", published = "10/21/2019 10:01:54 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xc, 4, 8, 16)
+)
 
 achievement(
     title = "Hot Dogs? Check.", points = 10, type="progression",
     description = "TOOB down American II",
     id = 86408, badge = "94475", published = "10/21/2019 10:01:58 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(4, 0x18, 8, 20)
+)
 
 // achievement(
 //     title = "Don't Forget the TUNES!", points = 10, type="progression",
