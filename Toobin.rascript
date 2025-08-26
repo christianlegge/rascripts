@@ -533,14 +533,14 @@ achievement(
     title = "The Pepto-Bismol River of Mars", points = 4,
     description = "Toob down Canals of Mars III",
     id = 86394, badge = "94458", published = "10/21/2019 10:01:10 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = lv_ach(0xc, 0xd, 6, 16)
+    trigger = lv_ach(0xc, 0xd, 6, 20)
 )
 
 achievement(
     title = "Beware the River Ripper", points = 4,
     description = "Toob down Nightmare III",
     id = 86395, badge = "94459", published = "10/21/2019 10:01:14 PM", modified = "11/22/2022 2:47:36 PM",
-    trigger = class_end_lv(0xd, 6, 20)
+    trigger = class_end_lv(0xd, 6, 24)
 )
 
 // achievement(
