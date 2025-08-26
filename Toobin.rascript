@@ -909,6 +909,18 @@ achievement(
                 fast_cans() > prev(fast_cans())
 )
 
+achievement(
+    title = "Crank Up the Tunes, Broseph",
+    description = "Hit the boombox in Beach Party to change the music",
+    points = 3,
+    trigger = music() == 0x0d && prev(music()) == 0x0c && code_block() != 7 &&
+            river() == 0x18 &&
+            (
+                (class_level() == 3 && level_idx() == 16) ||
+                (class_level() == 8 && level_idx() == 24)
+            )
+)
+
 // Leaderboards
 
 level_data = {
