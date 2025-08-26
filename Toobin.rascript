@@ -221,7 +221,7 @@ function music_high_keys_2() => byte(0x00058D)
 function score() => bcd(dword(0x000869))
 
 // $086E: Lives Remaining
-function lives_remaining() => byte(0x00086E)
+function lives_remaining() => byte(0x0006E)
 
 function beat_game() => level_screens() == 0x11 && prev(level_screens()) == 0x20 && class_level() == 8 &&
                 level_idx() == 24 && river() == 0x18 && code_block() != 7
@@ -232,6 +232,56 @@ function lv_ach(preriv, curr, class, class_idx_pre) {
 
 function class_end_lv(preriv, preclass, class_idx_pre) {
     return prev(class_level()) == preclass && class_level() == preclass + 1 && (river()) == preriv && (level_idx()) == class_idx_pre && code_block() != 7
+}
+
+class_levels = {
+ 1:   [0, 3, 0xa, 9],
+ 2:   [5, 8, 6, 0xe, 0xd],
+ 3:   [0x12, 0x10, 0x0b, 0x0c, 0x07],
+ 4:   [0xf, 1, 2, 4, 0x18],
+ 5:   [5, 6, 3, 7, 8],
+ 6:   [0x12, 0xa, 0xb, 0xc, 0xd],
+ 7:   [0x17, 1, 2, 3, 0xa, 0xc, 0xd],
+ 8:   [5, 2, 0xe, 7, 8],
+ 9:   [0xa, 5, 0x12, 0xb, 0xc, 4, 0x18]
+}
+
+valid_prev_classes = {
+ 1:   [],
+ 2:   [1],
+ 3:   [1, 2],
+ 4:   [1, 3],
+ 5:   [4],
+ 6:   [4, 5],
+ 7:   [4, 6],
+ 8:   [7],
+ 9:   [8]
+}
+
+function deflateless(class) {
+    class_idx = class - 1
+    levels = class_levels[class]
+    final_idx = length(class_levels[class]) - 1
+    final_level = levels[final_idx]
+    final_level_idx = final_idx * 4
+
+    checkpoint = __ornext(any_of(valid_prev_classes[class], c => prev(class_level()) == c - 1)) && class_level() == class_idx
+    trig = class_level() == class_idx + 1 && prev(class_level()) == class_idx &&
+                river() == final_level && level_idx() == final_level_idx
+
+    if (class == 1) {
+        checkpoint = class_level() == 0 && river() == 0 && prev(level_screens() == 0x11) && level_screens() == 0x20
+    }
+    if (class == 9) {
+        trig = beat_game()
+    }
+
+    return once(checkpoint) &&
+            never(lives_remaining() < prev(lives_remaining())) && never(prev(lives_remaining()) == 0 && lives_remaining() == 0xff) &&
+            never(class_level() != class_idx && class_level() != class_idx + 1) &&
+            never(river() == 0x13) && never(river() == 0x14) && never(river() == 0x15) &&
+            never(code_block() == 7) &&
+            trigger_when(trig)
 }
 
 achievement(
@@ -317,9 +367,7 @@ achievement(
     title = "Deflateless Class 1", points = 10,
     description = "Toob all the rivers in Class 1 without dying",
     id = 86364, badge = "94481", published = "10/21/2019 9:59:14 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 0) && once(class_level() == 1) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7)))
+    trigger = deflateless(1)
 )
 
 achievement(
@@ -655,72 +703,56 @@ achievement(
     title = "Deflateless Class 2", points = 10,
     description = "Toob all the rivers in Class 2 without dying",
     id = 86411, badge = "94482", published = "10/21/2019 10:03:31 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 1) && once(class_level() == 2) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 1))))
+    trigger = deflateless(2)
 )
 
 achievement(
     title = "Deflateless Class 3", points = 10,
     description = "Toob all the rivers in Class 3 without dying",
     id = 86412, badge = "94483", published = "10/21/2019 10:03:36 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 2) && once(class_level() == 3) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 2))))
+    trigger = deflateless(3)
 )
 
 achievement(
     title = "Deflateless Class 4", points = 10,
     description = "Toob all the rivers in Class 4 without dying",
     id = 86413, badge = "94484", published = "10/21/2019 10:03:39 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 3) && once(class_level() == 4) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 3))))
+    trigger = deflateless(4)
 )
 
 achievement(
     title = "Deflateless Class 5", points = 10,
     description = "Toob all the rivers in Class 5 without dying",
     id = 86414, badge = "94485", published = "10/21/2019 10:03:42 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 4) && once(class_level() == 5) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 4))))
+    trigger = deflateless(5)
 )
 
 achievement(
     title = "Deflateless Class 6", points = 25,
     description = "Toob all the rivers in Class 6 without dying",
     id = 86415, badge = "94486", published = "10/21/2019 10:03:45 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 5) && once(class_level() == 6) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 5))))
+    trigger = deflateless(6)
 )
 
 achievement(
     title = "Deflateless Class 7", points = 25,
     description = "Toob all the rivers in Class 7 without dying",
     id = 86416, badge = "94487", published = "10/21/2019 10:03:49 PM", modified = "11/22/2022 2:42:29 PM",
-    trigger = once(class_level() == 0) && prev(class_level()) == 6 && class_level() == 7 &&
-              never(lives_remaining() < prev(lives_remaining())) &&
-              never(river() == 21)
+    trigger = deflateless(7)
 )
 
 achievement(
     title = "Deflateless Class 8", points = 25,
     description = "Toob all the rivers in Class 8 without dying",
     id = 86417, badge = "94488", published = "10/21/2019 10:03:52 PM", modified = "10/24/2019 1:14:01 AM",
-    trigger = once(class_level() == 7) && once(class_level() == 8) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 7))))
+    trigger = deflateless(8)
 )
 
 achievement(
     title = "Deflateless Class 9", points = 25,
     description = "Toob all the rivers in Class 9 without dying",
     id = 86418, badge = "94489", published = "10/21/2019 10:03:55 PM", modified = "10/22/2019 7:26:04 AM",
-    trigger = once(class_level() == 8) && once(level_screens() == 32) &&
-              disable_when(lives_remaining() < prev(lives_remaining())) &&
-              (always_false() || (never(level_screens() == 19) && never(code_block() == 7) && never(once(class_level() < 8))))
+    trigger = deflateless(9)
 )
 
 // achievement(
