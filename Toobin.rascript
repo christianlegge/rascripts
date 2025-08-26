@@ -223,7 +223,7 @@ function score() => bcd(dword(0x000869))
 // $086E: Lives Remaining
 function lives_remaining() => byte(0x00086E)
 
-function beat_game() => portal_hit_at_01() == 1 && prev(portal_hit_at_01()) != 1 && class_level() == 8 &&
+function beat_game() => level_screens() == 0x11 && prev(level_screens()) == 0x20 && class_level() == 8 &&
                 level_idx() == 24 && river() == 0x18 && code_block() != 7
 
 function lv_ach(preriv, curr, class, class_idx_pre) {
