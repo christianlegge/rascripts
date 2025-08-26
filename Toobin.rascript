@@ -144,7 +144,7 @@ function f0_portal() => byte(0x0000E5)
 //        13 = Player Select
 //        16 = Canals of Mars
 //        20 = Colorado, Nile, Nevada, Beach Party, Snake
-//        27 = Rio Grande, Rio Del Oro
+//        27 = Rio Grande, Rio del Oro
 //        30 = Cuprum, Argentum
 //        31 = Yukon
 function level_screens() => byte(0x000100)
@@ -190,7 +190,7 @@ function sfx() => byte(0x000553)
 //        02 = Okefenokee, Mississippi
 //        03 = Canals of Mars
 //        04 = Rio Grande
-//        05 = Rio Del Oro
+//        05 = Rio del Oro
 //        07 = Snake
 //        08 = Jurassic, Brontisauri, Amazon
 //        2a = Yukon (switches to 06 halfway)
@@ -244,28 +244,28 @@ function class_end_lv(preriv, preclass, class_idx_pre) {
 
 achievement(
     title = "Colorado Koozie", points = 1,
-    description = "TOOB down Colorado",
+    description = "Toob down Colorado",
     id = 86353, badge = "94406", published = "10/21/2019 9:57:26 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0, 3, 0, 0)
 )
 
 achievement(
     title = "Okidokiee Okefenokee", points = 1,
-    description = "TOOB down Okefenokee",
+    description = "Toob down Okefenokee",
     id = 86354, badge = "94410", published = "10/21/2019 9:57:32 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(3, 0xa, 0, 4)
 )
 
 achievement(
     title = "Relaxing on the Rio Grande", points = 1,
-    description = "TOOB down Rio Grande",
+    description = "Toob down Rio Grande",
     id = 86355, badge = "94411", published = "10/21/2019 9:57:37 PM", modified = "2/21/2023 12:29:08 AM",
     trigger = lv_ach(0xa, 9, 0, 8)
 )
 
 achievement(
     title = "Splashtastic Jurassic", points = 1,
-    description = "TOOB down Jurassic",
+    description = "Toob down Jurassic",
     id = 86356, badge = "94412", published = "10/21/2019 9:57:43 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(9, 0, 12)
 )
@@ -280,35 +280,35 @@ achievement(
 
 achievement(
     title = "Down on the Yukon", points = 1,
-    description = "TOOB down Yukon",
+    description = "Toob down Yukon",
     id = 86358, badge = "94425", published = "10/21/2019 9:58:52 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(5, 8, 1, 0)
 )
 
 achievement(
     title = "In de-Nile", points = 1,
-    description = "TOOB down Nile",
+    description = "Toob down Nile",
     id = 86359, badge = "94426", published = "10/21/2019 9:58:55 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(8, 6, 1, 4)
 )
 
 achievement(
-    title = "Why is the Cuprum Gone?", points = 1,
-    description = "TOOB down Cuprum",
+    title = "Why Is the Cuprum Gone?", points = 1,
+    description = "Toob down Cuprum",
     id = 86360, badge = "94427", published = "10/21/2019 9:58:59 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(6, 0xe, 1, 8)
 )
 
 achievement(
     title = "Mississippi Sized Mosquitos", points = 1,
-    description = "TOOB down Mississippi",
+    description = "Toob down Mississippi",
     id = 86361, badge = "94462", published = "10/21/2019 9:59:03 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xe, 0xd, 1, 12)
 )
 
 achievement(
     title = "Oh What a Night to Toob", points = 1,
-    description = "TOOB down Nightmare",
+    description = "Toob down Nightmare",
     id = 86362, badge = "94429", published = "10/21/2019 9:59:07 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(0xd, 1, 16)
 )
@@ -323,7 +323,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 1", points = 10,
-    description = "Toob all the rivers without dying in Class 1",
+    description = "Toob all the rivers in Class 1 without dying",
     id = 86364, badge = "94481", published = "10/21/2019 9:59:14 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 0) && once(class_level() == 1) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -332,35 +332,35 @@ achievement(
 
 achievement(
     title = "Brontosauri Bobbin'", points = 2,
-    description = "TOOB down Brontosauri",
+    description = "Toob down Brontosauri",
     id = 86365, badge = "94430", published = "10/21/2019 9:59:24 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x12, 0x10, 2, 0)
 )
 
 achievement(
-    title = "Rapids Del Oro", points = 2,
-    description = "TOOB down Rio Del Oro",
+    title = "Rapids del Oro", points = 2,
+    description = "Toob down Rio del Oro",
     id = 86366, badge = "94431", published = "10/21/2019 9:59:27 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x10, 0x0b, 2, 4)
 )
 
 achievement(
     title = "White Wizard Rapids", points = 2,
-    description = "TOOB down Black Forest",
+    description = "Toob down Black Forest",
     id = 86367, badge = "94432", published = "10/21/2019 9:59:30 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0b, 0x0c, 2, 8)
 )
 
 achievement(
-    title = "...Mars? ...k", points = 2,
-    description = "TOOB down Canals of Mars",
+    title = "...Mars? ...K", points = 2,
+    description = "Toob down Canals of Mars",
     id = 86370, badge = "94433", published = "10/21/2019 9:59:43 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0c, 0x07, 2, 12)
 )
 
 achievement(
-    title = "\"Blood River, wider than a mile\"", points = 2,
-    description = "TOOB down Styx",
+    title = "Blood River, Wider than a Mile", points = 2,
+    description = "Toob down Styx",
     id = 86368, badge = "94434", published = "10/21/2019 9:59:35 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(0x07, 2, 16)
 )
@@ -374,36 +374,36 @@ achievement(
 // )
 
 achievement(
-    title = "What's the madda' Nevada?", points = 2,
-    description = "TOOB down Nevada",
+    title = "What's the Madda', Nevada?", points = 2,
+    description = "Toob down Nevada",
     id = 86371, badge = "94435", published = "10/21/2019 9:59:47 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0f, 1, 3, 0)
 )
 
 achievement(
     title = "Accurate Amazons", points = 2,
-    description = "TOOB down Amazon",
+    description = "Toob down Amazon",
     id = 86372, badge = "94436", published = "10/21/2019 9:59:50 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(1, 2, 3, 4)
 )
 
 achievement(
     title = "Argentum? I Hardly Knew Him!", points = 2,
-    description = "TOOB down Argentum",
+    description = "Toob down Argentum",
     id = 86373, badge = "94437", published = "10/21/2019 9:59:54 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(2, 4, 3, 8)
 )
 
 achievement(
     title = "Bald Eagles and Such", points = 2,
-    description = "TOOB down American",
+    description = "Toob down American",
     id = 86374, badge = "94438", published = "10/21/2019 9:59:58 PM", modified = "3/26/2023 11:44:26 AM",
     trigger = lv_ach(4, 0x18, 3, 12)
 )
 
 achievement(
-    title = "End of the Game (ARCADE ONLY)", points = 2,
-    description = "TOOB down Beach Party",
+    title = "End of the Game (Arcade Only)", points = 2,
+    description = "Toob down Beach Party",
     id = 86375, badge = "94439", published = "10/21/2019 10:00:01 PM", modified = "3/26/2023 11:38:25 AM",
     trigger = class_end_lv(0x18, 3, 16)
 )
@@ -418,35 +418,35 @@ achievement(
 
 achievement(
     title = "2kon", points = 3,
-    description = "TOOB down Yukon II",
+    description = "Toob down Yukon II",
     id = 86377, badge = "94440", published = "10/21/2019 10:00:09 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(5, 6, 4, 0)
 )
 
 achievement(
-    title = "I've Seen this Cuprum Before", points = 3,
-    description = "TOOB down Cuprum II",
+    title = "I've Seen This Cuprum Before", points = 3,
+    description = "Toob down Cuprum II",
     id = 86378, badge = "94441", published = "10/21/2019 10:00:12 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(6, 3, 4, 4)
 )
 
 achievement(
-    title = "OkefenokeeMyBrokeeTubeFloatee", points = 3,
-    description = "TOOB down Okefenokee II",
+    title = "Okefenokee My Brokee Toob Floatee", points = 3,
+    description = "Toob down Okefenokee II",
     id = 86379, badge = "94442", published = "10/21/2019 10:00:16 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(3, 7, 4, 8)
 )
 
 achievement(
-    title = "Who Needs a Boatman? I Has Tube", points = 3,
-    description = "TOOB down Styx II",
+    title = "Who Needs a Boatman? I Has Toob", points = 3,
+    description = "Toob down Styx II",
     id = 86380, badge = "94443", published = "10/21/2019 10:00:20 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(7, 8, 4, 12)
 )
 
 achievement(
     title = "Pyramids and Rapids", points = 3,
-    description = "TOOB down Nile II",
+    description = "Toob down Nile II",
     id = 86381, badge = "94444", published = "10/21/2019 10:00:24 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(8, 4, 16)
 )
@@ -461,35 +461,35 @@ achievement(
 
 achievement(
     title = "Double Dino Damage", points = 3,
-    description = "TOOB down Brontosauri II",
+    description = "Toob down Brontosauri II",
     id = 86383, badge = "94445", published = "10/21/2019 10:00:31 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x12, 0x0a, 5, 0)
 )
 
 achievement(
-    title = "Rio Repetative", points = 3,
-    description = "TOOB down Rio Grande II",
+    title = "Rio Repetitive", points = 3,
+    description = "Toob down Rio Grande II",
     id = 86384, badge = "94446", published = "10/21/2019 10:00:34 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0a, 0x0b, 5, 4)
 )
 
 achievement(
-    title = "Get Bent Ent!", points = 3,
-    description = "TOOB down Black Forest II",
+    title = "Get Bent, Ent!", points = 3,
+    description = "Toob down Black Forest II",
     id = 86385, badge = "94447", published = "10/21/2019 10:00:38 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x0b, 0x0c, 5, 8)
 )
 
 achievement(
     title = "Martian Circus Tents?", points = 3,
-    description = "TOOB down Canals of Mars II",
+    description = "Toob down Canals of Mars II",
     id = 86386, badge = "94448", published = "10/21/2019 10:00:41 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xc, 0x0d, 5, 12)
 )
 
 achievement(
     title = "It's Like Being in a Dollar Hell", points = 3,
-    description = "TOOB down Nightmare II",
+    description = "Toob down Nightmare II",
     id = 86387, badge = "94449", published = "10/21/2019 10:00:45 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(0xd, 5, 16)
 )
@@ -503,50 +503,50 @@ achievement(
 // )
 
 achievement(
-    title = "\"Why'd it have to be snakes?\"", points = 4,
-    description = "TOOB down Snake",
+    title = "Why'd It Have to Be Snakes?", points = 4,
+    description = "Toob down Snake",
     id = 86389, badge = "94450", published = "10/21/2019 10:00:53 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x17, 1, 6, 0)
 )
 
 achievement(
-    title = "I Bought This Tube on Amazon", points = 4,
-    description = "TOOB down Amazon II",
+    title = "I Bought This Toob on Amazon", points = 4,
+    description = "Toob down Amazon II",
     id = 86390, badge = "94454", published = "10/21/2019 10:00:56 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(1, 2, 6, 4)
 )
 
 achievement(
-    title = "Arggh, gent! Um...", points = 4,
-    description = "TOOB down Argentum II",
+    title = "Arggh, Gent! Um...", points = 4,
+    description = "Toob down Argentum II",
     id = 86391, badge = "94453", published = "10/21/2019 10:01:00 PM", modified = "3/26/2023 12:20:26 PM",
     trigger = lv_ach(2, 3, 6, 8)
 )
 
 achievement(
     title = "Okefenok3", points = 4,
-    description = "TOOB down Okefenokee III",
+    description = "Toob down Okefenokee III",
     id = 86392, badge = "94455", published = "10/21/2019 10:01:03 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(3, 0xa, 6, 12)
 )
 
 achievement(
-    title = "3-o-Grande", points = 4,
-    description = "TOOB down Rio Grande III",
+    title = "3-o Grande", points = 4,
+    description = "Toob down Rio Grande III",
     id = 86393, badge = "94456", published = "10/21/2019 10:01:06 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xa, 0xc, 6, 16)
 )
 
 achievement(
-    title = "The Pepto Bismol River of Mars", points = 4,
-    description = "TOOB down Canals of Mars III",
+    title = "The Pepto-Bismol River of Mars", points = 4,
+    description = "Toob down Canals of Mars III",
     id = 86394, badge = "94458", published = "10/21/2019 10:01:10 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xc, 0xd, 6, 16)
 )
 
 achievement(
     title = "Beware the River Ripper", points = 4,
-    description = "TOOB down Nightmare III",
+    description = "Toob down Nightmare III",
     id = 86395, badge = "94459", published = "10/21/2019 10:01:14 PM", modified = "11/22/2022 2:47:36 PM",
     trigger = class_end_lv(0xd, 6, 20)
 )
@@ -560,36 +560,36 @@ achievement(
 // )
 
 achievement(
-    title = "Yukon Do It (I'm so sorry)", points = 5, type="progression",
-    description = "TOOB down Yukon III",
+    title = "Yukon Do It (I'm So Sorry)", points = 5, type="progression",
+    description = "Toob down Yukon III",
     id = 86397, badge = "94460", published = "10/21/2019 10:01:21 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(5, 2, 7, 0)
 )
 
 achievement(
     title = "107.8682 u", points = 5, type="progression",
-    description = "TOOB down Argentum III",
+    description = "Toob down Argentum III",
     id = 86398, badge = "94461", published = "10/21/2019 10:01:24 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(2, 0xe, 7, 4)
 )
 
 achievement(
     title = "Yippie Skippy Mississippi", points = 5, type="progression",
-    description = "TOOB down Mississippi II",
+    description = "Toob down Mississippi II",
     id = 86399, badge = "94463", published = "10/21/2019 10:01:28 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xe, 7, 7, 8)
 )
 
 achievement(
     title = "The Grand Illusion Was Better", points = 5, type="progression",
-    description = "TOOB down Styx III",
+    description = "Toob down Styx III",
     id = 86400, badge = "94465", published = "10/21/2019 10:01:31 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(7, 8, 7, 12)
 )
 
 achievement(
     title = "Nile Mile", points = 5, type="progression",
-    description = "TOOB down Nile III",
+    description = "Toob down Nile III",
     id = 86401, badge = "94466", published = "10/21/2019 10:01:35 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = class_end_lv(8, 7, 16)
 )
@@ -604,42 +604,42 @@ achievement(
 
 achievement(
     title = "Cattle Paddle", points = 10, type="progression",
-    description = "TOOB down Rio Grande IV",
+    description = "Toob down Rio Grande IV",
     id = 86403, badge = "94467", published = "10/21/2019 10:01:41 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xa, 5, 8, 0)
 )
 
 achievement(
-    title = "Dooby-DoobyDo", points = 10, type="progression",
-    description = "TOOB down Yukon IV",
+    title = "Dooby-Dooby-Do", points = 10, type="progression",
+    description = "Toob down Yukon IV",
     id = 86404, badge = "94468", published = "10/21/2019 10:01:44 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(5, 0x12, 8, 4)
 )
 
 achievement(
     title = "Archeolotoob", points = 10, type="progression",
-    description = "TOOB down Brontosauri III",
+    description = "Toob down Brontosauri III",
     id = 86405, badge = "94470", published = "10/21/2019 10:01:47 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0x12, 0x0b, 8, 8)
 )
 
 achievement(
     title = "Don't Wiz in the River", points = 10, type="progression",
-    description = "TOOB down Black Forest III",
+    description = "Toob down Black Forest III",
     id = 86406, badge = "94474", published = "10/21/2019 10:01:50 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xb, 0xc, 8, 12)
 )
 
 achievement(
     title = "Mars Flota", points = 10, type="progression",
-    description = "TOOB down Canals of Mars IV",
+    description = "Toob down Canals of Mars IV",
     id = 86407, badge = "94472", published = "10/21/2019 10:01:54 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(0xc, 4, 8, 16)
 )
 
 achievement(
-    title = "Hot Dogs? Check.", points = 10, type="progression",
-    description = "TOOB down American II",
+    title = "Hot Dogs? Check", points = 10, type="progression",
+    description = "Toob down American II",
     id = 86408, badge = "94475", published = "10/21/2019 10:01:58 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = lv_ach(4, 0x18, 8, 20)
 )
@@ -662,7 +662,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 2", points = 10,
-    description = "Toob all the rivers without dying in Class 2",
+    description = "Toob all the rivers in Class 2 without dying",
     id = 86411, badge = "94482", published = "10/21/2019 10:03:31 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 1) && once(class_level() == 2) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -671,7 +671,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 3", points = 10,
-    description = "Toob all the rivers without dying in Class 3",
+    description = "Toob all the rivers in Class 3 without dying",
     id = 86412, badge = "94483", published = "10/21/2019 10:03:36 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 2) && once(class_level() == 3) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -680,7 +680,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 4", points = 10,
-    description = "Toob all the rivers without dying in Class 4",
+    description = "Toob all the rivers in Class 4 without dying",
     id = 86413, badge = "94484", published = "10/21/2019 10:03:39 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 3) && once(class_level() == 4) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -689,7 +689,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 5", points = 10,
-    description = "Toob all the rivers without dying in Class 5",
+    description = "Toob all the rivers in Class 5 without dying",
     id = 86414, badge = "94485", published = "10/21/2019 10:03:42 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 4) && once(class_level() == 5) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -698,7 +698,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 6", points = 25,
-    description = "Toob all the rivers without dying in Class 6",
+    description = "Toob all the rivers in Class 6 without dying",
     id = 86415, badge = "94486", published = "10/21/2019 10:03:45 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 5) && once(class_level() == 6) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -707,7 +707,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 7", points = 25,
-    description = "Toob all the rivers without dying in Class 7",
+    description = "Toob all the rivers in Class 7 without dying",
     id = 86416, badge = "94487", published = "10/21/2019 10:03:49 PM", modified = "11/22/2022 2:42:29 PM",
     trigger = once(class_level() == 0) && prev(class_level()) == 6 && class_level() == 7 &&
               never(lives_remaining() < prev(lives_remaining())) &&
@@ -716,7 +716,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 8", points = 25,
-    description = "Toob all the rivers without dying in Class 8",
+    description = "Toob all the rivers in Class 8 without dying",
     id = 86417, badge = "94488", published = "10/21/2019 10:03:52 PM", modified = "10/24/2019 1:14:01 AM",
     trigger = once(class_level() == 7) && once(class_level() == 8) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
@@ -725,7 +725,7 @@ achievement(
 
 achievement(
     title = "Deflateless Class 9", points = 25,
-    description = "Toob all the rivers without dying in Class 9",
+    description = "Toob all the rivers in Class 9 without dying",
     id = 86418, badge = "94489", published = "10/21/2019 10:03:55 PM", modified = "10/22/2019 7:26:04 AM",
     trigger = once(class_level() == 8) && once(level_screens() == 32) &&
               disable_when(lives_remaining() < prev(lives_remaining())) &&
