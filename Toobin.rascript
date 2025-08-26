@@ -47,7 +47,9 @@ function acceleration_x_axis() => byte(0x000044)
 function acceleration_y_axis() => byte(0x000047)
 
 // $004C: Number of Cans Remaining
-function number_of_cans_remaining() => byte(0x00004C)
+function cans() => byte(0x00004C)
+
+function fast_cans() => bit1(0x3f)
 
 // $0066: Multiplyer
 //        Max 5
@@ -260,6 +262,34 @@ valid_prev_classes = {
  9:   [8]
 }
 
+warp_zone_data = {
+    1: [1, 0x13, 0x10],
+    2: [4, 0x14, 0x14],
+    3: [7, 0x15, 0x1c]
+}
+
+warp_zone_dests = {
+    1: [
+        [3, 0x12],
+        [4, 0x0f],
+        [2, 5]
+    ],
+    2: [
+        [6, 0x12],
+        [7, 0x17],
+        [5, 5]
+    ],
+    3: [
+        [8, 5]
+    ]
+}
+
+roman_numerals = {
+    1: "I",
+    2: "II",
+    3: "III"
+}
+
 function start_game() => class_level() == 0 && river() == 0 && prev(level_screens() == 0x11) && level_screens() == 0x20
 
 function deflateless(class) {
@@ -280,13 +310,56 @@ function deflateless(class) {
         trig = beat_game()
     }
 
+    warp_check = always_false()
+    if (class == 1) {
+        warp_check = river() == 0x13
+    }
+    if (class == 4) {
+        warp_check = river() == 0x14
+    }
+    if (class == 7) {
+        warp_check = river() == 0x15
+    }
+
     return once(checkpoint) &&
             never(lives_remaining() < prev(lives_remaining())) && never(prev(lives_remaining()) == 0 && lives_remaining() == 0xff) &&
             never(class_level() != class_idx && class_level() != class_idx + 1) &&
-            never(river() == 0x13) && never(river() == 0x14) && never(river() == 0x15) &&
+            never(warp_check) &&
             never(code_block() == 7) &&
             trigger_when(trig)
 }
+
+function warp_cheev(zone) {
+    prev_class = warp_zone_data[zone][0]
+    rivid = warp_zone_data[zone][1]
+    lvidx = warp_zone_data[zone][2]
+    dests = warp_zone_dests[zone]
+    titles = {
+        1: "Beam Me Up, Brah",
+        2: "Whoa, This Wormhole Is Sick",
+        3: "Dude! We're Going Light Speed!"
+    }
+
+    achievement(
+        title = titles[zone],
+        description = format("Take a warp in Warp Zone {0}", roman_numerals[zone]),
+        points = zone,
+        trigger = prev(river()) == rivid && prev(level_idx()) == lvidx && 
+        code_block() != 7 &&
+        any_of(
+            dests,
+            dest => 
+                class_level() == dest[0] - 1 &&
+                river() == dest[1] &&
+                level_idx() == 0
+            )
+    )
+
+}
+
+warp_cheev(1)
+warp_cheev(2)
+warp_cheev(3)
 
 achievement(
     title = "Colorado Koozie", points = 1,
@@ -792,6 +865,7 @@ achievement(
     description = "Trade in 3 letters for some extra patches",
     points = 5,
     trigger = level_screens() == 0x11 && prev(letters()) - (letters()) == 3 &&
+            code_block() != 7 &&
                 lives_remaining() == 3 && prev(lives_remaining()) == 0xff
 )
 
@@ -813,7 +887,26 @@ achievement(
     description = "Trade in all 7 letters for 1,000,000 points",
     points = 10,
     trigger = level_screens() == 0x11 && letters() == 0 && prev(letters()) == 7 &&
+            code_block() != 7 &&
                 score() - score_delta() == 1000000
+)
+
+achievement(
+    title = "Pick Up That Can",
+    description = "Pick up a six-pack for \"unlimited\" cans",
+    points = 1,
+    trigger = level_screens() != 0x11 && level_screens() != 0x13 && class_level() <= 8 &&
+            code_block() != 7 &&
+                cans() == 0xff && prev(cans()) <= 9
+)
+
+achievement(
+    title = "Beach Ballin'",
+    description = "Pick up a beach ball for super-powered cans",
+    points = 1,
+    trigger = level_screens() != 0x11 && level_screens() != 0x13 && class_level() <= 8 &&
+            code_block() != 7 &&
+                fast_cans() > prev(fast_cans())
 )
 
 // Leaderboards
