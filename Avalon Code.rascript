@@ -5386,35 +5386,19 @@ achievement(
     title = "Age of Mystery", points = 10,
     description = "Achieve all gold medals in the Site of Cyril.",
     id = 478318, badge = "542256", published = "11/13/2024 6:48:36 AM", modified = "11/13/2024 6:48:36 AM",
-    trigger = map_id() != 0 &&
-              tally(25, once(prev(site_of_cyril_1_ohriemed_aof_medal()) == 3), once(prev(site_of_cyril_2_medal()) == 3),
-                  once(prev(site_of_cyril_3_medal()) == 3), once(prev(site_of_cyril_4_medal()) == 3),
-                  once(prev(site_of_cyril_5_medal()) == 3), once(prev(site_of_cyril_6_medal()) == 3),
-                  once(prev(site_of_cyril_7_medal()) == 3), once(prev(site_of_cyril_8_medal()) == 3),
-                  once(prev(site_of_cyril_9_medal()) == 3), once(prev(site_of_cyril_10_medal()) == 3),
-                  once(prev(site_of_cyril_11_medal()) == 3), once(prev(site_of_cyril_12_medal()) == 3),
-                  once(prev(site_of_cyril_13_medal()) == 3), once(prev(site_of_cyril_14_medal()) == 3),
-                  once(prev(site_of_cyril_15_medal()) == 3), once(prev(site_of_cyril_16_medal()) == 3),
-                  once(prev(site_of_cyril_17_medal()) == 3), once(prev(site_of_cyril_18_medal()) == 3),
-                  once(prev(site_of_cyril_19_medal()) == 3), once(prev(site_of_cyril_20_medal()) == 3),
-                  once(prev(site_of_cyril_21_medal()) == 3), once(prev(site_of_cyril_22_medal()) == 3),
-                  once(prev(site_of_cyril_23_medal()) == 3), once(prev(site_of_cyril_24_medal()) == 3),
-                  once(prev(site_of_cyril_25_medal()) == 3), once(prev(guardian_s_domain_torsol_medal()) == 3)
-              ) &&
-              measured(tally(26, once(site_of_cyril_1_ohriemed_aof_medal() == 3), once(site_of_cyril_2_medal() == 3),
-                  once(site_of_cyril_3_medal() == 3), once(site_of_cyril_4_medal() == 3),
-                  once(site_of_cyril_5_medal() == 3), once(site_of_cyril_6_medal() == 3),
-                  once(site_of_cyril_7_medal() == 3), once(site_of_cyril_8_medal() == 3),
-                  once(site_of_cyril_9_medal() == 3), once(site_of_cyril_10_medal() == 3),
-                  once(site_of_cyril_11_medal() == 3), once(site_of_cyril_12_medal() == 3),
-                  once(site_of_cyril_13_medal() == 3), once(site_of_cyril_14_medal() == 3),
-                  once(site_of_cyril_15_medal() == 3), once(site_of_cyril_16_medal() == 3),
-                  once(site_of_cyril_17_medal() == 3), once(site_of_cyril_18_medal() == 3),
-                  once(site_of_cyril_19_medal() == 3), once(site_of_cyril_20_medal() == 3),
-                  once(site_of_cyril_21_medal() == 3), once(site_of_cyril_22_medal() == 3),
-                  once(site_of_cyril_23_medal() == 3), once(site_of_cyril_24_medal() == 3),
-                  once(site_of_cyril_25_medal() == 3), once(guardian_s_domain_torsol_medal() == 3))
-              )
+    trigger = gold_medal_trigger([site_of_cyril_1_ohriemed_aof_medal(), site_of_cyril_2_medal(),
+                  site_of_cyril_3_medal(), site_of_cyril_4_medal(),
+                  site_of_cyril_5_medal(), site_of_cyril_6_medal(),
+                  site_of_cyril_7_medal(), site_of_cyril_8_medal(),
+                  site_of_cyril_9_medal(), site_of_cyril_10_medal(),
+                  site_of_cyril_11_medal(), site_of_cyril_12_medal(),
+                  site_of_cyril_13_medal(), site_of_cyril_14_medal(),
+                  site_of_cyril_15_medal(), site_of_cyril_16_medal(),
+                  site_of_cyril_17_medal(), site_of_cyril_18_medal(),
+                  site_of_cyril_19_medal(), site_of_cyril_20_medal(),
+                  site_of_cyril_21_medal(), site_of_cyril_22_medal(),
+                  site_of_cyril_23_medal(), site_of_cyril_24_medal(),
+                  site_of_cyril_25_medal(), guardian_s_domain_torsol_medal()])
 )
 
 achievement(
