@@ -5031,24 +5031,15 @@ achievement(
     title = "Training Pays Off", points = 10,
     description = "Achieve all gold medals in the Underground Training Space.",
     id = 478288, badge = "542226", published = "11/13/2024 6:48:26 AM", modified = "11/13/2024 6:48:26 AM",
-    trigger = map_id() != 0 &&
-              tally(9, once(prev(underground_training_space_1_medal()) == 3),
-                  once(prev(underground_training_space_2_medal()) == 3),
-                  once(prev(underground_training_space_3_medal()) == 3),
-                  once(prev(underground_training_space_4_medal()) == 3),
-                  once(prev(underground_training_space_7_medal()) == 3),
-                  once(prev(underground_training_space_10_medal()) == 3),
-                  once(prev(swordsman_s_domain_gustav_medal()) == 3), once(prev(underground_training_space_6_medal()) == 3),
-                  once(prev(underground_training_space_8_medal()) == 3),
-                  once(prev(underground_training_space_9_medal()) == 3)
-              ) &&
-              measured(tally(10, once(underground_training_space_1_medal() == 3),
-                  once(underground_training_space_2_medal() == 3), once(underground_training_space_3_medal() == 3),
-                  once(underground_training_space_4_medal() == 3), once(underground_training_space_7_medal() == 3),
-                  once(underground_training_space_10_medal() == 3), once(swordsman_s_domain_gustav_medal() == 3),
-                  once(underground_training_space_6_medal() == 3), once(underground_training_space_8_medal() == 3),
-                  once(underground_training_space_9_medal() == 3))
-              )
+    trigger = gold_medal_trigger([underground_training_space_1_medal(),
+                  underground_training_space_2_medal(),
+                  underground_training_space_3_medal(),
+                  underground_training_space_4_medal(),
+                  underground_training_space_7_medal(),
+                  underground_training_space_10_medal(),
+                  swordsman_s_domain_gustav_medal(), underground_training_space_6_medal(),
+                  underground_training_space_8_medal(),
+                  underground_training_space_9_medal()])
 )
 
 achievement(
