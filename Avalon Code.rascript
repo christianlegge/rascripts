@@ -5203,8 +5203,7 @@ achievement(
     title = "Really Ice Cold", points = 10,
     description = "Achieve all gold medals in the Depths of the Ice Cavern.",
     id = 478310, badge = "542248", published = "11/13/2024 6:48:32 AM", modified = "11/13/2024 6:48:32 AM",
-    trigger = map_id() != 0 &&
-              gold_medal_trigger([depths_of_ice_cavern_1_medal(),
+    trigger = gold_medal_trigger([depths_of_ice_cavern_1_medal(),
                   depths_of_ice_cavern_2_medal(), depths_of_ice_cavern_3_medal(),
                   depths_of_ice_cavern_4_medal(), depths_of_ice_cavern_5_medal(),
                   depths_of_ice_cavern_6_medal(), depths_of_ice_cavern_7_medal(),
@@ -5221,28 +5220,17 @@ achievement(
     title = "Hot As Hell", points = 10,
     description = "Achieve all gold medals in Mt. Elious.",
     id = 478311, badge = "542249", published = "11/13/2024 6:48:33 AM", modified = "11/13/2024 6:48:33 AM",
-    trigger = map_id() != 0 &&
-              tally(20, once(prev(mt_elious_1_medal()) == 3), once(prev(mt_elious_2_medal()) == 3),
-                  once(prev(mt_elious_3_medal()) == 3), once(prev(mt_elious_4_medal()) == 3),
-                  once(prev(mt_elious_5_medal()) == 3), once(prev(mt_elious_6_medal()) == 3),
-                  once(prev(mt_elious_7_medal()) == 3), once(prev(mt_elious_8_medal()) == 3),
-                  once(prev(mt_elious_9_medal()) == 3), once(prev(mt_elious_10_medal()) == 3),
-                  once(prev(mt_elious_11_medal()) == 3), once(prev(mt_elious_12_medal()) == 3),
-                  once(prev(mt_elious_13_medal()) == 3), once(prev(mt_elious_14_medal()) == 3),
-                  once(prev(mt_elious_15_medal()) == 3), once(prev(mt_elious_16_medal()) == 3),
-                  once(prev(mt_elious_17_medal()) == 3), once(prev(mt_elious_18_medal()) == 3),
-                  once(prev(mt_elious_19_medal()) == 3), once(prev(mt_elious_20_medal()) == 3),
-                  once(prev(melting_pot_untamo_medal()) == 3)
-              ) &&
-              measured(tally(21, once(mt_elious_1_medal() == 3), once(mt_elious_2_medal() == 3),
-                  once(mt_elious_3_medal() == 3), once(mt_elious_4_medal() == 3), once(mt_elious_5_medal() == 3),
-                  once(mt_elious_6_medal() == 3), once(mt_elious_7_medal() == 3), once(mt_elious_8_medal() == 3),
-                  once(mt_elious_9_medal() == 3), once(mt_elious_10_medal() == 3), once(mt_elious_11_medal() == 3),
-                  once(mt_elious_12_medal() == 3), once(mt_elious_13_medal() == 3), once(mt_elious_14_medal() == 3),
-                  once(mt_elious_15_medal() == 3), once(mt_elious_16_medal() == 3), once(mt_elious_17_medal() == 3),
-                  once(mt_elious_18_medal() == 3), once(mt_elious_19_medal() == 3), once(mt_elious_20_medal() == 3),
-                  once(melting_pot_untamo_medal() == 3))
-              )
+    trigger = gold_medal_trigger([mt_elious_1_medal(), mt_elious_2_medal(),
+                  mt_elious_3_medal(), mt_elious_4_medal(),
+                  mt_elious_5_medal(), mt_elious_6_medal(),
+                  mt_elious_7_medal(), mt_elious_8_medal(),
+                  mt_elious_9_medal(), mt_elious_10_medal(),
+                  mt_elious_11_medal(), mt_elious_12_medal(),
+                  mt_elious_13_medal(), mt_elious_14_medal(),
+                  mt_elious_15_medal(), mt_elious_16_medal(),
+                  mt_elious_17_medal(), mt_elious_18_medal(),
+                  mt_elious_19_medal(), mt_elious_20_medal(),
+                  melting_pot_untamo_medal()])
 )
 
 achievement(
