@@ -4787,20 +4787,20 @@ achievement(
     title = "Botanist", points = 10, type="missable",
     description = "All flowers coded and identified.",
     id = 478281, badge = "542219", published = "11/13/2024 6:48:24 AM", modified = "3/16/2025 3:58:50 AM",
-    trigger = map_id() == 28 &&
-              tally(29, once(prev(blazera_identified()) >= 6), once(prev(forest_drop_identified()) >= 6),
-                  once(prev(byte(0x15F1F4)) >= 6), once(prev(byte(0x15F227)) >= 6), once(prev(byte(0x15F25A)) >= 6),
-                  once(prev(byte(0x15F28D)) >= 6), once(prev(byte(0x15F2C0)) >= 6), once(prev(byte(0x15F2F3)) >= 6),
-                  once(prev(byte(0x15F326)) >= 6), once(prev(byte(0x15F359)) >= 6), once(prev(byte(0x15F38C)) >= 6),
-                  once(prev(byte(0x15F3BF)) >= 6), once(prev(byte(0x15F3F2)) >= 6), once(prev(byte(0x15F425)) >= 6),
-                  once(prev(byte(0x15F458)) >= 6), once(prev(byte(0x15F48B)) >= 6), once(prev(byte(0x15F4BE)) >= 6),
-                  once(prev(byte(0x15F4F1)) >= 6), once(prev(byte(0x15F524)) >= 6), once(prev(byte(0x15F557)) >= 6),
-                  once(prev(byte(0x15F58A)) >= 6), once(prev(byte(0x15F5BD)) >= 6), once(prev(byte(0x15F5F0)) >= 6),
-                  once(prev(purse_plant_identified()) >= 6), once(prev(byte(0x15F656)) >= 6),
-                  once(prev(howl_grass_identified()) >= 6), once(prev(byte(0x15F6BC)) >= 6),
-                  once(prev(scaled_grass_identified()) >= 6), once(prev(byte(0x15F722)) >= 6),
-                  once(prev(byte(0x15F755)) >= 6)
-              ) &&
+    trigger = never(map_id() != 28) &&
+              __ornext(any_of([prev(blazera_identified() < 6), prev(forest_drop_identified() < 6),
+                  prev(byte(0x15F1F4) < 6), prev(byte(0x15F227) < 6), prev(byte(0x15F25A) < 6),
+                  prev(byte(0x15F28D) < 6), prev(byte(0x15F2C0) < 6), prev(byte(0x15F2F3) < 6),
+                  prev(byte(0x15F326) < 6), prev(byte(0x15F359) < 6), prev(byte(0x15F38C) < 6),
+                  prev(byte(0x15F3BF) < 6), prev(byte(0x15F3F2) < 6), prev(byte(0x15F425) < 6),
+                  prev(byte(0x15F458) < 6), prev(byte(0x15F48B) < 6), prev(byte(0x15F4BE) < 6),
+                  prev(byte(0x15F4F1) < 6), prev(byte(0x15F524) < 6), prev(byte(0x15F557) < 6),
+                  prev(byte(0x15F58A) < 6), prev(byte(0x15F5BD) < 6), prev(byte(0x15F5F0) < 6),
+                  prev(purse_plant_identified() < 6), prev(byte(0x15F656) < 6),
+                  prev(howl_grass_identified() < 6), prev(byte(0x15F6BC) < 6),
+                  prev(scaled_grass_identified() < 6), prev(byte(0x15F722) < 6),
+                  prev(byte(0x15F755) < 6)], x => x
+              )) &&
               measured(tally(30, once(blazera_identified() >= 6), once(forest_drop_identified() >= 6),
                   once(byte(0x15F1F4) >= 6), once(byte(0x15F227) >= 6), once(byte(0x15F25A) >= 6),
                   once(byte(0x15F28D) >= 6), once(byte(0x15F2C0) >= 6), once(byte(0x15F2F3) >= 6),
