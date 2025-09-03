@@ -4530,14 +4530,20 @@ function monster_2_judgement_link_combo() => byte(0x3DD7A8)
 // $3DDC22: [8bit] Last Written Judgement Link Combo
 function last_written_judgement_link_combo() => byte(0x3DDC22)
 
-function gold_medal_trigger(medal_addrs) {
+function value_checks_trigger(addrs_targetvals) {
     return
-        sum_of(medal_addrs,
-            addr => prev(addr) / 3
-        ) == length(medal_addrs) - 1 &&
-        measured(sum_of(medal_addrs,
-            addr => addr / 3
-        ) == length(medal_addrs), when = map_id() != 0)
+        sum_of(addrs_targetvals,
+            addr => prev(addr[0]) / addr[1]
+        ) == length(addrs_targetvals) - 1 &&
+        measured(sum_of(addrs_targetvals,
+            addr => addr[0] / addr[1]
+        ) == length(addrs_targetvals), when = map_id() != 0)
+}
+
+function gold_medal_trigger(medal_addrs) {
+    return value_checks_trigger(
+        array_map(medal_addrs, addr => [addr, 3])
+    )
 }
 
 achievement(
@@ -5063,96 +5069,56 @@ achievement(
     title = "Royal Chambers", points = 5,
     description = "Fully code all areas in Franelle Castle.",
     id = 478292, badge = "542230", published = "11/13/2024 6:48:27 AM", modified = "11/13/2024 6:48:27 AM",
-    trigger = map_id() != 0 &&
-              tally(14, once(prev(castle_gates_cleared()) == 7), once(prev(inner_garden_cleared()) == 31),
-                  once(prev(entrance_cleared()) == 15), once(prev(hall_cleared()) == 15),
-                  once(prev(corridor_cleared()) == 15), once(prev(corridor_cleared()) == 15),
-                  once(prev(corridor_cleared()) == 7), once(prev(great_gate_clear()) == 7),
-                  once(prev(council_room_cleared()) == 7), once(prev(dining_hall_cleared()) == 31),
-                  once(prev(path_to_dungeon_1_cleared()) == 7), once(prev(path_to_dungeon_2_cleared()) == 7),
-                  once(prev(audience_chamber_cleared()) == 31), once(prev(princess_quarters_cleared()) == 15),
-                  once(prev(king_s_quarters_cleared()) == 7)
-              ) &&
-              measured(tally(15, once(castle_gates_cleared() == 7), once(inner_garden_cleared() == 31),
-                  once(entrance_cleared() == 15), once(hall_cleared() == 15), once(corridor_cleared() == 15),
-                  once(corridor_cleared() == 15), once(corridor_cleared() == 7), once(great_gate_clear() == 7),
-                  once(council_room_cleared() == 7), once(dining_hall_cleared() == 31),
-                  once(path_to_dungeon_1_cleared() == 7), once(path_to_dungeon_2_cleared() == 7),
-                  once(audience_chamber_cleared() == 31), once(princess_quarters_cleared() == 15),
-                  once(king_s_quarters_cleared() == 7))
-              )
+    trigger = value_checks_trigger([[castle_gates_cleared(), 7], [inner_garden_cleared(), 31],
+                  [entrance_cleared(), 15], [hall_cleared(), 15],
+                  [corridor_cleared(), 15], [corridor_cleared(), 15],
+                  [corridor_cleared(), 7], [great_gate_clear(), 7],
+                  [council_room_cleared(), 7], [dining_hall_cleared(), 31],
+                  [path_to_dungeon_1_cleared(), 7], [path_to_dungeon_2_cleared(), 7],
+                  [audience_chamber_cleared(), 31], [princess_quarters_cleared(), 15],
+                  [king_s_quarters_cleared(), 7]])
 )
 
 achievement(
     title = "In the Heart of the Castle", points = 10,
     description = "Achieve all gold medals and code all areas in the Castle Dungeons.",
     id = 478306, badge = "542244", published = "11/13/2024 6:48:31 AM", modified = "11/13/2024 6:48:31 AM",
-    trigger = map_id() != 0 &&
-              tally(35, once(prev(fro_s_hiding_place_clear()) == 31), once(prev(escape_route_1_clear()) == 7),
-                  once(prev(escape_route_2_clear()) == 7), once(prev(escape_route_3_clear()) == 31),
-                  once(prev(escape_route_4_clear()) == 7), once(prev(escape_route_5_clear()) == 7),
-                  once(prev(escape_route_6_clear()) == 7), once(prev(prison_clear()) == 7), once(prev(prison_clear()) == 7),
-                  once(prev(dungeon_entrance_clear()) == 7), once(prev(dungeon_1_clear()) == 7),
-                  once(prev(dungeon_2_clear()) == 7), once(prev(dungeon_3_clear()) == 7),
-                  once(prev(dungeon_4_medal()) == 3), once(prev(dungeon_5_clear()) == 7),
-                  once(prev(dungeon_6_clear()) == 7), once(prev(dungeon_7_medal()) == 3),
-                  once(prev(dungeon_8_clear()) == 7), once(prev(dungeon_9_medal()) == 3),
-                  once(prev(hidden_meia_1_medal()) == 3), once(prev(hidden_meia_2_clear()) == 7),
-                  once(prev(hidden_meia_3_medal()) == 3), once(prev(hidden_meia_4_clear()) == 7),
-                  once(prev(hidden_meia_5_medal()) == 3), once(prev(hidden_meia_6_medal()) == 3),
-                  once(prev(hidden_meia_7_clear()) == 7), once(prev(hidden_meia_8_medal()) == 3),
-                  once(prev(hidden_meia_9_clear()) == 7), once(prev(hidden_meia_10_clear()) == 7),
-                  once(prev(hidden_meia_11_medal()) == 3), once(prev(hidden_meia_12_medal()) == 3),
-                  once(prev(hidden_meia_13_medal()) == 3), once(prev(hidden_meia_14_clear()) == 7),
-                  once(prev(hidden_meia_15_medal()) == 3), once(prev(hidden_meia_16_clear()) == 31),
-                  once(prev(eternal_abyss_kullervo_medal()) == 3)
-              ) &&
-              measured(tally(36, once(fro_s_hiding_place_clear() == 31), once(escape_route_1_clear() == 7),
-                  once(escape_route_2_clear() == 7), once(escape_route_3_clear() == 31), once(escape_route_4_clear() == 7),
-                  once(escape_route_5_clear() == 7), once(escape_route_6_clear() == 7), once(prison_clear() == 7),
-                  once(prison_clear() == 7), once(dungeon_entrance_clear() == 7), once(dungeon_1_clear() == 7),
-                  once(dungeon_2_clear() == 7), once(dungeon_3_clear() == 7), once(dungeon_4_medal() == 3),
-                  once(dungeon_5_clear() == 7), once(dungeon_6_clear() == 7), once(dungeon_7_medal() == 3),
-                  once(dungeon_8_clear() == 7), once(dungeon_9_medal() == 3), once(hidden_meia_1_medal() == 3),
-                  once(hidden_meia_2_clear() == 7), once(hidden_meia_3_medal() == 3), once(hidden_meia_4_clear() == 7),
-                  once(hidden_meia_5_medal() == 3), once(hidden_meia_6_medal() == 3), once(hidden_meia_7_clear() == 7),
-                  once(hidden_meia_8_medal() == 3), once(hidden_meia_9_clear() == 7), once(hidden_meia_10_clear() == 7),
-                  once(hidden_meia_11_medal() == 3), once(hidden_meia_12_medal() == 3), once(hidden_meia_13_medal() == 3),
-                  once(hidden_meia_14_clear() == 7), once(hidden_meia_15_medal() == 3), once(hidden_meia_16_clear() == 31),
-                  once(eternal_abyss_kullervo_medal() == 3))
-              )
+    trigger = value_checks_trigger([[fro_s_hiding_place_clear(), 31], [escape_route_1_clear(), 7],
+                  [escape_route_2_clear(), 7], [escape_route_3_clear(), 31],
+                  [escape_route_4_clear(), 7], [escape_route_5_clear(), 7],
+                  [escape_route_6_clear(), 7], [prison_clear(), 7], [prison_clear(), 7],
+                  [dungeon_entrance_clear(), 7], [dungeon_1_clear(), 7],
+                  [dungeon_2_clear(), 7], [dungeon_3_clear(), 7],
+                  [dungeon_4_medal(), 3], [dungeon_5_clear(), 7],
+                  [dungeon_6_clear(), 7], [dungeon_7_medal(), 3],
+                  [dungeon_8_clear(), 7], [dungeon_9_medal(), 3],
+                  [hidden_meia_1_medal(), 3], [hidden_meia_2_clear(), 7],
+                  [hidden_meia_3_medal(), 3], [hidden_meia_4_clear(), 7],
+                  [hidden_meia_5_medal(), 3], [hidden_meia_6_medal(), 3],
+                  [hidden_meia_7_clear(), 7], [hidden_meia_8_medal(), 3],
+                  [hidden_meia_9_clear(), 7], [hidden_meia_10_clear(), 7],
+                  [hidden_meia_11_medal(), 3], [hidden_meia_12_medal(), 3],
+                  [hidden_meia_13_medal(), 3], [hidden_meia_14_clear(), 7],
+                  [hidden_meia_15_medal(), 3], [hidden_meia_16_clear(), 31],
+                  [eternal_abyss_kullervo_medal(), 3]])
 )
 
 achievement(
     title = "Mystical Tower", points = 10,
     description = "Achieve all gold medals and code all areas in the Great Spear of Mastema.",
     id = 478307, badge = "542245", published = "11/13/2024 6:48:31 AM", modified = "11/13/2024 6:48:31 AM",
-    trigger = map_id() != 0 &&
-              tally(20, once(prev(great_spear_of_mastema_1_clear()) == 15),
-                  once(prev(great_spear_of_mastema_2_medal()) == 3), once(prev(great_spear_of_mastema_3_medal()) == 3),
-                  once(prev(great_spear_of_mastema_4_medal()) == 3), once(prev(great_spear_of_mastema_5_medal()) == 3),
-                  once(prev(great_spear_of_mastema_6_medal()) == 3), once(prev(great_spear_of_mastema_7_medal()) == 3),
-                  once(prev(great_spear_of_mastema_8_medal()) == 3), once(prev(great_spear_of_mastema_9_clear()) == 7),
-                  once(prev(great_spear_of_mastema_10_medal()) == 3), once(prev(great_spear_of_mastema_11_medal()) == 3),
-                  once(prev(great_spear_of_mastema_12_medal()) == 3), once(prev(great_spear_of_mastema_13_medal()) == 3),
-                  once(prev(great_spear_of_mastema_14_medal()) == 3), once(prev(great_spear_of_mastema_15_medal()) == 3),
-                  once(prev(great_spear_of_mastema_16_medal()) == 3), once(prev(great_spear_of_mastema_17_medal()) == 3),
-                  once(prev(great_spear_of_mastema_19_medal()) == 3), once(prev(great_spear_of_mastema_20_clear()) == 7),
-                  once(prev(great_spear_of_mastema_21_clear()) == 7),
-                  once(prev(paradise_at_cloud_s_end_perkele_medal()) == 3)
-              ) &&
-              measured(tally(21, once(great_spear_of_mastema_1_clear() == 15),
-                  once(great_spear_of_mastema_2_medal() == 3), once(great_spear_of_mastema_3_medal() == 3),
-                  once(great_spear_of_mastema_4_medal() == 3), once(great_spear_of_mastema_5_medal() == 3),
-                  once(great_spear_of_mastema_6_medal() == 3), once(great_spear_of_mastema_7_medal() == 3),
-                  once(great_spear_of_mastema_8_medal() == 3), once(great_spear_of_mastema_9_clear() == 7),
-                  once(great_spear_of_mastema_10_medal() == 3), once(great_spear_of_mastema_11_medal() == 3),
-                  once(great_spear_of_mastema_12_medal() == 3), once(great_spear_of_mastema_13_medal() == 3),
-                  once(great_spear_of_mastema_14_medal() == 3), once(great_spear_of_mastema_15_medal() == 3),
-                  once(great_spear_of_mastema_16_medal() == 3), once(great_spear_of_mastema_17_medal() == 3),
-                  once(great_spear_of_mastema_19_medal() == 3), once(great_spear_of_mastema_20_clear() == 7),
-                  once(great_spear_of_mastema_21_clear() == 7), once(paradise_at_cloud_s_end_perkele_medal() == 3))
-              )
+    trigger = value_checks_trigger([[great_spear_of_mastema_1_clear(), 15],
+                  [great_spear_of_mastema_2_medal(), 3], [great_spear_of_mastema_3_medal(), 3],
+                  [great_spear_of_mastema_4_medal(), 3], [great_spear_of_mastema_5_medal(), 3],
+                  [great_spear_of_mastema_6_medal(), 3], [great_spear_of_mastema_7_medal(), 3],
+                  [great_spear_of_mastema_8_medal(), 3], [great_spear_of_mastema_9_clear(), 7],
+                  [great_spear_of_mastema_10_medal(), 3], [great_spear_of_mastema_11_medal(), 3],
+                  [great_spear_of_mastema_12_medal(), 3], [great_spear_of_mastema_13_medal(), 3],
+                  [great_spear_of_mastema_14_medal(), 3], [great_spear_of_mastema_15_medal(), 3],
+                  [great_spear_of_mastema_16_medal(), 3], [great_spear_of_mastema_17_medal(), 3],
+                  [great_spear_of_mastema_19_medal(), 3], [great_spear_of_mastema_20_clear(), 7],
+                  [great_spear_of_mastema_21_clear(), 7],
+                  [paradise_at_cloud_s_end_perkele_medal(), 3]])
 )
 
 achievement(
