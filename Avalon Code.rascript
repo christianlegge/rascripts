@@ -4723,111 +4723,64 @@ achievement(
     title = "Unshackled Spirits", points = 10,
     description = "Release your spirit friends from their binds.",
     id = 478322, badge = "542260", published = "11/13/2024 6:48:37 AM", modified = "11/13/2024 6:48:37 AM",
-    trigger = map_id() == 8 &&
-              tally(3, once(prev(event_flags_rempo_unshackled()) == 1), once(prev(event_flags_mieli_unshackled()) == 1),
-                  once(prev(event_flags_neaki_unshackled()) == 1), once(prev(event_flags_ur_unshackled()) == 1)
-              ) &&
-              measured(tally(4, once(event_flags_rempo_unshackled() == 1), once(event_flags_mieli_unshackled() == 1),
-                  once(event_flags_neaki_unshackled() == 1), once(event_flags_ur_unshackled() == 1))
-              )
+    trigger = value_checks_trigger([[event_flags_rempo_unshackled(), 1], [event_flags_mieli_unshackled(), 1],
+                  [event_flags_neaki_unshackled(), 1], [event_flags_ur_unshackled(), 1]])
 )
 
 achievement(
     title = "Bestiary", points = 25, type="missable",
     description = "All enemies coded.",
     id = 478284, badge = "542222", published = "11/13/2024 6:48:25 AM", modified = "11/13/2024 6:48:25 AM",
-    trigger = map_id() != 0 &&
-              tally(75, once(prev(goblin_coded()) == 1), once(prev(hobgoblin_coded()) == 1),
-                  once(prev(king_goblin_coded()) == 1), once(prev(harpy_coded()) == 1), once(prev(siren_coded()) == 1),
-                  once(prev(minotaurus_coded()) == 1), once(prev(hell_guard_coded()) == 1),
-                  once(prev(knight_mare_coded()) == 1), once(prev(hell_knight_coded()) == 1),
-                  once(prev(lizard_man_coded()) == 1), once(prev(lizard_lord_coded()) == 1),
-                  once(prev(lion_knight_coded()) == 1), once(prev(balbazun_coded()) == 1), once(prev(pog_coded()) == 1),
-                  once(prev(raptor_coded()) == 1), once(prev(blade_beak_coded()) == 1), once(prev(dragon_pup_coded()) == 1),
-                  once(prev(shell_head_coded()) == 1), once(prev(dire_bat_coded()) == 1), once(prev(eye_wing_coded()) == 1),
-                  once(prev(frog_man_coded()) == 1), once(prev(grapper_coded()) == 1), once(prev(siege_drake_coded()) == 1),
-                  once(prev(mortar_drake_coded()) == 1), once(prev(man_eater_coded()) == 1),
-                  once(prev(blood_sucker_coded()) == 1), once(prev(blob_coded()) == 1), once(prev(pink_jelly_coded()) == 1),
-                  once(prev(dusk_spider_coded()) == 1), once(prev(black_widow_coded()) == 1),
-                  once(prev(land_squid_coded()) == 1), once(prev(mad_squid_coded()) == 1),
-                  once(prev(hell_hornet_coded()) == 1), once(prev(robber_fly_coded()) == 1),
-                  once(prev(dark_hopper_coded()) == 1), once(prev(giant_bug_coded()) == 1),
-                  once(prev(lord_locust_coded()) == 1), once(prev(abaddon_cry_coded()) == 1),
-                  once(prev(wood_bone_coded()) == 1), once(prev(living_spike_coded()) == 1),
-                  once(prev(automation_coded()) == 1), once(prev(golem_coded()) == 1),
-                  once(prev(battle_titan_coded()) == 1), once(prev(mul_coded()) == 1), once(prev(ghost_eye_coded()) == 1),
-                  once(prev(assault_eye_coded()) == 1), once(prev(mummy_coded()) == 1), once(prev(mummy_lord_coded()) == 1),
-                  once(prev(zombie_coded()) == 1), once(prev(hell_prisoner_coded()) == 1),
-                  once(prev(vampire_lady_coded()) == 1), once(prev(strigoi_coded()) == 1),
-                  once(prev(skeleton_coded()) == 1), once(prev(bone_lord_coded()) == 1),
-                  once(prev(element_skull_coded()) == 1), once(prev(evil_spirit_coded()) == 1),
-                  once(prev(demon_head_coded()) == 1), once(prev(ular_coded()) == 1), once(prev(shadow_claw_coded()) == 1),
-                  once(prev(kaleila_rebel_coded()) == 1), once(prev(evil_eye_coded()) == 1),
-                  once(prev(plasma_gazer_coded()) == 1), once(prev(arch_demon_coded()) == 1),
-                  once(prev(sargatanas_coded()) == 1), once(prev(moloch_coded()) == 1), once(prev(orobas_coded()) == 1),
-                  once(prev(nussie_coded()) == 1), once(prev(chimera_coded()) == 1), once(prev(amorphes_coded()) == 1),
-                  once(prev(torsol_coded()) == 1), once(prev(tuoni_coded()) == 1), once(prev(perkele_coded()) == 1),
-                  once(prev(malcahatu_coded()) == 1), once(prev(antelobibnen_coded()) == 1),
-                  once(prev(untamo_coded()) == 1), once(prev(kullervo_coded()) == 1)
-              ) &&
-              measured(tally(76, once(goblin_coded() == 1), once(hobgoblin_coded() == 1),
-                  once(king_goblin_coded() == 1), once(harpy_coded() == 1), once(siren_coded() == 1),
-                  once(minotaurus_coded() == 1), once(hell_guard_coded() == 1), once(knight_mare_coded() == 1),
-                  once(hell_knight_coded() == 1), once(lizard_man_coded() == 1), once(lizard_lord_coded() == 1),
-                  once(lion_knight_coded() == 1), once(balbazun_coded() == 1), once(pog_coded() == 1),
-                  once(raptor_coded() == 1), once(blade_beak_coded() == 1), once(dragon_pup_coded() == 1),
-                  once(shell_head_coded() == 1), once(dire_bat_coded() == 1), once(eye_wing_coded() == 1),
-                  once(frog_man_coded() == 1), once(grapper_coded() == 1), once(siege_drake_coded() == 1),
-                  once(mortar_drake_coded() == 1), once(man_eater_coded() == 1), once(blood_sucker_coded() == 1),
-                  once(blob_coded() == 1), once(pink_jelly_coded() == 1), once(dusk_spider_coded() == 1),
-                  once(black_widow_coded() == 1), once(land_squid_coded() == 1), once(mad_squid_coded() == 1),
-                  once(hell_hornet_coded() == 1), once(robber_fly_coded() == 1), once(dark_hopper_coded() == 1),
-                  once(giant_bug_coded() == 1), once(lord_locust_coded() == 1), once(abaddon_cry_coded() == 1),
-                  once(wood_bone_coded() == 1), once(living_spike_coded() == 1), once(automation_coded() == 1),
-                  once(golem_coded() == 1), once(battle_titan_coded() == 1), once(mul_coded() == 1),
-                  once(ghost_eye_coded() == 1), once(assault_eye_coded() == 1), once(mummy_coded() == 1),
-                  once(mummy_lord_coded() == 1), once(zombie_coded() == 1), once(hell_prisoner_coded() == 1),
-                  once(vampire_lady_coded() == 1), once(strigoi_coded() == 1), once(skeleton_coded() == 1),
-                  once(bone_lord_coded() == 1), once(element_skull_coded() == 1), once(evil_spirit_coded() == 1),
-                  once(demon_head_coded() == 1), once(ular_coded() == 1), once(shadow_claw_coded() == 1),
-                  once(kaleila_rebel_coded() == 1), once(evil_eye_coded() == 1), once(plasma_gazer_coded() == 1),
-                  once(arch_demon_coded() == 1), once(sargatanas_coded() == 1), once(moloch_coded() == 1),
-                  once(orobas_coded() == 1), once(nussie_coded() == 1), once(chimera_coded() == 1),
-                  once(amorphes_coded() == 1), once(torsol_coded() == 1), once(tuoni_coded() == 1),
-                  once(perkele_coded() == 1), once(malcahatu_coded() == 1), once(antelobibnen_coded() == 1),
-                  once(untamo_coded() == 1), once(kullervo_coded() == 1))
-              )
+    trigger = value_checks_trigger([ [goblin_coded(), 1], [hobgoblin_coded(), 1],
+                  [king_goblin_coded(), 1], [harpy_coded(), 1], [siren_coded(), 1],
+                  [minotaurus_coded(), 1], [hell_guard_coded(), 1],
+                  [knight_mare_coded(), 1], [hell_knight_coded(), 1],
+                  [lizard_man_coded(), 1], [lizard_lord_coded(), 1],
+                  [lion_knight_coded(), 1], [balbazun_coded(), 1], [pog_coded(), 1],
+                  [raptor_coded(), 1], [blade_beak_coded(), 1], [dragon_pup_coded(), 1],
+                  [shell_head_coded(), 1], [dire_bat_coded(), 1], [eye_wing_coded(), 1],
+                  [frog_man_coded(), 1], [grapper_coded(), 1], [siege_drake_coded(), 1],
+                  [mortar_drake_coded(), 1], [man_eater_coded(), 1],
+                  [blood_sucker_coded(), 1], [blob_coded(), 1], [pink_jelly_coded(), 1],
+                  [dusk_spider_coded(), 1], [black_widow_coded(), 1],
+                  [land_squid_coded(), 1], [mad_squid_coded(), 1],
+                  [hell_hornet_coded(), 1], [robber_fly_coded(), 1],
+                  [dark_hopper_coded(), 1], [giant_bug_coded(), 1],
+                  [lord_locust_coded(), 1], [abaddon_cry_coded(), 1],
+                  [wood_bone_coded(), 1], [living_spike_coded(), 1],
+                  [automation_coded(), 1], [golem_coded(), 1],
+                  [battle_titan_coded(), 1], [mul_coded(), 1], [ghost_eye_coded(), 1],
+                  [assault_eye_coded(), 1], [mummy_coded(), 1], [mummy_lord_coded(), 1],
+                  [zombie_coded(), 1], [hell_prisoner_coded(), 1],
+                  [vampire_lady_coded(), 1], [strigoi_coded(), 1],
+                  [skeleton_coded(), 1], [bone_lord_coded(), 1],
+                  [element_skull_coded(), 1], [evil_spirit_coded(), 1],
+                  [demon_head_coded(), 1], [ular_coded(), 1], [shadow_claw_coded(), 1],
+                  [kaleila_rebel_coded(), 1], [evil_eye_coded(), 1],
+                  [plasma_gazer_coded(), 1], [arch_demon_coded(), 1],
+                  [sargatanas_coded(), 1], [moloch_coded(), 1], [orobas_coded(), 1],
+                  [nussie_coded(), 1], [chimera_coded(), 1], [amorphes_coded(), 1],
+                  [torsol_coded(), 1], [tuoni_coded(), 1], [perkele_coded(), 1],
+                  [malcahatu_coded(), 1], [antelobibnen_coded(), 1],
+                  [untamo_coded(), 1], [kullervo_coded(), 1]])
 )
 
 achievement(
     title = "With Friends Like These", points = 10, type="missable",
     description = "All characters coded.",
     id = 478285, badge = "542223", published = "11/13/2024 6:48:25 AM", modified = "11/13/2024 6:48:25 AM",
-    trigger = map_id() != 0 &&
-              tally(31, once(prev(fana_coded()) == 1), once(prev(sylphy_coded()) == 1), once(prev(nanai_coded()) == 1),
-                  once(prev(dorothea_coded()) == 1), once(prev(lauca_meia_coded()) == 1), once(prev(duran_coded()) == 1),
-                  once(prev(rex_coded()) == 1), once(prev(valdo_coded()) == 1), once(prev(heath_coded()) == 1),
-                  once(prev(anwar_coded()) == 1), once(prev(gustav_coded()) == 1), once(prev(meenya_coded()) == 1),
-                  once(prev(helen_coded()) == 1), once(prev(kamui_coded()) == 1), once(prev(romaioni_coded()) == 1),
-                  once(prev(francesca_coded()) == 1), once(prev(haochy_coded()) == 1), once(prev(georg_coded()) == 1),
-                  once(prev(vis_coded()) == 1), once(prev(xenonbart_coded()) == 1), once(prev(fro_coded()) == 1),
-                  once(prev(guri_guri_coded()) == 1), once(prev(rudrud_coded()) == 1), once(prev(gim_coded()) == 1),
-                  once(prev(olly_coded()) == 1), once(prev(ellie_coded()) == 1), once(prev(werman_coded()) == 1),
-                  once(prev(maid_coded()) == 1), once(prev(royal_soldier_coded()) == 1),
-                  once(prev(imperial_soldier_coded()) == 1), once(prev(imperial_knight_coded()) == 1),
-                  once(prev(desert_dweller_coded()) == 1)
-              ) &&
-              measured(tally(32, once(fana_coded() == 1), once(sylphy_coded() == 1), once(nanai_coded() == 1),
-                  once(dorothea_coded() == 1), once(lauca_meia_coded() == 1), once(duran_coded() == 1),
-                  once(rex_coded() == 1), once(valdo_coded() == 1), once(heath_coded() == 1), once(anwar_coded() == 1),
-                  once(gustav_coded() == 1), once(meenya_coded() == 1), once(helen_coded() == 1), once(kamui_coded() == 1),
-                  once(romaioni_coded() == 1), once(francesca_coded() == 1), once(haochy_coded() == 1),
-                  once(georg_coded() == 1), once(vis_coded() == 1), once(xenonbart_coded() == 1), once(fro_coded() == 1),
-                  once(guri_guri_coded() == 1), once(rudrud_coded() == 1), once(gim_coded() == 1), once(olly_coded() == 1),
-                  once(ellie_coded() == 1), once(werman_coded() == 1), once(maid_coded() == 1),
-                  once(royal_soldier_coded() == 1), once(imperial_soldier_coded() == 1), once(imperial_knight_coded() == 1),
-                  once(desert_dweller_coded() == 1))
-              )
+    trigger = value_checks_trigger([ [fana_coded(), 1], [sylphy_coded(), 1], [nanai_coded(), 1],
+                  [dorothea_coded(), 1], [lauca_meia_coded(), 1], [duran_coded(), 1],
+                  [rex_coded(), 1], [valdo_coded(), 1], [heath_coded(), 1],
+                  [anwar_coded(), 1], [gustav_coded(), 1], [meenya_coded(), 1],
+                  [helen_coded(), 1], [kamui_coded(), 1], [romaioni_coded(), 1],
+                  [francesca_coded(), 1], [haochy_coded(), 1], [georg_coded(), 1],
+                  [vis_coded(), 1], [xenonbart_coded(), 1], [fro_coded(), 1],
+                  [guri_guri_coded(), 1], [rudrud_coded(), 1], [gim_coded(), 1],
+                  [olly_coded(), 1], [ellie_coded(), 1], [werman_coded(), 1],
+                  [maid_coded(), 1], [royal_soldier_coded(), 1],
+                  [imperial_soldier_coded(), 1], [imperial_knight_coded(), 1],
+                  [desert_dweller_coded(), 1]])
 )
 
 achievement(
@@ -4977,60 +4930,35 @@ achievement(
     title = "Fields of Grass", points = 5,
     description = "Fully code all areas in the Grana Plains.",
     id = 478280, badge = "542218", published = "11/13/2024 6:48:23 AM", modified = "11/13/2024 6:48:23 AM",
-    trigger = map_id() != 0 &&
-              tally(15, once(prev(sunny_hill_clear()) == 15), once(prev(grana_plains_1_clear()) == 31),
-                  once(prev(grana_plains_2_clear()) == 7), once(prev(grana_plains_3_clear()) == 7),
-                  once(prev(grana_plains_4_clear()) == 31), once(prev(grana_plains_5_clear()) == 15),
-                  once(prev(grana_plains_6_clear()) == 7), once(prev(grana_plains_7_clear()) == 7),
-                  once(prev(grana_plains_8_clear()) == 7), once(prev(grana_plains_9_clear()) == 7),
-                  once(prev(three_way_road_ruins_clear()) == 7), once(prev(grana_plains_10_clear()) == 7),
-                  once(prev(grana_plains_11_clear()) == 7), once(prev(grana_plains_12_clear()) == 7),
-                  once(prev(grana_plains_13_clear()) == 31), once(prev(grana_plains_14_clear()) == 7)
-              ) &&
-              measured(tally(16, once(sunny_hill_clear() == 15), once(grana_plains_1_clear() == 31),
-                  once(grana_plains_2_clear() == 7), once(grana_plains_3_clear() == 7), once(grana_plains_4_clear() == 31),
-                  once(grana_plains_5_clear() == 15), once(grana_plains_6_clear() == 7), once(grana_plains_7_clear() == 7),
-                  once(grana_plains_8_clear() == 7), once(grana_plains_9_clear() == 7),
-                  once(three_way_road_ruins_clear() == 7), once(grana_plains_10_clear() == 7),
-                  once(grana_plains_11_clear() == 7), once(grana_plains_12_clear() == 7),
-                  once(grana_plains_13_clear() == 31), once(grana_plains_14_clear() == 7))
-              )
+    trigger = value_checks_trigger([ [sunny_hill_clear(), 15], [grana_plains_1_clear(), 31],
+                  [grana_plains_2_clear(), 7], [grana_plains_3_clear(), 7],
+                  [grana_plains_4_clear(), 31], [grana_plains_5_clear(), 15],
+                  [grana_plains_6_clear(), 7], [grana_plains_7_clear(), 7],
+                  [grana_plains_8_clear(), 7], [grana_plains_9_clear(), 7],
+                  [three_way_road_ruins_clear(), 7], [grana_plains_10_clear(), 7],
+                  [grana_plains_11_clear(), 7], [grana_plains_12_clear(), 7],
+                  [grana_plains_13_clear(), 31], [grana_plains_14_clear(), 7]])
 )
 
 achievement(
     title = "Home Sweet Home", points = 5,
     description = "Fully code all areas in Rhoan Town.",
     id = 478283, badge = "542221", published = "11/13/2024 6:48:24 AM", modified = "11/13/2024 6:48:24 AM",
-    trigger = map_id() != 0 &&
-              tally(29, once(prev(crossroads_of_the_world_clear()) == 7), once(prev(town_entrance_clear()) == 7),
-                  once(prev(center_of_town_clear()) == 7), once(prev(central_park_clear()) == 7),
-                  once(prev(road_to_castle_clear()) == 7), once(prev(fortune_teller_alley_clear()) == 7),
-                  once(prev(training_hall_road_clear()) == 7), once(prev(arena_clear()) == 7),
-                  once(prev(cemetery_clear()) == 7), once(prev(back_alleys_clear()) == 7),
-                  once(prev(outside_abandoned_house_clear()) == 7), once(prev(mayor_s_house_clear()) == 7),
-                  once(prev(vis_house_outside_clear()) == 7), once(prev(home_clear()) == 15),
-                  once(prev(rex_s_house_clear()) == 7), once(prev(nanai_s_house_1f_clear()) == 7),
-                  once(prev(nanai_s_house_2f_clear()) == 7), once(prev(duran_s_house_1f_clear()) == 7),
-                  once(prev(duran_s_house_2f_clear()) == 7), once(prev(haochy_s_house_clear()) == 7),
-                  once(prev(abandoned_house_clear()) == 7), once(prev(fana_s_house_1f_clear()) == 7),
-                  once(prev(fana_s_house_2f_clear()) == 7), once(prev(kamui_s_house_clear()) == 15),
-                  once(prev(romaioni_s_house_1f_clear()) == 7), once(prev(romaioni_s_house_2f_clear()) == 7),
-                  once(prev(mayor_s_house_1f_clear()) == 7), once(prev(mayor_s_house_2f_clear()) == 7),
-                  once(prev(vis_house_inside_clear()) == 7), once(prev(training_hall_clear()) == 7)
-              ) &&
-              measured(tally(30, once(crossroads_of_the_world_clear() == 7), once(town_entrance_clear() == 7),
-                  once(center_of_town_clear() == 7), once(central_park_clear() == 7), once(road_to_castle_clear() == 7),
-                  once(fortune_teller_alley_clear() == 7), once(training_hall_road_clear() == 7), once(arena_clear() == 7),
-                  once(cemetery_clear() == 7), once(back_alleys_clear() == 7), once(outside_abandoned_house_clear() == 7),
-                  once(mayor_s_house_clear() == 7), once(vis_house_outside_clear() == 7), once(home_clear() == 15),
-                  once(rex_s_house_clear() == 7), once(nanai_s_house_1f_clear() == 7), once(nanai_s_house_2f_clear() == 7),
-                  once(duran_s_house_1f_clear() == 7), once(duran_s_house_2f_clear() == 7),
-                  once(haochy_s_house_clear() == 7), once(abandoned_house_clear() == 7), once(fana_s_house_1f_clear() == 7),
-                  once(fana_s_house_2f_clear() == 7), once(kamui_s_house_clear() == 15),
-                  once(romaioni_s_house_1f_clear() == 7), once(romaioni_s_house_2f_clear() == 7),
-                  once(mayor_s_house_1f_clear() == 7), once(mayor_s_house_2f_clear() == 7),
-                  once(vis_house_inside_clear() == 7), once(training_hall_clear() == 7))
-              )
+    trigger = value_checks_trigger([ [crossroads_of_the_world_clear(), 7], [town_entrance_clear(), 7],
+                  [center_of_town_clear(), 7], [central_park_clear(), 7],
+                  [road_to_castle_clear(), 7], [fortune_teller_alley_clear(), 7],
+                  [training_hall_road_clear(), 7], [arena_clear(), 7],
+                  [cemetery_clear(), 7], [back_alleys_clear(), 7],
+                  [outside_abandoned_house_clear(), 7], [mayor_s_house_clear(), 7],
+                  [vis_house_outside_clear(), 7], [home_clear(), 15],
+                  [rex_s_house_clear(), 7], [nanai_s_house_1f_clear(), 7],
+                  [nanai_s_house_2f_clear(), 7], [duran_s_house_1f_clear(), 7],
+                  [duran_s_house_2f_clear(), 7], [haochy_s_house_clear(), 7],
+                  [abandoned_house_clear(), 7], [fana_s_house_1f_clear(), 7],
+                  [fana_s_house_2f_clear(), 7], [kamui_s_house_clear(), 15],
+                  [romaioni_s_house_1f_clear(), 7], [romaioni_s_house_2f_clear(), 7],
+                  [mayor_s_house_1f_clear(), 7], [mayor_s_house_2f_clear(), 7],
+                  [vis_house_inside_clear(), 7], [training_hall_clear(), 7]])
 )
 
 achievement(
@@ -5052,17 +4980,10 @@ achievement(
     title = "Was This A Betrayal?", points = 10,
     description = "Achieve all gold medals and code each area in the Witch's Hidden Room.",
     id = 478289, badge = "542227", published = "11/13/2024 6:48:26 AM", modified = "11/13/2024 6:48:26 AM",
-    trigger = map_id() != 0 &&
-              tally(6, once(prev(witch_s_hidden_room_1_clear()) == 31), once(prev(witch_s_hidden_room_2_medal()) == 3),
-                  once(prev(witch_s_hidden_room_3_medal()) == 3), once(prev(witch_s_hidden_room_4_medal()) == 3),
-                  once(prev(witch_s_hidden_room_5_medal()) == 3), once(prev(witch_s_hidden_room_6_medal()) == 3),
-                  once(prev(witch_s_hidden_room_7_clear()) == 7)
-              ) &&
-              measured(tally(7, once(witch_s_hidden_room_1_clear() == 31), once(witch_s_hidden_room_2_medal() == 3),
-                  once(witch_s_hidden_room_3_medal() == 3), once(witch_s_hidden_room_4_medal() == 3),
-                  once(witch_s_hidden_room_5_medal() == 3), once(witch_s_hidden_room_6_medal() == 3),
-                  once(witch_s_hidden_room_7_clear() == 7))
-              )
+    trigger = value_checks_trigger([[witch_s_hidden_room_1_clear(), 31], [witch_s_hidden_room_2_medal(), 3],
+                  [witch_s_hidden_room_3_medal(), 3], [witch_s_hidden_room_4_medal(), 3],
+                  [witch_s_hidden_room_5_medal(), 3], [witch_s_hidden_room_6_medal(), 3],
+                  [witch_s_hidden_room_7_clear(), 7]])
 )
 
 achievement(
@@ -5125,19 +5046,11 @@ achievement(
     title = "Siege of the Century", points = 5,
     description = "Fully code all areas in Wargliss Fortress.",
     id = 478308, badge = "542246", published = "11/13/2024 6:48:32 AM", modified = "11/13/2024 6:48:32 AM",
-    trigger = map_id() != 0 &&
-              tally(8, once(prev(wargliss_fortress_1_clear()) == 7), once(prev(wargliss_fortress_2_coded()) == 1),
-                  once(prev(wargliss_fortress_3_clear()) == 7), once(prev(wargliss_fortress_4_clear()) == 7),
-                  once(prev(wargliss_fortress_5_clear()) == 7), once(prev(wargliss_fortress_6_clear()) == 7),
-                  once(prev(wargliss_fortress_7_clear()) == 7), once(prev(northern_battlefield_clear()) == 7),
-                  once(prev(waisen_empire_camp_clear()) == 7)
-              ) &&
-              measured(tally(9, once(wargliss_fortress_1_clear() == 7), once(wargliss_fortress_2_coded() == 1),
-                  once(wargliss_fortress_3_clear() == 7), once(wargliss_fortress_4_clear() == 7),
-                  once(wargliss_fortress_5_clear() == 7), once(wargliss_fortress_6_clear() == 7),
-                  once(wargliss_fortress_7_clear() == 7), once(northern_battlefield_clear() == 7),
-                  once(waisen_empire_camp_clear() == 7))
-              )
+    trigger = value_checks_trigger([[wargliss_fortress_1_clear(), 7], [wargliss_fortress_2_coded(), 1],
+                  [wargliss_fortress_3_clear(), 7], [wargliss_fortress_4_clear(), 7],
+                  [wargliss_fortress_5_clear(), 7], [wargliss_fortress_6_clear(), 7],
+                  [wargliss_fortress_7_clear(), 7], [northern_battlefield_clear(), 7],
+                  [waisen_empire_camp_clear(), 7]])
 )
 
 achievement(
@@ -5194,96 +5107,55 @@ achievement(
     title = "A Secret Lake", points = 5,
     description = "Fully code all areas in Granatum Forest and Underground Lake Avernus.",
     id = 478312, badge = "542250", published = "11/13/2024 6:48:33 AM", modified = "11/13/2024 6:48:33 AM",
-    trigger = map_id() != 0 &&
-              tally(17, once(prev(granatum_forest_1_clear()) == 7), once(prev(granatum_forest_2_clear()) == 15),
-                  once(prev(granatum_forest_3_clear()) == 7), once(prev(granatum_forest_4_clear()) == 7),
-                  once(prev(granatum_forest_5_clear()) == 7), once(prev(granatum_forest_6_clear()) == 7),
-                  once(prev(granatum_forest_7_clear()) == 7), once(prev(granatum_forest_8_clear()) == 7),
-                  once(prev(granatum_forest_9_clear()) == 15), once(prev(granatum_forest_10_clear()) == 15),
-                  once(prev(granatum_forest_11_clear()) == 7), once(prev(granatum_forest_12_clear()) == 7),
-                  once(prev(granatum_forest_13_clear()) == 15), once(prev(granatum_forest_14_clear()) == 7),
-                  once(prev(underground_lake_avernus_1_clear()) == 7), once(prev(underground_lake_avernus_2_clear()) == 7),
-                  once(prev(underground_lake_avernus_3_coded()) == 1), once(prev(underground_lake_avernus_4_clear()) == 7)
-              ) &&
-              measured(tally(18, once(granatum_forest_1_clear() == 7), once(granatum_forest_2_clear() == 15),
-                  once(granatum_forest_3_clear() == 7), once(granatum_forest_4_clear() == 7),
-                  once(granatum_forest_5_clear() == 7), once(granatum_forest_6_clear() == 7),
-                  once(granatum_forest_7_clear() == 7), once(granatum_forest_8_clear() == 7),
-                  once(granatum_forest_9_clear() == 15), once(granatum_forest_10_clear() == 15),
-                  once(granatum_forest_11_clear() == 7), once(granatum_forest_12_clear() == 7),
-                  once(granatum_forest_13_clear() == 15), once(granatum_forest_14_clear() == 7),
-                  once(underground_lake_avernus_1_clear() == 7), once(underground_lake_avernus_2_clear() == 7),
-                  once(underground_lake_avernus_3_coded() == 1), once(underground_lake_avernus_4_clear() == 7))
-              )
+    trigger = value_checks_trigger([ [granatum_forest_1_clear(), 7], [granatum_forest_2_clear(), 15],
+                  [granatum_forest_3_clear(), 7], [granatum_forest_4_clear(), 7],
+                  [granatum_forest_5_clear(), 7], [granatum_forest_6_clear(), 7],
+                  [granatum_forest_7_clear(), 7], [granatum_forest_8_clear(), 7],
+                  [granatum_forest_9_clear(), 15], [granatum_forest_10_clear(), 15],
+                  [granatum_forest_11_clear(), 7], [granatum_forest_12_clear(), 7],
+                  [granatum_forest_13_clear(), 15], [granatum_forest_14_clear(), 7],
+                  [underground_lake_avernus_1_clear(), 7], [underground_lake_avernus_2_clear(), 7],
+                  [underground_lake_avernus_3_coded(), 1], [underground_lake_avernus_4_clear(), 7]])
 )
 
 achievement(
     title = "Cavern Completionist", points = 10,
     description = "Achieve all gold medals and code all areas in Kalcazoth Cave.",
     id = 478313, badge = "542251", published = "11/13/2024 6:48:33 AM", modified = "11/13/2024 6:48:33 AM",
-    trigger = map_id() != 0 &&
-              tally(16, once(prev(kalcazoth_cave_1_medal()) == 3), once(prev(kalcazoth_cave_2_medal()) == 3),
-                  once(prev(kalcazoth_cave_3_medal()) == 3), once(prev(kalcazoth_cave_4_medal()) == 3),
-                  once(prev(kalcazoth_cave_5_medal()) == 3), once(prev(kalcazoth_cave_6_medal()) == 3),
-                  once(prev(kalcazoth_cave_7_medal()) == 3), once(prev(kalcazoth_cave_8_medal()) == 3),
-                  once(prev(clear()) == 15), once(prev(kalcazoth_cave_10_medal()) == 3),
-                  once(prev(kalcazoth_cave_11_medal()) == 3), once(prev(kalcazoth_cave_12_medal()) == 3),
-                  once(prev(kalcazoth_cave_13_medal()) == 3), once(prev(kalcazoth_cave_14_medal()) == 3),
-                  once(prev(kalcazoth_cave_15_medal()) == 3), once(prev(kalcazoth_cave_16_medal()) == 3),
-                  once(prev(kalcazoth_cave_17_medal()) == 3)
-              ) &&
-              measured(tally(17, once(kalcazoth_cave_1_medal() == 3), once(kalcazoth_cave_2_medal() == 3),
-                  once(kalcazoth_cave_3_medal() == 3), once(kalcazoth_cave_4_medal() == 3),
-                  once(kalcazoth_cave_5_medal() == 3), once(kalcazoth_cave_6_medal() == 3),
-                  once(kalcazoth_cave_7_medal() == 3), once(kalcazoth_cave_8_medal() == 3), once(clear() == 15),
-                  once(kalcazoth_cave_10_medal() == 3), once(kalcazoth_cave_11_medal() == 3),
-                  once(kalcazoth_cave_12_medal() == 3), once(kalcazoth_cave_13_medal() == 3),
-                  once(kalcazoth_cave_14_medal() == 3), once(kalcazoth_cave_15_medal() == 3),
-                  once(kalcazoth_cave_16_medal() == 3), once(kalcazoth_cave_17_medal() == 3))
-              )
+    trigger = value_checks_trigger([ [kalcazoth_cave_1_medal(), 3], [kalcazoth_cave_2_medal(), 3],
+                  [kalcazoth_cave_3_medal(), 3], [kalcazoth_cave_4_medal(), 3],
+                  [kalcazoth_cave_5_medal(), 3], [kalcazoth_cave_6_medal(), 3],
+                  [kalcazoth_cave_7_medal(), 3], [kalcazoth_cave_8_medal(), 3],
+                  [clear(), 15], [kalcazoth_cave_10_medal(), 3],
+                  [kalcazoth_cave_11_medal(), 3], [kalcazoth_cave_12_medal(), 3],
+                  [kalcazoth_cave_13_medal(), 3], [kalcazoth_cave_14_medal(), 3],
+                  [kalcazoth_cave_15_medal(), 3], [kalcazoth_cave_16_medal(), 3],
+                  [kalcazoth_cave_17_medal(), 3]])
 )
 
 achievement(
     title = "In the Forest of Fear", points = 5,
     description = "Fully code all areas in Granatum Plateau and the Deep Forest.",
     id = 478314, badge = "542252", published = "11/13/2024 6:48:33 AM", modified = "11/13/2024 6:48:33 AM",
-    trigger = map_id() != 0 &&
-              tally(12, once(prev(sun_shelf_coded()) == 1), once(prev(clear()) == 15), once(prev(clear()) == 31),
-                  once(prev(deep_forest_1_clear()) == 7), once(prev(deep_forest_2_clear()) == 7),
-                  once(prev(deep_forest_3_clear()) == 7), once(prev(deep_forest_4_clear()) == 7),
-                  once(prev(deep_forest_5_clear()) == 7), once(prev(western_big_tree_coded()) == 1),
-                  once(prev(beast_s_lair_clear()) == 7), once(prev(granatum_plateau_clear()) == 7),
-                  once(prev(light_falls_clear()) == 7), once(prev(bridge_coded()) == 1)
-              ) &&
-              measured(tally(13, once(sun_shelf_coded() == 1), once(clear() == 15), once(clear() == 31),
-                  once(deep_forest_1_clear() == 7), once(deep_forest_2_clear() == 7), once(deep_forest_3_clear() == 7),
-                  once(deep_forest_4_clear() == 7), once(deep_forest_5_clear() == 7), once(western_big_tree_coded() == 1),
-                  once(beast_s_lair_clear() == 7), once(granatum_plateau_clear() == 7), once(light_falls_clear() == 7),
-                  once(bridge_coded() == 1))
-              )
+    trigger = value_checks_trigger([ [sun_shelf_coded(), 1], [clear(), 15], [clear(), 31],
+                  [deep_forest_1_clear(), 7], [deep_forest_2_clear(), 7],
+                  [deep_forest_3_clear(), 7], [deep_forest_4_clear(), 7],
+                  [deep_forest_5_clear(), 7], [western_big_tree_coded(), 1],
+                  [beast_s_lair_clear(), 7], [granatum_plateau_clear(), 7],
+                  [light_falls_clear(), 7], [bridge_coded(), 1]])
 )
 
 achievement(
     title = "On the Hunt", points = 5,
     description = "Fully code all areas in the Hunter's Trail.",
     id = 478315, badge = "542253", published = "11/13/2024 6:48:34 AM", modified = "11/13/2024 6:48:34 AM",
-    trigger = map_id() != 0 &&
-              tally(12, once(prev(eastern_big_tree_clear()) == 15), once(prev(lauca_meia_s_house_clear()) == 31),
-                  once(prev(hunter_s_trail_1_clear()) == 7), once(prev(hunter_s_trail_2_clear()) == 7),
-                  once(prev(hunter_s_trail_3_clear()) == 7), once(prev(hunter_s_trail_4_clear()) == 7),
-                  once(prev(hunter_s_trail_5_clear()) == 7), once(prev(hunter_s_trail_6_clear()) == 7),
-                  once(prev(hunter_s_trail_7_clear()) == 7), once(prev(hunter_s_trail_8_clear()) == 7),
-                  once(prev(hunter_s_trail_9_clear()) == 7), once(prev(hunter_s_trail_10_clear()) == 7),
-                  once(prev(beast_s_cemetery_coded()) == 1)
-              ) &&
-              measured(tally(13, once(eastern_big_tree_clear() == 15), once(lauca_meia_s_house_clear() == 31),
-                  once(hunter_s_trail_1_clear() == 7), once(hunter_s_trail_2_clear() == 7),
-                  once(hunter_s_trail_3_clear() == 7), once(hunter_s_trail_4_clear() == 7),
-                  once(hunter_s_trail_5_clear() == 7), once(hunter_s_trail_6_clear() == 7),
-                  once(hunter_s_trail_7_clear() == 7), once(hunter_s_trail_8_clear() == 7),
-                  once(hunter_s_trail_9_clear() == 7), once(hunter_s_trail_10_clear() == 7),
-                  once(beast_s_cemetery_coded() == 1))
-              )
+    trigger = value_checks_trigger([ [eastern_big_tree_clear(), 15], [lauca_meia_s_house_clear(), 31],
+                  [hunter_s_trail_1_clear(), 7], [hunter_s_trail_2_clear(), 7],
+                  [hunter_s_trail_3_clear(), 7], [hunter_s_trail_4_clear(), 7],
+                  [hunter_s_trail_5_clear(), 7], [hunter_s_trail_6_clear(), 7],
+                  [hunter_s_trail_7_clear(), 7], [hunter_s_trail_8_clear(), 7],
+                  [hunter_s_trail_9_clear(), 7], [hunter_s_trail_10_clear(), 7],
+                  [beast_s_cemetery_coded(), 1]])
 )
 
 achievement(
@@ -5313,30 +5185,17 @@ achievement(
     title = "Baked Hero", points = 5,
     description = "Fully code all areas in the Central Desert and the Desert Settlement.",
     id = 478317, badge = "542255", published = "11/13/2024 6:48:35 AM", modified = "11/13/2024 6:48:35 AM",
-    trigger = map_id() != 0 &&
-              tally(20, once(prev(desert_town_clear()) == 15), once(prev(desert_witch_s_palace_coded()) == 1),
-                  once(prev(prison_clear()) == 15), once(prev(nomad_s_tent_clear()) == 7),
-                  once(prev(nomad_s_tent_clear()) == 15), once(prev(prison_escape_route_clear()) == 7),
-                  once(prev(central_desert_1_clear()) == 7), once(prev(central_desert_2_clear()) == 7),
-                  once(prev(central_desert_3_clear()) == 7), once(prev(central_desert_4_clear()) == 7),
-                  once(prev(central_desert_5_clear()) == 7), once(prev(central_desert_7_clear()) == 7),
-                  once(prev(central_desert_7_clear()) == 7), once(prev(central_desert_8_clear()) == 7),
-                  once(prev(central_desert_9_clear()) == 7), once(prev(central_desert_10_clear()) == 7),
-                  once(prev(central_desert_11_clear()) == 7), once(prev(central_desert_12_clear()) == 7),
-                  once(prev(central_desert_13_clear()) == 7), once(prev(central_desert_14_clear()) == 7),
-                  once(prev(central_desert_15_clear()) == 7)
-              ) &&
-              measured(tally(21, once(desert_town_clear() == 15), once(desert_witch_s_palace_coded() == 1),
-                  once(prison_clear() == 15), once(nomad_s_tent_clear() == 7), once(nomad_s_tent_clear() == 15),
-                  once(prison_escape_route_clear() == 7), once(central_desert_1_clear() == 7),
-                  once(central_desert_2_clear() == 7), once(central_desert_3_clear() == 7),
-                  once(central_desert_4_clear() == 7), once(central_desert_5_clear() == 7),
-                  once(central_desert_7_clear() == 7), once(central_desert_7_clear() == 7),
-                  once(central_desert_8_clear() == 7), once(central_desert_9_clear() == 7),
-                  once(central_desert_10_clear() == 7), once(central_desert_11_clear() == 7),
-                  once(central_desert_12_clear() == 7), once(central_desert_13_clear() == 7),
-                  once(central_desert_14_clear() == 7), once(central_desert_15_clear() == 7))
-              )
+    trigger = value_checks_trigger([ [desert_town_clear(), 15], [desert_witch_s_palace_coded(), 1],
+                  [prison_clear(), 15], [nomad_s_tent_clear(), 7],
+                  [nomad_s_tent_clear(), 15], [prison_escape_route_clear(), 7],
+                  [central_desert_1_clear(), 7], [central_desert_2_clear(), 7],
+                  [central_desert_3_clear(), 7], [central_desert_4_clear(), 7],
+                  [central_desert_5_clear(), 7], [central_desert_7_clear(), 7],
+                  [central_desert_7_clear(), 7], [central_desert_8_clear(), 7],
+                  [central_desert_9_clear(), 7], [central_desert_10_clear(), 7],
+                  [central_desert_11_clear(), 7], [central_desert_12_clear(), 7],
+                  [central_desert_13_clear(), 7], [central_desert_14_clear(), 7],
+                  [central_desert_15_clear(), 7]])
 )
 
 achievement(
@@ -5362,74 +5221,41 @@ achievement(
     title = "Get Me Some Water", points = 5,
     description = "Fully code all areas in the Western Desert.",
     id = 478319, badge = "542257", published = "11/13/2024 6:48:36 AM", modified = "11/13/2024 6:48:36 AM",
-    trigger = map_id() != 0 &&
-              tally(20, once(prev(western_desert_1_clear()) == 7), once(prev(western_desert_2_clear()) == 7),
-                  once(prev(western_desert_3_clear()) == 7), once(prev(western_desert_4_clear()) == 7),
-                  once(prev(western_desert_5_clear()) == 7), once(prev(western_desert_6_clear()) == 7),
-                  once(prev(western_desert_7_clear()) == 7), once(prev(western_desert_1_clear()) == 31),
-                  once(prev(western_desert_9_clear()) == 7), once(prev(western_desert_10_clear()) == 31),
-                  once(prev(western_desert_11_clear()) == 7), once(prev(western_desert_12_clear()) == 7),
-                  once(prev(western_desert_13_clear()) == 31), once(prev(western_desert_14_clear()) == 7),
-                  once(prev(western_desert_15_clear()) == 7), once(prev(western_desert_16_clear()) == 15),
-                  once(prev(western_desert_17_clear()) == 7), once(prev(western_desert_18_clear()) == 7),
-                  once(prev(western_desert_19_clear()) == 31), once(prev(western_desert_20_clear()) == 7),
-                  once(prev(western_desert_21_clear()) == 7)
-              ) &&
-              measured(tally(21, once(western_desert_1_clear() == 7), once(western_desert_2_clear() == 7),
-                  once(western_desert_3_clear() == 7), once(western_desert_4_clear() == 7),
-                  once(western_desert_5_clear() == 7), once(western_desert_6_clear() == 7),
-                  once(western_desert_7_clear() == 7), once(western_desert_1_clear() == 31),
-                  once(western_desert_9_clear() == 7), once(western_desert_10_clear() == 31),
-                  once(western_desert_11_clear() == 7), once(western_desert_12_clear() == 7),
-                  once(western_desert_13_clear() == 31), once(western_desert_14_clear() == 7),
-                  once(western_desert_15_clear() == 7), once(western_desert_16_clear() == 15),
-                  once(western_desert_17_clear() == 7), once(western_desert_18_clear() == 7),
-                  once(western_desert_19_clear() == 31), once(western_desert_20_clear() == 7),
-                  once(western_desert_21_clear() == 7))
-              )
+    trigger = value_checks_trigger([ [western_desert_1_clear(), 7], [western_desert_2_clear(), 7],
+                  [western_desert_3_clear(), 7], [western_desert_4_clear(), 7],
+                  [western_desert_5_clear(), 7], [western_desert_6_clear(), 7],
+                  [western_desert_7_clear(), 7], [western_desert_1_clear(), 31],
+                  [western_desert_9_clear(), 7], [western_desert_10_clear(), 31],
+                  [western_desert_11_clear(), 7], [western_desert_12_clear(), 7],
+                  [western_desert_13_clear(), 31], [western_desert_14_clear(), 7],
+                  [western_desert_15_clear(), 7], [western_desert_16_clear(), 15],
+                  [western_desert_17_clear(), 7], [western_desert_18_clear(), 7],
+                  [western_desert_19_clear(), 31], [western_desert_20_clear(), 7],
+                  [western_desert_21_clear(), 7]])
 )
 
 achievement(
     title = "Are Cacti Edible?", points = 5,
     description = "Fully code all areas in the Eastern Desert.",
     id = 478320, badge = "542258", published = "11/13/2024 6:48:36 AM", modified = "11/13/2024 6:48:36 AM",
-    trigger = map_id() != 0 &&
-              tally(17, once(prev(eastern_desert_1_clear()) == 7), once(prev(eastern_desert_2_clear()) == 7),
-                  once(prev(eastern_desert_3_clear()) == 7), once(prev(eastern_desert_4_clear()) == 7),
-                  once(prev(eastern_desert_5_clear()) == 7), once(prev(eastern_desert_6_clear()) == 31),
-                  once(prev(eastern_desert_7_clear()) == 7), once(prev(eastern_desert_8_clear()) == 7),
-                  once(prev(eastern_desert_9_clear()) == 7), once(prev(eastern_desert_10_clear()) == 7),
-                  once(prev(eastern_desert_11_clear()) == 7), once(prev(eastern_desert_12_clear()) == 7),
-                  once(prev(eastern_desert_13_clear()) == 31), once(prev(eastern_desert_14_clear()) == 15),
-                  once(prev(eastern_desert_15_clear()) == 7), once(prev(eastern_desert_16_clear()) == 7),
-                  once(prev(eastern_desert_17_clear()) == 15), once(prev(eastern_desert_18_clear()) == 31)
-              ) &&
-              measured(tally(18, once(eastern_desert_1_clear() == 7), once(eastern_desert_2_clear() == 7),
-                  once(eastern_desert_3_clear() == 7), once(eastern_desert_4_clear() == 7),
-                  once(eastern_desert_5_clear() == 7), once(eastern_desert_6_clear() == 31),
-                  once(eastern_desert_7_clear() == 7), once(eastern_desert_8_clear() == 7),
-                  once(eastern_desert_9_clear() == 7), once(eastern_desert_10_clear() == 7),
-                  once(eastern_desert_11_clear() == 7), once(eastern_desert_12_clear() == 7),
-                  once(eastern_desert_13_clear() == 31), once(eastern_desert_14_clear() == 15),
-                  once(eastern_desert_15_clear() == 7), once(eastern_desert_16_clear() == 7),
-                  once(eastern_desert_17_clear() == 15), once(eastern_desert_18_clear() == 31))
-              )
+    trigger = value_checks_trigger([ [eastern_desert_1_clear(), 7], [eastern_desert_2_clear(), 7],
+                  [eastern_desert_3_clear(), 7], [eastern_desert_4_clear(), 7],
+                  [eastern_desert_5_clear(), 7], [eastern_desert_6_clear(), 31],
+                  [eastern_desert_7_clear(), 7], [eastern_desert_8_clear(), 7],
+                  [eastern_desert_9_clear(), 7], [eastern_desert_10_clear(), 7],
+                  [eastern_desert_11_clear(), 7], [eastern_desert_12_clear(), 7],
+                  [eastern_desert_13_clear(), 31], [eastern_desert_14_clear(), 15],
+                  [eastern_desert_15_clear(), 7], [eastern_desert_16_clear(), 7],
+                  [eastern_desert_17_clear(), 15], [eastern_desert_18_clear(), 31]])
 )
 
 achievement(
     title = "World Traveler", points = 5,
     description = "Fully code all areas in Weld River, Ravine of Vulgazzo, and Shark's Jaw.",
     id = 478321, badge = "542259", published = "11/13/2024 6:48:36 AM", modified = "11/13/2024 6:48:36 AM",
-    trigger = map_id() != 0 &&
-              tally(8, once(prev(weld_river_1_clear()) == 15), once(prev(weld_river_2_clear()) == 7),
-                  once(prev(weld_river_3_clear()) == 7), once(prev(ravine_of_vulgazzo_1_clear()) == 7),
-                  once(prev(ravine_of_vulgazzo_2_clear()) == 7), once(prev(ravine_of_vulgazzo_3_clear()) == 7),
-                  once(prev(shark_s_jaw_1_clear()) == 7), once(prev(shark_s_jaw_2_clear()) == 7),
-                  once(prev(shark_s_jaw_3_clear()) == 15)
-              ) &&
-              measured(tally(9, once(weld_river_1_clear() == 15), once(weld_river_2_clear() == 7),
-                  once(weld_river_3_clear() == 7), once(ravine_of_vulgazzo_1_clear() == 7),
-                  once(ravine_of_vulgazzo_2_clear() == 7), once(ravine_of_vulgazzo_3_clear() == 7),
-                  once(shark_s_jaw_1_clear() == 7), once(shark_s_jaw_2_clear() == 7), once(shark_s_jaw_3_clear() == 15))
-              )
+    trigger = value_checks_trigger([[weld_river_1_clear(), 15], [weld_river_2_clear(), 7],
+                  [weld_river_3_clear(), 7], [ravine_of_vulgazzo_1_clear(), 7],
+                  [ravine_of_vulgazzo_2_clear(), 7], [ravine_of_vulgazzo_3_clear(), 7],
+                  [shark_s_jaw_1_clear(), 7], [shark_s_jaw_2_clear(), 7],
+                  [shark_s_jaw_3_clear(), 15]])
 )
