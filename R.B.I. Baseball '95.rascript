@@ -265,7 +265,7 @@ function difficulty() => byte(0x00CF24)
 //        0x01 = Human vs. Human
 //        0x02 = Comp vs. Comp
 function players_setting() => byte(0x00CF25)
-function sp() => players_setting() == 0x00
+function sp() => demo() == 0 && players_setting() == 0x00
 
 // $CF29: [8-bit] Movies setting
 //        0x00 = Off
@@ -286,6 +286,8 @@ function something_to_do_with_ai() => byte(0x00CF40)
 function for_1_player_which_team_is_human_controlling() => byte(0x00CF41)
 function paway() => for_1_player_which_team_is_human_controlling() == 0x00
 function phome() => for_1_player_which_team_is_human_controlling() == 0x01
+
+function demo() => bit7(0xcf43)
 
 // $CF87: [8-bit] Current inning
 function current_inning() => byte(0x00CF87)
@@ -1027,6 +1029,11 @@ function rp_ac(addr) => rich_presence_lookup("CustomASCII", byte(addr), {
 rp_scenario = rich_presence_lookup("Scenario", unchanging_gb_scenario(), scenario_dict, "Unknown Scenario")
 
 rich_presence_conditional_display(
+    demo() == 1,
+    "Watching the demo"
+)
+
+rich_presence_conditional_display(
     current_inning() > 0 && sp() && game() && game_mode() == 0x00, // Playball
      "[Playball] [{0}] {1} {2} {3} {4}-{5} {6} {7}",
     rp_series_type, rp_human_team, rp_home_away, rp_computer_team,
@@ -1034,14 +1041,14 @@ rich_presence_conditional_display(
 )
 
 rich_presence_conditional_display(
-     current_inning() > 0 &&sp() && game_mode() == 0x02,
+     current_inning() > 0 && sp() && game_mode() == 0x02,
      "[Game Breakers] [{0}] {1} {2} {3} {4}-{5} {6} {7}",
     rp_scenario, rp_human_team, rp_home_away, rp_computer_team,
     rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
 )
 
 rich_presence_conditional_display(
-     current_inning() > 0 &&sp() && game(),
+     current_inning() > 0 && sp() && game(),
      "[{0}] {1} {2} {3} {4}-{5} {6} {7}",
     rp_gamemode, rp_human_team, rp_home_away, rp_computer_team,
     rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
@@ -1055,7 +1062,7 @@ rich_presence_conditional_display(
 )
 
 rich_presence_conditional_display(
-     current_inning() > 0 &&game_mode() == 0x02, // Game Breakers
+     current_inning() > 0 && game_mode() == 0x02, // Game Breakers
      "[{0}] [Game Breakers] [{1}] {2} @ {3} {4}-{5} {6} {7}",
     rp_multi, rp_gamemode, rp_human_team, rp_computer_team,
     rp_human_runs, rp_computer_runs, rp_top_bottom, rp_inning
