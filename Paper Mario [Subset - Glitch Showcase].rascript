@@ -987,12 +987,13 @@ achievement("Out on Good Behavior", "In Koopa Bros. Fortress, recruit Bombette b
     )
 )
 
-achievement("Around the Outside", "Cross the top of the room with 3 jail cells while only hitting the red switch once.", points = 2,
+achievement("Around the Outside", "Cross the top of the room with 3 jail cells while only hitting the red switch once and without using Parakarry.", points = 2,
     trigger = any_of(regions, r => 
         region_check[r] && once(prev(map_id[r] == 4) && map_id[r] == 3 && entry_id[r] == 3) &&
         never(region_check[r] && area_id[r] != 7) &&
         never(region_check[r] && map_id[r] != 2 && map_id[r] != 3) &&
         never(region_check[r] && map_id[r] == 2 && entry_id[r] != 3) &&
+        never(region_check[r] && acting_partner[r] == 0x04 && partner_action_state[r] == 0x01) &&
         never(repeated(2, region_check[r] && mv0[r] != prev(mv0[r]))) &&
         trigger_when(prev(map_id[r] == 0x3) && map_id[r] == 0x2 && entry_id[r] == 3)
     )
