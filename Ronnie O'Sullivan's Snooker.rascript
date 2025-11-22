@@ -492,8 +492,9 @@ achievement(title = "Chain Reaction", description = "Legally pot a plant by hitt
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
 achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
-    trigger =       in_game() && __ornext(in_tournament() || in_quick_match()) && !replay() && 
+    trigger =       in_game() && __ornext(in_tournament() || in_quick_match()) && never(replay()) && 
     once(break_off()) && never(their_shot() && !snookered()) && never(shot_timer_reset()) &&
+    never(opponent_score() > 0) &&
     prev(our_shot()) && trigger_when(their_shot()) && trigger_when(snookered()))
 
 achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
