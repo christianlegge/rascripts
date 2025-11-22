@@ -1016,9 +1016,23 @@ function lv_lastclass_lb(rivname, rivid, prevclass, previdx) {
     )
 }
 
+function lv_bp2_lb(rivname, rivid, prevclass, previdx) {
+    leaderboard(title = format("{0} Speedtoob", rivname), description = format("Toob down {0} as fast as possible", rivname),
+        start = class_level() == prevclass && river() == rivid && prev(level_screens() == 0x11) && level_screens() != 0x11 && level_screens() != 0x13,
+        cancel = __ornext(patches() < prev(patches()) || patches() == 0xff || river() != rivid || code_block() == 7 || level_screens() == 0x13),
+        submit = beat_game(),
+        value = always_true(),
+        format = "FRAMES",
+        lower_is_better = true
+    )
+}
+
 for riv in level_data {
     if (length(level_data[riv]) == 4) {
         lv_speed_lb(riv, level_data[riv][0], level_data[riv][1], level_data[riv][2], level_data[riv][3])
+    }
+    else if (riv == "Beach Party II") {
+        lv_bp2_lb(riv, level_data[riv][0], level_data[riv][1], level_data[riv][2])
     }
     else if (length(level_data[riv]) == 3) {
         lv_lastclass_lb(riv, level_data[riv][0], level_data[riv][1], level_data[riv][2])
