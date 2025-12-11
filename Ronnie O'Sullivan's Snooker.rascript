@@ -82,9 +82,10 @@ opponents = {
 }
 
 function snookered() => byte(0x009d8a60) == 0x01
+function not_snookered() => byte(0x9d8a60) == 0x00
 function free_ball() => byte(0x009d8a5f) == 0x01
 
-function replay() => byte(0x01ffd98c) == 1
+function replay() => byte(0x15ceba0) == 7
 
 function practice_timer() => dword(0x009d8a94)
 
@@ -353,7 +354,7 @@ function frame_started() => player_score() == 0 && opponent_score() == 0 && in_g
 function frames_won() => dword(0x015adbc0)
 function match_total_frames() => dword(0x009d8e60)
 
-function ball_in_hand() => byte(0x009d8a61) == 0x01
+function ball_in_hand() => byte(0x15ceba0) == 0x0a
 
 function shot_timer() => word(0x009d8a7a)
 
@@ -476,83 +477,83 @@ function break_off() => ball_in_hand() && player_score() == 0 && opponent_score(
 
 // Achievements
 
-achievement(title = "There and Back Again", description="Legally pot a double by bouncing a ball off of a rail at least once before potting it.", points=3,
+achievement(id = 452738, title = "There and Back Again", description="Legally pot a double by bouncing a ball off of a rail at least once before potting it.", points=3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), potted_double) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
     
-achievement(title = "Shot to Something", description="Legally pot a cocked-hat double by bouncing a ball off of at least 3 rails before potting it.", points=10,
+achievement(id=452739, title = "Shot to Something", description="Legally pot a cocked-hat double by bouncing a ball off of at least 3 rails before potting it.", points=10,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), ball_banked_three) && score_increased() && never(their_shot() || in_menu() || shot_timer_reset()))
 
-achievement(title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
+achievement(id = 452732, title = "Well On Your Way", description = "Win a frame in Tournament or Quick Match mode.", points = 5,
     trigger = in_game() && !replay() && __ornext(in_tournament() || in_quick_match()) && prev(game_in_progress()) && game_won())
 
-achievement(title = "Two For One Deal", description = "Legally pot two or more balls with one shot.", points = 5,
+achievement(id=452733, title = "Two For One Deal", description = "Legally pot two or more balls with one shot.", points = 5,
     trigger = in_game() && prev(in_game()) && !replay() && our_shot() && any_of(range(7, 21), ball_on) && player_score() - prev(player_score()) >= 2)
 
-achievement(title = "Chain Reaction", description = "Legally pot a plant by hitting a ball on into another ball on to pot it.", points = 3,
+achievement(id=452727, title = "Chain Reaction", description = "Legally pot a plant by hitting a ball on into another ball on to pot it.", points = 3,
     trigger = in_game() && !replay() && our_shot() && any_of(range(1, 21), plant_pot) && score_increased() && never(in_menu() || their_shot() || shot_timer_reset()))
 
-achievement(title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
+achievement(id=452717, title = "Well, This is a Bad Start... But Not For Me!", description = "Snooker your opponent on the break-off shot and without committing a foul in Tournament or Quick Match mode.", points = 10,
     trigger =       in_game() && __ornext(in_tournament() || in_quick_match()) && never(replay()) && 
-    once(break_off()) && never(their_shot() && !snookered()) && never(shot_timer_reset()) &&
+    once(break_off()) && never(prev(their_shot()) && !snookered()) &&
     never(opponent_score() > 0) &&
-    prev(our_shot()) && trigger_when(their_shot()) && trigger_when(snookered()))
+    trigger_when(their_shot()) && trigger_when(prev(not_snookered())) && trigger_when(snookered()))
 
-achievement(title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
+achievement(id=452522, title = "Getting Out of Trouble", description = "From a snookered position, make a legal stroke by hitting a ball on.", points = 3,
     trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(prev(ball_first_struck()) == 0) && trigger_when(any_hit_ball_on()))
 
-achievement(title = "Can't Keep a Good Player Down", description = "From a snookered position, legally pot a ball.", points = 5,
+achievement(id=452729, title = "Can't Keep a Good Player Down", description = "From a snookered position, legally pot a ball.", points = 5,
     trigger = in_game() && !replay() && our_shot() && snookered() && !free_ball() && trigger_when(score_increased()))
 
-achievement(title = "Name of the Game", description = "Snooker your opponent without committing a foul.", points = 5,
+achievement(id=452547, title = "Name of the Game", description = "Snooker your opponent without committing a foul.", points = 5,
     trigger = in_game() && !replay() && prev(our_shot()) && their_shot() && snookered() && !free_ball())
 
-achievement(title = "I Know Better Than You", description = "Make a scoring play when the game recommends a safety shot.", points = 5,
+achievement(id=452525, title = "I Know Better Than You", description = "Make a scoring play when the game recommends a safety shot.", points = 5,
     trigger = in_game() && !replay() && our_shot() && current_career_scenario() == 0x11 &&
     (current_career_sub_scenario() == 0 || current_career_sub_scenario() == 2) &&
     disable_when(their_shot(),  until = in_menu() || replay() || game_won()) &&
     trigger_when(any_legal_pot()))
 
-achievement(title = "Where's the Cue Ball Going?!", description = "In one stroke, legally pot a ball and have the cue ball come to rest right next to a pocket.", points = 10,
+achievement(id=452557,title = "Where's the Cue Ball Going?!", description = "In one stroke, legally pot a ball and have the cue ball come to rest right next to a pocket.", points = 10,
     trigger = in_game() && !replay() && our_shot() && cue_ball_next_to_pocket() && prev(player_score()) < player_score())
 
-achievement(title = "Long Pot", description = "Legally pot a ball when it and the cue ball are at opposite ends of the table.", points = 3,
+achievement(id=452528, title = "Long Pot", description = "Legally pot a ball when it and the cue ball are at opposite ends of the table.", points = 3,
     trigger = in_game() && !replay() && our_shot() && (any_of(range(1, 21), did_long_pot_a) || any_of(range(1, 21), did_long_pot_b)) && never(shot_timer_reset()))
 
 // This doesn't need logic protection for the "set up colours" option because the memory I'm using doesn't set them as off the table
-achievement(title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
+achievement(id = 452524, title = "Gotta Hit 'Em All, Snooker Balls", description = "Clear the table in Practice mode (without using the \"Set Up Colours\" option).", points = 3,
             trigger = in_game() && !replay() && in_practice() && none_of(range(1, 21), ball_is_on_table) && __ornext(any_of(range(1, 21), ball_is_on_table_prev)))
 
-achievement(title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
+achievement(id=452546, title = "Mercy Kill", description = "Win by concession before starting to pot the colours.", points = 10,
             trigger = in_game() && !replay() && all_colours_left() && __ornext(in_tournament() || in_quick_match()) && game_won() && prev(game_in_progress()))
 
-achievement(title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 1,
+achievement(id=452558, title = "Zero-Sum Game", description = "Score points due to an opponent's foul.", points = 1,
             trigger = in_game() && !replay() && their_shot() && player_score() > prev(player_score()))
 
 achievement(title = "Wait, This Isn't 8-Ball?", description = "View the Game Rules menu.",
 points = 0, trigger = in_menu() && prev(current_menu()) == 0x04 && current_menu() == 0x0f)
 
-achievement(title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
+achievement(id=452534, title = "Red, Black, Red, Black...", description = "Pot and re-spot the black ball three or more times in a single break.",
 points = 5, trigger = never(in_menu() || !our_shot() || current_break() == 0) && in_game() && never(replay()) && our_shot() &&
                       repeated(3, potted_ball_legally(6)) && measured(repeated(3, ball_got_respotted(6))))
 
-achievement(title = "Just Another Notch in the Belt", description = "Win a Final match to become champion of the Premier League in Tournament mode.", points = 25,
+achievement(id = 452527, title = "Just Another Notch in the Belt", description = "Win a Final match to become champion of the Premier League in Tournament mode.", points = 25,
             trigger = in_game() && !replay() && in_tournament() && prev(game_in_progress()) && game_won() && match_total_frames() == 7 && prev(frames_won()) == 3 && frames_won() == 4)
 
 // Noticed this achievement adding an always false condition to the reset group - double check that
-achievement(title = "Speed Potter", description = "Complete any of the Career mode Practice stages in one minute or less after starting (time bonuses don't count).", points = 10,
+achievement(id=452551, title = "Speed Potter", description = "Complete any of the Career mode Practice stages in one minute or less after starting (time bonuses don't count).", points = 10,
     trigger = in_game() && !replay() && in_career() && in_career_practice() && trigger_when(prev(game_in_progress()) && game_won()) &&
     disable_when(repeated(3601, timer_is_running()), until = (in_menu() || game_lost() || !in_career_practice())))
 
 achievement(title = "Ronnie Rainbow II", description = "Pot and re-spot each coloured ball at least once during a single break.", points = 10,
     trigger = in_game() && never(in_menu()) && never(their_shot()) && never(!game_in_progress()) && never(current_break() == 0 && prev(current_break() > 0)) && all_of(range(1, 6), our_ball_potted_once) && measured(tally_of(range(1, 6), 6, our_ball_respotted_once)))
 
-achievement(title = "Ronnie Rainbow I", description = "Pot and re-spot each coloured ball at least once during a single frame.", points = 5,
+achievement(id=452550, title = "Ronnie Rainbow I", description = "Pot and re-spot each coloured ball at least once during a single frame.", points = 5,
     trigger = in_game() && !replay() && never(in_menu()) && never(!game_in_progress()) && all_of(range(1, 6), our_ball_potted_once) && measured(tally_of(range(1, 6), 6, our_ball_respotted_once)))
 
-achievement(title = "Fast Can Be Smooth Too", description = "Legally pot a ball while shooting at full power.", points = 3,
+achievement(id=452521, title = "Fast Can Be Smooth Too", description = "Legally pot a ball while shooting at full power.", points = 3,
     trigger = in_game() && !replay() && our_shot() && shot_power() == 65536 && trigger_when(prev(player_score()) < player_score()))
 
-achievement(title = "Break-Off to a Good Start", description = "Pot a red ball on the break-off shot in Tournament or Quick Match mode.", points = 5,
+achievement(id=452518, title = "Break-Off to a Good Start", description = "Pot a red ball on the break-off shot in Tournament or Quick Match mode.", points = 5,
     trigger = in_game() && __ornext(in_tournament() || in_quick_match()) && !replay() && our_shot() &&
     once(break_off()) && never(their_shot()) &&
     trigger_when(prev(player_score()) < player_score())
