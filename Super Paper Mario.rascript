@@ -14,6 +14,9 @@ function cooking_disk_5() => bit0(0x5256df)
 function cooking_disk_6() => bit1(0x5256df)
 function cooking_disk_7() => bit2(0x5256df)
 
+function story() => dword_be(0x525690)
+current_map = 0x525594
+
 saffron_recipes = [
     bit3(0x511d44),
     bit6(0x511d44),
@@ -338,4 +341,122 @@ cards_2_star = [
     bit7(0x511d6f)
 ]
 
+class CharacterOrPixlSlot {
+    base = 0
 
+    function obtained(id) {
+        prev(byte(base)) == 0 &&
+        byte(base) == 1 &&
+        word(base + 2) == id
+    }
+}
+
+character_slots = [
+    CharacterOrPixlSlot(0x511adc),
+    CharacterOrPixlSlot(0x511ae0),
+    CharacterOrPixlSlot(0x511ae4),
+    CharacterOrPixlSlot(0x511ae8)
+]
+
+pixl_slots = [
+    CharacterOrPixlSlot(0x511aec),
+    CharacterOrPixlSlot(0x511af0),
+    CharacterOrPixlSlot(0x511af4),
+    CharacterOrPixlSlot(0x511af8),
+    CharacterOrPixlSlot(0x511afc),
+    CharacterOrPixlSlot(0x511b00),
+    CharacterOrPixlSlot(0x511b04),
+    CharacterOrPixlSlot(0x511b08),
+    CharacterOrPixlSlot(0x511b0c),
+    CharacterOrPixlSlot(0x511b10),
+    CharacterOrPixlSlot(0x511b14),
+    CharacterOrPixlSlot(0x511b18),
+    CharacterOrPixlSlot(0x511b1c),
+    CharacterOrPixlSlot(0x511b20),
+    CharacterOrPixlSlot(0x511b24),
+    CharacterOrPixlSlot(0x511b28)
+]
+
+function bitflag_cheevo(flags, title, description, points) {
+    achievement(
+        title = title,
+        description = description,
+        points = points,
+        trigger = 
+            measured(sum_of(flags, flag => flag)) &&
+            sum_of(flags, flag => prev(flag)) == length(flags)
+    )
+}
+
+function story_cheevo(seq, map_id, title, description, points) {
+    achievement(
+        title = title,
+        description = description,
+        points = points,
+        trigger =
+            story() = seq &&
+            prev(story) < seq &&
+            ascii_string_equals(current_map, map_id)
+   ) 
+}
+
+bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 10)
+bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
+bitflag_cheevo(saffron_recipes, "Saffron Placeholder", "Cook all of the 1-ingredient recipes.", 5)
+bitflag_cheevo(dyllis_recipes, "Dyllis Placeholder", "Cook all of the 2-ingredient recipes.", 10)
+
+achievement(
+    title = "A Helping Hand",
+    description = "Recruit Thoreau to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xdd))
+)
+
+achievement(
+    title = "Float On",
+    description = "Recruit Peach to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(character_slots, slot => slot.obtained(0xd9))
+)
+
+achievement(
+    title = "A Helping Hand",
+    description = "Recruit Boomer to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xde))
+)
+
+achievement(
+    title = "A Helping Hand",
+    description = "Recruit Slim to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xdf))
+)
+
+achievement(
+    title = "A Helping Hand",
+    description = "Recruit Bowser to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(character_slots, slot => slot.obtained(0xda))
+)
+
+achievement(
+    title = "A Helping Hand",
+    description = "Recruit Thudley to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xe0))
+)
+
+achievement(
+    title = "A Helping Hand",
+    description = "Recruit Carrie to the party.",
+    points = 2,
+    type = "progression",
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xe1))
+)
