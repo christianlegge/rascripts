@@ -1,3 +1,6 @@
+// Super Paper Mario
+// #ID = 187
+
 function mario() => byte(0x510490) == 0
 function peach() => byte(0x510490) == 1
 function bowser() => byte(0x510490) == 2
@@ -345,9 +348,9 @@ class CharacterOrPixlSlot {
     base = 0
 
     function obtained(id) {
-        prev(byte(base)) == 0 &&
-        byte(base) == 1 &&
-        word(base + 2) == id
+        return prev(byte(this.base)) == 0 &&
+        byte(this.base) == 1 &&
+        word(this.base + 2) == id
     }
 }
 
@@ -383,8 +386,7 @@ function bitflag_cheevo(flags, title, description, points) {
         description = description,
         points = points,
         trigger = 
-            measured(sum_of(flags, flag => flag)) &&
-            sum_of(flags, flag => prev(flag)) == length(flags)
+            measured(sum_of(flags, flag => prev(flag)) == length(flags))
     )
 }
 
@@ -394,7 +396,7 @@ function story_cheevo(seq, map_id, title, description, points) {
         description = description,
         points = points,
         trigger =
-            story() = seq &&
+            story() == seq &&
             prev(story) < seq &&
             ascii_string_equals(current_map, map_id)
    ) 
