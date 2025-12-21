@@ -20,6 +20,20 @@ function cooking_disk_7() => bit2(0x5256df)
 function story() => dword_be(0x525690)
 current_map = 0x525594
 
+function map_flag(num, base) {
+    num = num - 1
+    bitn = num % 8
+    if (num > 32) {
+        base = base + 4
+        num = num - 32
+    }
+    off = 3 - num / 8
+    return bit(bitn, base + off)
+}
+
+function owned_map_flag(num) => map_flag(num, 0x511d34)
+function found_map_flag(num) => map_flag(num, 0x511d3c)
+
 saffron_recipes = [
     bit3(0x511d44),
     bit6(0x511d44),
@@ -402,6 +416,18 @@ function story_cheevo(seq, map_id, title, description, points) {
    ) 
 }
 
+function map_cheevo(maps, title, description, points) {
+    achievement(
+        title = title,
+        description = description,
+        points = points,
+        trigger =
+            all_of(maps, n => owned_map_flag(n) == 1) &&
+            measured(sum_of(maps, n => found_map_flag(n)) == length(maps)) &&
+            __ornext(any_of(maps, n => prev(found_map_flag(n)) == 0))
+    )
+}
+
 bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 10)
 bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
 bitflag_cheevo(saffron_recipes, "Saffron Placeholder", "Cook all of the 1-ingredient recipes.", 5)
@@ -462,3 +488,8 @@ achievement(
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xe1))
 )
+
+map_cheevo(range(1, 11), "Maps I", "test", 1)
+map_cheevo(range(12, 24), "Maps II", "test", 1)
+map_cheevo(range(25, 37), "Maps III", "test", 1)
+map_cheevo(range(38, 48), "Maps IV", "test", 1)
