@@ -428,6 +428,20 @@ function map_cheevo(maps, title, description, points) {
     )
 }
 
+function cooking_disk_cheevo(addr, title, description) {
+    achievement(
+        title = title,
+        description = description,
+        points = 1,
+        trigger =
+            addr == 1 && prev(addr) == 0 &&
+            __ornext(
+                ascii_string_equals(current_map, "mac_02")
+                || ascii_string_equals(current_map, "mac_12")
+            )
+    )
+}
+
 bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 10)
 bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
 bitflag_cheevo(saffron_recipes, "Saffron Placeholder", "Cook all of the 1-ingredient recipes.", 5)
@@ -493,3 +507,10 @@ map_cheevo(range(1, 11), "Maps I", "test", 1)
 map_cheevo(range(12, 24), "Maps II", "test", 1)
 map_cheevo(range(25, 37), "Maps III", "test", 1)
 map_cheevo(range(38, 48), "Maps IV", "test", 1)
+
+cooking_disk_cheevo(cooking_disk_2(), "Red Velvet", "Upload Cooking Disk R to the Dining Specializer.")
+cooking_disk_cheevo(cooking_disk_3(), "White Chocolate", "Upload Cooking Disk W to the Dining Specializer.")
+cooking_disk_cheevo(cooking_disk_4(), "Yellow Sponge Cake", "Upload Cooking Disk Y to the Dining Specializer.")
+cooking_disk_cheevo(cooking_disk_5(), "Chicken Cordon Bleu", "Upload Cooking Disk B to the Dining Specializer.")
+cooking_disk_cheevo(cooking_disk_6(), "Salad Greens", "Upload Cooking Disk G to the Dining Specializer.")
+cooking_disk_cheevo(cooking_disk_7(), "Plum Pudding", "Upload Cooking Disk PU to the Dining Specializer.")
