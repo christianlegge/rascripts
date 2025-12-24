@@ -411,7 +411,7 @@ function story_cheevo(seq, map_id, title, description, points) {
         points = points,
         trigger =
             story() == seq &&
-            prev(story) < seq &&
+            prev(story()) < seq &&
             ascii_string_equals(current_map, map_id)
    ) 
 }
@@ -436,8 +436,8 @@ function cooking_disk_cheevo(addr, title, description) {
         trigger =
             addr == 1 && prev(addr) == 0 &&
             __ornext(
-                ascii_string_equals(current_map, "mac_02")
-                || ascii_string_equals(current_map, "mac_12")
+                ascii_string_equals(current_map, "mac_04")
+                || ascii_string_equals(current_map, "mac_19")
             )
     )
 }
@@ -447,6 +447,8 @@ bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Ca
 bitflag_cheevo(saffron_recipes, "Saffron Placeholder", "Cook all of the 1-ingredient recipes.", 5)
 bitflag_cheevo(dyllis_recipes, "Dyllis Placeholder", "Cook all of the 2-ingredient recipes.", 10)
 
+story_cheevo(8, "mac_02", "HP1", "Place the first Pure Heart in its Heart Pillar.", 1)
+
 achievement(
     title = "A Helping Hand",
     description = "Recruit Thoreau to the party.",
@@ -454,6 +456,10 @@ achievement(
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xdd))
 )
+
+story_cheevo(0x22, "he3_04", "OChunks", "Defeat O'Chunks in the Yold Desert.", 1)
+
+story_cheevo(0x34, "he4_10", "Fracktail", "Defeat Fracktail and complete Chapter 1.", 3)
 
 achievement(
     title = "Float On",
@@ -479,6 +485,12 @@ achievement(
     trigger = any_of(pixl_slots, slot => slot.obtained(0xdf))
 )
 
+story_cheevo(0x57, "mi3_06", "Debt", "Pay off your 1-million Rubee debt.", 2)
+
+story_cheevo(0x5f, "mi4_14", "Mimi", "Defeat Mimi in Merlee's Mansion and complete Chapter 2.", 3)
+
+story_cheevo(0x64, "mac_07", "HP3", "Place the third Pure Heart in its Heart Pillar.", 1)
+
 achievement(
     title = "A Helping Hand",
     description = "Recruit Bowser to the party.",
@@ -495,6 +507,10 @@ achievement(
     trigger = any_of(pixl_slots, slot => slot.obtained(0xe0))
 )
 
+story_cheevo(0x6e, "ta2_05", "Bloop", "Defeat Big Blooper.", 2)
+
+story_cheevo(0x74, "ta3_03", "D Tree", "Defeat Dimentio in the Dotwood Tree.", 2)
+
 achievement(
     title = "A Helping Hand",
     description = "Recruit Carrie to the party.",
@@ -502,6 +518,8 @@ achievement(
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xe1))
 )
+
+story_cheevo(0x7d, "ta4_13", "Francis", "Defeat Francis and complete Chapter 3.", 3)
 
 map_cheevo(range(1, 11), "Maps I", "test", 1)
 map_cheevo(range(12, 24), "Maps II", "test", 1)
