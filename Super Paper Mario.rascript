@@ -400,7 +400,8 @@ function bitflag_cheevo(flags, title, description, points) {
         description = description,
         points = points,
         trigger = 
-            measured(sum_of(flags, flag => prev(flag)) == length(flags))
+            sum_of(flags, flag => prev(flag)) == length(flags) - 1 &&
+            measured(sum_of(flags, flag => flag) == length(flags))
     )
 }
 
