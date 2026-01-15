@@ -501,8 +501,8 @@ function cooking_disk_cheevo(addr, title, description) {
 
 bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 10)
 bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
-bitflag_cheevo(saffron_recipes, "Saffron Placeholder", "Cook all of the 1-ingredient recipes.", 5)
-bitflag_cheevo(dyllis_recipes, "Dyllis Placeholder", "Cook all of the 2-ingredient recipes.", 10)
+bitflag_cheevo(saffron_recipes, "Joy of Cooking", "Cook all of the 1-ingredient recipes.", 5)
+bitflag_cheevo(dyllis_recipes, "Pépin Mario", "Cook all of the 2-ingredient recipes.", 10)
 
 bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all chest items and hidden Catch Cards in Flipside.", 5)
 bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all chest items and hidden Catch Cards in Flopside.", 5)
@@ -510,7 +510,7 @@ bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all chest items and h
 bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all chest items and hidden Catch Cards in Chapter 2.", 5)
 bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all chest items and hidden Catch Cards in Chapter 3.", 5)
 
-story_cheevo(8, "mac_02", "HP1", "Place the first Pure Heart in its Heart Pillar.", 1)
+story_cheevo(8, "mac_02", "The Dark Prognosticus Unfolds", "Place the first Pure Heart in its Heart Pillar.", 1)
 
 achievement(
     title = "A Helping Hand",
@@ -520,9 +520,9 @@ achievement(
     trigger = any_of(pixl_slots, slot => slot.obtained(0xdd))
 )
 
-story_cheevo(0x22, "he3_04", "OChunks", "Defeat O'Chunks in the Yold Desert.", 1)
+story_cheevo(0x22, "he3_04", "Thrown Off", "Defeat O'Chunks in the Yold Desert.", 2)
 
-story_cheevo(0x34, "he4_10", "Fracktail", "Defeat Fracktail and complete Chapter 1.", 3)
+story_cheevo(0x34, "he4_10", "Colossal Wreck", "Defeat Fracktail and complete Chapter 1.", 2)
 
 achievement(
     title = "Float On",
@@ -533,7 +533,7 @@ achievement(
 )
 
 achievement(
-    title = "A Helping Hand",
+    title = "Five Big Booms",
     description = "Recruit Boomer to the party.",
     points = 2,
     type = "progression",
@@ -541,21 +541,21 @@ achievement(
 )
 
 achievement(
-    title = "A Helping Hand",
+    title = "Paper Thin",
     description = "Recruit Slim to the party.",
     points = 2,
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xdf))
 )
 
-story_cheevo(0x57, "mi3_06", "Debt", "Pay off your 1-million Rubee debt.", 2)
+story_cheevo(0x57, "mi3_06", "The Easy Way or the Hard Way", "Pay off your 1-million Rubee debt.", 3)
 
-story_cheevo(0x5f, "mi4_14", "Mimi", "Defeat Mimi in Merlee's Mansion and complete Chapter 2.", 3)
+story_cheevo(0x5f, "mi4_14", "Arachnanthropy", "Defeat Mimi in Merlee's Mansion and complete Chapter 2.", 3)
 
-story_cheevo(0x64, "mac_07", "HP3", "Place the third Pure Heart in its Heart Pillar.", 1)
+story_cheevo(0x64, "mac_07", "Man in Green", "Place the third Pure Heart in its Heart Pillar.", 1)
 
 achievement(
-    title = "A Helping Hand",
+    title = "A Common Enemy",
     description = "Recruit Bowser to the party.",
     points = 2,
     type = "progression",
@@ -563,31 +563,31 @@ achievement(
 )
 
 achievement(
-    title = "A Helping Hand",
+    title = "Weight for Me",
     description = "Recruit Thudley to the party.",
     points = 2,
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xe0))
 )
 
-story_cheevo(0x6e, "ta2_05", "Bloop", "Defeat Big Blooper.", 2)
+story_cheevo(0x6e, "ta2_05", "Commotion in the Ocean", "Defeat Big Blooper.", 2)
 
-story_cheevo(0x74, "ta3_03", "D Tree", "Defeat Dimentio in the Dotwood Tree.", 2)
+story_cheevo(0x74, "ta3_03", "Treetop Tussle", "Defeat Dimentio in the Dotwood Tree.", 3)
 
 achievement(
-    title = "A Helping Hand",
+    title = "Magic Cuboid Ride",
     description = "Recruit Carrie to the party.",
     points = 2,
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xe1))
 )
 
-story_cheevo(0x7d, "ta4_13", "Francis", "Defeat Francis and complete Chapter 3.", 3)
+story_cheevo(0x7d, "ta4_13", "Vellum Cerebellum", "Defeat Francis and complete Chapter 3.", 4)
 
-map_cheevo(range(1, 11), "Maps I", "test", 1)
-map_cheevo(range(12, 24), "Maps II", "test", 1)
-map_cheevo(range(25, 37), "Maps III", "test", 1)
-map_cheevo(range(38, 48), "Maps IV", "test", 1)
+map_cheevo(range(1, 11), "Pointing and Clicking", "Collect the treasures from Maps 1-11.", 10)
+map_cheevo(range(12, 24), "In Search of Something", "Collect the treasures from Maps 12-24.", 10)
+map_cheevo(range(25, 37), "Invisible Treasures", "Collect the treasures from Maps 25-37.", 10)
+map_cheevo(range(38, 48), "Right Under Your Nose", "Collect the treasures from Maps 38-48.", 10)
 
 cooking_disk_cheevo(cooking_disk_2(), "Red Velvet", "Upload Cooking Disk R to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_3(), "White Chocolate", "Upload Cooking Disk W to the Dining Specializer.")
