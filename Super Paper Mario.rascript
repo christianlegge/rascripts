@@ -394,6 +394,62 @@ pixl_slots = [
     CharacterOrPixlSlot(0x511b28)
 ]
 
+flipside_items = [
+    bit7(0x5256d1),
+    bit0(0x5256d6),
+    bit1(0x5256d6),
+    bit2(0x5256d6),
+    bit3(0x5256d6),
+    bit7(0x5256d6),
+    bit4(0x5256df)
+]
+
+flopside_items = [
+    bit2(0x5256d0),
+    bit1(0x5256d4),
+    bit1(0x5256d5),
+    bit4(0x5256d6),
+    bit5(0x5256d6),
+    bit5(0x5256df),
+    bit6(0x5256df),
+    bit7(0x5256df)
+]
+
+chapter_1_items = [
+    bit3(0x5256dc),
+    bit4(0x5256dc),
+    bit5(0x5256dc),
+    bit6(0x5256dc),
+    bit2(0x5256e2),
+    bit1(0x5256e3),
+    bit2(0x5256e3),
+    bit3(0x5256e3),
+    bit4(0x5256e3),
+    bit5(0x5256e3),
+]
+
+chapter_2_items = [
+    bit1(0x5256ec),
+    bit2(0x5256ec),
+    bit3(0x5256ec),
+    bit4(0x5256ec),
+    bit5(0x5256ec),
+    bit7(0x5256ec),
+    bit6(0x5256ed),
+    bit2(0x5256f3)
+]
+
+chapter_3_items = [
+    bit1(0x5256f8),
+    bit2(0x5256f8),
+    bit4(0x5256f8),
+    bit4(0x5256f9),
+    bit5(0x5256f9),
+    bit6(0x5256f9),
+    bit7(0x5256f9),
+    bit0(0x5256ff)
+]
+
 function bitflag_cheevo(flags, title, description, points) {
     achievement(
         title = title,
@@ -447,6 +503,12 @@ bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rari
 bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
 bitflag_cheevo(saffron_recipes, "Saffron Placeholder", "Cook all of the 1-ingredient recipes.", 5)
 bitflag_cheevo(dyllis_recipes, "Dyllis Placeholder", "Cook all of the 2-ingredient recipes.", 10)
+
+bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all chest items and hidden Catch Cards in Flipside.", 5)
+bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all chest items and hidden Catch Cards in Flopside.", 5)
+bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all chest items and hidden Catch Cards in Chapter 1.", 5)
+bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all chest items and hidden Catch Cards in Chapter 2.", 5)
+bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all chest items and hidden Catch Cards in Chapter 3.", 5)
 
 story_cheevo(8, "mac_02", "HP1", "Place the first Pure Heart in its Heart Pillar.", 1)
 
