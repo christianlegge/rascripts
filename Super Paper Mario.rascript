@@ -589,6 +589,27 @@ map_cheevo(range(12, 24), "In Search of Something", "Collect the treasures from 
 map_cheevo(range(25, 37), "Invisible Treasures", "Collect the treasures from Maps 25-37.", 10)
 map_cheevo(range(38, 48), "Right Under Your Nose", "Collect the treasures from Maps 38-48.", 10)
 
+achievement(
+    title = "Quaver Mario",
+    description = "Recruit Piccolo to the party.",
+    points = 10,
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xe5))
+)
+
+achievement(
+    title = "The Best Defense",
+    description = "Recruit Barry to the party.",
+    points = 5,
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xe6))
+)
+
+achievement(
+    title = "Welcome to the Pit",
+    description = "Defeat Wracktail in the Pit of 100 Trials and recruit Dashell to the party.",
+    points = 25,
+    trigger = any_of(pixl_slots, slot => slot.obtained(0xe7))
+)
+
 cooking_disk_cheevo(cooking_disk_2(), "Red Velvet", "Upload Cooking Disk R to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_3(), "White Chocolate", "Upload Cooking Disk W to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_4(), "Yellow Sponge Cake", "Upload Cooking Disk Y to the Dining Specializer.")
