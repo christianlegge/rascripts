@@ -823,6 +823,7 @@ achievement("Breaking and Entering", "After entering from another Toad Town scre
         never(region_check[r] && entry_id[r] > 3) &&
         never(bluehouse_unlock[r] == 1) &&
         never(region_check[r] && area_id[r] == 1 && map_id[r] != 3) &&
+        never(region_check[r] && area_id[r] == 2 && map_id[r] != 12) &&
         never(region_check[r] && area_id[r] != 1 && area_id[r] != 2) &&
         never(region_check[r] && partner_action_state[r] == 0x01 && acting_partner[r] == 0x08) &&
         trigger_when(area_id[r] == 2 && map_id[r] == 12)
