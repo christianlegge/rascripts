@@ -36,6 +36,12 @@ battle_state = {
     "EU": byte(0xd87e0 - 8)
 }
 
+encounter_state = {
+    "US": byte(0x9a600),
+    "JP": byte(0x9a5e0),
+    "EU": byte(0x969d4)
+}
+
 battle_status = {
     "US": byte(0xdc070),
     "JP": byte(0xdc050),
@@ -812,7 +818,10 @@ achievement("Hey Old Man, Check This Out!", "In Prologue and with Goompa as your
 
 achievement("No Hard Hat Required", "Reach the southern area of Toad Town beyond the logs before clearing them.", points = 5,
     trigger = any_of(regions, r => 
-        region_check[r] && area_id[r] == 0x01 && trigger_when(entry_id[r] == 0x02) && __ornext(map_id[r] == 0x02 || map_id[r] == 0x03) && trigger_when(map_id[r] == 0x03) && unsigned_lt(story_progress[r], 0xb4) && trigger_when(mario_x_pos[r] > 80 && prev(air_falling[r] == 1) && air_falling[r] == 0)
+        region_check[r] && area_id[r] == 0x01 &&
+        trigger_when(entry_id[r] == 0x02) && __ornext(map_id[r] == 0x02 || map_id[r] == 0x03) &&
+        trigger_when(map_id[r] == 0x03) && unsigned_lt(story_progress[r], 0xb4) &&
+        trigger_when(mario_y_pos[r] >= 0 && prev(mario_z_pos[r]) < -400.0 && mario_z_pos[r] >= -400.0)
     )
 )
 
@@ -1586,11 +1595,12 @@ achievement("Cannonless", "In the room in Bowser's Castle with B. Bill Blasters,
     )
 )
 
-achievement("Thread the Needle", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles and without clipping under the floor.", points = 5,
+achievement("Thread the Needle", "In the room in Bowser's Castle with B. Bill Blasters, make it from the left entrance to the right exit without getting in any battles, defeating any enemies, or clipping under the floor.", points = 5,
     trigger = any_of(regions, r =>
         region_check[r] && once(prev(map_id[r] == 49) && map_id[r] == 47) &&
         dword(world_npcs[r] + 18*4) != 0 &&
         never(region_check[r] && battle_state[r] != 0) &&
+        never(region_check[r] && encounter_state[r] == 3) &&
         never(region_check[r] && area_id[r] != 22) &&
         never(region_check[r] && map_id[r] == 49) &&
         never(region_check[r] && mario_y_pos[r] < -100.0) &&
