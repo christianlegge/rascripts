@@ -616,3 +616,79 @@ cooking_disk_cheevo(cooking_disk_4(), "Yellow Sponge Cake", "Upload Cooking Disk
 cooking_disk_cheevo(cooking_disk_5(), "Chicken Cordon Bleu", "Upload Cooking Disk B to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_6(), "Salad Greens", "Upload Cooking Disk G to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_7(), "Plum Pudding", "Upload Cooking Disk PU to the Dining Specializer.")
+
+rp_terse_areas = {
+    "he1_": "Lineland Road",
+    "he2_": "Mount Lineland",
+    "he3_": "Yold Desert",
+    "he4_": "Yold Ruins",
+    "ls1_": "Castle Bleck",
+    "mi1_": "Gloam Valley",
+    "mi2_": "Merlee's Mansion",
+    "mi3_": "Merlee's Mansion",
+    "mi4_": "Merlee's Basement",
+    "ta1_": "The Bitlands",
+    "ta2_": "The Tile Pool",
+    "ta3_": "The Dotwood Tree",
+    "ta4_": "Fort Francis",
+    "ls4_": "Intro",
+    "aa1_": "Mario's House",
+    "aa2_": "Bowser's Castle"
+}
+rp_hub_maps = {
+    "mac_01": "Flipside",
+    "mac_02": "Flipside",
+    "mac_03": "Flipside",
+    "mac_04": "Flipside",
+    "mac_05": "Flipside",
+    "mac_06": "Flipside",
+    "mac_07": "Flipside",
+    "mac_08": "Flipside",
+    "mac_09": "Flipside",
+    "mac_11": "Flopside",
+    "mac_12": "Flopside",
+    "mac_15": "Flopside",
+    "mac_16": "Flopside",
+    "mac_17": "Flopside",
+    "mac_18": "Flopside",
+    "mac_19": "Flopside",
+    "mac_22": "Flopside",
+    "mac_30": "Flopside"
+}
+rp_pit_maps = {
+    "dan_01": "Flipside Pit of 100 Trials",
+    "dan_02": "Flipside Pit of 100 Trials",
+    "dan_03": "Flipside Pit of 100 Trials",
+    "dan_04": "Flipside Pit of 100 Trials",
+    "dan_21": "Flipside Pit of 100 Trials",
+    "dan_22": "Flipside Pit of 100 Trials",
+    "dan_23": "Flipside Pit of 100 Trials",
+    "dan_24": "Flipside Pit of 100 Trials",
+    "dan_30": "Flipside Pit of 100 Trials",
+    "dan_61": "Flopside Pit of 100 Trials",
+    "dan_62": "Flopside Pit of 100 Trials",
+    "dan_63": "Flopside Pit of 100 Trials",
+    "dan_64": "Flopside Pit of 100 Trials",
+    "dan_70": "Flopside Pit of 100 Trials",
+    "dan_41": "Flopside Pit of 100 Trials",
+    "dan_42": "Flopside Pit of 100 Trials",
+    "dan_43": "Flopside Pit of 100 Trials",
+    "dan_44": "Flopside Pit of 100 Trials"
+}
+
+rich_presence_conditional_display(
+    ascii_string_equals(0x525594, "dan_"),
+    "{0}",
+    rich_presence_ascii_string_lookup("PitMap", 0x525594, rp_pit_maps)
+)
+
+rich_presence_conditional_display(
+    ascii_string_equals(0x525594, "mac_"),
+    "{0}",
+    rich_presence_ascii_string_lookup("HubMap", 0x525594, rp_hub_maps)
+)
+    
+rich_presence_display(
+    "{0}",
+    rich_presence_ascii_string_lookup("Map", 0x00525594, rp_terse_areas)
+)
