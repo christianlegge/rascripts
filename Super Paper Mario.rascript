@@ -3,7 +3,12 @@
 
 map_addr = 0x525594
 
+function in_game() => byte(map_addr) != 0
+
 function npc_entries() => tbyte_be(0x5283e9)
+
+function stylish_points() => dword_be(0x5118fc)
+function stylish_combo() => dword_be(0x511904)
 
 function mario() => byte(0x510490) == 0
 function peach() => byte(0x510490) == 1
@@ -20,6 +25,8 @@ function cooking_disk_4() => bit7(0x5256d8)
 function cooking_disk_5() => bit0(0x5256df)
 function cooking_disk_6() => bit1(0x5256df)
 function cooking_disk_7() => bit2(0x5256df)
+
+function score() => dword_be(0x511a40)
 
 function story() => dword_be(0x525690)
 current_map = 0x525594
@@ -679,6 +686,20 @@ cooking_disk_cheevo(cooking_disk_4(), "Yellow Sponge Cake", "Upload Cooking Disk
 cooking_disk_cheevo(cooking_disk_5(), "Chicken Cordon Bleu", "Upload Cooking Disk B to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_6(), "Salad Greens", "Upload Cooking Disk G to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_7(), "Plum Pudding", "Upload Cooking Disk PU to the Dining Specializer.")
+
+achievement(
+    title = "No Fun Allowed",
+    description = "Attempt the classic 1-up trick with a Koopa and lose points.",
+    trigger = in_game() && score() - prev(score()) == -1000,
+    points = 1
+)
+
+achievement(
+    title = "For the Fans",
+    description = "Perform a 5-move Stylish combo.",
+    trigger = in_game() && stylish_points() == 100 && prev(stylish_points()) == 80 && measured(stylish_combo() == 5) && prev(stylish_combo()) == 4,
+    points = 1
+)
 
 // Leaderboards
 
