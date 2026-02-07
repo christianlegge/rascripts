@@ -701,6 +701,13 @@ achievement(
     points = 1
 )
 
+achievement(
+    title = "At the Salon",
+    description = "Give Peach a new hairstyle.",
+    trigger = peach() && ascii_string_equals(map_addr, "mac_19") && bit3(0x510460) > prev(bit3(0x510460)),
+    points = 1
+)
+
 // Leaderboards
 
 leaderboard(
