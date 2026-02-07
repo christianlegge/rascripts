@@ -1,6 +1,10 @@
 // Super Paper Mario
 // #ID = 187
 
+map_addr = 0x525594
+
+function npc_entries() => tbyte_be(0x5283e9)
+
 function mario() => byte(0x510490) == 0
 function peach() => byte(0x510490) == 1
 function bowser() => byte(0x510490) == 2
@@ -450,6 +454,10 @@ chapter_3_items = [
     bit0(0x5256ff)
 ]
 
+function enemy_test(base_addr, num, predicate) {
+    return any_of(range(0, num), i => predicate(base_addr + 0x748 * i))
+}
+
 function bitflag_cheevo(flags, title, description, points) {
     achievement(
         title = title,
@@ -616,6 +624,33 @@ cooking_disk_cheevo(cooking_disk_4(), "Yellow Sponge Cake", "Upload Cooking Disk
 cooking_disk_cheevo(cooking_disk_5(), "Chicken Cordon Bleu", "Upload Cooking Disk B to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_6(), "Salad Greens", "Upload Cooking Disk G to the Dining Specializer.")
 cooking_disk_cheevo(cooking_disk_7(), "Plum Pudding", "Upload Cooking Disk PU to the Dining Specializer.")
+
+// Leaderboards
+
+leaderboard(
+    title = "Flipside Pit of 100 Trials Speedrun",
+    description = "Complete the Flipside Pit and defeat Wracktail as fast as possible.",
+    start = 
+        ascii_string_equals(map_addr, "mac_05", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_01"),
+    cancel =
+        !ascii_string_equals(map_addr, "dan_"),
+    submit =
+        ascii_string_equals(map_addr, "dan_30") && 
+            enemy_test(
+                npc_entries(),
+                3,
+                addr =>
+                    dword_be(addr + 0x49c) == 0x13A &&
+                    dword_be(addr + 0x51C) == 0 &&
+                    prev(dword_be(addr + 0x51C)) == 1
+            ),
+    value = always_true(),
+    format = "FRAMES",
+    lower_is_better = true
+)
+
+// Rich Presence
 
 rp_terse_areas = {
     "he1_": "Lineland Road",
