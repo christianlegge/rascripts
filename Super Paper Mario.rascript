@@ -708,6 +708,23 @@ achievement(
     points = 1
 )
 
+achievement(
+    title = "They Hate to See Me Coming",
+    description = "Find Whacka in Chapter 5-1 and obtain a Whacka Bump.",
+    trigger = ascii_string_equals(map_addr, "gn1_01") && any_of(range(0, 9), i =>
+        word_be(0x511a88 + i*2) == 0x6a &&
+        prev(word_be(0x511a88 + i*2)) != 0x6a 
+    ),
+    points = 3
+)
+
+achievement(
+    title = "Bullet Sponge",
+    description = "Destroy a Hedron.",
+    trigger = ascii_string_equals(map_addr, "sp3_") && score() - prev(score()) == 256,
+    points = 3
+)
+
 // Leaderboards
 
 leaderboard(
