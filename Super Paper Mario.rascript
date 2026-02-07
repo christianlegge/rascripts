@@ -362,6 +362,41 @@ cards_2_star = [
     bit7(0x511d6f)
 ]
 
+cards_flipside_pit = [
+    bit2(0x511d6b),
+    bit3(0x511d6b),
+    bit4(0x511d6b),
+    bit5(0x511d6b),
+    bit6(0x511d6b),
+    bit7(0x511d6b),
+    bit0(0x511d6a),
+    bit1(0x511d6a),
+    bit2(0x511d6a)
+]
+
+cards_flopside_pit = [
+    bit5(0x511d6a),
+    bit6(0x511d6a),
+    bit7(0x511d6a),
+    bit0(0x511d69),
+    bit1(0x511d69),
+    bit2(0x511d69),
+    bit3(0x511d69),
+    bit4(0x511d69),
+    bit5(0x511d69)
+]
+
+cards_shadoo_reward = [
+    bit0(0x511d6d),
+    bit1(0x511d6d),
+    bit0(0x511d65),
+    bit7(0x511d6e),
+    bit1(0x511d65),
+    bit2(0x511d65),
+    bit3(0x511d65),
+    bit4(0x511d65)
+]
+
 class CharacterOrPixlSlot {
     base = 0
 
@@ -517,6 +552,10 @@ bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all chest items and 
 bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all chest items and hidden Catch Cards in Chapter 1.", 5)
 bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all chest items and hidden Catch Cards in Chapter 2.", 5)
 bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all chest items and hidden Catch Cards in Chapter 3.", 5)
+
+bitflag_cheevo(cards_flipside_pit, "All the Stars Are Here", "Collect all 9 Catch Cards from the Flipside Pit of 100 Trials.", 10)
+bitflag_cheevo(cards_flopside_pit, "Old Friends Hide Hard", "Collect all 9 Catch Cards from the Flopside Pit of 100 Trials.", 25)
+bitflag_cheevo(cards_shadoo_reward, "The Gauntlet", "Defeat Shadoo in the Flopside Pit of 100 Trials and obtain all 8 Catch Card rewards.", 25)
 
 story_cheevo(8, "mac_02", "The Dark Prognosticus Unfolds", "Place the first Pure Heart in its Heart Pillar.", 1)
 
