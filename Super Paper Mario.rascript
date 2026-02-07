@@ -667,31 +667,26 @@ cooking_disk_cheevo(cooking_disk_7(), "Plum Pudding", "Upload Cooking Disk PU to
 // Leaderboards
 
 leaderboard(
+    id = 155750,
     title = "Flipside Pit of 100 Trials Speedrun",
-    description = "Complete the Flipside Pit and defeat Wracktail as fast as possible.",
+    description = "Complete the non-boss enemy floors of the Flipside Pit as fast as possible.",
     start = 
         ascii_string_equals(map_addr, "mac_05", transform = a => prev(a)) &&
         ascii_string_equals(map_addr, "dan_01"),
     cancel =
         !ascii_string_equals(map_addr, "dan_"),
     submit =
-        ascii_string_equals(map_addr, "dan_30") && 
-            enemy_test(
-                npc_entries(),
-                3,
-                addr =>
-                    dword_be(addr + 0x49c) == 0x13A &&
-                    dword_be(addr + 0x51C) == 0 &&
-                    prev(dword_be(addr + 0x51C)) == 1
-            ),
+        ascii_string_equals(map_addr, "dan_04", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_30"),
     value = always_true(),
     format = "FRAMES",
     lower_is_better = true
 )
 
 leaderboard(
+    id = 155775,
     title = "Flipside Pit of 100 Trials Itemless Speedrun",
-    description = "Complete the Flipside Pit and defeat Wracktail as fast as possible without using items.",
+    description = "Complete the non-boss enemy floors of the Flipside Pit as fast as possible without using items.",
     start = 
         ascii_string_equals(map_addr, "mac_05", transform = a => prev(a)) &&
         ascii_string_equals(map_addr, "dan_01"),
@@ -702,15 +697,44 @@ leaderboard(
             prev(word_be(0x511a88 + i*2)) != 0
         ),
     submit =
-        ascii_string_equals(map_addr, "dan_30") && 
-            enemy_test(
-                npc_entries(),
-                3,
-                addr =>
-                    dword_be(addr + 0x49c) == 0x13A &&
-                    dword_be(addr + 0x51C) == 0 &&
-                    prev(dword_be(addr + 0x51C)) == 1
-            ),
+        ascii_string_equals(map_addr, "dan_04", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_30"),
+    value = always_true(),
+    format = "FRAMES",
+    lower_is_better = true
+)
+
+leaderboard(
+    title = "Flopside Pit of 100 Trials Speedrun",
+    description = "Complete the non-boss enemy floors of the Flopside Pit as fast as possible.",
+    start = 
+        ascii_string_equals(map_addr, "mac_15", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_41"),
+    cancel =
+        !ascii_string_equals(map_addr, "dan_"),
+    submit =
+        ascii_string_equals(map_addr, "dan_44", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_70"),
+    value = always_true(),
+    format = "FRAMES",
+    lower_is_better = true
+)
+
+leaderboard(
+    title = "Flopside Pit of 100 Trials Itemless Speedrun",
+    description = "Complete the non-boss floors of the Flopside Pit as fast as possible without using items.",
+    start = 
+        ascii_string_equals(map_addr, "mac_15", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_41"),
+    cancel =
+        !ascii_string_equals(map_addr, "dan_") ||
+        any_of(range(0, 9), i =>
+            word_be(0x511a88 + i*2) == 0 &&
+            prev(word_be(0x511a88 + i*2)) != 0
+        ),
+    submit =
+        ascii_string_equals(map_addr, "dan_44", transform = a => prev(a)) &&
+        ascii_string_equals(map_addr, "dan_70"),
     value = always_true(),
     format = "FRAMES",
     lower_is_better = true
