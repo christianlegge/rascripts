@@ -489,8 +489,17 @@ chapter_3_items = [
     bit0(0x5256ff)
 ]
 
-function enemy_test(base_addr, num, predicate) {
-    return any_of(range(0, num), i => predicate(base_addr + 0x748 * i))
+function enemy_test(num, predicate) {
+    base_addr = npc_entries()
+    return any_of(range(0, num - 1), i => predicate(base_addr + 0x748 * i))
+}
+
+function enemy_defeated(num, tribe_id) {
+    return enemy_test(num, addr =>
+        dword_be(addr + 0x49C) == tribe_id &&
+        prev(dword_be(addr + 0x4F0)) > 0 &&
+        dword_be(addr + 0x4F0) == 0
+    )
 }
 
 function bitflag_cheevo(flags, title, description, points) {
@@ -565,6 +574,13 @@ achievement(
     points = 2,
     type = "progression",
     trigger = any_of(pixl_slots, slot => slot.obtained(0xdd))
+)
+
+achievement(
+    title = "No Loitering",
+    description = "Destroy a Megabite.",
+    points = 3,
+    trigger = enemy_defeated(80, 254)
 )
 
 story_cheevo(0x22, "he3_04", "Thrown Off", "Defeat O'Chunks in the Yold Desert.", 2)
