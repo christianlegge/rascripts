@@ -36,7 +36,7 @@ current_map = 0x525594
 function map_flag(num, base) {
     num = num - 1
     bitn = num % 8
-    if (num > 32) {
+    if (num >= 32) {
         base = base + 4
         num = num - 32
     }
@@ -542,7 +542,7 @@ function map_cheevo(maps, title, description, points) {
         trigger =
             all_of(maps, n => owned_map_flag(n) == 1) &&
             measured(sum_of(maps, n => found_map_flag(n)) == length(maps)) &&
-            __ornext(any_of(maps, n => prev(found_map_flag(n)) == 0))
+            sum_of(maps, n => prev(found_map_flag(n))) == length(maps) - 1
     )
 }
 
@@ -672,14 +672,21 @@ achievement(
     title = "The Best Defense",
     description = "Recruit Barry to the party.",
     points = 5,
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xe6))
+    trigger = ascii_string_equals(map_addr, "ta1_01") && any_of(pixl_slots, slot => slot.obtained(0xe6))
 )
 
 achievement(
     title = "Welcome to the Pit",
     description = "Defeat Wracktail in the Pit of 100 Trials and recruit Dashell to the party.",
     points = 25,
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xe7))
+    trigger = ascii_string_equals(map_addr, "dan_30") && any_of(pixl_slots, slot => slot.obtained(0xe7))
+)
+
+achievement(
+    title = "Future-Proofing",
+    description = "Purchase Tiptron from Francis.",
+    trigger = ascii_string_equals(map_addr, "ta4_13") && prev(story()) == 0x1a7 && story() == 0x1a8,
+    points = 10
 )
 
 cooking_disk_cheevo(cooking_disk_2(), "Red Velvet", "Upload Cooking Disk R to the Dining Specializer.")
