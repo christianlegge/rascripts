@@ -5,6 +5,8 @@ map_addr = 0x525594
 
 function in_game() => byte(map_addr) != 0
 
+function shop_points() => dword_be(0x511b2c)
+
 function npc_entries() => tbyte_be(0x5283e9)
 
 function stylish_points() => dword_be(0x5118fc)
@@ -723,6 +725,27 @@ achievement(
     description = "Destroy a Hedron.",
     trigger = ascii_string_equals(map_addr, "sp3_") && score() - prev(score()) == 256,
     points = 3
+)
+
+achievement(
+    title = "Quarter Muncher",
+    description = "Purchase the Amazy Dayzee Catch Card from Flipside Arcade.",
+    trigger = ascii_string_equals(map_addr, "mac_30") && bit7(0x511d56) == 1 && ((byte(0x511b63) - prev(byte(0x511b63)) == 1) || (byte(0x511b63) == 0 && prev(byte(0x511b63)) == 255)),
+    points = 5
+)
+
+achievement(
+    title = "Exclusive Member",
+    description = "Unlock the Hammer Whacker minigame.",
+    trigger = ascii_string_equals(map_addr, "mac_30") && bit3(0x5256d8) > prev(bit3(0x5256d8)) && bit2(0x5256d8) == 1,
+    points = 5
+)
+
+achievement(
+    title = "Put It on My Black Card",
+    description = "Earn the Whacka Catch Card via Shop Points.",
+    trigger = in_game() && bit6(0x511d6f) == 1 && shop_points() == 0 && prev(shop_points()) == 300,
+    points = 5
 )
 
 // Leaderboards
