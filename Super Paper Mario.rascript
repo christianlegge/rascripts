@@ -412,7 +412,7 @@ class CharacterOrPixlSlot {
     function obtained(id) {
         return prev(byte(this.base)) == 0 &&
         byte(this.base) == 1 &&
-        word(this.base + 2) == id
+        word_be(this.base + 2) == id
     }
 }
 
