@@ -372,27 +372,27 @@ cards_2_star = [
 ]
 
 cards_flipside_pit = [
-    bit2(0x511d6b),
-    bit3(0x511d6b),
-    bit4(0x511d6b),
-    bit5(0x511d6b),
-    bit6(0x511d6b),
-    bit7(0x511d6b),
-    bit0(0x511d6a),
-    bit1(0x511d6a),
-    bit2(0x511d6a)
+    bit1(0x5256c9),
+    bit2(0x5256c9),
+    bit3(0x5256c9),
+    bit4(0x5256c9),
+    bit5(0x5256c9),
+    bit6(0x5256c9),
+    bit7(0x5256c9),
+    bit0(0x5256c8),
+    bit1(0x5256c8)
 ]
 
 cards_flopside_pit = [
-    bit5(0x511d6a),
-    bit6(0x511d6a),
-    bit7(0x511d6a),
-    bit0(0x511d69),
-    bit1(0x511d69),
-    bit2(0x511d69),
-    bit3(0x511d69),
-    bit4(0x511d69),
-    bit5(0x511d69)
+    bit2(0x5256c8),
+    bit3(0x5256c8),
+    bit4(0x5256c8),
+    bit5(0x5256c8),
+    bit6(0x5256c8),
+    bit7(0x5256c8),
+    bit0(0x5256cf),
+    bit1(0x5256cf),
+    bit2(0x5256cf)
 ]
 
 cards_shadoo_reward = [
