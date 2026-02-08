@@ -556,7 +556,7 @@ function cooking_disk_cheevo(addr, title, description) {
         trigger =
             addr == 1 && prev(addr) == 0 &&
             __ornext(
-                ascii_string_equals(current_map, "mac_04")
+                ascii_string_equals(current_map, "mac_09")
                 || ascii_string_equals(current_map, "mac_19")
             )
     )
@@ -647,6 +647,20 @@ achievement(
     points = 2,
     type = "progression",
     trigger = m("ta4_12") && any_of(pixl_slots, slot => slot.obtained(0xe1))
+)
+
+achievement(
+    title = "With Help From My Little Friends",
+    description = "Collect some Pal Pills.",
+    trigger = in_game() && bit6(0x51046a) > prev(bit6(0x51046a)),
+    points = 1
+)
+
+achievement(
+    title = "Kickin' It Old School",
+    description = "Collect a Mega Star.",
+    trigger = in_game() && bit1(0x005256c6) > prev(bit1(0x005256c6)),
+    points = 1
 )
 
 story_cheevo(0x7d, "ta4_13", "Vellum Cerebellum", "Defeat Francis and complete Chapter 3.", 4)
