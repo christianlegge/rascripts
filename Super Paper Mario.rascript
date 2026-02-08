@@ -34,6 +34,7 @@ function story() => dword_be(0x525690)
 current_map = 0x525594
 
 function m(id) => ascii_string_equals(map_addr, id)
+function mdelta(id) => ascii_string_equals(map_addr, id, transform = a => prev(a))
 
 function map_flag(num, base) {
     num = num - 1
@@ -812,6 +813,34 @@ achievement(
     description = "Earn the Whacka Catch Card via Shop Points.",
     trigger = in_game() && bit6(0x511d6f) == 1 && shop_points() == 0 && prev(shop_points()) == 300,
     points = 5
+)
+
+achievement(
+    title = "Coin Heaven",
+    description = "Reach the bonus cloud platform in Chapter 1-2.",
+    trigger = player_x() >= 400.0 && player_x() <= 1600.0 && m("he2_02") && prev(player_y()) != 1225.0 && player_y() == 1225.0,
+    points = 1
+)
+
+achievement(
+    title = "Staircase Secret",
+    description = "Find the hidden room in the underground section of Chapter 3-1.",
+    trigger = mdelta("ta1_03") && m("ta1_08") && mario(),
+    points = 2
+)
+
+achievement(
+    title = "Far, Far Away",
+    description = "Find the hidden coin room in Chapter 4-1.",
+    trigger = mdelta("sp1_06") && m("sp1_07") && story() >= 0x86,
+    points = 2
+)
+
+achievement(
+    title = "Blast Mining",
+    description = "Find both hidden coin rooms in Chapter 5-3.",
+    trigger = measured(tally(2, mdelta("gn3_03") && m("gn3_10"), mdelta("gn3_15") && m("gn3_04"))) && bit7(0x525715) == 1 && bit3(0x525710) == 1 && never(byte(map_addr) == 0),
+    points = 4
 )
 
 // Leaderboards
