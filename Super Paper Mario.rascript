@@ -33,6 +33,8 @@ function score() => dword_be(0x511a40)
 function story() => dword_be(0x525690)
 current_map = 0x525594
 
+function m(id) => ascii_string_equals(map_addr, id)
+
 function map_flag(num, base) {
     num = num - 1
     bitn = num % 8
@@ -575,14 +577,14 @@ bitflag_cheevo(cards_flipside_pit, "All the Stars Are Here", "Collect all 9 Catc
 bitflag_cheevo(cards_flopside_pit, "Old Friends Hide Hard", "Collect all 9 Catch Cards from the Flopside Pit of 100 Trials.", 25)
 bitflag_cheevo(cards_shadoo_reward, "The Gauntlet", "Defeat Shadoo in the Flopside Pit of 100 Trials and obtain all 8 Catch Card rewards.", 25)
 
-story_cheevo(8, "mac_02", "The Dark Prognosticus Unfolds", "Place the first Pure Heart in its Heart Pillar.", 1)
+story_cheevo(8, "mac_01", "The Dark Prognosticus Unfolds", "Place the first Pure Heart in its Heart Pillar.", 1)
 
 achievement(
     title = "A Helping Hand",
     description = "Recruit Thoreau to the party.",
     points = 2,
     type = "progression",
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xdd))
+    trigger = ascii_string_equals(map_addr, "he2_07") && any_of(pixl_slots, slot => slot.obtained(0xdd))
 )
 
 achievement(
@@ -595,21 +597,14 @@ achievement(
 story_cheevo(0x22, "he3_04", "Thrown Off", "Defeat O'Chunks in the Yold Desert.", 2)
 
 story_cheevo(0x34, "he4_10", "Colossal Wreck", "Defeat Fracktail and complete Chapter 1.", 2)
-
-achievement(
-    title = "Float On",
-    description = "Recruit Peach to the party.",
-    points = 2,
-    type = "progression",
-    trigger = any_of(character_slots, slot => slot.obtained(0xd9))
-)
+story_cheevo(0x3f, "mac_02", "Float On", "Recruit Peach to the party.", 2)
 
 achievement(
     title = "Five Big Booms",
     description = "Recruit Boomer to the party.",
     points = 2,
     type = "progression",
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xde))
+    trigger = m("mi1_07") && any_of(pixl_slots, slot => slot.obtained(0xde))
 )
 
 achievement(
@@ -617,7 +612,7 @@ achievement(
     description = "Recruit Slim to the party.",
     points = 2,
     type = "progression",
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xdf))
+    trigger = m("mi3_01") && any_of(pixl_slots, slot => slot.obtained(0xdf))
 )
 
 story_cheevo(0x57, "mi3_06", "The Easy Way or the Hard Way", "Pay off your 1-million Rubee debt.", 3)
