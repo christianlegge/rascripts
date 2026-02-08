@@ -596,7 +596,7 @@ achievement(
 
 story_cheevo(0x22, "he3_04", "Thrown Off", "Defeat O'Chunks in the Yold Desert.", 2)
 
-story_cheevo(0x34, "he4_10", "Colossal Wreck", "Defeat Fracktail and complete Chapter 1.", 2)
+story_cheevo(0x35, "he4_11", "Colossal Wreck", "Defeat Fracktail and complete Chapter 1.", 2)
 story_cheevo(0x3f, "mac_02", "Float On", "Recruit Peach to the party.", 2)
 
 achievement(
@@ -619,14 +619,14 @@ story_cheevo(0x57, "mi3_06", "The Easy Way or the Hard Way", "Pay off your 1-mil
 
 story_cheevo(0x5f, "mi4_14", "Arachnanthropy", "Defeat Mimi in Merlee's Mansion and complete Chapter 2.", 3)
 
-story_cheevo(0x64, "mac_07", "Man in Green", "Place the third Pure Heart in its Heart Pillar.", 1)
+// story_cheevo(0x64, "mac_07", "Man in Green", "Place the third Pure Heart in its Heart Pillar.", 1)
 
 achievement(
     title = "A Common Enemy",
     description = "Recruit Bowser to the party.",
     points = 2,
     type = "progression",
-    trigger = any_of(character_slots, slot => slot.obtained(0xda))
+    trigger = m("ta1_04") && any_of(character_slots, slot => slot.obtained(0xda))
 )
 
 achievement(
@@ -634,7 +634,7 @@ achievement(
     description = "Recruit Thudley to the party.",
     points = 2,
     type = "progression",
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xe0))
+    trigger = m("ta2_04") && any_of(pixl_slots, slot => slot.obtained(0xe0))
 )
 
 story_cheevo(0x6e, "ta2_05", "Commotion in the Ocean", "Defeat Big Blooper.", 2)
@@ -646,7 +646,7 @@ achievement(
     description = "Recruit Carrie to the party.",
     points = 2,
     type = "progression",
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xe1))
+    trigger = m("ta4_12") && any_of(pixl_slots, slot => slot.obtained(0xe1))
 )
 
 story_cheevo(0x7d, "ta4_13", "Vellum Cerebellum", "Defeat Francis and complete Chapter 3.", 4)
