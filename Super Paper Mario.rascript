@@ -47,7 +47,57 @@ function map_flag(num, base) {
 }
 
 function owned_map_flag(num) => map_flag(num, 0x511d34)
-function found_map_flag(num) => map_flag(num, 0x511d3c)
+
+found_map_flags = [
+    bit6(0x5256a8),
+    bit7(0x5256a8),
+    bit0(0x5256af),
+    bit1(0x5256af),
+    bit2(0x5256af),
+    bit3(0x5256af),
+    bit4(0x5256af),
+    bit5(0x5256af),
+    bit6(0x5256af),
+    bit7(0x5256af),
+    bit0(0x5256ae),
+    bit1(0x5256ae),
+    bit2(0x5256ae),
+    bit3(0x5256ae),
+    bit4(0x5256ae),
+    bit5(0x5256ae),
+    bit6(0x5256ae),
+    bit7(0x5256ae),
+    bit0(0x5256ad),
+    bit1(0x5256ad),
+    bit2(0x5256ad),
+    bit3(0x5256ad),
+    bit4(0x5256ad),
+    bit5(0x5256ad),
+    bit6(0x5256ad),
+    bit7(0x5256ad),
+    bit0(0x5256ac),
+    bit1(0x5256ac),
+    bit2(0x5256ac),
+    bit3(0x5256ac),
+    bit4(0x5256ac),
+    bit5(0x5256ac),
+    bit6(0x5256ac),
+    bit7(0x5256ac),
+    bit0(0x5256b3),
+    bit1(0x5256b3),
+    bit2(0x5256b3),
+    bit3(0x5256b3),
+    bit4(0x5256b3),
+    bit5(0x5256b3),
+    bit6(0x5256b3),
+    bit7(0x5256b3),
+    bit0(0x5256b2),
+    bit1(0x5256b2),
+    bit2(0x5256b2),
+    bit3(0x5256b2),
+    bit4(0x5256b2),
+    bit5(0x5256b2)
+]
 
 saffron_recipes = [
     bit3(0x511d44),
@@ -543,8 +593,8 @@ function map_cheevo(maps, title, description, points) {
         points = points,
         trigger =
             all_of(maps, n => owned_map_flag(n) == 1) &&
-            measured(sum_of(maps, n => found_map_flag(n)) == length(maps)) &&
-            sum_of(maps, n => prev(found_map_flag(n))) == length(maps) - 1
+            measured(sum_of(maps, n => found_map_flags[n - 1]) == length(maps)) &&
+            sum_of(maps, n => prev(found_map_flags[n - 1])) == length(maps) - 1
     )
 }
 
