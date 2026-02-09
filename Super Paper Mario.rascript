@@ -725,7 +725,7 @@ achievement(
     title = "Quaver Mario",
     description = "Recruit Piccolo to the party.",
     points = 10,
-    trigger = any_of(pixl_slots, slot => slot.obtained(0xe5))
+    trigger = m("mac_19") && any_of(pixl_slots, slot => slot.obtained(0xe5))
 )
 
 achievement(
@@ -841,6 +841,13 @@ achievement(
     description = "Find both hidden coin rooms in Chapter 5-3.",
     trigger = measured(tally(2, mdelta("gn3_03") && m("gn3_10"), mdelta("gn3_15") && m("gn3_04"))) && bit7(0x525715) == 1 && bit3(0x525710) == 1 && never(byte(map_addr) == 0),
     points = 4
+)
+
+achievement(
+    title = "Bushido Bro",
+    description = "Win the Sammer Guy Tournament and earn King Sammer's reward.",
+    points = 25,
+    trigger = bit6(0x0052571e) > prev(bit6(0x0052571e)) && m("wa4_26")
 )
 
 // Leaderboards
