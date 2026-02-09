@@ -3,6 +3,8 @@
 
 map_addr = 0x525594
 
+function flipped() => word_be(0x0079c0ea) == 1
+
 function in_game() => byte(map_addr) != 0
 
 function mot() => word_be(0x00510484)
@@ -18,6 +20,8 @@ function mario() => byte(0x510490) == 0
 function peach() => byte(0x510490) == 1
 function bowser() => byte(0x510490) == 2
 function luigi() => byte(0x510490) == 3
+
+function hp() => dword_be(0x00511a34)
 
 function player_x() => float_be(0x5104b4)
 function player_y() => float_be(0x5104b8)
@@ -871,6 +875,17 @@ achievement(
         trigger_when(story() == 0x6e),
     points = 3,
     type = "missable"
+)
+
+achievement(
+    title = "Jump, Man",
+    description = "Climb the hill in Chapter 1-2 without flipping or taking damage.",
+    trigger = once(player_x() >= 600.0 && prev(player_x() < 600.0)) &&
+        never(!m("he2_02")) &&
+        never(flipped()) &&
+        never(hp() < prev(hp())) &&
+        trigger_when(player_y() == 1300.0 && mot() <= 2 && prev(mot()) > 2),
+    points = 3
 )
 
 // Leaderboards
