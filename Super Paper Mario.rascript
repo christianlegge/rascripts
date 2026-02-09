@@ -5,6 +5,8 @@ map_addr = 0x525594
 
 function in_game() => byte(map_addr) != 0
 
+function mot() => word_be(0x00510484)
+
 function shop_points() => dword_be(0x511b2c)
 
 function npc_entries() => tbyte_be(0x5283e9)
@@ -848,6 +850,27 @@ achievement(
     description = "Win the Sammer Guy Tournament and earn King Sammer's reward.",
     points = 25,
     trigger = bit6(0x0052571e) > prev(bit6(0x0052571e)) && m("wa4_26")
+)
+
+achievement(
+    title = "Mr. Driller",
+    description = "Unlock all of Welderberg's shortcut warp pipes.",
+    points = 5,
+    trigger = __ornext(m("mac_05") || m("mac_12") || m("mac_15")) &&
+        measured(bit5(0x5256d5) + bit6(0x5256d5) + bit7(0x5256d5) == 3) &&
+        (prev(bit5(0x5256d5)) + prev(bit6(0x5256d5)) + prev(bit7(0x5256d5))) == 2
+)
+
+achievement(
+    title = "Sashimi Chef",
+    description = "Defeat Big Blooper without using Bowser's fire breath.",
+    trigger = once(player_x() >= 201.0 && prev(player_x() < 201.0)) &&
+        never(!m("ta2_05")) &&
+        never(mot() == 0x4c) &&
+        prev(story() < 0x6e) &&
+        trigger_when(story() == 0x6e),
+    points = 3,
+    type = "missable"
 )
 
 // Leaderboards
