@@ -2352,119 +2352,119 @@ achievement(
     title = "Capped Companion", points = 5, type="progression",
     description = "Have Goombario join your party",
     id = 49518, badge = "86074", published = "2017-06-11 1:28:32 AM", modified = "2025-05-13 1:56:14 PM",
-    trigger = any_of(re, r => re[r] && has_goombario[r] == 1 && prev(has_goombario[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_goombario[r] == 1 && prev(has_goombario[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Turtle Torpedo", points = 5, type="progression",
     description = "Have Kooper join your party",
     id = 49519, badge = "86075", published = "2017-06-11 1:28:36 AM", modified = "2025-05-13 1:56:14 PM",
-    trigger = any_of(re, r => re[r] && has_kooper[r] == 1 && prev(has_kooper[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_kooper[r] == 1 && prev(has_kooper[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "A Blast With My Gal", points = 5, type="progression",
     description = "Have Bombette join the party",
     id = 49520, badge = "86076", published = "2017-06-11 1:28:38 AM", modified = "2025-11-27 2:48:12 AM",
-    trigger = any_of(re, r => re[r] && has_bombette[r] == 1 && prev(has_bombette[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_bombette[r] == 1 && prev(has_bombette[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Turtle Mail", points = 5, type="progression",
     description = "Have Parakarry join the party",
     id = 49521, badge = "86077", published = "2017-06-11 1:28:40 AM", modified = "2019-08-07 6:46:13 AM",
-    trigger = any_of(re, r => re[r] && has_parakarry[r] == 1 && prev(has_parakarry[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_parakarry[r] == 1 && prev(has_parakarry[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Her Royal Frightfulness", points = 5, type="progression",
     description = "Have Bow join the party",
     id = 49522, badge = "86078", published = "2017-06-11 1:28:43 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => re[r] && has_bow[r] == 1 && prev(has_bow[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_bow[r] == 1 && prev(has_bow[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "My Sweet Little Night Light", points = 5, type="progression",
     description = "Have Watt join the party",
     id = 49523, badge = "86079", published = "2017-06-11 1:28:45 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => re[r] && has_watt[r] == 1 && prev(has_watt[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_watt[r] == 1 && prev(has_watt[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Fishie Friend", points = 5, type="progression",
     description = "Have Sushie join the party",
     id = 49524, badge = "86080", published = "2017-06-11 1:28:47 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => re[r] && has_sushie[r] == 1 && prev(has_sushie[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_sushie[r] == 1 && prev(has_sushie[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Lakitu With a 'Tude", points = 5, type="progression",
     description = "Have Lakilester join the party",
     id = 49525, badge = "86081", published = "2017-06-11 1:28:49 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => re[r] && has_lakilester[r] == 1 && prev(has_lakilester[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_lakilester[r] == 1 && prev(has_lakilester[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Goomtastic", points = 5,
     description = "Fully upgrade Goombario",
     id = 49526, badge = "86082", published = "2017-06-11 1:28:51 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = any_of(re, r => re[r] && goombario_level[r] == 2 && prev(goombario_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && goombario_level[r] == 2 && prev(goombario_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Shell Yeah!", points = 5,
     description = "Fully upgrade Kooper",
     id = 49527, badge = "86083", published = "2017-06-11 1:28:53 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = any_of(re, r => re[r] && kooper_level[r] == 2 && prev(kooper_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && kooper_level[r] == 2 && prev(kooper_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Explosive Personality", points = 5,
     description = "Fully upgrade Bombette",
     id = 49528, badge = "86084", published = "2017-06-11 1:28:55 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = any_of(re, r => re[r] && bombette_level[r] == 2 && prev(bombette_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && bombette_level[r] == 2 && prev(bombette_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "First-Class", points = 5,
     description = "Fully upgrade Parakarry",
     id = 49529, badge = "86085", published = "2017-06-11 1:28:56 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = any_of(re, r => re[r] && parakarry_level[r] == 2 && prev(parakarry_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && parakarry_level[r] == 2 && prev(parakarry_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Mistress of the Night", points = 5,
     description = "Fully upgrade Bow",
     id = 49530, badge = "86086", published = "2017-06-11 1:28:59 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = any_of(re, r => re[r] && bow_level[r] == 2 && prev(bow_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && bow_level[r] == 2 && prev(bow_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Power Surge", points = 5,
     description = "Fully upgrade Watt",
     id = 49531, badge = "86087", published = "2017-06-11 1:29:01 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = any_of(re, r => re[r] && watt_level[r] == 2 && prev(watt_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && watt_level[r] == 2 && prev(watt_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Hooked on Sushie", points = 5,
     description = "Fully upgrade Sushie",
     id = 49532, badge = "86088", published = "2017-06-11 1:29:02 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = any_of(re, r => re[r] && sushie_level[r] == 2 && prev(sushie_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && sushie_level[r] == 2 && prev(sushie_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "You're Cool in My Book", points = 5,
     description = "Fully upgrade Lakilester",
     id = 49533, badge = "86089", published = "2017-06-11 1:29:05 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = any_of(re, r => re[r] && lakilester_level[r] == 2 && prev(lakilester_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && lakilester_level[r] == 2 && prev(lakilester_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "To The Max!", points = 25,
     description = "Power up all of your party members to their max level",
     id = 49534, badge = "86090", published = "2017-06-11 1:29:08 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = byte(0x0A094A) == 1 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 &&
               (prev(kooper_upgrade_level_bit1()) + prev(parrakarry_upgrade_level_bit1()) +
               prev(watt_upgrade_level_bit1()) + prev(lakilester_upgrade_level_bit1()) +
               prev(goombario_upgrade_level_bit1()) + prev(bombette_upgrade_level_bit1()) + prev(upgrade_level_bit1()) +
@@ -2473,219 +2473,219 @@ achievement(
                   lakilester_upgrade_level_bit1() + goombario_upgrade_level_bit1() + bombette_upgrade_level_bit1() +
                   upgrade_level_bit1() + bow_upgrade_level_bit1()) == 8
               )
-)
+))
 
 achievement(
     title = "Flower Power", points = 10,
     description = "Max out your FP (Including Badges)",
     id = 49535, badge = "86094", published = "2017-06-11 1:29:30 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = byte(0x0A094A) == 1 && prev(max_fp()) < 65 && max_fp() == 65 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(max_fp()) < 65 && max_fp() == 65 && music_id() != 105
+))
 
 achievement(
     title = "Heartful", points = 10,
     description = "Max out your HP (Including Badges)",
     id = 49536, badge = "86092", published = "2017-06-11 1:29:32 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = byte(0x0A094A) == 1 && prev(max_hp()) < 65 && max_hp() == 65 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(max_hp()) < 65 && max_hp() == 65 && music_id() != 105
+))
 
 achievement(
     title = "Badges of Honor", points = 10,
     description = "Max out your Badge Points",
     id = 49537, badge = "86093", published = "2017-06-11 1:30:28 AM", modified = "2025-05-13 1:56:19 PM",
-    trigger = byte(0x0A094A) != 0 && music_id() != 105 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) != 0 && music_id() != 105 &&
               ((total_badge_points() == 30 && prev(total_badge_points()) == 27) ||
                (total_badge_points() == 30 && prev(total_badge_points()) == 24))
-)
+))
 
 achievement(
     title = "Maxxed Out Mario", points = 25,
     description = "Level Mario to his max level",
     id = 49538, badge = "86095", published = "2017-06-11 1:30:38 AM", modified = "2025-05-13 1:56:19 PM",
-    trigger = marios_level() == 27 && prev(marios_level()) == 26 && byte(0x0A094A) != 0 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && marios_level() == 27 && prev(marios_level()) == 26 && byte(0x0A094A) != 0 && music_id() != 105
+))
 
 achievement(
     title = "Age Old Wisdom", points = 5, type="progression",
     description = "Free Eldstar from the captivity of the Koopa Bros. and gain his power",
     id = 49539, badge = "86096", published = "2017-06-11 1:30:44 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = star_spirits() == 1 && prev(star_spirits()) == 0 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 1 && prev(star_spirits()) == 0 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "Motherly Instincts", points = 5, type="progression",
     description = "Free Mamar from the captivity of Tutankoopa and gain her power",
     id = 49540, badge = "86097", published = "2017-06-11 1:30:46 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = star_spirits() == 2 && prev(star_spirits()) == 1 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 2 && prev(star_spirits()) == 1 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "The Life of a Scholar", points = 5, type="progression",
     description = "Free Skolar from the captivity of Tubba Blubba and his Boos and gain his power",
     id = 49541, badge = "86098", published = "2017-06-11 1:30:48 AM", modified = "2024-06-26 5:55:11 PM",
-    trigger = star_spirits() == 3 && prev(star_spirits()) == 2 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 3 && prev(star_spirits()) == 2 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "Time to Chill", points = 5, type="progression",
     description = "Free Muskular from the captivity of General Guy and gain his power",
     id = 49542, badge = "86099", published = "2017-06-11 1:30:50 AM", modified = "2024-06-26 5:55:11 PM",
-    trigger = star_spirits() == 4 && prev(star_spirits()) == 3 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 4 && prev(star_spirits()) == 3 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "Little Miss Star", points = 5, type="progression",
     description = "Free Misstar from the captivity of the Lava Piranha and gain her power",
     id = 49543, badge = "86100", published = "2017-06-11 1:30:53 AM", modified = "2024-06-26 5:55:12 PM",
-    trigger = star_spirits() == 5 && prev(star_spirits()) == 4 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 5 && prev(star_spirits()) == 4 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "The Book Worm", points = 5, type="progression",
     description = "Free Klevar from the captivity of Huff N. Puff and gain his power",
     id = 49544, badge = "86101", published = "2017-06-11 1:30:55 AM", modified = "2024-06-26 5:55:12 PM",
-    trigger = star_spirits() == 6 && prev(star_spirits()) == 5 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 6 && prev(star_spirits()) == 5 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "Stay Calm", points = 5, type="progression",
     description = "Free Kalmar from the captivity of the Crystal King and gain his power",
     id = 49545, badge = "86102", published = "2017-06-11 1:31:00 AM", modified = "2024-06-26 5:55:12 PM",
-    trigger = star_spirits() == 7 && prev(star_spirits()) == 6 && byte(0x0A094A) == 1
-)
+    trigger = any_of(re, r => rc[r] && star_spirits() == 7 && prev(star_spirits()) == 6 && byte(0x0A094A) == 1
+))
 
 achievement(
     title = "Hammer Bro", points = 5,
     description = "Get the Hammer",
     id = 49548, badge = "86105", published = "2017-06-11 1:48:02 AM", modified = "2019-08-07 6:47:16 AM",
-    trigger = ff_no_hammer_01_super_hammer_02_ultra_hammer() == 0 &&
+    trigger = any_of(re, r => rc[r] && ff_no_hammer_01_super_hammer_02_ultra_hammer() == 0 &&
               prev(ff_no_hammer_01_super_hammer_02_ultra_hammer()) == 255 && music_id_word() != 106 &&
               byte(0x0A094A) != 0
-)
+))
 
 achievement(
     title = "Super Hammer Bro ", points = 5,
     description = "Get the Super Hammer",
     id = 49549, badge = "86106", published = "2017-06-11 1:48:08 AM", modified = "2019-08-07 6:47:19 AM",
-    trigger = ff_no_hammer_01_super_hammer_02_ultra_hammer() == 1 &&
+    trigger = any_of(re, r => rc[r] && ff_no_hammer_01_super_hammer_02_ultra_hammer() == 1 &&
               prev(ff_no_hammer_01_super_hammer_02_ultra_hammer()) == 0 && byte(0x0A094A) != 0
-)
+))
 
 achievement(
     title = "Ultra Hammer Bro", points = 5,
     description = "Get the Ultra Hammer",
     id = 49550, badge = "86107", published = "2017-06-11 1:48:11 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = ff_no_hammer_01_super_hammer_02_ultra_hammer() == 2 &&
+    trigger = any_of(re, r => rc[r] && ff_no_hammer_01_super_hammer_02_ultra_hammer() == 2 &&
               prev(ff_no_hammer_01_super_hammer_02_ultra_hammer()) == 1 && byte(0x0A094A) != 0
-)
+))
 
 achievement(
     title = "Super Jumpman Mario", points = 5,
     description = "Get the Super Boots",
     id = 49551, badge = "86108", published = "2017-06-11 1:48:13 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = super_boots_02_ultra_boots() == 1 && prev(super_boots_02_ultra_boots()) == 0 && byte(0x0A094A) != 0
-)
+    trigger = any_of(re, r => rc[r] && super_boots_02_ultra_boots() == 1 && prev(super_boots_02_ultra_boots()) == 0 && byte(0x0A094A) != 0
+))
 
 achievement(
     title = "Ultra Jumpman Mario", points = 5,
     description = "Get the Ultra Boots",
     id = 49552, badge = "86109", published = "2017-06-11 1:48:15 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = super_boots_02_ultra_boots() == 2 && prev(super_boots_02_ultra_boots()) == 1 && byte(0x0A094A) != 0
-)
+    trigger = any_of(re, r => rc[r] && super_boots_02_ultra_boots() == 2 && prev(super_boots_02_ultra_boots()) == 1 && byte(0x0A094A) != 0
+))
 
 achievement(
     title = "Pop Quiz", points = 1,
     description = "Answer your first Chuck Quizmo question",
     id = 49578, badge = "86112", published = "2017-06-12 4:46:23 AM", modified = "2024-12-26 6:54:22 PM",
-    trigger = chuck_quizmo_quiz_attempts() >= 1 && chuck_quizmo_completion_addresses() == 1 &&
+    trigger = any_of(re, r => rc[r] && chuck_quizmo_quiz_attempts() >= 1 && chuck_quizmo_completion_addresses() == 1 &&
               prev(chuck_quizmo_completion_addresses()) == 0 && byte(0x0A094A) != 0 &&
               (music_id() != 105 && music_id() != 106)
-)
+))
 
 achievement(
     title = "Quiz Master", points = 25,
     description = "Answer all 64 of Chuck Quizmo questions",
     id = 49579, badge = "86114", published = "2017-06-12 4:46:25 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = chuck_quizmo_completion_addresses() == 64 && prev(chuck_quizmo_completion_addresses()) == 63 &&
+    trigger = any_of(re, r => rc[r] && chuck_quizmo_completion_addresses() == 64 && prev(chuck_quizmo_completion_addresses()) == 63 &&
               byte(0x0A094A) != 0
-)
+))
 
 achievement(
     title = "Star Piece Finder", points = 25,
     description = "Collect 80 star pieces",
     id = 49580, badge = "86115", published = "2017-06-12 4:46:27 AM", modified = "2025-05-13 1:56:21 PM",
-    trigger = prev(total_star_pieces_collected()) < 80 && total_star_pieces_collected() >= 80 && byte(0x0A094A) == 1 &&
+    trigger = any_of(re, r => rc[r] && prev(total_star_pieces_collected()) < 80 && total_star_pieces_collected() >= 80 && byte(0x0A094A) == 1 &&
               music_id() != 105
-)
+))
 
 achievement(
     title = "Star Man", points = 50,
     description = "Collect all 160 Star Pieces",
     id = 49581, badge = "86116", published = "2017-06-12 4:46:28 AM", modified = "2024-07-01 12:56:01 PM",
-    trigger = byte(0x0A094A) == 1 && prev(total_star_pieces_collected()) < 160 && total_star_pieces_collected() >= 160 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(total_star_pieces_collected()) < 160 && total_star_pieces_collected() >= 160 &&
               music_id() != 105
-)
+))
 
 achievement(
     title = "Boy Scout", points = 1,
     description = "Get your first badge",
     id = 49609, badge = "86120", published = "2017-06-15 2:07:52 AM", modified = "2023-03-14 3:28:09 AM",
-    trigger = area_world_id_word() == 0 && map_id() == 1 && byte(0x0A094A) == 1 && prev(id_for_first_badge_found()) == 0 &&
+    trigger = any_of(re, r => rc[r] && area_world_id_word() == 0 && map_id() == 1 && byte(0x0A094A) == 1 && prev(id_for_first_badge_found()) == 0 &&
               id_for_first_badge_found() == 289
-)
+))
 
 achievement(
     title = "First Class Scout", points = 5,
     description = "Obtain 20 Badges",
     id = 49610, badge = "86121", published = "2017-06-15 2:08:03 AM", modified = "2024-07-01 12:56:02 PM",
-    trigger = byte(0x0A094A) == 1 && prev(_20th_badge_slot()) == 0 && _20th_badge_slot() != 0 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_20th_badge_slot()) == 0 && _20th_badge_slot() != 0 && music_id() != 105
+))
 
 achievement(
     title = "Star Scout", points = 10,
     description = "Obtain 40 Badges",
     id = 49611, badge = "86122", published = "2017-06-15 2:08:09 AM", modified = "2024-07-01 12:56:02 PM",
-    trigger = byte(0x0A094A) == 1 && prev(_40th_badge_slot()) == 0 && _40th_badge_slot() != 0 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_40th_badge_slot()) == 0 && _40th_badge_slot() != 0 && music_id() != 105
+))
 
 achievement(
     title = "Life Scout", points = 10,
     description = "Obtain 60 Badges",
     id = 49612, badge = "86123", published = "2017-06-15 2:08:12 AM", modified = "2024-07-01 12:56:02 PM",
-    trigger = byte(0x0A094A) == 1 && prev(_60th_badge_slot()) == 0 && _60th_badge_slot() != 0 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_60th_badge_slot()) == 0 && _60th_badge_slot() != 0 && music_id() != 105
+))
 
 achievement(
     title = "Eagle Scout", points = 25, type="missable",
     description = "Obtain all 80 badges in the game",
     id = 49613, badge = "86124", published = "2017-06-15 2:08:14 AM", modified = "2024-07-01 12:56:03 PM",
-    trigger = byte(0x0A094A) == 1 && prev(_80th_badge_slot()) == 0 && _80th_badge_slot() != 0 && music_id() != 105
-)
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_80th_badge_slot()) == 0 && _80th_badge_slot() != 0 && music_id() != 105
+))
 
 achievement(
     title = "Goomnutless", points = 10, type="missable",
     description = "Defeat the Goomba King without the use of the Goomnut",
     id = 49617, badge = "513627", published = "2017-06-15 6:21:11 AM", modified = "2021-02-05 1:55:20 AM",
-    trigger = once(npc_dialogue_id_word() == 203) && once(npc_dialogue_id_word() == 204) &&
+    trigger = any_of(re, r => rc[r] && once(npc_dialogue_id_word() == 203) && once(npc_dialogue_id_word() == 204) &&
               once(npc_dialogue_id_word() == 205) && once(npc_dialogue_id_word() == 206) && once(music_id_word() == 7) &&
               never(music_id_word() == 2) && byte(0x3E20DD) == 110 && once(music_id() == 126) &&
               ((music_id_word() == 142) ||
                (music_id_word() == 139))
-)
+))
 
 achievement(
     title = "Buzz Off!", points = 10,
     description = "Defeat Buzzar",
     id = 49615, badge = "513628", published = "2017-06-15 3:04:32 AM", modified = "2025-05-02 2:19:25 PM",
-    trigger = event_id() == 1 && prev(remaining_turns_mario_won_the_battle()) == 0 &&
+    trigger = any_of(re, r => rc[r] && event_id() == 1 && prev(remaining_turns_mario_won_the_battle()) == 0 &&
               remaining_turns_mario_won_the_battle() == 1 && battle_id() == 2316
-)
+))
 
 achievement(
     title = "P.O.W-erless", points = 10, type="missable",
     description = "Defeat the Koopa Bros. without using any items",
     id = 321735, badge = "513629", published = "2023-05-26 6:12:20 PM", modified = "2023-05-28 5:34:24 PM",
-    trigger = area_world_id_word() == 7 && unless(battle_id() != 1792) &&
+    trigger = any_of(re, r => rc[r] && area_world_id_word() == 7 && unless(battle_id() != 1792) &&
               disable_when(item_slots_word() != prev(item_slots_word())) && disable_when(_16bit() != prev(_16bit())) &&
               disable_when(_16bit_2() != prev(_16bit_2())) && disable_when(_16bit_3() != prev(_16bit_3())) &&
               disable_when(_16bit_4() != prev(_16bit_4())) && disable_when(_16bit_5() != prev(_16bit_5())) &&
@@ -2694,45 +2694,45 @@ achievement(
               trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               (always_false() || (never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "Bury the Dead", points = 5, type="missable",
     description = "Defeat Tutankoopa by harming him only with items",
     id = 321736, badge = "513630", published = "2023-05-26 6:12:21 PM", modified = "2025-05-13 1:56:21 PM",
-    trigger = area_world_id_word() == 11 && unless(battle_id() != 3072) &&
+    trigger = any_of(re, r => rc[r] && area_world_id_word() == 11 && unless(battle_id() != 3072) &&
               unless(marios_battle_animation_id() == 4294967295) &&
               disable_when(battle_2() != 52 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB))) &&
               trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               (always_false() || (never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "Sheer Heart Attack", points = 10, type="missable",
     description = "Defeat Tubba Blubba's Heart in 4 turns or less",
     id = 321762, badge = "513631", published = "2023-05-26 7:41:11 PM", modified = "2023-05-31 9:32:02 PM",
-    trigger = area_world_id() == 14 && unless(battle_id() != 3599) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 14 && unless(battle_id() != 3599) &&
               disable_when(repeated(10, prev(battle_phase()) == 0 && battle_phase() == 1)) &&
               trigger_when(byte(pointer_2() + 0x1BB) <= 5) &&
               (always_false() || (never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "General Guy's Bright Idea", points = 10, type="missable",
     description = "Defeat General Guy without damaging his Light Bulb",
     id = 321755, badge = "513632", published = "2023-05-26 6:44:17 PM", modified = "2024-12-14 3:24:10 PM",
-    trigger = unless(battle_id() != 4352) && disable_when(byte(pointer_4() + 0x1BB) < 8) &&
+    trigger = any_of(re, r => rc[r] && unless(battle_id() != 4352) && disable_when(byte(pointer_4() + 0x1BB) < 8) &&
               trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               (always_false() || (never(area_world_id() != 16) && never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "Hot Footed Hero", points = 10, type="missable",
     description = "Defeat Lava Piranha without using Sushie, the Snowman Doll, or the Fire Shield Badge",
     id = 321763, badge = "513633", published = "2023-05-26 7:49:25 PM", modified = "2023-06-30 1:09:52 PM",
-    trigger = area_world_id() == 18 && unless(battle_id() != 5888) && unless(activated_badge_id_2() == 236) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 18 && unless(battle_id() != 5888) && unless(activated_badge_id_2() == 236) &&
               unless(activated_badge_id_1() == 236) && unless(word(0x10F49C) == 236) && unless(word(0x10F49E) == 236) &&
               unless(word(0x10F4A0) == 236) && unless(word(0x10F4A2) == 236) && unless(word(0x10F4A4) == 236) &&
               unless(word(0x10F4A6) == 236) && unless(word(0x10F4A8) == 236) && unless(word(0x10F4AA) == 236) &&
@@ -2759,145 +2759,145 @@ achievement(
               trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               (always_false() || (never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "That Guy Got Hit in the Head With a Coconut!", points = 10, type="missable",
     description = "Defeat Jr. Troopa after returning to Toad Town from Yoshi's Village with only coconuts",
     id = 321739, badge = "513634", published = "2023-05-26 6:12:22 PM", modified = "2025-05-13 1:56:21 PM",
-    trigger = area_world_id() == 1 && unless(battle_id() != 517) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && unless(battle_id() != 517) &&
               disable_when(battle_2() != 52 && item_used_id() != 172 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB))) &&
               trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               (always_false() || (never(music_id() == 255) && never(byte(pointer_2() + 0x1BB) >= 20)))
-)
+))
 
 achievement(
     title = "Off Cloud Nine", points = 10, type="missable",
     description = "Defeat Huff N. Puff without the use of Bow or Lakilester",
     id = 321770, badge = "513635", published = "2023-05-26 9:27:14 PM", modified = "2023-05-29 8:57:59 PM",
-    trigger = area_world_id() == 19 && unless(battle_id() != 6400) && disable_when(current_partner() == 8) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 19 && unless(battle_id() != 6400) && disable_when(current_partner() == 8) &&
               disable_when(current_partner() == 9) && trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               (always_false() || (never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "Let's Kick Some Ice", points = 5, type="missable",
     description = "Stop time on Crystal King, then deal 7 or more damage in a single attack while he is frozen (Indicator must say 7 or more specifically, cannot be total)",
     id = 321948, badge = "513636", published = "2023-05-27 4:23:18 AM", modified = "2024-07-03 3:12:47 PM",
-    trigger = area_world_id() == 21 && byte(0x30E8DB) == 8 && trigger_when(pointer_enemy_status_thingy() == 2) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 21 && byte(0x30E8DB) == 8 && trigger_when(pointer_enemy_status_thingy() == 2) &&
               remaining_turns_using_his_turn_mario() == 1 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB)) &&
               damage_amount_from_the_damage_indicator_shown_in_battle() >= 7 && battle_id() == 8192
-)
+))
 
 achievement(
     title = "Who's the Bully Now?", points = 10,
     description = "Defeat Kent C. Koopa",
     id = 49614, badge = "513637", published = "2017-06-15 2:54:23 AM", modified = "2025-05-13 1:56:21 PM",
-    trigger = once(npc_dialogue_id_word() == 301) && once(music_id_word() == 3) && never(music_id_word() == 2) &&
+    trigger = any_of(re, r => rc[r] && once(npc_dialogue_id_word() == 301) && once(music_id_word() == 3) && never(music_id_word() == 2) &&
               once(music_id_word() == 91) && never(music_id_word() == 0) && once(music_id_word() == 17) &&
               never(music_id_word() == 19) && never(music_id_word() == 132) &&
               ((music_id_word() == 139) ||
                (music_id_word() == 142))
-)
+))
 
 achievement(
     title = "No Sleep For Ol' Four Eyes", points = 10, type="missable",
     description = "Defeat Kent C. Koopa without putting him to sleep or any other status effect",
     id = 321854, badge = "513638", published = "2023-05-26 11:02:12 PM", modified = "2023-07-06 9:45:22 PM",
-    trigger = area_world_id() == 6 && unless(battle_id() != 1304) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 6 && unless(battle_id() != 1304) &&
               trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
               trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
               disable_when(pointer_enemy_status_thingy() == 2) &&
               (always_false() || (never(music_id() == 255)))
-)
+))
 
 achievement(
     title = "Anti-Antiguy", points = 25, type="missable",
     description = "Defeat Antiguy",
     id = 49616, badge = "513639", published = "2017-06-15 5:06:34 AM", modified = "2025-11-07 2:22:06 PM",
-    trigger = event_id() == 1 && prev(remaining_turns_mario_won_the_battle()) == 0 &&
+    trigger = any_of(re, r => rc[r] && event_id() == 1 && prev(remaining_turns_mario_won_the_battle()) == 0 &&
               remaining_turns_mario_won_the_battle() == 1 && battle_id() == 4140
-)
+))
 
 achievement(
     title = "Graduate", points = 25,
     description = "Prove yourself worthy to have your Diploma",
     id = 49582, badge = "513640", published = "2017-06-12 4:46:30 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = degree_cards() == 5 && prev(degree_cards()) == 4 && byte(0x0A094A) != 0
-)
+    trigger = any_of(re, r => rc[r] && degree_cards() == 5 && prev(degree_cards()) == 4 && byte(0x0A094A) != 0
+))
 
 achievement(
     title = "The True King of the Koopas", points = 25,
     description = "Defeat Bowser without using your Star Energy (Final part of the battle)",
     id = 49687, badge = "513641", published = "2017-06-18 3:10:28 AM", modified = "2025-05-13 1:56:22 PM",
-    trigger = star_power_meter() == 7 && never(star_power_meter() < 7) && once(music_id_word() == 104) &&
+    trigger = any_of(re, r => rc[r] && star_power_meter() == 7 && never(star_power_meter() < 7) && once(music_id_word() == 104) &&
               music_id_word() == 111
-)
+))
 
 achievement(
     title = "First Strike!", points = 1,
     description = "Get a first strike",
     id = 49546, badge = "513642", published = "2017-06-11 1:39:51 AM", modified = "2025-05-13 1:56:22 PM",
-    trigger = number_of_first_strikes() == 1 && byte(0x0A094A) != 0
-)
+    trigger = any_of(re, r => rc[r] && number_of_first_strikes() == 1 && byte(0x0A094A) != 0
+))
 
 achievement(
     title = "Preemptive Striker", points = 10,
     description = "Perform 100 or more 'First Strikes'",
     id = 49547, badge = "513643", published = "2017-06-11 1:40:20 AM", modified = "2025-05-13 1:56:22 PM",
-    trigger = number_of_first_strikes() == 100 && prev(number_of_first_strikes()) == 99 && byte(0x0A094A) != 0
-)
+    trigger = any_of(re, r => rc[r] && number_of_first_strikes() == 100 && prev(number_of_first_strikes()) == 99 && byte(0x0A094A) != 0
+))
 
 achievement(
     title = "Battle Hardened", points = 25,
     description = "Fight your way through 250 battles throughout your adventure",
     id = 49576, badge = "513645", published = "2017-06-12 4:45:59 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = number_of_battles() == 250 && prev(number_of_battles()) == 249 && byte(0x0A094A) != 0
-)
+    trigger = any_of(re, r => rc[r] && number_of_battles() == 250 && prev(number_of_battles()) == 249 && byte(0x0A094A) != 0
+))
 
 achievement(
     title = "Power Bouncer", points = 25,
     description = "Use the Power Bounce badge to bounce 25 times consecutively on an enemy",
     id = 49577, badge = "86111", published = "2017-06-12 4:46:21 AM", modified = "2025-05-13 1:56:23 PM",
-    trigger = never(marios_battle_animation_id() == 65540) &&
+    trigger = any_of(re, r => rc[r] && never(marios_battle_animation_id() == 65540) &&
               ((byte(0x0A094A) == 1 && total_power_bounces() >= 25 &&
                 measured(repeated(25, prev(marios_battle_animation_id()) == 65543 && marios_battle_animation_id() == 65548))) ||
                (byte(0x0A094A) == 1 && total_power_bounces() >= 25 &&
                 measured(repeated(25, prev(marios_battle_animation_id()) == 65547 && marios_battle_animation_id() == 65548))) ||
                (byte(0x0A094A) == 1 && total_power_bounces() >= 25 &&
                 measured(repeated(25, prev(marios_battle_animation_id()) == 65544 && marios_battle_animation_id() == 65548))))
-)
+))
 
 achievement(
     title = "Coin Collector", points = 5,
     description = "Collect 1,000 or more coins throughout your adventure",
     id = 49583, badge = "86118", published = "2017-06-12 4:46:36 AM", modified = "2025-05-13 1:56:23 PM",
-    trigger = byte(0x0A094A) == 1 && prev(total_coins_earned_through_the_course_of_the_game()) < 1000 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(total_coins_earned_through_the_course_of_the_game()) < 1000 &&
               total_coins_earned_through_the_course_of_the_game() >= 1000 && music_id() != 105
-)
+))
 
 achievement(
     title = "Closing the Book", points = 25, type="win_condition",
     description = "Rescue the Princess and sit back and watch the fireworks",
     id = 49608, badge = "86119", published = "2017-06-15 2:05:18 AM", modified = "2025-05-13 1:56:24 PM",
-    trigger = byte(0x315600) == 92 && byte(0x315601) == 4 && byte(0x315602) == 36 && byte(0x315603) == 128 &&
+    trigger = any_of(re, r => rc[r] && byte(0x315600) == 92 && byte(0x315601) == 4 && byte(0x315602) == 36 && byte(0x315603) == 128 &&
               the_end_address() == 255
-)
+))
 
 achievement(
     title = "Ring Around the Rosie", points = 2,
     description = "Play 'Ring Around the Rosie' with a Candycane to get some life",
     id = 49618, badge = "86129", published = "2017-06-15 1:58:38 PM", modified = "2025-05-13 1:56:24 PM",
-    trigger = music_id_word() == 132 && hearts_out_to_be_able_to_be_picked_up() == 1
-)
+    trigger = any_of(re, r => rc[r] && music_id_word() == 132 && hearts_out_to_be_able_to_be_picked_up() == 1
+))
 
 achievement(
     title = "Encyclopedia", points = 50, type="missable",
     description = "Have Goombario use 'Tattle' on every enemy",
     id = 79592, badge = "85928", published = "2019-08-05 8:01:58 AM", modified = "2025-05-13 1:56:24 PM",
-    trigger = byte(0x0A094A) == 1 && event_id() == 1 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && event_id() == 1 &&
               ((measured((tattle_flags_1_bill_blaster() + tattle_flags_1_cleft() + tattle_flags_1_monty_mole() +
                     tattle_flags_1_bandit() + tattle_flags_1_pokey() + tattle_flags_1_pokey_mummy() +
                     tattle_flags_1_swooper() + tattle_flags_1_buzzy_beetle() + tattle_flags_2_paragoomba() +
@@ -3246,13 +3246,13 @@ achievement(
                 prev(tattle_flags_22_huff_n_puff()) + prev(tattle_flags_22_tuff_puff()) +
                 prev(tattle_flags_22_monstar()) + prev(tattle_flags_22_crystal_king()) +
                 prev(tattle_flags_22_crystal_bit())) == 109))
-)
+))
 
 achievement(
     title = "Kitchen Nightmare", points = 50,
     description = "Cook every recipe",
     id = 79593, badge = "85929", published = "2019-08-05 8:02:00 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = event_id() == 0 && byte(0x0A094A) == 1 &&
+    trigger = any_of(re, r => rc[r] && event_id() == 0 && byte(0x0A094A) == 1 &&
               measured((recipes_flag_1_16bits_bit6() + recipes_flag_1_16bits_bit7() + bit0(0x0DBC97) + bit1(0x0DBC97) +
                   bit2(0x0DBC97) + bit3(0x0DBC97) + bit4(0x0DBC97) + bit5(0x0DBC97) + bit6(0x0DBC97) + bit7(0x0DBC97) +
                   recipes_flag_2_16bits_bit0() + recipes_flag_2_16bits_bit1() + recipes_flag_2_16bits_bit2() +
@@ -3285,26 +3285,26 @@ achievement(
               prev(recipes_flag_4_16bits_bit3()) + prev(recipes_flag_4_16bits_bit5()) +
               prev(recipes_flag_4_16bits_bit6()) + prev(recipes_flag_4_16bits_bit7()) + prev(bit0(0x0DBC9D)) +
               prev(bit1(0x0DBC9D))) == 49
-)
+))
 
 achievement(
     title = "Rolling in the Deep", points = 3,
     description = "Destroy each of the spinning flames in Mt. Lavalava",
     id = 79594, badge = "85930", published = "2019-08-05 8:02:02 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = (prev(area_flag_2_flame_1_destroyed()) + prev(area_flag_2_flame_2_destroyed()) +
+    trigger = any_of(re, r => rc[r] && (prev(area_flag_2_flame_1_destroyed()) + prev(area_flag_2_flame_2_destroyed()) +
               prev(area_flag_2_flame_3_destroyed()) + prev(area_flag_2_flame_4_destroyed()) +
               prev(area_flag_2_flame_5_destroyed()) + prev(area_flag_2_flame_6_destroyed())) == 5 &&
               measured((area_flag_2_flame_1_destroyed() + area_flag_2_flame_2_destroyed() +
                   area_flag_2_flame_3_destroyed() + area_flag_2_flame_4_destroyed() + area_flag_2_flame_5_destroyed() +
                   area_flag_2_flame_6_destroyed()) == 6, when=area_world_id() == 18
               )
-)
+))
 
 achievement(
     title = "Brotherly Secrets", points = 5,
     description = "Read all of Luigi's Diary",
     id = 79595, badge = "85931", published = "2019-08-05 8:02:04 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = area_world_id() == 0 && map_id() == 11 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 0 && map_id() == 11 &&
               (prev(luigis_diary_1_page_9()) + prev(luigis_diary_1_page_10()) + prev(luigis_diary_1_page_11()) +
               prev(luigis_diary_1_page_12()) + prev(luigis_diary_2_bit0()) + prev(luigis_diary_2_bit1()) +
               prev(luigis_diary_2_bit2()) + prev(luigis_diary_2_bit3()) + prev(luigis_diary_2_bit4()) +
@@ -3314,13 +3314,13 @@ achievement(
                   luigis_diary_2_bit3() + luigis_diary_2_bit4() + luigis_diary_2_bit5() + luigis_diary_2_bit6() +
                   luigis_diary_2_bit7()) == 12
               )
-)
+))
 
 achievement(
     title = "Unwanted Mail", points = 5,
     description = "Read all of Mario's letters",
     id = 79596, badge = "85932", published = "2019-08-05 8:02:05 AM", modified = "2025-09-14 4:30:39 AM",
-    trigger = area_world_id() == 0 && map_id() == 11 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 0 && map_id() == 11 &&
               (prev(bitfield_marios_letters_kolorado_2()) + prev(bitfield_marios_letters_yoshi_kids()) +
               prev(bitfield_marios_letters_rowf()) + prev(bitfield_marios_letters_wise_wisterwood()) +
               prev(bitfield_marios_letters_2_little_t()) + prev(bitfield_marios_letters_2_vanna_t()) +
@@ -3334,13 +3334,13 @@ achievement(
                   bitfield_marios_letters_2_moustafa() + bitfield_marios_letters_2_kolorado() +
                   bitfield_marios_letters_2_goombaria() + bitfield_marios_letters_2_tayce_t()) == 12
               )
-)
+))
 
 achievement(
     title = "Here's the Mail that Never Fails", points = 5, type="missable",
     description = "Read every letter dedicated to your partners",
     id = 79597, badge = "85933", published = "2019-08-05 8:02:07 AM", modified = "2023-03-14 3:28:13 AM",
-    trigger = area_world_id() == 1 && map_id() == 2 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && map_id() == 2 &&
               (prev(partners_letters_flag_1_8bits_letters_1_4_readed()) +
               prev(partners_letters_flag_1_8bits_letters_1_4_readed_bit5()) +
               prev(partners_letters_flag_1_8bits_letters_1_4_readed_bit6()) +
@@ -3367,13 +3367,13 @@ achievement(
                   partners_letters_flag_3_letters_14_20_readed_bit4() + partners_letters_flag_3_letters_14_20_readed_bit5()
                   + partners_letters_flag_3_letters_14_20_readed_bit6()) == 19
               )
-)
+))
 
 achievement(
     title = "Oink!", points = 5,
     description = "Win an item from a Lil' Oink",
     id = 79598, badge = "85934", published = "2019-08-05 8:02:09 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = area_world_id() == 1 && map_id() == 4 && player_pos_x() >= 271.0 && player_pos_x() <= 588.0 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && map_id() == 4 && player_pos_x() >= 271.0 && player_pos_x() <= 588.0 &&
               player_pos_z() <= -107.0 && player_pos_z() >= -252.0 &&
               ((prev(item_slots()) == 0 && item_slots() > 0) ||
                (prev(_16bit_byte()) == 0 && _16bit_byte() > 0) ||
@@ -3387,13 +3387,13 @@ achievement(
                (prev(_16bit_8_byte()) == 0 && _16bit_8_byte() > 0) ||
                (prev(items_checked_slot_1()) == 0 && items_checked_slot_1() > 0) ||
                (prev(byte(0x10F458)) == 0 && byte(0x10F458) > 0))
-)
+))
 
 achievement(
     title = "99.7 FM", points = 5,
     description = "Get the last reward from the Trading Event Toad",
     id = 79599, badge = "85935", published = "2019-08-05 8:02:11 AM", modified = "2024-04-05 3:22:20 PM",
-    trigger = byte(0x0A094A) == 1 && area_world_id() == 1 && map_id() == 6 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && area_world_id() == 1 && map_id() == 6 &&
               ((prev(item_slots()) == 0 && item_slots() == 187) ||
                (prev(_16bit_byte()) == 0 && _16bit_byte() == 187) ||
                (prev(_16bit_3_byte()) == 0 && _16bit_3_byte() == 187) ||
@@ -3406,39 +3406,39 @@ achievement(
                (prev(_16bit_8_byte()) == 0 && _16bit_8_byte() == 187) ||
                (prev(items_checked_slot_1()) == 0 && items_checked_slot_1() == 187) ||
                (prev(byte(0x10F458)) == 0 && byte(0x10F458) == 187))
-)
+))
 
 achievement(
     title = "Jackpot", points = 10,
     description = "Win a total of 250 or more coins in the 'Smash Attack' Minigame",
     id = 79600, badge = "85936", published = "2019-08-05 8:02:13 AM", modified = "2025-05-13 1:56:26 PM",
-    trigger = area_world_id() == 25 && map_id() == 2 && smash_attack_total_coins_won_16bits() != 250 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 25 && map_id() == 2 && smash_attack_total_coins_won_16bits() != 250 &&
               smash_attack_total_coins_won_16bits() >= 250
-)
+))
 
 achievement(
     title = "Why, Spike?", points = 1, type="missable",
     description = "Don't forgive Lakilester",
     id = 79707, badge = "86072", published = "2019-08-07 3:10:48 AM", modified = "2025-05-13 1:56:26 PM",
-    trigger = area_world_id() == 19 && map_id() == 8 && prev(marios_battle_animation_id_byte()) == 43 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 19 && map_id() == 8 && prev(marios_battle_animation_id_byte()) == 43 &&
               marios_battle_animation_id_byte() == 23
-)
+))
 
 achievement(
     title = "Afraid of Ghosts", points = 4,
     description = "Make it to the chest at the end of the Spike Room in Tubba Blubba's Castle without using Bow",
     id = 84288, badge = "91675", published = "2019-09-28 7:30:40 PM", modified = "2025-05-13 1:56:26 PM",
-    trigger = never(area_world_id() != 15) && never(map_id() != 12) && never(sound_id_16bits() == 8206) &&
+    trigger = any_of(re, r => rc[r] && never(area_world_id() != 15) && never(map_id() != 12) && never(sound_id_16bits() == 8206) &&
               never(sound_id_2() == 8206) && never(sound_id_3() == 8206) && never(sound_id_16bits() == 661) &&
               never(sound_id_2() == 661) && never(sound_id_3() == 661) && once(sound_id_16bits() == 450) &&
               x_coordinates_16bits() <= 50050 && z_coordinates_16bits() >= 49988
-)
+))
 
 achievement(
     title = "Hidden Goodies", points = 10,
     description = "Find every hidden block (Must grab item from each box at least once)",
     id = 321728, badge = "359762", published = "2023-05-26 6:12:17 PM", modified = "2023-06-08 11:12:59 PM",
-    trigger = byte(0x0A094A) != 0 && event_id() == 0 &&
+    trigger = any_of(re, r => rc[r] && byte(0x0A094A) != 0 && event_id() == 0 &&
               measured((hidden_block_in_00_02() + hidden_block_1_in_02_09() + hidden_block_2_in_02_09() +
                   hidden_block_3_in_02_09() + hidden_block_in_02_0e() + hidden_block_1_in_02_11() +
                   hidden_block_2_in_02_11() + hidden_block_3_in_02_11() + hidden_block_4_in_02_11() +
@@ -3470,88 +3470,88 @@ achievement(
               prev(hidden_block_1_in_13_11()) + prev(hidden_block_2_in_13_11()) + prev(hidden_block_in_14_04()) +
               prev(hidden_block_in_14_06()) + prev(hidden_block_in_15_12()) + prev(hidden_block_in_16_25()) +
               prev(hidden_block_in_16_31()) + prev(hidden_block_in_17_02())) == 47
-)
+))
 
 achievement(
     title = "I Feel Like I've Been Scammed", points = 3, type="missable",
     description = "Get an 'Upgrade' from Chet Rippo in Toad Town",
     id = 321729, badge = "359763", published = "2023-05-26 6:12:18 PM", modified = "2023-06-13 9:41:29 PM",
-    trigger = area_world_id() == 1 && prev(chet_rippo_flag_when_on_he_has_been_activated()) == 0 && map_id() == 5 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && prev(chet_rippo_flag_when_on_he_has_been_activated()) == 0 && map_id() == 5 &&
               chet_rippo_flag_when_on_he_has_been_activated() == 1
-)
+))
 
 achievement(
     title = "She Does Spells, but Not for Free", points = 3,
     description = "Purchase a 'Special Course' Spell from Merlee in Dry Dry Outpost",
     id = 321730, badge = "359764", published = "2023-05-26 6:12:18 PM", modified = "2023-05-28 5:28:13 PM",
-    trigger = area_world_id() == 9 && prev(current_merlee_spell_8bit()) != 20 && current_merlee_spell_8bit() == 20
-)
+    trigger = any_of(re, r => rc[r] && area_world_id() == 9 && prev(current_merlee_spell_8bit()) != 20 && current_merlee_spell_8bit() == 20
+))
 
 achievement(
     title = "Old School House Party", points = 1,
     description = "Become 8-Bit Mario in Boo's Mansion",
     id = 321731, badge = "359765", published = "2023-05-26 6:12:18 PM", modified = "2023-05-29 7:41:23 PM",
-    trigger = area_world_id() == 13 && prev(music_id()) != 65 && music_id() == 65
-)
+    trigger = any_of(re, r => rc[r] && area_world_id() == 13 && prev(music_id()) != 65 && music_id() == 65
+))
 
 achievement(
     title = "You're A Monster", points = 0,
     description = "Deal enough damage to Whacka and cause him to disappear",
     id = 321732, badge = "359766", published = "2023-05-26 6:12:19 PM", modified = "2023-05-28 5:28:14 PM",
-    trigger = area_world_id() == 8 && prev(times_you_have_whacked_whacka()) != 8 && times_you_have_whacked_whacka() >= 8
-)
+    trigger = any_of(re, r => rc[r] && area_world_id() == 8 && prev(times_you_have_whacked_whacka()) != 8 && times_you_have_whacked_whacka() >= 8
+))
 
 achievement(
     title = "Dayzee'd and Confused", points = 5,
     description = "Defeat an Amazy Dayzee",
     id = 321733, badge = "359767", published = "2023-05-26 6:12:19 PM", modified = "2023-05-28 5:28:14 PM",
-    trigger = area_world_id_word() == 19 && battle_id() == 6172 && event_id() == 1 && byte(pointer_2() + 0x1BB) == 0
-)
+    trigger = any_of(re, r => rc[r] && area_world_id_word() == 19 && battle_id() == 6172 && event_id() == 1 && byte(pointer_2() + 0x1BB) == 0
+))
 
 achievement(
     title = "Loading Screen Aficionado", points = 1, type="missable",
     description = "Wait on any Chapter introduction and hear the classic Mario Bros. theme",
     id = 321734, badge = "359768", published = "2023-05-26 6:12:20 PM", modified = "2023-05-29 4:36:29 PM",
-    trigger = repeated(900, area_world_id() == 0 && music_id() == 65) && never(area_world_id() != 0)
-)
+    trigger = any_of(re, r => rc[r] && repeated(900, area_world_id() == 0 && music_id() == 65) && never(area_world_id() != 0)
+))
 
 achievement(
     title = "Sorry, Bro!", points = 5, type="missable",
     description = "After getting the Super Boots, go and find Luigi's secret diary BEFORE meeting Lady Bow",
     id = 321737, badge = "359771", published = "2023-05-26 6:12:21 PM", modified = "2023-05-29 8:25:04 PM",
-    trigger = area_world_id() == 0 && map_id() == 11 && player_pos_y() <= -70.0 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 0 && map_id() == 11 && player_pos_y() <= -70.0 &&
               prev(luigi_state_luigi_is_outside_of_his_room()) == 0 && luigi_state_luigi_is_outside_of_his_room() == 1
-)
+))
 
 achievement(
     title = "Survey Says...!", points = 3, type="missable",
     description = "Answer all of the questions correctly in the 64th Trivia Quiz-Off",
     id = 321738, badge = "359772", published = "2023-05-26 6:12:21 PM", modified = "2023-05-28 5:28:16 PM",
-    trigger = area_world_id() == 4 && prev(quiz_show_answers_correct_answer_count_for_peach()) == 9 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 4 && prev(quiz_show_answers_correct_answer_count_for_peach()) == 9 &&
               quiz_show_answers_correct_answer_count_for_peach() == 10
-)
+))
 
 achievement(
     title = "Mild Shock", points = 5,
     description = "Use a Thunder Rage from a 'Mystery?' item (Cannot use Double or Triple dip)",
     id = 321863, badge = "359779", published = "2023-05-27 2:01:14 AM", modified = "2023-06-15 12:24:10 AM",
-    trigger = once(battle_2() == 52 && prev(item_used_id()) == 150 && item_used_id() == 130) &&
+    trigger = any_of(re, r => rc[r] && once(battle_2() == 52 && prev(item_used_id()) == 150 && item_used_id() == 130) &&
               (always_false() || (never(event_id() == 0) && never(remaining_turns_using_his_turn_mario() == 0)))
-)
+))
 
 achievement(
     title = "Quite the New Look", points = 1, type="missable",
     description = "As Peach, disguise yourself as an enemy and look at the mirror in her room",
     id = 321950, badge = "359781", published = "2023-05-27 4:40:53 AM", modified = "2023-06-12 4:05:53 AM",
-    trigger = area_world_id() == 4 && map_id() == 8 && npc_dialogue_id() == 69 && npc_group_id() == 20 &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 4 && map_id() == 8 && npc_dialogue_id() == 69 && npc_group_id() == 20 &&
               prev(also_dialogue()) == 88 && also_dialogue() == 89 && prev(dialogue()) == 82 && dialogue() == 83
-)
+))
 
 achievement(
     title = "Shroomy Slots", points = 10,
     description = "Earn a Mushroom from the Slot Machine in Shy Guy's Toybox",
     id = 322960, badge = "360326", published = "2023-05-29 3:20:59 PM", modified = "2023-10-16 3:15:40 PM",
-    trigger = area_world_id() == 16 && map_id() == 8 && byte(0x0DBF90) == 1 && (what_2() == 143 || what_2() == 14) &&
+    trigger = any_of(re, r => rc[r] && area_world_id() == 16 && map_id() == 8 && byte(0x0DBF90) == 1 && (what_2() == 143 || what_2() == 14) &&
               ((prev(item_slots_word()) != 138 && item_slots_word() == 138 && disable_player_inputs_flag() == 1) ||
                (prev(_16bit()) != 138 && _16bit() == 138 && disable_player_inputs_flag() == 1) ||
                (prev(_16bit_2()) != 138 && _16bit_2() == 138 && disable_player_inputs_flag() == 1) ||
@@ -3562,13 +3562,13 @@ achievement(
                (prev(_16bit_7()) != 138 && _16bit_7() == 138 && disable_player_inputs_flag() == 1) ||
                (prev(_16bit_8()) != 138 && _16bit_8() == 138 && disable_player_inputs_flag() == 1) ||
                (prev(_16bit_9()) != 138 && _16bit_9() == 138 && disable_player_inputs_flag() == 1))
-)
+))
 
 achievement(
     title = "Encyclopedia* (AddSourceless)", points = 25,
     description = "If you want to check what tattles you have missing",
     id = 101551, badge = "85928", published = "2020-03-03 11:49:58 PM", modified = "2020-03-22 3:43:22 AM",
-    trigger = tattle_flags_1_bill_blaster() == 1 && tattle_flags_1_cleft() == 1 && tattle_flags_1_monty_mole() == 1 &&
+    trigger = any_of(re, r => rc[r] && tattle_flags_1_bill_blaster() == 1 && tattle_flags_1_cleft() == 1 && tattle_flags_1_monty_mole() == 1 &&
               tattle_flags_1_bandit() == 1 && tattle_flags_1_pokey() == 1 && tattle_flags_1_pokey_mummy() == 1 &&
               tattle_flags_1_swooper() == 1 && tattle_flags_1_buzzy_beetle() == 1 && tattle_flags_2_paragoomba() == 1 &&
               tattle_flags_2_spiked_goomba() == 1 && tattle_flags_2_fuzzy() == 1 && tattle_flags_2_koopa_troopa() == 1 &&
@@ -3626,13 +3626,13 @@ achievement(
                (tattle_flags_18() > prev(tattle_flags_18())) ||
                (tattle_flags_20() > prev(tattle_flags_20())) ||
                (tattle_flags_21() > prev(tattle_flags_21())))
-)
+))
 
 achievement(
     title = "Mighty Morphin' Shy Guys", points = 5,
     description = "Defeat the groups of two Red, Pink, Yellow, Green, and Blue Shy Guys IN ORDER in the Blue Zone of Shy Guys Toybox (Must not use First Strike Badge!)",
     id = 322736, badge = "359998", published = "2023-05-28 8:28:53 PM", modified = "2024-06-03 1:28:20 AM",
-    trigger = map_id() == 3 &&
+    trigger = any_of(re, r => rc[r] && map_id() == 3 &&
               once(once(once(once(once(once(once(once(once(once(battle_id() == 4096) &&
                   remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())) &&
                   battle_id() == 4100) &&
@@ -3645,7 +3645,7 @@ achievement(
                   remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())
               ) &&
               (always_false() || (never(area_world_id() != 16)))
-)
+))
 
 leaderboard(
     id = 5385, title = "Jump Attack Highscore",
