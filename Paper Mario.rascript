@@ -2352,119 +2352,112 @@ achievement(
     title = "Capped Companion", points = 5, type="progression",
     description = "Have Goombario join your party",
     id = 49518, badge = "86074", published = "2017-06-11 1:28:32 AM", modified = "2025-05-13 1:56:14 PM",
-    trigger = goombario() == 1 && bombette() != 1 && sushie() != 1 && bow() != 1 && kooper() != 1 && parakarry() != 1 &&
-              watt() != 1 && lakilester() != 1 && once(music_id_word() == 130)
+    trigger = any_of(re, r => re[r] && has_goombario[r] == 1 && prev(has_goombario[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Turtle Torpedo", points = 5, type="progression",
     description = "Have Kooper join your party",
     id = 49519, badge = "86075", published = "2017-06-11 1:28:36 AM", modified = "2025-05-13 1:56:14 PM",
-    trigger = kooper() == 1 && goombario() == 1 && bombette() != 1 && sushie() != 1 && bow() != 1 && parakarry() != 1 &&
-              watt() != 1 && lakilester() != 1 && music_id_word() == 130
+    trigger = any_of(re, r => re[r] && has_kooper[r] == 1 && prev(has_kooper[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "A Blast With My Gal", points = 5, type="progression",
     description = "Have Bombette join the party",
     id = 49520, badge = "86076", published = "2017-06-11 1:28:38 AM", modified = "2025-11-27 2:48:12 AM",
-    trigger = area_world_id() == 7 && byte(0x0A094A) == 1 && prev(bombette()) == 0 && bombette() == 1
+    trigger = any_of(re, r => re[r] && has_bombette[r] == 1 && prev(has_bombette[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Turtle Mail", points = 5, type="progression",
     description = "Have Parakarry join the party",
     id = 49521, badge = "86077", published = "2017-06-11 1:28:40 AM", modified = "2019-08-07 6:46:13 AM",
-    trigger = parakarry() == 1 && goombario() == 1 && bombette() == 1 && kooper() == 1 && watt() != 1 &&
-              lakilester() != 1 && bow() != 1 && sushie() != 1 && music_id_word() == 130
+    trigger = any_of(re, r => re[r] && has_parakarry[r] == 1 && prev(has_parakarry[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Her Royal Frightfulness", points = 5, type="progression",
     description = "Have Bow join the party",
     id = 49522, badge = "86078", published = "2017-06-11 1:28:43 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = bow() == 1 && goombario() == 1 && bombette() == 1 && kooper() == 1 && parakarry() == 1 && watt() != 1 &&
-              lakilester() != 1 && sushie() != 1 && music_id_word() == 130
+    trigger = any_of(re, r => re[r] && has_bow[r] == 1 && prev(has_bow[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "My Sweet Little Night Light", points = 5, type="progression",
     description = "Have Watt join the party",
     id = 49523, badge = "86079", published = "2017-06-11 1:28:45 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = watt() == 1 && goombario() == 1 && kooper() == 1 && bombette() == 1 && parakarry() == 1 && bow() == 1 &&
-              sushie() != 1 && lakilester() != 1 && music_id_word() == 130
+    trigger = any_of(re, r => re[r] && has_watt[r] == 1 && prev(has_watt[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Fishie Friend", points = 5, type="progression",
     description = "Have Sushie join the party",
     id = 49524, badge = "86080", published = "2017-06-11 1:28:47 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = sushie() == 1 && goombario() == 1 && bombette() == 1 && bow() == 1 && kooper() == 1 && parakarry() == 1 &&
-              watt() == 1 && lakilester() != 1 && music_id_word() == 130
+    trigger = any_of(re, r => re[r] && has_sushie[r] == 1 && prev(has_sushie[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Lakitu With a 'Tude", points = 5, type="progression",
     description = "Have Lakilester join the party",
     id = 49525, badge = "86081", published = "2017-06-11 1:28:49 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = lakilester() == 1 && goombario() == 1 && bombette() == 1 && sushie() == 1 && bow() == 1 && kooper() == 1 &&
-              parakarry() == 1 && watt() == 1 && music_id_word() == 130
+    trigger = any_of(re, r => re[r] && has_lakilester[r] == 1 && prev(has_lakilester[r]) == 0 && room(r, x, y))
 )
 
 achievement(
     title = "Goomtastic", points = 5,
     description = "Fully upgrade Goombario",
     id = 49526, badge = "86082", published = "2017-06-11 1:28:51 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = goombario_upgrade_level() == 2 && prev(goombario_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && goombario_level[r] == 2 && prev(goombario_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Shell Yeah!", points = 5,
     description = "Fully upgrade Kooper",
     id = 49527, badge = "86083", published = "2017-06-11 1:28:53 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = kooper_upgrade_level() == 2 && prev(kooper_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && kooper_level[r] == 2 && prev(kooper_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Explosive Personality", points = 5,
     description = "Fully upgrade Bombette",
     id = 49528, badge = "86084", published = "2017-06-11 1:28:55 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = bombette_upgrade_level() == 2 && prev(bombette_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && bombette_level[r] == 2 && prev(bombette_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "First-Class", points = 5,
     description = "Fully upgrade Parakarry",
     id = 49529, badge = "86085", published = "2017-06-11 1:28:56 AM", modified = "2025-05-13 1:56:16 PM",
-    trigger = parrakarry_upgrade_level() == 2 && prev(parrakarry_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && parakarry_level[r] == 2 && prev(parakarry_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Mistress of the Night", points = 5,
     description = "Fully upgrade Bow",
     id = 49530, badge = "86086", published = "2017-06-11 1:28:59 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = bow_upgrade_level() == 2 && prev(bow_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && bow_level[r] == 2 && prev(bow_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Power Surge", points = 5,
     description = "Fully upgrade Watt",
     id = 49531, badge = "86087", published = "2017-06-11 1:29:01 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = watt_upgrade_level() == 2 && prev(watt_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && watt_level[r] == 2 && prev(watt_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "Hooked on Sushie", points = 5,
     description = "Fully upgrade Sushie",
     id = 49532, badge = "86088", published = "2017-06-11 1:29:02 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = upgrade_level() == 2 && prev(upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && sushie_level[r] == 2 && prev(sushie_level[r]) == 1 && in_game[r])
 )
 
 achievement(
     title = "You're Cool in My Book", points = 5,
     description = "Fully upgrade Lakilester",
     id = 49533, badge = "86089", published = "2017-06-11 1:29:05 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = lakilester_upgrade_level() == 2 && prev(lakilester_upgrade_level()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => re[r] && lakilester_level[r] == 2 && prev(lakilester_level[r]) == 1 && in_game[r])
 )
 
 achievement(
