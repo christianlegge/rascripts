@@ -1,6 +1,822 @@
 // Paper Mario
+// #MinimumVersion = 1.3
 // #ID = 10154
 
+re = [ "US", "JP", "EU" ]
+
+rc = {
+    "US": ascii_string_equals(0x77bd0, " grP", 4),
+    "JP": ascii_string_equals(0x77ba0, " grP", 4),
+    "EU": ascii_string_equals(0x73f70, " grP", 4)
+}
+
+in_game = {
+    "US": word(0xa094a) == 1,
+    "JP": word(0x9e75a) == 1,
+    "EU": word(0x9f0aa) == 1
+}
+
+sprite_instances = {
+    "US": 0x2dfa48,
+    "JP": 0x113598,
+    "EU": 0x2e5d3c
+}
+
+world_triggers = {
+    "US": 0x159190,
+    "JP": 0x15e110,
+    "EU": 0x157d60
+}
+
+battle_state = {
+    "US": byte(0xdc070 - 8),
+    "JP": byte(0xdc050 - 8),
+    "EU": byte(0xd87e0 - 8)
+}
+
+encounter_state = {
+    "US": byte(0x9a600),
+    "JP": byte(0x9a5e0),
+    "EU": byte(0x969d4)
+}
+
+battle_status = {
+    "US": byte(0xdc070),
+    "JP": byte(0xdc050),
+    "EU": byte(0xd87e0)
+}
+
+can_flee_battle = {
+    "US": bit5(0xdc070 + 0x4),
+    "JP": bit5(0xdc050 + 0x4),
+    "EU": bit5(0xd87e0 + 0x4)
+}
+
+battle_player_actor = {
+    "US": tbyte(0xdc070 + 0xd8),
+    "JP": tbyte(0xdc050 + 0xd8),
+    "EU": tbyte(0xd87e0 + 0xd8)
+}
+
+move_argument = {
+    "US": word(0xdc070 + 0x178),
+    "JP": word(0xdc050 + 0x178),
+    "EU": word(0xd87e0 + 0x178)
+}
+
+selected_move_category = {
+    "US": byte(0xdc070 + 0x17b),
+    "JP": byte(0xdc050 + 0x17b),
+    "EU": byte(0xd87e0 + 0x17b)
+}
+
+selected_move_id = {
+    "US": word(0xdc070 + 0x17e),
+    "JP": word(0xdc050 + 0x17e),
+    "EU": word(0xd87e0 + 0x17e)
+}
+
+enemy_actors_start = {
+    "US": 0xdc070 + 0xe0,
+    "JP": 0xdc050 + 0xe0,
+    "EU": 0xd87e0 + 0xe0
+}
+
+changing_map = {
+    "US": bit4(0x10f080 - 0xb2),
+    "JP": bit4(0x10f240 - 0xb2),
+    "EU": bit4(0x10db80 - 0xb2)
+}
+
+player_animation = {
+    "US": byte(0x10f080),
+    "JP": byte(0x10f240),
+    "EU": byte(0x10db80)
+}
+
+time_freeze = {
+    "US": dword(0x9a5d8),
+    "JP": dword(0x9a5b8),
+    "EU": dword(0x969ac)
+}
+
+picking_up_item = {
+    "US": word(0x1565a6),
+    "JP": word(0x15b526),
+    "EU": word(0x155166)
+}
+
+game_status = {
+    "US": tbyte(0x7419c),
+    "JP": tbyte(0x7417c),
+    "EU": tbyte(0x714ac)
+}
+
+shop_addr = {
+    "US": tbyte(game_status["US"] + 0x144),
+    "JP": tbyte(game_status["JP"] + 0x144),
+    "EU": tbyte(game_status["EU"] + 0x144)
+}
+
+is_peach = {
+    "US": bit0(game_status["US"] + 0x7d),
+    "JP": bit0(game_status["JP"] + 0x7d),
+    "EU": bit0(game_status["EU"] + 0x7d)
+}
+
+first_enemy_type = {
+    "US": byte(tbyte(0xdc070 + 0xe0) + 0x135),
+    "JP": byte(tbyte(0xdc050 + 0xe0) + 0x135),
+    "EU": byte(tbyte(0xd87e0 + 0xe0) + 0x135)
+}
+
+function enemy_type(n, region) {
+    if (region == "US") {
+        return byte(tbyte(enemy_actors_start["US"] + n*4) + 0x135)
+    } else if (region == "JP") {
+        return byte(tbyte(enemy_actors_start["JP"] + n*4) + 0x135)
+    } else if (region == "EU") {
+        return byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x135)
+    }
+}
+
+function enemy_prev_current_hp(n, region) {
+    if (region == "US") {
+        return prev(byte(tbyte(enemy_actors_start["US"] + n*4) + 0x1bb))
+    } else if (region == "JP") {
+        return prev(byte(tbyte(enemy_actors_start["JP"] + n*4) + 0x1bb))
+    } else if (region == "EU") {
+        return prev(byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x1bb))
+    }
+}
+
+
+function enemy_current_hp(n, region) {
+    if (region == "US") {
+        return byte(tbyte(enemy_actors_start["US"] + n*4) + 0x1bb)
+    } else if (region == "JP") {
+        return byte(tbyte(enemy_actors_start["JP"] + n*4) + 0x1bb)
+    } else if (region == "EU") {
+        return byte(tbyte(enemy_actors_start["EU"] + n*4) + 0x1bb)
+    }
+}
+
+world_npcs = {
+    "US": 0xa0990,
+    "JP": 0x9e7a0,
+    "EU": 0x9f100
+}
+
+max_star_power = {
+    "US": byte(0x10f51d),
+    "JP": byte(0x10f6dd),
+    "EU": byte(0x10e01d)
+}
+
+mario_x_pos = {
+    "US": float(0x740bc),
+    "JP": float(0x10f1b0),
+    "EU": float(0x713cc)
+}
+
+mario_y_pos = {
+    "US": float(0x740c0),
+    "JP": float(0x10f1b4),
+    "EU": float(0x713d0)
+}
+
+mario_z_pos = {
+    "US": float(0x740c4),
+    "JP": float(0x10f1b8),
+    "EU": float(0x713d4)
+}
+
+current_partner = {
+    "US": byte(0x10f2a1),
+    "JP": byte(0x10f461),
+    "EU": byte(0x10dda1)
+}
+
+acting_partner = {
+    "US": byte(0x10ebb0),
+    "JP": byte(0x10ed70),
+    "EU": byte(0x10d6b0)
+}
+
+partner_action_state = {
+    "US": byte(0x10ebb3),
+    "JP": byte(0x10ed73),
+    "EU": byte(0x10d6b3)
+}
+
+area_id = {
+    "US": word(tbyte(0x7419c) + 0x8a),
+    "JP": word(tbyte(0x7417c) + 0x8a),
+    "EU": word(tbyte(0x714ac) + 0x8a)
+}
+
+entry_id = {
+    "US": word(tbyte(0x7419c) + 0x8c),
+    "JP": word(tbyte(0x7417c) + 0x8c),
+    "EU": word(tbyte(0x714ac) + 0x8c)
+}
+
+map_id = {
+    "US": word(tbyte(0x7419c) + 0x8e),
+    "JP": word(tbyte(0x7417c) + 0x8e),
+    "EU": word(tbyte(0x714ac) + 0x8e)
+}
+
+story_progress = {
+    "US": byte(0xdbd73),
+    "JP": byte(0xdbd53),
+    "EU": byte(0xd84e3)
+}
+
+jump_byte = {
+    "US": byte(0x10efc8),
+    "JP": byte(0x10f188),
+    "EU": byte(0x10dac8)
+}
+
+jump_ascent = {
+    "US": bit1(0x10efc8),
+    "JP": bit1(0x10f188),
+    "EU": bit1(0x10dac8)
+}
+
+air_falling = {
+    "US": bit2(0x10efc8),
+    "JP": bit2(0x10f188),
+    "EU": bit2(0x10dac8)
+}
+
+player_input_disabled = {
+    "US": bit5(0x10efc9),
+    "JP": bit5(0x10f189),
+    "EU": bit5(0x10dac9)
+}
+
+max_hp = {
+    "US": byte(0x10f290),
+    "JP": byte(0x10f450),
+    "EU": byte(0x10dd90)
+}
+
+max_fp = {
+    "US": byte(0x10f295),
+    "JP": byte(0x10f455),
+    "EU": byte(0x10dd95)
+}
+
+max_bp = {
+    "US": byte(0x10f29b),
+    "JP": byte(0x10f45b),
+    "EU": byte(0x10dd9b)
+}
+
+current_hp = {
+    "US": byte(0x10f291),
+    "JP": byte(0x10f451),
+    "EU": byte(0x10dd91)
+}
+
+current_fp = {
+    "US": byte(0x10f296),
+    "JP": byte(0x10f456),
+    "EU": byte(0x10dd96)
+}
+
+mario_level = {
+    "US": byte(0x10f29a),
+    "JP": byte(0x10f45a),
+    "EU": byte(0x10dd9a)
+}
+
+current_hammer = {
+    "US": byte(0x10f292),
+    "JP": byte(0x10f452),
+    "EU": byte(0x10dd92)
+}
+
+current_boots = {
+    "US": byte(0x10f293),
+    "JP": byte(0x10f453),
+    "EU": byte(0x10dd93)
+}
+
+coins = {
+    "US": word(0x10f29e),
+    "JP": word(0x10f45e),
+    "EU": word(0x10dd9e)
+}
+
+has_goombario = {
+    "US": byte(0x10f290 + 0x1f),
+    "JP": byte(0x10f450 + 0x1f),
+    "EU": byte(0x10dd90 + 0x1f)
+}
+
+has_kooper = {
+    "US": byte(0x10f290 + 0x27),
+    "JP": byte(0x10f450 + 0x27),
+    "EU": byte(0x10dd90 + 0x27)
+}
+
+has_bombette = {
+    "US": byte(0x10f290 + 0x2f),
+    "JP": byte(0x10f450 + 0x2f),
+    "EU": byte(0x10dd90 + 0x2f)
+}
+
+has_parakarry = {
+    "US": byte(0x10f290 + 0x37),
+    "JP": byte(0x10f450 + 0x37),
+    "EU": byte(0x10dd90 + 0x37)
+}
+
+has_bow = {
+    "US": byte(0x10f290 + 0x5f),
+    "JP": byte(0x10f450 + 0x5f),
+    "EU": byte(0x10dd90 + 0x5f)
+}
+
+has_watt = {
+    "US": byte(0x10f290 + 0x47),
+    "JP": byte(0x10f450 + 0x47),
+    "EU": byte(0x10dd90 + 0x47)
+}
+
+has_sushie = {
+    "US": byte(0x10f290 + 0x4f),
+    "JP": byte(0x10f450 + 0x4f),
+    "EU": byte(0x10dd90 + 0x4f)
+}
+
+has_laki = {
+    "US": byte(0x10f290 + 0x57),
+    "JP": byte(0x10f450 + 0x57),
+    "EU": byte(0x10dd90 + 0x57)
+}
+
+goombario_level = {
+    "US": byte(0x10f290 + 0x1e),
+    "JP": byte(0x10f450 + 0x1e),
+    "EU": byte(0x10dd90 + 0x1e)
+}
+
+kooper_level = {
+    "US": byte(0x10f290 + 0x26),
+    "JP": byte(0x10f450 + 0x26),
+    "EU": byte(0x10dd90 + 0x26)
+}
+
+bombette_level = {
+    "US": byte(0x10f290 + 0x2e),
+    "JP": byte(0x10f450 + 0x2e),
+    "EU": byte(0x10dd90 + 0x2e)
+}
+
+parakarry_level = {
+    "US": byte(0x10f290 + 0x36),
+    "JP": byte(0x10f450 + 0x36),
+    "EU": byte(0x10dd90 + 0x36)
+}
+
+bow_level = {
+    "US": byte(0x10f290 + 0x5e),
+    "JP": byte(0x10f450 + 0x5e),
+    "EU": byte(0x10dd90 + 0x5e)
+}
+
+watt_level = {
+    "US": byte(0x10f290 + 0x46),
+    "JP": byte(0x10f450 + 0x46),
+    "EU": byte(0x10dd90 + 0x46)
+}
+
+sushie_level = {
+    "US": byte(0x10f290 + 0x4e),
+    "JP": byte(0x10f450 + 0x4e),
+    "EU": byte(0x10dd90 + 0x4e)
+}
+
+laki_level = {
+    "US": byte(0x10f290 + 0x56),
+    "JP": byte(0x10f450 + 0x56),
+    "EU": byte(0x10dd90 + 0x56)
+}
+
+item_inv = {
+    "US": (0x10f290 + 0x1b4),
+    "JP": (0x10f450 + 0x1b4),
+    "EU": (0x10dd90 + 0x1b4)
+}
+
+function key_item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return word(0x10f290 + 0x74 + i*2)
+    } else if (region == "JP") {
+        return word(0x10f450 + 0x74 + i*2)
+    } else if (region == "EU") {
+        return word(0x10dd90 + 0x74 + i*2)
+    }
+}
+
+function prev_key_item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return prev(word(0x10f290 + 0x74 + i*2))
+    } else if (region == "JP") {
+        return prev(word(0x10f450 + 0x74 + i*2))
+    } else if (region == "EU") {
+        return prev(word(0x10dd90 + 0x74 + i*2))
+    }
+}
+
+function prev_item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return prev(word(0x10f290 + 0x1b4 + i*2))
+    } else if (region == "JP") {
+        return prev(word(0x10f450 + 0x1b4 + i*2))
+    } else if (region == "EU") {
+        return prev(word(0x10dd90 + 0x1b4 + i*2))
+    }
+}
+
+function item_slot(region, i) {
+    if (i % 2 == 0) {
+        i = i + 1
+    }
+    else {
+        i = i - 1
+    }
+    if (region == "US") {
+        return word(0x10f290 + 0x1b4 + i*2)
+    } else if (region == "JP") {
+        return word(0x10f450 + 0x1b4 + i*2)
+    } else if (region == "EU") {
+        return word(0x10dd90 + 0x1b4 + i*2)
+    }
+}
+
+badge_inv = {
+    "US": (0x10f290 + 0xb4),
+    "JP": (0x10f450 + 0xb4),
+    "EU": (0x10dd90 + 0xb4)
+}
+
+function prev_badge_slot(region, i) {
+    if (region == "US") {
+        return prev(word(0x10f290 + 0xb4 + i*2))
+    } else if (region == "JP") {
+        return prev(word(0x10f450 + 0xb4 + i*2))
+    } else if (region == "EU") {
+        return prev(word(0x10dd90 + 0xb4 + i*2))
+    }
+}
+
+function badge_slot(region, i) {
+    if (region == "US") {
+        return word(0x10f290 + 0xb4 + i*2)
+    } else if (region == "JP") {
+        return word(0x10f450 + 0xb4 + i*2)
+    } else if (region == "EU") {
+        return word(0x10dd90 + 0xb4 + i*2)
+    }
+}
+
+function equipped_badge(r, id) {
+    return __ornext(any_of(range(0, 63), i => word(badge_inv[r] + 340 + i*2) == id))
+}
+
+area_id_values = {
+    0x00: "Goomba Village",
+    0x01: "Toad Town",
+    0x02: "Toad Town Tunnels",
+    0x03: "Inside the Whale",
+    0x04: "Peach's Castle",
+    0x05: "Shooting Star Summit",
+    0x06: "Koopa Village",
+    0x07: "Koopa Bros. Fortress",
+    0x08: "Mt. Rugged",
+    0x09: "Dry Dry Outpost",
+    0x0A: "Dry Dry Desert",
+    0x0B: "Dry Dry Ruins",
+    0x0C: "Forever Forest",
+    0x0D: "Bow's Mansion",
+    0x0E: "Gusty Gulch",
+    0x0F: "Tubba Blubba's Castle",
+    0x10: "Shy Guy's Toy Box",
+    0x11: "Jade Jungle",
+    0x12: "Mt. Lavalava",
+    0x13: "Flower Fields",
+    0x14: "Shiver City",
+    0x15: "Crystal Palace",
+    0x16: "Bowser's Castle",
+    0x17: "Peach's Castle cutscenes",
+    0x18: "Credits",
+    0x19: "Mini Game House",
+    0x1A: "Game Over screen",
+    0x1B: "Debug rooms"
+}
+
+partner_values = {
+    0x00: "is",
+    0x01: "and Goombario are",
+    0x02: "and Kooper are",
+    0x03: "and Bombette are",
+    0x04: "and Parakarry are",
+    0x05: "and Goompa are",
+    0x06: "and Watt are",
+    0x07: "and Sushie are",
+    0x08: "and Lakilester are",
+    0x09: "and Bow are",
+    0x0A: "and Goombaria are",
+    0x0B: "and Twink are"
+}
+
+prologue_repel_gel = {
+    "US": bit4(0xdbc76),
+    "JP": bit4(0xdbc56),
+    "EU": bit4(0xd83e6)
+}
+
+prologue_stone_block = {
+    "US": bit6(0xdbc76),
+    "JP": bit6(0xdbc56),
+    "EU": bit6(0xd83e6)
+}
+
+mt_rugged_seed = {
+    "US": bit4(0xdbcc9),
+    "JP": bit4(0xdbca9),
+    "EU": bit4(0xd8439)
+}
+
+buzzar_defeated = {
+    "US": bit4(0xdbcc8),
+    "JP": bit4(0xdbca8),
+    "EU": bit4(0xd8438)
+}
+
+function map_flag(bit_index) {
+    byte_index = bit_index / 8
+    bit_in_byte = bit_index % 8
+    if (bit_in_byte == 0) {
+        return {
+            "US": bit0(0x2dbc70 + byte_index),
+            "JP": bit0(0x2dbc70 + byte_index),
+            "EU": bit0(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 1) {
+        return {
+            "US": bit1(0x2dbc70 + byte_index),
+            "JP": bit1(0x2dbc70 + byte_index),
+            "EU": bit1(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 2) {
+        return {
+            "US": bit2(0x2dbc70 + byte_index),
+            "JP": bit2(0x2dbc70 + byte_index),
+            "EU": bit2(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 3) {
+        return {
+            "US": bit3(0x2dbc70 + byte_index),
+            "JP": bit3(0x2dbc70 + byte_index),
+            "EU": bit3(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 4) {
+        return {
+            "US": bit4(0x2dbc70 + byte_index),
+            "JP": bit4(0x2dbc70 + byte_index),
+            "EU": bit4(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 5) {
+        return {
+            "US": bit5(0x2dbc70 + byte_index),
+            "JP": bit5(0x2dbc70 + byte_index),
+            "EU": bit5(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 6) {
+        return {
+            "US": bit6(0x2dbc70 + byte_index),
+            "JP": bit6(0x2dbc70 + byte_index),
+            "EU": bit6(0x2e1f50 + byte_index)
+        }
+    } else if (bit_in_byte == 7) {
+        return {
+            "US": bit7(0x2dbc70 + byte_index),
+            "JP": bit7(0x2dbc70 + byte_index),
+            "EU": bit7(0x2e1f50 + byte_index)
+        }
+    }
+}
+
+function map_var(idx) {
+    return {
+        "US": dword(0x2dbca8 + idx),
+        "JP": dword(0x2dbca8 + idx),
+        "EU": dword(0x2e1f88 + idx)
+    }
+}
+
+function game_flag(bit_index) {
+    byte_index = bit_index / 8
+    bit_in_byte = bit_index % 8
+    if (bit_in_byte == 0) {
+        return {
+            "US": bit0(0xdbc70 + byte_index),
+            "JP": bit0(0xdbc50 + byte_index),
+            "EU": bit0(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 1) {
+        return {
+            "US": bit1(0xdbc70 + byte_index),
+            "JP": bit1(0xdbc50 + byte_index),
+            "EU": bit1(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 2) {
+        return {
+            "US": bit2(0xdbc70 + byte_index),
+            "JP": bit2(0xdbc50 + byte_index),
+            "EU": bit2(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 3) {
+        return {
+            "US": bit3(0xdbc70 + byte_index),
+            "JP": bit3(0xdbc50 + byte_index),
+            "EU": bit3(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 4) {
+        return {
+            "US": bit4(0xdbc70 + byte_index),
+            "JP": bit4(0xdbc50 + byte_index),
+            "EU": bit4(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 5) {
+        return {
+            "US": bit5(0xdbc70 + byte_index),
+            "JP": bit5(0xdbc50 + byte_index),
+            "EU": bit5(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 6) {
+        return {
+            "US": bit6(0xdbc70 + byte_index),
+            "JP": bit6(0xdbc50 + byte_index),
+            "EU": bit6(0xd83e0 + byte_index)
+        }
+    } else if (bit_in_byte == 7) {
+        return {
+            "US": bit7(0xdbc70 + byte_index),
+            "JP": bit7(0xdbc50 + byte_index),
+            "EU": bit7(0xd83e0 + byte_index)
+        }
+    }
+}
+
+playground_starpiece = game_flag(0x04a)
+toadtown_starpiece = game_flag(0x12d)
+bluehouse_unlock = game_flag(0x83)
+toytrain = game_flag(0x121)
+sewer_ch5_blooper = game_flag(0x1af)
+sewer_ch5_pipe = game_flag(0x78e)
+ultraboots_chest = game_flag(0x1a7)
+ultraboots_block = game_flag(0x18e)
+fpplus_bombwall = game_flag(0x241)
+fpplus_koopa_chest = game_flag(0x282)
+smash_charge = game_flag(0x27e)
+koopa_fortress_key1 = game_flag(0x285)
+koopa_fortress_key2 = game_flag(0x288)
+koopa_fortress_key3_bombwall = game_flag(0x291)
+koopa_fortress_key3 = game_flag(0x287)
+koopa_fortress_door1 = game_flag(0x28A)
+koopa_fortress_door2 = game_flag(0x28D)
+koopa_fortress_door3 = game_flag(0x28C)
+koopa_fortress_door4 = game_flag(0x28B)
+artifact_obtained = game_flag(0x374)
+ruins_key4 = game_flag(0x377)
+ruins_door1 = game_flag(0x366)
+ruins_door2 = game_flag(0x369)
+ruins_door3 = game_flag(0x36d)
+ruins_door4 = game_flag(0x378)
+artifact_block = game_flag(0x37F)
+slow_go_chest = game_flag(0x385)
+super_hammer_chest = game_flag(0x384)
+super_hammer_block = game_flag(0x380)
+bubulb_seed3 = game_flag(0x3A2)
+record_chest = game_flag(0x3D2)
+spike_room_chest = game_flag(0x421)
+yakkey_chest = game_flag(0x42f)
+anti_guy_defeated = game_flag(0x451)
+anti_guy_chest = game_flag(0x49F)
+dictionary_chest = game_flag(0x47B)
+toybox_blue_switch = game_flag(0x44D)
+toybox_red_barricade = game_flag(0x459)
+dizzy_stomp_chest = game_flag(0x52c)
+ultra_hammer_chest = game_flag(0x523)
+happyflower_tree = game_flag(0x566)
+yellow_plant_fed = game_flag(0x554)
+yellow_plant_superblock = game_flag(0x57a)
+bubble_plant_fed = game_flag(0x584)
+sun_tower_rock = game_flag(0x579)
+warehouse_key = game_flag(0x5BA)
+warehouse_unlocked = game_flag(0x5BB)
+bowserjail_bombwall = game_flag(0x616)
+shutofflava = game_flag(0x614)
+floodroom_bombwall = game_flag(0x631)
+floodroom_passage = game_flag(0x636)
+peachcastle_mettoad = game_flag(0x1f9)
+finalbowser = game_flag(0x1fd)
+
+mf0 = map_flag(0)
+mf1 = map_flag(1)
+mf10 = map_flag(10)
+mf13 = map_flag(13)
+
+mv0 = map_var(0)
+
+ch1_started = game_flag(0x1)
+ch2_started = game_flag(0x2)
+ch3_started = game_flag(0x3)
+ch4_started = game_flag(0x4)
+ch5_started = game_flag(0x5)
+ch6_started = game_flag(0x6)
+ch7_started = game_flag(0x7)
+ch8_started = game_flag(0x8)
+
+ch1_beatkoopabros = game_flag(0x297)
+ch2_beattutankoopa = game_flag(0x386)
+ch3_mysticalkey = game_flag(0x42F)
+ch4_fryingpanchest = game_flag(0x476)
+ch4_bombedwall = game_flag(0x459)
+ch5_intruderalert2 = game_flag(0x51E)
+ch6_placedbean = game_flag(0x55C)
+ch7_palacekeyused = game_flag(0x5F0)
+
+function unsigned_lt(a, b) {
+    if (b >= 0x80) {
+        return a >= 0x80 && a < b
+    } else {
+        return __ornext(a >= 0x80 || a < b)
+    }
+}
+
+function unsigned_gt(a, b) {
+    if (b >= 0x80) {
+        return __ornext(a < 0x80 || a > b)
+    } else {
+        return a < 0x80 && a > b
+    }
+}
+
+function encode_area_map(r) {
+    return area_id[r] * 256 + map_id[r]
+}
+
+function check_npc(list, num, cmp) {
+    return any_of(range(0, num), idx => cmp(tbyte(list + 4*idx)))
+}
+
+function all_inv_slots(r, cmp) {
+    return all_of(range(0, 9), idx => cmp(word(item_inv[r] + 2*idx)))
+}
+
+function lzs(story, area, map, cutscene_map, exit_map) {
+    return any_of(re, r =>
+        region_check[r] && trigger_when(prior(story_progress[r] == story) && story_progress[r] == story+1) &&
+        __ornext(prev(story_progress[r] == story) || prev(area_id[r] == 0)) &&
+        __ornext(map_id[r] == exit_map || map_id[r] == map) && area_id[r] == area &&
+        trigger_when(prev(area_id[r] == 0)) && prev(map_id[r] == cutscene_map) && trigger_when(map_id[r] == exit_map)
+    )
+}
+
+function rac(story, area, map, yes_flags, no_flags) {
+    return any_of(re, r =>
+        region_check[r] && prev(area_id[r] == area) && prev(map_id[r] == map) &&
+        prev(story_progress[r] == story) && story_progress[r] == story+1 &&
+        all_of(yes_flags, flag => flag[r] == 1) &&
+        all_of(no_flags, flag => flag[r] == 0) 
+    )
+}
 // $02D574: Screen Wideness (Signed Value/Load a save state to make it work)
 function screen_wideness() => byte(0x02D574)
 
@@ -1525,6 +2341,12 @@ function shop_current_item_description_and_name_16bits() => word(0x324BB8)
 
 // $3E744E: Hand Cursor Battle 2 enemies cc= left f6= right
 function hand_cursor_battle_2_enemies_cc_left_f6_right() => byte(0x3E744E)
+
+function room(r, area, mapid) {
+    return map_id[r] == mapid && area_id[r] == area
+}
+
+// Achievements
 
 achievement(
     title = "Capped Companion", points = 5, type="progression",
