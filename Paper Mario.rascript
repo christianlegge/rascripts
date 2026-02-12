@@ -2133,13 +2133,29 @@ function total_coins_earned_through_the_course_of_the_game() => word(0x10F544)
 function play_time_game_timer() => dword(0x10F54C)
 
 // $10F550: Chuck Quizmo completion addresses [40]
-function chuck_quizmo_completion_addresses() => byte(0x10F550)
+quiz_completions = {
+    "US": word(0x10f550),
+    "JP": word(0x10f710),
+    "EU": word(0x10e050)
+}
+
+quiz_attempts = {
+    "US": word(0x10f552),
+    "JP": word(0x10f712),
+    "EU": word(0x10e052)
+}
 
 // $10F552: Chuck Quizmo Quiz attempts
 function chuck_quizmo_quiz_attempts() => byte(0x10F552)
 
 // $10F5BE: Total Star Pieces collected
 function total_star_pieces_collected() => byte(0x10F5BE)
+
+star_pieces = {
+    "US": word(0x10f5be),
+    "JP": word(0x10f77e),
+    "EU": word(0x10e0be)
+}
 
 // $10F5C0: Jump Attack Total Coins Won 16bits
 function jump_attack_total_coins_won_16bits() => byte(0x10F5C0)
@@ -2465,13 +2481,13 @@ achievement(
     description = "Power up all of your party members to their max level",
     id = 49534, badge = "86090", published = "2017-06-11 1:29:08 AM", modified = "2025-05-13 1:56:18 PM",
     trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 &&
-              (prev(kooper_upgrade_level_bit1()) + prev(parrakarry_upgrade_level_bit1()) +
-              prev(watt_upgrade_level_bit1()) + prev(lakilester_upgrade_level_bit1()) +
-              prev(goombario_upgrade_level_bit1()) + prev(bombette_upgrade_level_bit1()) + prev(upgrade_level_bit1()) +
-              prev(bow_upgrade_level_bit1())) == 7 &&
-              measured((kooper_upgrade_level_bit1() + parrakarry_upgrade_level_bit1() + watt_upgrade_level_bit1() +
-                  lakilester_upgrade_level_bit1() + goombario_upgrade_level_bit1() + bombette_upgrade_level_bit1() +
-                  upgrade_level_bit1() + bow_upgrade_level_bit1()) == 8
+              (prev(kooper_level[r]/2) + prev(parrakarry_level[r]/2) +
+              prev(watt_level[r]/2) + prev(lakilester_level[r]/2) +
+              prev(goombario_level[r]/2) + prev(bombette_level[r]/2) + prev(sushie_level[r]/2) +
+              prev(bow_level[r]/2)) == 7 &&
+              measured((kooper_level[r]/2 + parrakarry_level[r]/2 + watt_level[r]/2 +
+                  lakilester_level[r]/2 + goombario_level[r]/2 + bombette_level[r]/2 +
+                  sushie_level[r]/2 + bow_level[r]/2) == 8
               )
 ))
 
@@ -2479,104 +2495,102 @@ achievement(
     title = "Flower Power", points = 10,
     description = "Max out your FP (Including Badges)",
     id = 49535, badge = "86094", published = "2017-06-11 1:29:30 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(max_fp()) < 65 && max_fp() == 65 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev(max_fp[r]) == 60 && max_fp[r] == 65
 ))
 
 achievement(
     title = "Heartful", points = 10,
     description = "Max out your HP (Including Badges)",
     id = 49536, badge = "86092", published = "2017-06-11 1:29:32 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(max_hp()) < 65 && max_hp() == 65 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev(max_hp[r]) == 60 && max_hp[r] == 65
 ))
 
 achievement(
     title = "Badges of Honor", points = 10,
     description = "Max out your Badge Points",
     id = 49537, badge = "86093", published = "2017-06-11 1:30:28 AM", modified = "2025-05-13 1:56:19 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) != 0 && music_id() != 105 &&
-              ((total_badge_points() == 30 && prev(total_badge_points()) == 27) ||
-               (total_badge_points() == 30 && prev(total_badge_points()) == 24))
+    trigger = any_of(re, r => rc[r] && in_game[r] &&
+              max_bp[r] == 30 && __ornext(prev(max_bp[r] == 27) || prev(max_bp[r] == 24))
 ))
 
 achievement(
     title = "Maxxed Out Mario", points = 25,
     description = "Level Mario to his max level",
     id = 49538, badge = "86095", published = "2017-06-11 1:30:38 AM", modified = "2025-05-13 1:56:19 PM",
-    trigger = any_of(re, r => rc[r] && marios_level() == 27 && prev(marios_level()) == 26 && byte(0x0A094A) != 0 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && mario_level[r] == 27 && prev(mario_level[r]) == 26 && in_game[r]
 ))
 
 achievement(
     title = "Age Old Wisdom", points = 5, type="progression",
     description = "Free Eldstar from the captivity of the Koopa Bros. and gain his power",
     id = 49539, badge = "86096", published = "2017-06-11 1:30:44 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 1 && prev(star_spirits()) == 0 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 1 && prev(max_star_power[r]) == 0 && in_game[r]
 ))
 
 achievement(
     title = "Motherly Instincts", points = 5, type="progression",
     description = "Free Mamar from the captivity of Tutankoopa and gain her power",
     id = 49540, badge = "86097", published = "2017-06-11 1:30:46 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 2 && prev(star_spirits()) == 1 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 2 && prev(max_star_power[r]) == 1 && in_game[r]
 ))
 
 achievement(
     title = "The Life of a Scholar", points = 5, type="progression",
     description = "Free Skolar from the captivity of Tubba Blubba and his Boos and gain his power",
     id = 49541, badge = "86098", published = "2017-06-11 1:30:48 AM", modified = "2024-06-26 5:55:11 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 3 && prev(star_spirits()) == 2 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 3 && prev(max_star_power[r]) == 2 && in_game[r]
 ))
 
 achievement(
     title = "Time to Chill", points = 5, type="progression",
     description = "Free Muskular from the captivity of General Guy and gain his power",
     id = 49542, badge = "86099", published = "2017-06-11 1:30:50 AM", modified = "2024-06-26 5:55:11 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 4 && prev(star_spirits()) == 3 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 4 && prev(max_star_power[r]) == 3 && in_game[r]
 ))
 
 achievement(
     title = "Little Miss Star", points = 5, type="progression",
     description = "Free Misstar from the captivity of the Lava Piranha and gain her power",
     id = 49543, badge = "86100", published = "2017-06-11 1:30:53 AM", modified = "2024-06-26 5:55:12 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 5 && prev(star_spirits()) == 4 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 5 && prev(max_star_power[r]) == 4 && in_game[r]
 ))
 
 achievement(
     title = "The Book Worm", points = 5, type="progression",
     description = "Free Klevar from the captivity of Huff N. Puff and gain his power",
     id = 49544, badge = "86101", published = "2017-06-11 1:30:55 AM", modified = "2024-06-26 5:55:12 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 6 && prev(star_spirits()) == 5 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 6 && prev(max_star_power[r]) == 5 && in_game[r]
 ))
 
 achievement(
     title = "Stay Calm", points = 5, type="progression",
     description = "Free Kalmar from the captivity of the Crystal King and gain his power",
     id = 49545, badge = "86102", published = "2017-06-11 1:31:00 AM", modified = "2024-06-26 5:55:12 PM",
-    trigger = any_of(re, r => rc[r] && star_spirits() == 7 && prev(star_spirits()) == 6 && byte(0x0A094A) == 1
+    trigger = any_of(re, r => rc[r] && max_star_power[r] == 7 && prev(max_star_power[r]) == 6 && in_game[r]
 ))
 
 achievement(
     title = "Hammer Bro", points = 5,
     description = "Get the Hammer",
     id = 49548, badge = "86105", published = "2017-06-11 1:48:02 AM", modified = "2019-08-07 6:47:16 AM",
-    trigger = any_of(re, r => rc[r] && ff_no_hammer_01_super_hammer_02_ultra_hammer() == 0 &&
-              prev(ff_no_hammer_01_super_hammer_02_ultra_hammer()) == 255 && music_id_word() != 106 &&
-              byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && current_hammer[r] == 0 &&
+              prev(current_hammer[r]) == 255 && room(r, 0, 3) && in_game[r]
 ))
 
 achievement(
     title = "Super Hammer Bro ", points = 5,
     description = "Get the Super Hammer",
     id = 49549, badge = "86106", published = "2017-06-11 1:48:08 AM", modified = "2019-08-07 6:47:19 AM",
-    trigger = any_of(re, r => rc[r] && ff_no_hammer_01_super_hammer_02_ultra_hammer() == 1 &&
-              prev(ff_no_hammer_01_super_hammer_02_ultra_hammer()) == 0 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && current_hammer[r] == 1 &&
+              prev(current_hammer[r]) == 0 && in_game[r] && room(r, 11, 8)
 ))
 
 achievement(
     title = "Ultra Hammer Bro", points = 5,
     description = "Get the Ultra Hammer",
     id = 49550, badge = "86107", published = "2017-06-11 1:48:11 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = any_of(re, r => rc[r] && ff_no_hammer_01_super_hammer_02_ultra_hammer() == 2 &&
-              prev(ff_no_hammer_01_super_hammer_02_ultra_hammer()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && current_hammer[r] == 2 &&
+              prev(current_hammer[r]) == 1 && in_game[r] && room(r, 18, 6)
 ))
 
 achievement(
@@ -2597,33 +2611,30 @@ achievement(
     title = "Pop Quiz", points = 1,
     description = "Answer your first Chuck Quizmo question",
     id = 49578, badge = "86112", published = "2017-06-12 4:46:23 AM", modified = "2024-12-26 6:54:22 PM",
-    trigger = any_of(re, r => rc[r] && chuck_quizmo_quiz_attempts() >= 1 && chuck_quizmo_completion_addresses() == 1 &&
-              prev(chuck_quizmo_completion_addresses()) == 0 && byte(0x0A094A) != 0 &&
-              (music_id() != 105 && music_id() != 106)
+    trigger = any_of(re, r => rc[r] && quiz_attempts[r] >= 1 && quiz_completions[r] == 1 &&
+              prev(quiz_completions[r]) == 0 && in_game[r]
 ))
 
 achievement(
     title = "Quiz Master", points = 25,
     description = "Answer all 64 of Chuck Quizmo questions",
     id = 49579, badge = "86114", published = "2017-06-12 4:46:25 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = any_of(re, r => rc[r] && chuck_quizmo_completion_addresses() == 64 && prev(chuck_quizmo_completion_addresses()) == 63 &&
-              byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && quiz_completions[r] == 64 && prev(quiz_completions[r]) == 63 &&
+              in_game[r]
 ))
 
 achievement(
     title = "Star Piece Finder", points = 25,
     description = "Collect 80 star pieces",
     id = 49580, badge = "86115", published = "2017-06-12 4:46:27 AM", modified = "2025-05-13 1:56:21 PM",
-    trigger = any_of(re, r => rc[r] && prev(total_star_pieces_collected()) < 80 && total_star_pieces_collected() >= 80 && byte(0x0A094A) == 1 &&
-              music_id() != 105
+    trigger = any_of(re, r => rc[r] && prev(star_pieces[r]) < 80 && prev(star_pieces[r] > 40) && star_pieces[r] >= 80 && in_game[r]
 ))
 
 achievement(
     title = "Star Man", points = 50,
     description = "Collect all 160 Star Pieces",
     id = 49581, badge = "86116", published = "2017-06-12 4:46:28 AM", modified = "2024-07-01 12:56:01 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(total_star_pieces_collected()) < 160 && total_star_pieces_collected() >= 160 &&
-              music_id() != 105
+    trigger = any_of(re, r => rc[r] && prev(star_pieces[r]) < 160 && prev(star_pieces[r] > 80) && star_pieces[r] >= 160 && in_game[r]
 ))
 
 achievement(
