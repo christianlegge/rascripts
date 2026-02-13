@@ -82,6 +82,12 @@ enemy_actors_start = {
     "EU": 0xd87e0 + 0xe0
 }
 
+function enemy_actor(r, num, pred) {
+    return any_of(range(0, num - 1), i =>
+        pred(tbyte(enemy_actors_start[r] + 4*i))
+    )
+}
+
 changing_map = {
     "US": bit4(0x10f080 - 0xb2),
     "JP": bit4(0x10f240 - 0xb2),
@@ -2677,11 +2683,11 @@ achievement(
     title = "Goomnutless", points = 10, type="missable",
     description = "Defeat the Goomba King without the use of the Goomnut",
     id = 49617, badge = "513627", published = "2017-06-15 6:21:11 AM", modified = "2021-02-05 1:55:20 AM",
-    trigger = any_of(re, r => rc[r] && once(npc_dialogue_id_word() == 203) && once(npc_dialogue_id_word() == 204) &&
-              once(npc_dialogue_id_word() == 205) && once(npc_dialogue_id_word() == 206) && once(music_id_word() == 7) &&
-              never(music_id_word() == 2) && byte(0x3E20DD) == 110 && once(music_id() == 126) &&
-              ((music_id_word() == 142) ||
-               (music_id_word() == 139))
+    trigger = any_of(re, r => rc[r] && 
+        prev(battle_state[r] > 0) && prev(battle_state[r]) < 26 &&
+        room(r, 0, 9) &&
+        enemy_actor(r, 4, addr => byte(addr + 0x135) == 0x93 && dword(addr + 0x9c) == 0) &&
+        trigger_when(battle_state[r] == 26)
 ))
 
 achievement(
