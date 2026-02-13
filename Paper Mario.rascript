@@ -2752,33 +2752,14 @@ achievement(
     title = "Hot Footed Hero", points = 10, type="missable",
     description = "Defeat Lava Piranha without using Sushie, the Snowman Doll, or the Fire Shield Badge",
     id = 321763, badge = "513633", published = "2023-05-26 7:49:25 PM", modified = "2023-06-30 1:09:52 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 18 && unless(battle_id() != 5888) && unless(activated_badge_id_2() == 236) &&
-              unless(activated_badge_id_1() == 236) && unless(word(0x10F49C) == 236) && unless(word(0x10F49E) == 236) &&
-              unless(word(0x10F4A0) == 236) && unless(word(0x10F4A2) == 236) && unless(word(0x10F4A4) == 236) &&
-              unless(word(0x10F4A6) == 236) && unless(word(0x10F4A8) == 236) && unless(word(0x10F4AA) == 236) &&
-              unless(word(0x10F4AC) == 236) && unless(word(0x10F4AE) == 236) && unless(word(0x10F4B0) == 236) &&
-              unless(word(0x10F4B2) == 236) && unless(word(0x10F4B4) == 236) && unless(word(0x10F4B6) == 236) &&
-              unless(word(0x10F4B8) == 236) && unless(word(0x10F4BA) == 236) && unless(word(0x10F4BC) == 236) &&
-              unless(word(0x10F4BE) == 236) && unless(word(0x10F4C0) == 236) && unless(word(0x10F4C2) == 236) &&
-              unless(word(0x10F4C4) == 236) && unless(word(0x10F4C6) == 236) && unless(word(0x10F4C8) == 236) &&
-              unless(word(0x10F4CA) == 236) && unless(word(0x10F4CC) == 236) && unless(word(0x10F4CE) == 236) &&
-              unless(word(0x10F4D0) == 236) && unless(word(0x10F4D2) == 236) && unless(word(0x10F4D4) == 236) &&
-              unless(word(0x10F4D6) == 236) && unless(word(0x10F4D8) == 236) && unless(word(0x10F4DA) == 236) &&
-              unless(word(0x10F4DC) == 236) && unless(word(0x10F4DE) == 236) && unless(word(0x10F4E0) == 236) &&
-              unless(word(0x10F4E2) == 236) && unless(word(0x10F4E4) == 236) && unless(word(0x10F4E6) == 236) &&
-              unless(word(0x10F4E8) == 236) && unless(word(0x10F4EA) == 236) && unless(word(0x10F4EC) == 236) &&
-              unless(word(0x10F4EE) == 236) && unless(word(0x10F4F0) == 236) && unless(word(0x10F4F2) == 236) &&
-              unless(word(0x10F4F4) == 236) && unless(word(0x10F4F6) == 236) && unless(word(0x10F4F8) == 236) &&
-              unless(word(0x10F4FA) == 236) && unless(word(0x10F4FC) == 236) && unless(word(0x10F4FE) == 236) &&
-              unless(word(0x10F500) == 236) && unless(word(0x10F502) == 236) && unless(word(0x10F504) == 236) &&
-              unless(word(0x10F506) == 236) && unless(word(0x10F508) == 236) && unless(word(0x10F50A) == 236) &&
-              unless(word(0x10F50C) == 236) && unless(word(0x10F50E) == 236) && unless(word(0x10F510) == 236) &&
-              unless(word(0x10F512) == 236) && unless(activated_badge_id_64() == 236) &&
-              disable_when(current_partner() == 7) &&
-              disable_when(item_used_id() == 129 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB))) &&
-              trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              (always_false() || (never(music_id() == 255)))
+    trigger = any_of(re, r => 
+        unless(!rc[r]) &&
+        never(!room(r, 18, 13)) &&
+        !equipped_badge(r, 236) &&
+        once(battle_start(r)) &&
+        never(current_partner[r] == 7) &&
+        never(selected_move_category[r] == 2 && move_argument[r] == 129 && battle_state[r] == 18) &&
+        trigger_when(battle_won(r))
 ))
 
 achievement(
