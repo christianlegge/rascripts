@@ -2417,7 +2417,7 @@ achievement(
     title = "Lakitu With a 'Tude", points = 5, type="progression",
     description = "Have Lakilester join the party",
     id = 49525, badge = "86081", published = "2017-06-11 1:28:49 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => rc[r] && has_lakilester[r] == 1 && prev(has_lakilester[r]) == 0 && room(r, 19, 8))
+    trigger = any_of(re, r => rc[r] && has_laki[r] == 1 && prev(has_laki[r]) == 0 && room(r, 19, 8))
 )
 
 achievement(
