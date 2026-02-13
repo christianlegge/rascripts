@@ -34,6 +34,9 @@ battle_state = {
     "EU": byte(0xd87e0 - 8)
 }
 
+function battle_start(r) => battle_state[r] > 0 && prev(battle_state[r]) == 0
+function battle_won(r) => battle_state[r] == 33 && prev(battle_state[r]) != 33
+
 encounter_state = {
     "US": byte(0x9a600),
     "JP": byte(0x9a5e0),
@@ -2687,42 +2690,39 @@ achievement(
         prev(battle_state[r] > 0) && prev(battle_state[r]) < 26 &&
         room(r, 0, 9) &&
         enemy_actor(r, 4, addr => byte(addr + 0x135) == 0x93 && dword(addr + 0x9c) == 0) &&
-        trigger_when(battle_state[r] == 26)
+        trigger_when(prev(battle_state[r] != 33) && battle_state[r] == 33)
 ))
 
 achievement(
     title = "Buzz Off!", points = 10,
     description = "Defeat Buzzar",
     id = 49615, badge = "513628", published = "2017-06-15 3:04:32 AM", modified = "2025-05-02 2:19:25 PM",
-    trigger = any_of(re, r => rc[r] && event_id() == 1 && prev(remaining_turns_mario_won_the_battle()) == 0 &&
-              remaining_turns_mario_won_the_battle() == 1 && battle_id() == 2316
+    trigger = any_of(re, r => rc[r] && room(r, 8, 4) && buzzar_defeated[r] > prev(buzzar_defeated[r])
 ))
 
 achievement(
     title = "P.O.W-erless", points = 10, type="missable",
     description = "Defeat the Koopa Bros. without using any items",
     id = 321735, badge = "513629", published = "2023-05-26 6:12:20 PM", modified = "2023-05-28 5:34:24 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id_word() == 7 && unless(battle_id() != 1792) &&
-              disable_when(item_slots_word() != prev(item_slots_word())) && disable_when(_16bit() != prev(_16bit())) &&
-              disable_when(_16bit_2() != prev(_16bit_2())) && disable_when(_16bit_3() != prev(_16bit_3())) &&
-              disable_when(_16bit_4() != prev(_16bit_4())) && disable_when(_16bit_5() != prev(_16bit_5())) &&
-              disable_when(_16bit_6() != prev(_16bit_6())) && disable_when(_16bit_7() != prev(_16bit_7())) &&
-              disable_when(_16bit_8() != prev(_16bit_8())) && disable_when(_16bit_9() != prev(_16bit_9())) &&
-              trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              (always_false() || (never(music_id() == 255)))
+    trigger = any_of(re, r => 
+        unless(!rc[r]) &&
+        once(battle_state[r] > 0 && prev(battle_state[r]) == 0) &&
+        never(battle_state[r] == 18 && selected_move_category[r] == 2) &&
+        never(!room(r, 7, 10)) &&
+        never(battle_state[r] == 0) &&
+        trigger_when(prev(battle_state[r] != 33) && battle_state[r] == 33)
 ))
 
 achievement(
     title = "Bury the Dead", points = 5, type="missable",
     description = "Defeat Tutankoopa by harming him only with items",
     id = 321736, badge = "513630", published = "2023-05-26 6:12:21 PM", modified = "2025-05-13 1:56:21 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id_word() == 11 && unless(battle_id() != 3072) &&
-              unless(marios_battle_animation_id() == 4294967295) &&
-              disable_when(battle_2() != 52 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB))) &&
-              trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              (always_false() || (never(music_id() == 255)))
+    trigger = any_of(re, r => 
+        unless(!rc[r]) &&
+        never(!room(r, 11, 14)) &&
+        once(battle_start(r)) &&
+        enemy_actor(r, 2, addr => never(byte(addr+0x135) == 0xa1 && byte(addr + 0x1bb) < prev(byte(addr + 0x1bb)) && battle_state[r] > 1 && selected_move_category[r] != 2)) &&
+        trigger_when(battle_won(r))
 ))
 
 achievement(
