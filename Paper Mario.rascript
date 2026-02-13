@@ -2641,36 +2641,36 @@ achievement(
     title = "Boy Scout", points = 1,
     description = "Get your first badge",
     id = 49609, badge = "86120", published = "2017-06-15 2:07:52 AM", modified = "2023-03-14 3:28:09 AM",
-    trigger = any_of(re, r => rc[r] && area_world_id_word() == 0 && map_id() == 1 && byte(0x0A094A) == 1 && prev(id_for_first_badge_found()) == 0 &&
-              id_for_first_badge_found() == 289
+    trigger = any_of(re, r => rc[r] && room(r, 0, 1) && in_game[r] && prev_badge_slot(r, 1) == 0 &&
+              badge_slot(r, 1) == 289
 ))
 
 achievement(
     title = "First Class Scout", points = 5,
     description = "Obtain 20 Badges",
     id = 49610, badge = "86121", published = "2017-06-15 2:08:03 AM", modified = "2024-07-01 12:56:02 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_20th_badge_slot()) == 0 && _20th_badge_slot() != 0 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev_badge_slot(r, 20 - 2) == 0 && badge_slot(r, 20 - 2) != 0 && prev_badge_slot(r, 19) != 0
 ))
 
 achievement(
     title = "Star Scout", points = 10,
     description = "Obtain 40 Badges",
     id = 49611, badge = "86122", published = "2017-06-15 2:08:09 AM", modified = "2024-07-01 12:56:02 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_40th_badge_slot()) == 0 && _40th_badge_slot() != 0 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev_badge_slot(r, 40 - 2) == 0 && badge_slot(r, 40 - 2) != 0 && prev_badge_slot(r, 39) != 0
 ))
 
 achievement(
     title = "Life Scout", points = 10,
     description = "Obtain 60 Badges",
     id = 49612, badge = "86123", published = "2017-06-15 2:08:12 AM", modified = "2024-07-01 12:56:02 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_60th_badge_slot()) == 0 && _60th_badge_slot() != 0 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev_badge_slot(r, 60 - 2) == 0 && badge_slot(r, 60 - 2) != 0 && prev_badge_slot(r, 59) != 0
 ))
 
 achievement(
     title = "Eagle Scout", points = 25, type="missable",
     description = "Obtain all 80 badges in the game",
     id = 49613, badge = "86124", published = "2017-06-15 2:08:14 AM", modified = "2024-07-01 12:56:03 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(_80th_badge_slot()) == 0 && _80th_badge_slot() != 0 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev_badge_slot(r, 80 - 2) == 0 && badge_slot(r, 80 - 2) != 0 && prev_badge_slot(r, 79) != 0
 ))
 
 achievement(
