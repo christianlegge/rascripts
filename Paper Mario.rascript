@@ -2473,7 +2473,7 @@ achievement(
     title = "You're Cool in My Book", points = 5,
     description = "Fully upgrade Lakilester",
     id = 49533, badge = "86089", published = "2017-06-11 1:29:05 AM", modified = "2025-05-13 1:56:17 PM",
-    trigger = any_of(re, r => rc[r] && lakilester_level[r] == 2 && prev(lakilester_level[r]) == 1 && in_game[r])
+    trigger = any_of(re, r => rc[r] && laki_level[r] == 2 && prev(laki_level[r]) == 1 && in_game[r])
 )
 
 achievement(
@@ -2481,12 +2481,12 @@ achievement(
     description = "Power up all of your party members to their max level",
     id = 49534, badge = "86090", published = "2017-06-11 1:29:08 AM", modified = "2025-05-13 1:56:18 PM",
     trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 &&
-              (prev(kooper_level[r]/2) + prev(parrakarry_level[r]/2) +
-              prev(watt_level[r]/2) + prev(lakilester_level[r]/2) +
+              (prev(kooper_level[r]/2) + prev(parakarry_level[r]/2) +
+              prev(watt_level[r]/2) + prev(laki_level[r]/2) +
               prev(goombario_level[r]/2) + prev(bombette_level[r]/2) + prev(sushie_level[r]/2) +
               prev(bow_level[r]/2)) == 7 &&
-              measured((kooper_level[r]/2 + parrakarry_level[r]/2 + watt_level[r]/2 +
-                  lakilester_level[r]/2 + goombario_level[r]/2 + bombette_level[r]/2 +
+              measured((kooper_level[r]/2 + parakarry_level[r]/2 + watt_level[r]/2 +
+                  laki_level[r]/2 + goombario_level[r]/2 + bombette_level[r]/2 +
                   sushie_level[r]/2 + bow_level[r]/2) == 8
               )
 ))
