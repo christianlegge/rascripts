@@ -1,6 +1,6 @@
 // Paper Mario
 // #MinimumVersion = 1.3
-// #ID = 10154
+// #ID = 33114
 
 re = [ "US", "JP", "EU" ]
 
