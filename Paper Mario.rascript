@@ -2729,10 +2729,12 @@ achievement(
     title = "Sheer Heart Attack", points = 10, type="missable",
     description = "Defeat Tubba Blubba's Heart in 4 turns or less",
     id = 321762, badge = "513631", published = "2023-05-26 7:41:11 PM", modified = "2023-05-31 9:32:02 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 14 && unless(battle_id() != 3599) &&
-              disable_when(repeated(10, prev(battle_phase()) == 0 && battle_phase() == 1)) &&
-              trigger_when(byte(pointer_2() + 0x1BB) <= 5) &&
-              (always_false() || (never(music_id() == 255)))
+    trigger = any_of(re, r =>
+        unless(!rc[r]) &&
+        once(battle_start(r)) &&
+        never(repeated(4, prev(battle_state[r] != 21) && battle_state[r] == 21)) &&
+        never(!room(r, 14, 8)) &&
+        enemy_actor(r, 1, addr => trigger_when(byte(addr + 0x1bb) <= 5))
 ))
 
 achievement(
