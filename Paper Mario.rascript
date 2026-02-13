@@ -2368,56 +2368,56 @@ achievement(
     title = "Capped Companion", points = 5, type="progression",
     description = "Have Goombario join your party",
     id = 49518, badge = "86074", published = "2017-06-11 1:28:32 AM", modified = "2025-05-13 1:56:14 PM",
-    trigger = any_of(re, r => rc[r] && has_goombario[r] == 1 && prev(has_goombario[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_goombario[r] == 1 && prev(has_goombario[r]) == 0 && room(r, 0, 1))
 )
 
 achievement(
     title = "Turtle Torpedo", points = 5, type="progression",
     description = "Have Kooper join your party",
     id = 49519, badge = "86075", published = "2017-06-11 1:28:36 AM", modified = "2025-05-13 1:56:14 PM",
-    trigger = any_of(re, r => rc[r] && has_kooper[r] == 1 && prev(has_kooper[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_kooper[r] == 1 && prev(has_kooper[r]) == 0 && room(r, 6, 3))
 )
 
 achievement(
     title = "A Blast With My Gal", points = 5, type="progression",
     description = "Have Bombette join the party",
     id = 49520, badge = "86076", published = "2017-06-11 1:28:38 AM", modified = "2025-11-27 2:48:12 AM",
-    trigger = any_of(re, r => rc[r] && has_bombette[r] == 1 && prev(has_bombette[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_bombette[r] == 1 && prev(has_bombette[r]) == 0 && room(r, 7, 6))
 )
 
 achievement(
     title = "Turtle Mail", points = 5, type="progression",
     description = "Have Parakarry join the party",
     id = 49521, badge = "86077", published = "2017-06-11 1:28:40 AM", modified = "2019-08-07 6:46:13 AM",
-    trigger = any_of(re, r => rc[r] && has_parakarry[r] == 1 && prev(has_parakarry[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_parakarry[r] == 1 && prev(has_parakarry[r]) == 0 && room(r, 8, 5))
 )
 
 achievement(
     title = "Her Royal Frightfulness", points = 5, type="progression",
     description = "Have Bow join the party",
     id = 49522, badge = "86078", published = "2017-06-11 1:28:43 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => rc[r] && has_bow[r] == 1 && prev(has_bow[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_bow[r] == 1 && prev(has_bow[r]) == 0 && room(r, 13, 8))
 )
 
 achievement(
     title = "My Sweet Little Night Light", points = 5, type="progression",
     description = "Have Watt join the party",
     id = 49523, badge = "86079", published = "2017-06-11 1:28:45 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => rc[r] && has_watt[r] == 1 && prev(has_watt[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_watt[r] == 1 && prev(has_watt[r]) == 0 && room(r, 16, 11))
 )
 
 achievement(
     title = "Fishie Friend", points = 5, type="progression",
     description = "Have Sushie join the party",
     id = 49524, badge = "86080", published = "2017-06-11 1:28:47 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => rc[r] && has_sushie[r] == 1 && prev(has_sushie[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_sushie[r] == 1 && prev(has_sushie[r]) == 0 && room(r, 17, 4))
 )
 
 achievement(
     title = "Lakitu With a 'Tude", points = 5, type="progression",
     description = "Have Lakilester join the party",
     id = 49525, badge = "86081", published = "2017-06-11 1:28:49 AM", modified = "2025-05-13 1:56:15 PM",
-    trigger = any_of(re, r => rc[r] && has_lakilester[r] == 1 && prev(has_lakilester[r]) == 0 && room(r, x, y))
+    trigger = any_of(re, r => rc[r] && has_lakilester[r] == 1 && prev(has_lakilester[r]) == 0 && room(r, 19, 8))
 )
 
 achievement(
