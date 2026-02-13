@@ -2741,10 +2741,11 @@ achievement(
     title = "General Guy's Bright Idea", points = 10, type="missable",
     description = "Defeat General Guy without damaging his Light Bulb",
     id = 321755, badge = "513632", published = "2023-05-26 6:44:17 PM", modified = "2024-12-14 3:24:10 PM",
-    trigger = any_of(re, r => rc[r] && unless(battle_id() != 4352) && disable_when(byte(pointer_4() + 0x1BB) < 8) &&
-              trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              (always_false() || (never(area_world_id() != 16) && never(music_id() == 255)))
+    trigger = any_of(re, r => rc[r] && 
+        room(r, 16, 14) &&
+        battle_state[r] > 0 &&
+        enemy_actor(r, 4, addr => byte(addr + 0x135) == 0xab && byte(addr + 0x1bb) == byte(addr + 0x1ba)) &&
+        trigger_when(battle_won(r))
 ))
 
 achievement(
