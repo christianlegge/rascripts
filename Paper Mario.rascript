@@ -2771,30 +2771,41 @@ achievement(
     title = "That Guy Got Hit in the Head With a Coconut!", points = 10, type="missable",
     description = "Defeat Jr. Troopa after returning to Toad Town from Yoshi's Village with only coconuts",
     id = 321739, badge = "513634", published = "2023-05-26 6:12:22 PM", modified = "2025-05-13 1:56:21 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && unless(battle_id() != 517) &&
-              disable_when(battle_2() != 52 && item_used_id() != 172 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB))) &&
-              trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              (always_false() || (never(music_id() == 255) && never(byte(pointer_2() + 0x1BB) >= 20)))
+    trigger = any_of(re, r =>
+        unless(!rc[r]) &&
+        once(prev(battle_state[r]) == 1 && battle_state[r] == 5) &&
+        never(!room(r, 1, 6)) &&
+        never(selected_move_category[r] == 2 && move_argument[r] == 129 && battle_state[r] == 18) &&
+        enemy_actor(r, 1, addr => never(
+            byte(addr + 0x1bb) < 20 &&
+            byte(addr + 0x1bb) < prev(byte(addr + 0x1bb)) &&
+            __ornext(selected_move_category[r] != 2 || move_argument[r] != 172)
+        )) &&
+        trigger_when(battle_won(r))
 ))
 
 achievement(
     title = "Off Cloud Nine", points = 10, type="missable",
     description = "Defeat Huff N. Puff without the use of Bow or Lakilester",
     id = 321770, badge = "513635", published = "2023-05-26 9:27:14 PM", modified = "2023-05-29 8:57:59 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 19 && unless(battle_id() != 6400) && disable_when(current_partner() == 8) &&
-              disable_when(current_partner() == 9) && trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              (always_false() || (never(music_id() == 255)))
+    trigger = any_of(re, r =>
+        unless(!rc[r]) &&
+        once(battle_start(r)) &&
+        never(!room(r, 19, 15)) &&
+        never(current_partner[r] == 9) &&
+        never(current_partner[r] == 8) &&
+        trigger_when(battle_won(r))
 ))
 
 achievement(
     title = "Let's Kick Some Ice", points = 5, type="missable",
     description = "Stop time on Crystal King, then deal 7 or more damage in a single attack while he is frozen (Indicator must say 7 or more specifically, cannot be total)",
     id = 321948, badge = "513636", published = "2023-05-27 4:23:18 AM", modified = "2024-07-03 3:12:47 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 21 && byte(0x30E8DB) == 8 && trigger_when(pointer_enemy_status_thingy() == 2) &&
-              remaining_turns_using_his_turn_mario() == 1 && byte(pointer_2() + 0x1BB) < prev(byte(pointer_2() + 0x1BB)) &&
-              damage_amount_from_the_damage_indicator_shown_in_battle() >= 7 && battle_id() == 8192
+    trigger = any_of(re, r => rc[r] &&
+        room(r, 21, 23) &&
+        enemy_actor(r, 1, addr => byte(addr + 0x213) == 8 && trigger_when(
+            prev(byte(addr + 0x1BB)) - byte(addr + 0x1bb) >= 7
+        ))
 ))
 
 achievement(
