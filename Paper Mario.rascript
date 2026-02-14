@@ -1,6 +1,7 @@
 // Paper Mario
 // #MinimumVersion = 1.3
 // #ID = 33114
+// subset 33114, base 10154
 
 re = [ "US", "JP", "EU" ]
 
@@ -2719,9 +2720,13 @@ achievement(
     id = 321736, badge = "513630", published = "2023-05-26 6:12:21 PM", modified = "2025-05-13 1:56:21 PM",
     trigger = any_of(re, r => 
         unless(!rc[r]) &&
+        once(prev(battle_state[r]) == 1 && battle_state[r] == 5) &&
         never(!room(r, 11, 14)) &&
-        once(battle_start(r)) &&
-        enemy_actor(r, 2, addr => never(byte(addr+0x135) == 0xa1 && byte(addr + 0x1bb) < prev(byte(addr + 0x1bb)) && battle_state[r] > 1 && selected_move_category[r] != 2)) &&
+        enemy_actor(r, 1, addr => never(
+            byte(addr + 0x1bb) < prev(byte(addr + 0x1bb)) &&
+            battle_state[r] != 21 &&
+            selected_move_category[r] != 2
+        )) &&
         trigger_when(battle_won(r))
 ))
 
