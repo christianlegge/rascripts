@@ -2640,14 +2640,15 @@ achievement(
     title = "To The Max!", points = 25,
     description = "Power up all of your party members to their max level",
     id = 49534, badge = "86090", published = "2017-06-11 1:29:08 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 &&
+    trigger = any_of(re, r =>
               (prev(kooper_level[r]/2) + prev(parakarry_level[r]/2) +
               prev(watt_level[r]/2) + prev(laki_level[r]/2) +
               prev(goombario_level[r]/2) + prev(bombette_level[r]/2) + prev(sushie_level[r]/2) +
               prev(bow_level[r]/2)) == 7 &&
               measured((kooper_level[r]/2 + parakarry_level[r]/2 + watt_level[r]/2 +
                   laki_level[r]/2 + goombario_level[r]/2 + bombette_level[r]/2 +
-                  sushie_level[r]/2 + bow_level[r]/2) == 8
+                  sushie_level[r]/2 + bow_level[r]/2) == 8,
+                  when = rc[r]
               )
 ))
 
@@ -3033,12 +3034,12 @@ achievement(
     title = "Power Bouncer", points = 25,
     description = "Use the Power Bounce badge to bounce 25 times consecutively on an enemy",
     id = 49577, badge = "86111", published = "2017-06-12 4:46:21 AM", modified = "2025-05-13 1:56:23 PM",
-    trigger = any_of(re, r => rc[r] &&
+    trigger = any_of(re, r =>
         battle_state[r] == 18 &&
         selected_move_category[r] == 0 &&
         selected_move_id[r] == 32 &&
         prev(current_power_bounce_streak()) == 24 &&
-        measured(current_power_bounce_streak() == 25)
+        measured(current_power_bounce_streak() == 25, when = rc[r])
 ))
 
 achievement(
@@ -3073,8 +3074,8 @@ achievement(
     title = "Encyclopedia", points = 50, type="missable",
     description = "Have Goombario use 'Tattle' on every enemy",
     id = 79592, badge = "85928", published = "2019-08-05 8:01:58 AM", modified = "2025-05-13 1:56:24 PM",
-    trigger = any_of(re, r => any_of(range(0, 3), i => rc[r] &&
-        measured(sum_of(tattle_bitflags(r, i), x => x) == 110) &&
+    trigger = any_of(re, r => any_of(range(0, 3), i =>
+        measured(sum_of(tattle_bitflags(r, i), x => x) == 110, when = rc[r]) &&
         sum_of(tattle_bitflags(r, i), x => prev(x)) == 109
 )))
 
@@ -3082,8 +3083,8 @@ achievement(
     title = "Kitchen Nightmare", points = 50,
     description = "Cook every recipe",
     id = 79593, badge = "85929", published = "2019-08-05 8:02:00 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] &&
-        measured(sum_of(recipes(r), i => i) == 50) &&
+    trigger = any_of(re, r =>
+        measured(sum_of(recipes(r), i => i) == 50, when = rc[r]) &&
         sum_of(recipes(r), i => prev(i)) == 49
 ))
 
@@ -3091,8 +3092,8 @@ achievement(
     title = "Rolling in the Deep", points = 3,
     description = "Destroy each of the spinning flames in Mt. Lavalava",
     id = 79594, badge = "85930", published = "2019-08-05 8:02:02 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] &&
-        measured(sum_of(range(18, 23), i => area_flag(i)[r]) == 6, when = area_id[r] == 18) &&
+    trigger = any_of(re, r =>
+        measured(sum_of(range(18, 23), i => area_flag(i)[r]) == 6, when = area_id[r] == 18 && rc[r]) &&
         sum_of(range(18, 23), i => prev(area_flag(i)[r])) == 5
 ))
 
@@ -3100,8 +3101,8 @@ achievement(
     title = "Brotherly Secrets", points = 5,
     description = "Read all of Luigi's Diary",
     id = 79595, badge = "85931", published = "2019-08-05 8:02:04 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] && room(r, 0, 11) &&
-        measured(luigi_diaries(r) == 12) &&
+    trigger = any_of(re, r => room(r, 0, 11) &&
+        measured(luigi_diaries(r) == 12, when = rc[r]) &&
         prev(luigi_diaries(r)) == 11
 ))
 
@@ -3109,8 +3110,8 @@ achievement(
     title = "Unwanted Mail", points = 5,
     description = "Read all of Mario's letters",
     id = 79596, badge = "85932", published = "2019-08-05 8:02:05 AM", modified = "2025-09-14 4:30:39 AM",
-    trigger = any_of(re, r => rc[r] && room(r, 0, 11) &&
-        measured(mario_letters(r) == 12) &&
+    trigger = any_of(re, r => room(r, 0, 11) &&
+        measured(mario_letters(r) == 12, when = rc[r]) &&
         prev(mario_letters(r)) == 11
 ))
 
@@ -3118,8 +3119,8 @@ achievement(
     title = "Here's the Mail that Never Fails", points = 5, type="missable",
     description = "Read every letter dedicated to your partners",
     id = 79597, badge = "85933", published = "2019-08-05 8:02:07 AM", modified = "2023-03-14 3:28:13 AM",
-    trigger = any_of(re, r => rc[r] && room(r, 1, 2) &&
-        measured(sum_of(range(0xac, 0xbe), i => game_flag(i)[r]) == 19) &&
+    trigger = any_of(re, r => room(r, 1, 2) &&
+        measured(sum_of(range(0xac, 0xbe), i => game_flag(i)[r]) == 19, when = rc[r]) &&
         sum_of(range(0xac, 0xbe), i => prev(game_flag(i)[r])) == 18
 ))
 
