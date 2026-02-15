@@ -711,6 +711,22 @@ game_byte_addr = {
     "EU": 0xd84e3
 }
 
+function luigi_diaries(r) {
+    return bitcount(game_byte_addr[r] + 12) +
+        bit0(game_byte_addr[r] + 11) +
+        bit1(game_byte_addr[r] + 11) +
+        bit2(game_byte_addr[r] + 11) +
+        bit3(game_byte_addr[r] + 11)
+}
+
+function mario_letters(r) {
+    return bitcount(game_byte_addr[r] + 10) +
+        bit0(game_byte_addr[r] + 9) +
+        bit1(game_byte_addr[r] + 9) +
+        bit2(game_byte_addr[r] + 9) +
+        bit3(game_byte_addr[r] + 9)
+}
+
 tattle_bits = [
     // starting at game_byte_addr[r] + 0x169
     [0, 1, 2, 3, 4, 5, 6, 7],
@@ -3084,69 +3100,27 @@ achievement(
     title = "Brotherly Secrets", points = 5,
     description = "Read all of Luigi's Diary",
     id = 79595, badge = "85931", published = "2019-08-05 8:02:04 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 0 && map_id() == 11 &&
-              (prev(luigis_diary_1_page_9()) + prev(luigis_diary_1_page_10()) + prev(luigis_diary_1_page_11()) +
-              prev(luigis_diary_1_page_12()) + prev(luigis_diary_2_bit0()) + prev(luigis_diary_2_bit1()) +
-              prev(luigis_diary_2_bit2()) + prev(luigis_diary_2_bit3()) + prev(luigis_diary_2_bit4()) +
-              prev(luigis_diary_2_bit5()) + prev(luigis_diary_2_bit6()) + prev(luigis_diary_2_bit7())) == 11 &&
-              measured((luigis_diary_1_page_9() + luigis_diary_1_page_10() + luigis_diary_1_page_11() +
-                  luigis_diary_1_page_12() + luigis_diary_2_bit0() + luigis_diary_2_bit1() + luigis_diary_2_bit2() +
-                  luigis_diary_2_bit3() + luigis_diary_2_bit4() + luigis_diary_2_bit5() + luigis_diary_2_bit6() +
-                  luigis_diary_2_bit7()) == 12
-              )
+    trigger = any_of(re, r => rc[r] && room(r, 0, 11) &&
+        measured(luigi_diaries(r) == 12) &&
+        prev(luigi_diaries(r)) == 11
 ))
 
 achievement(
     title = "Unwanted Mail", points = 5,
     description = "Read all of Mario's letters",
     id = 79596, badge = "85932", published = "2019-08-05 8:02:05 AM", modified = "2025-09-14 4:30:39 AM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 0 && map_id() == 11 &&
-              (prev(bitfield_marios_letters_kolorado_2()) + prev(bitfield_marios_letters_yoshi_kids()) +
-              prev(bitfield_marios_letters_rowf()) + prev(bitfield_marios_letters_wise_wisterwood()) +
-              prev(bitfield_marios_letters_2_little_t()) + prev(bitfield_marios_letters_2_vanna_t()) +
-              prev(bitfield_marios_letters_2_koopa_bros()) + prev(bitfield_marios_letters_2_koopa_troopas()) +
-              prev(bitfield_marios_letters_2_moustafa()) + prev(bitfield_marios_letters_2_kolorado()) +
-              prev(bitfield_marios_letters_2_goombaria()) + prev(bitfield_marios_letters_2_tayce_t())) == 11 &&
-              measured((bitfield_marios_letters_kolorado_2() + bitfield_marios_letters_yoshi_kids() +
-                  bitfield_marios_letters_rowf() + bitfield_marios_letters_wise_wisterwood() +
-                  bitfield_marios_letters_2_little_t() + bitfield_marios_letters_2_vanna_t() +
-                  bitfield_marios_letters_2_koopa_bros() + bitfield_marios_letters_2_koopa_troopas() +
-                  bitfield_marios_letters_2_moustafa() + bitfield_marios_letters_2_kolorado() +
-                  bitfield_marios_letters_2_goombaria() + bitfield_marios_letters_2_tayce_t()) == 12
-              )
+    trigger = any_of(re, r => rc[r] && room(r, 0, 11) &&
+        measured(mario_letters(r) == 12) &&
+        prev(mario_letters(r)) == 11
 ))
 
 achievement(
     title = "Here's the Mail that Never Fails", points = 5, type="missable",
     description = "Read every letter dedicated to your partners",
     id = 79597, badge = "85933", published = "2019-08-05 8:02:07 AM", modified = "2023-03-14 3:28:13 AM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && map_id() == 2 &&
-              (prev(partners_letters_flag_1_8bits_letters_1_4_readed()) +
-              prev(partners_letters_flag_1_8bits_letters_1_4_readed_bit5()) +
-              prev(partners_letters_flag_1_8bits_letters_1_4_readed_bit6()) +
-              prev(partners_letters_flag_1_8bits_letters_1_4_readed_bit7()) + prev(partners_letters_flag_2_bit0()) +
-              prev(partners_letters_flag_2_bit1()) + prev(partners_letters_flag_2_bit2()) +
-              prev(partners_letters_flag_2_bit3()) + prev(partners_letters_flag_2_bit4()) +
-              prev(partners_letters_flag_2_bit5()) + prev(partners_letters_flag_2_bit6()) +
-              prev(partners_letters_flag_2_bit7()) + prev(partners_letters_flag_3_letters_14_20_readed()) +
-              prev(partners_letters_flag_3_letters_14_20_readed_bit1()) +
-              prev(partners_letters_flag_3_letters_14_20_readed_bit2()) +
-              prev(partners_letters_flag_3_letters_14_20_readed_bit3()) +
-              prev(partners_letters_flag_3_letters_14_20_readed_bit4()) +
-              prev(partners_letters_flag_3_letters_14_20_readed_bit5()) +
-              prev(partners_letters_flag_3_letters_14_20_readed_bit6())) == 18 &&
-              measured((partners_letters_flag_1_8bits_letters_1_4_readed() +
-                  partners_letters_flag_1_8bits_letters_1_4_readed_bit5() +
-                  partners_letters_flag_1_8bits_letters_1_4_readed_bit6() +
-                  partners_letters_flag_1_8bits_letters_1_4_readed_bit7() + partners_letters_flag_2_bit0() +
-                  partners_letters_flag_2_bit1() + partners_letters_flag_2_bit2() + partners_letters_flag_2_bit3() +
-                  partners_letters_flag_2_bit4() + partners_letters_flag_2_bit5() + partners_letters_flag_2_bit6() +
-                  partners_letters_flag_2_bit7() + partners_letters_flag_3_letters_14_20_readed() +
-                  partners_letters_flag_3_letters_14_20_readed_bit1() + partners_letters_flag_3_letters_14_20_readed_bit2()
-                  + partners_letters_flag_3_letters_14_20_readed_bit3() +
-                  partners_letters_flag_3_letters_14_20_readed_bit4() + partners_letters_flag_3_letters_14_20_readed_bit5()
-                  + partners_letters_flag_3_letters_14_20_readed_bit6()) == 19
-              )
+    trigger = any_of(re, r => rc[r] && room(r, 1, 2) &&
+        measured(sum_of(range(0xac, 0xbe), i => game_flag(i)[r]) == 19) &&
+        sum_of(range(0xac, 0xbe), i => prev(game_flag(i)[r])) == 18
 ))
 
 achievement(
