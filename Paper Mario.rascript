@@ -201,6 +201,12 @@ first_strikes = {
     "EU": word(0x10e02e)
 }
 
+power_bounces = {
+    "US": word(0x10f532),
+    "JP": word(0x10f6f2),
+    "EU": word(0x10e032)
+}
+
 battles = {
     "US": word(0x10f530),
     "JP": word(0x10f6f0),
@@ -2915,13 +2921,12 @@ achievement(
     title = "Power Bouncer", points = 25,
     description = "Use the Power Bounce badge to bounce 25 times consecutively on an enemy",
     id = 49577, badge = "86111", published = "2017-06-12 4:46:21 AM", modified = "2025-05-13 1:56:23 PM",
-    trigger = any_of(re, r => rc[r] && never(marios_battle_animation_id() == 65540) &&
-              ((byte(0x0A094A) == 1 && total_power_bounces() >= 25 &&
-                measured(repeated(25, prev(marios_battle_animation_id()) == 65543 && marios_battle_animation_id() == 65548))) ||
-               (byte(0x0A094A) == 1 && total_power_bounces() >= 25 &&
-                measured(repeated(25, prev(marios_battle_animation_id()) == 65547 && marios_battle_animation_id() == 65548))) ||
-               (byte(0x0A094A) == 1 && total_power_bounces() >= 25 &&
-                measured(repeated(25, prev(marios_battle_animation_id()) == 65544 && marios_battle_animation_id() == 65548))))
+    trigger = any_of(re, r => rc[r] &&
+        battle_state[r] == 18 &&
+        selected_move_category[r] == 0 &&
+        selected_move_id[r] == 32 &&
+        prev(current_power_bounce_streak()) == 24 &&
+        measured(current_power_bounce_streak() == 25)
 ))
 
 achievement(
