@@ -2812,22 +2812,22 @@ achievement(
     title = "Who's the Bully Now?", points = 10,
     description = "Defeat Kent C. Koopa",
     id = 49614, badge = "513637", published = "2017-06-15 2:54:23 AM", modified = "2025-05-13 1:56:21 PM",
-    trigger = any_of(re, r => rc[r] && once(npc_dialogue_id_word() == 301) && once(music_id_word() == 3) && never(music_id_word() == 2) &&
-              once(music_id_word() == 91) && never(music_id_word() == 0) && once(music_id_word() == 17) &&
-              never(music_id_word() == 19) && never(music_id_word() == 132) &&
-              ((music_id_word() == 139) ||
-               (music_id_word() == 142))
+    trigger = any_of(re, r => rc[r] && room(r, 6, 4) && game_flag(0x262)[r] > prev(game_flag(0x262)[r])
 ))
 
 achievement(
     title = "No Sleep For Ol' Four Eyes", points = 10, type="missable",
     description = "Defeat Kent C. Koopa without putting him to sleep or any other status effect",
     id = 321854, badge = "513638", published = "2023-05-26 11:02:12 PM", modified = "2023-07-06 9:45:22 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 6 && unless(battle_id() != 1304) &&
-              trigger_when(prev(remaining_turns_mario_won_the_battle()) == 0) &&
-              trigger_when(remaining_turns_mario_won_the_battle() == 1) &&
-              disable_when(pointer_enemy_status_thingy() == 2) &&
-              (always_false() || (never(music_id() == 255)))
+    trigger = any_of(re, r => 
+        unless(!rc[r]) &&
+        once(battle_state[r] == 5 && prev(battle_state[r]) == 1) &&
+        never(!room(r, 6, 4)) &&
+        enemy_actor(r, 1, addr =>
+            never(byte(addr + 0x135) != 0xb9) &&
+            never(byte(addr + 0x213) != 0) &&
+            trigger_when(byte(addr + 0x1bb) == 0 && prev(byte(addr + 0x1bb)) > 0)
+        )
 ))
 
 achievement(
