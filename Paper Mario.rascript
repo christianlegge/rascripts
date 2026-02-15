@@ -3127,20 +3127,10 @@ achievement(
     title = "Oink!", points = 5,
     description = "Win an item from a Lil' Oink",
     id = 79598, badge = "85934", published = "2019-08-05 8:02:09 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && map_id() == 4 && player_pos_x() >= 271.0 && player_pos_x() <= 588.0 &&
-              player_pos_z() <= -107.0 && player_pos_z() >= -252.0 &&
-              ((prev(item_slots()) == 0 && item_slots() > 0) ||
-               (prev(_16bit_byte()) == 0 && _16bit_byte() > 0) ||
-               (prev(_16bit_3_byte()) == 0 && _16bit_3_byte() > 0) ||
-               (prev(_16bit_2_byte()) == 0 && _16bit_2_byte() > 0) ||
-               (prev(_16bit_5_byte()) == 0 && _16bit_5_byte() > 0) ||
-               (prev(_16bit_4_byte()) == 0 && _16bit_4_byte() > 0) ||
-               (prev(_16bit_7_byte()) == 0 && _16bit_7_byte() > 0) ||
-               (prev(_16bit_6_byte()) == 0 && _16bit_6_byte() > 0) ||
-               (prev(_16bit_9_byte()) == 0 && _16bit_9_byte() > 0) ||
-               (prev(_16bit_8_byte()) == 0 && _16bit_8_byte() > 0) ||
-               (prev(items_checked_slot_1()) == 0 && items_checked_slot_1() > 0) ||
-               (prev(byte(0x10F458)) == 0 && byte(0x10F458) > 0))
+    trigger = any_of(re, r => rc[r] && room(r, 1, 4) &&
+        mario_x_pos[r] >= 271.0 && mario_x_pos[r] <= 588.0 &&
+        mario_z_pos[r] <= -107.0 && mario_z_pos[r] >= -252.0 &&
+        any_of(range(0, 9), i => item_slot(r, i) > 0 && prev(item_slot(r, i)) == 0)
 ))
 
 achievement(
