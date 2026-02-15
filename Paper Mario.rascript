@@ -3137,19 +3137,8 @@ achievement(
     title = "99.7 FM", points = 5,
     description = "Get the last reward from the Trading Event Toad",
     id = 79599, badge = "85935", published = "2019-08-05 8:02:11 AM", modified = "2024-04-05 3:22:20 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && area_world_id() == 1 && map_id() == 6 &&
-              ((prev(item_slots()) == 0 && item_slots() == 187) ||
-               (prev(_16bit_byte()) == 0 && _16bit_byte() == 187) ||
-               (prev(_16bit_3_byte()) == 0 && _16bit_3_byte() == 187) ||
-               (prev(_16bit_2_byte()) == 0 && _16bit_2_byte() == 187) ||
-               (prev(_16bit_5_byte()) == 0 && _16bit_5_byte() == 187) ||
-               (prev(_16bit_4_byte()) == 0 && _16bit_4_byte() == 187) ||
-               (prev(_16bit_7_byte()) == 0 && _16bit_7_byte() == 187) ||
-               (prev(_16bit_6_byte()) == 0 && _16bit_6_byte() == 187) ||
-               (prev(_16bit_9_byte()) == 0 && _16bit_9_byte() == 187) ||
-               (prev(_16bit_8_byte()) == 0 && _16bit_8_byte() == 187) ||
-               (prev(items_checked_slot_1()) == 0 && items_checked_slot_1() == 187) ||
-               (prev(byte(0x10F458)) == 0 && byte(0x10F458) == 187))
+    trigger = any_of(re, r => rc[r] && in_game[r] && room(r, 1, 6) &&
+        game_byte(0x15e)[r] == 3 && prev(game_byte(0x15e)[r]) == 2
 ))
 
 achievement(
