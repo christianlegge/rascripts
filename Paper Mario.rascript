@@ -769,6 +769,15 @@ function tattle_bitflags(r, i) {
     return bitflag_array
 }
 
+function area_flag(bit_index) {
+    byte_index = bit_index / 8
+    return {
+        "US": bit(bit_index % 8, 0xdacc0 + 0x12b0 + byte_index),
+        "JP": bit(bit_index % 8, 0xdaca0 + 0x12b0 + byte_index),
+        "EU": bit(bit_index % 8, 0xd7430 + 0x12b0 + byte_index)
+    }
+}
+
 function game_flag(bit_index) {
     byte_index = bit_index / 8
     bit_in_byte = bit_index % 8
@@ -3066,13 +3075,9 @@ achievement(
     title = "Rolling in the Deep", points = 3,
     description = "Destroy each of the spinning flames in Mt. Lavalava",
     id = 79594, badge = "85930", published = "2019-08-05 8:02:02 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] && (prev(area_flag_2_flame_1_destroyed()) + prev(area_flag_2_flame_2_destroyed()) +
-              prev(area_flag_2_flame_3_destroyed()) + prev(area_flag_2_flame_4_destroyed()) +
-              prev(area_flag_2_flame_5_destroyed()) + prev(area_flag_2_flame_6_destroyed())) == 5 &&
-              measured((area_flag_2_flame_1_destroyed() + area_flag_2_flame_2_destroyed() +
-                  area_flag_2_flame_3_destroyed() + area_flag_2_flame_4_destroyed() + area_flag_2_flame_5_destroyed() +
-                  area_flag_2_flame_6_destroyed()) == 6, when=area_world_id() == 18
-              )
+    trigger = any_of(re, r => rc[r] &&
+        measured(sum_of(range(18, 23), i => area_flag(i)[r]) == 6, when = area_id[r] == 18) &&
+        sum_of(range(18, 23), i => prev(area_flag(i)[r])) == 5
 ))
 
 achievement(
