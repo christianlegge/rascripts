@@ -225,6 +225,18 @@ mario_x_pos = {
     "EU": float(0x713cc)
 }
 
+music = {
+    "US": dword(0x159b00),
+    "JP": dword(0x15ea80),
+    "EU": dword(0x1586c0)
+}
+
+entities = {
+    "US": dword(0x1512f8),
+    "JP": dword(0x156358),
+    "EU": dword(0x14fec8)
+}
+
 mario_y_pos = {
     "US": float(0x740c0),
     "JP": float(0x10f1b4),
@@ -2948,15 +2960,19 @@ achievement(
     title = "Closing the Book", points = 25, type="win_condition",
     description = "Rescue the Princess and sit back and watch the fireworks",
     id = 49608, badge = "86119", published = "2017-06-15 2:05:18 AM", modified = "2025-05-13 1:56:24 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x315600) == 92 && byte(0x315601) == 4 && byte(0x315602) == 36 && byte(0x315603) == 128 &&
-              the_end_address() == 255
+    trigger = any_of(re, r => rc[r] &&
+        prev(room(r, 0x18, 1)) &&
+        room(r, 0, 0x10)
 ))
 
 achievement(
     title = "Ring Around the Rosie", points = 2,
     description = "Play 'Ring Around the Rosie' with a Candycane to get some life",
     id = 49618, badge = "86129", published = "2017-06-15 1:58:38 PM", modified = "2025-05-13 1:56:24 PM",
-    trigger = any_of(re, r => rc[r] && music_id_word() == 132 && hearts_out_to_be_able_to_be_picked_up() == 1
+    trigger = any_of(re, r => rc[r] &&
+        room(r, 6, 6) &&
+        music[r] == 0x84 &&
+        entities[r] - prev(entities[r]) == 1
 ))
 
 achievement(
