@@ -213,6 +213,12 @@ battles = {
     "EU": word(0x10e030)
 }
 
+total_coins = {
+    "US": word(0x10f544),
+    "JP": word(0x10f704),
+    "EU": word(0x10e044)
+}
+
 mario_x_pos = {
     "US": float(0x740bc),
     "JP": float(0x10f1b0),
@@ -2933,8 +2939,9 @@ achievement(
     title = "Coin Collector", points = 5,
     description = "Collect 1,000 or more coins throughout your adventure",
     id = 49583, badge = "86118", published = "2017-06-12 4:46:36 AM", modified = "2025-05-13 1:56:23 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && prev(total_coins_earned_through_the_course_of_the_game()) < 1000 &&
-              total_coins_earned_through_the_course_of_the_game() >= 1000 && music_id() != 105
+    trigger = any_of(re, r => rc[r] && in_game[r] && prev(total_coins[r]) < 1000 &&
+        prev(total_coins[r]) >= 100 &&
+        total_coins[r] >= 1000
 ))
 
 achievement(
