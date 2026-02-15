@@ -17,6 +17,12 @@ in_game = {
     "EU": word(0x9f0aa) == 1
 }
 
+battle_id = {
+    "US": word(0xdc4e8),
+    "JP": word(0xdc4c8),
+    "EU": word(0xd8c58)
+}
+
 sprite_instances = {
     "US": 0x2dfa48,
     "JP": 0x113598,
@@ -181,6 +187,24 @@ max_star_power = {
     "US": byte(0x10f51d),
     "JP": byte(0x10f6dd),
     "EU": byte(0x10e01d)
+}
+
+star_power = {
+    "US": word(0x10f522),
+    "JP": word(0x10f6e2),
+    "EU": word(0x10e022)
+}
+
+first_strikes = {
+    "US": word(0x10f52e),
+    "JP": word(0x10f6ee),
+    "EU": word(0x10e02e)
+}
+
+battles = {
+    "US": word(0x10f530),
+    "JP": word(0x10f6f0),
+    "EU": word(0x10e030)
 }
 
 mario_x_pos = {
@@ -646,6 +670,14 @@ function map_var(idx) {
         "US": dword(0x2dbca8 + idx),
         "JP": dword(0x2dbca8 + idx),
         "EU": dword(0x2e1f88 + idx)
+    }
+}
+
+function game_byte(idx) {
+    return {
+        "US": byte(0xdbd73 + idx),
+        "JP": byte(0xdbd53 + idx),
+        "EU": byte(0xd84e3 + idx)
     }
 }
 
@@ -2834,44 +2866,49 @@ achievement(
     title = "Anti-Antiguy", points = 25, type="missable",
     description = "Defeat Antiguy",
     id = 49616, badge = "513639", published = "2017-06-15 5:06:34 AM", modified = "2025-11-07 2:22:06 PM",
-    trigger = any_of(re, r => rc[r] && event_id() == 1 && prev(remaining_turns_mario_won_the_battle()) == 0 &&
-              remaining_turns_mario_won_the_battle() == 1 && battle_id() == 4140
+    trigger = any_of(re, r => rc[r] && room(r, 16, 12) && battle_id[r] == 0x102c && battle_won(r)
 ))
 
 achievement(
     title = "Graduate", points = 25,
     description = "Prove yourself worthy to have your Diploma",
     id = 49582, badge = "513640", published = "2017-06-12 4:46:30 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = any_of(re, r => rc[r] && degree_cards() == 5 && prev(degree_cards()) == 4 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && game_byte(0x1c)[r] == 5 && prev(game_byte(0x1c)[r]) == 4 && in_game[r]
 ))
 
 achievement(
     title = "The True King of the Koopas", points = 25,
     description = "Defeat Bowser without using your Star Energy (Final part of the battle)",
     id = 49687, badge = "513641", published = "2017-06-18 3:10:28 AM", modified = "2025-05-13 1:56:22 PM",
-    trigger = any_of(re, r => rc[r] && star_power_meter() == 7 && never(star_power_meter() < 7) && once(music_id_word() == 104) &&
-              music_id_word() == 111
+    trigger = any_of(re, r =>
+        unless(!rc[r]) &&
+        once(battle_id[r] == 0x2304 && prev(battle_id[r] != 0x2304)) &&
+        never(!room(r, 4, 19)) &&
+        never(star_power[r] < 0x700) &&
+        enemy_actor(r, 1, addr => trigger_when(
+            byte(addr + 0x1bb) == 0 && prev(byte(addr + 0x1bb)) > 0
+        ))
 ))
 
 achievement(
     title = "First Strike!", points = 1,
     description = "Get a first strike",
     id = 49546, badge = "513642", published = "2017-06-11 1:39:51 AM", modified = "2025-05-13 1:56:22 PM",
-    trigger = any_of(re, r => rc[r] && number_of_first_strikes() == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && first_strikes[r] > prev(first_strikes[r]) && in_game[r]
 ))
 
 achievement(
     title = "Preemptive Striker", points = 10,
     description = "Perform 100 or more 'First Strikes'",
     id = 49547, badge = "513643", published = "2017-06-11 1:40:20 AM", modified = "2025-05-13 1:56:22 PM",
-    trigger = any_of(re, r => rc[r] && number_of_first_strikes() == 100 && prev(number_of_first_strikes()) == 99 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && first_strikes[r] > prev(first_strikes[r]) && first_strikes[r] >= 100 && in_game[r]
 ))
 
 achievement(
     title = "Battle Hardened", points = 25,
     description = "Fight your way through 250 battles throughout your adventure",
     id = 49576, badge = "513645", published = "2017-06-12 4:45:59 AM", modified = "2019-10-22 4:37:02 PM",
-    trigger = any_of(re, r => rc[r] && number_of_battles() == 250 && prev(number_of_battles()) == 249 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && battles[r] > prev(battles[r]) && battles[r] >= 250 && in_game[r]
 ))
 
 achievement(
