@@ -823,6 +823,11 @@ function game_flag(bit_index) {
     }
 }
 
+function recipes(r) {
+    idxs = array_filter(range(0, 51), i => i != 0x12 && i != 0x2e)
+    return array_map(idxs, x => game_flag(0x136 + x)[r])
+}
+
 playground_starpiece = game_flag(0x04a)
 toadtown_starpiece = game_flag(0x12d)
 bluehouse_unlock = game_flag(0x83)
@@ -3052,39 +3057,9 @@ achievement(
     title = "Kitchen Nightmare", points = 50,
     description = "Cook every recipe",
     id = 79593, badge = "85929", published = "2019-08-05 8:02:00 AM", modified = "2025-05-13 1:56:25 PM",
-    trigger = any_of(re, r => rc[r] && event_id() == 0 && byte(0x0A094A) == 1 &&
-              measured((recipes_flag_1_16bits_bit6() + recipes_flag_1_16bits_bit7() + bit0(0x0DBC97) + bit1(0x0DBC97) +
-                  bit2(0x0DBC97) + bit3(0x0DBC97) + bit4(0x0DBC97) + bit5(0x0DBC97) + bit6(0x0DBC97) + bit7(0x0DBC97) +
-                  recipes_flag_2_16bits_bit0() + recipes_flag_2_16bits_bit1() + recipes_flag_2_16bits_bit2() +
-                  recipes_flag_2_16bits_bit3() + recipes_flag_2_16bits_bit4() + recipes_flag_2_16bits_bit5() +
-                  recipes_flag_2_16bits_bit6() + recipes_flag_2_16bits_bit7() + bit1(0x0DBC99) + bit2(0x0DBC99) +
-                  bit3(0x0DBC99) + bit4(0x0DBC99) + bit5(0x0DBC99) + bit6(0x0DBC99) + bit7(0x0DBC99) +
-                  recipes_flag_3_16bits_bit0() + recipes_flag_3_16bits_bit1() + recipes_flag_3_16bits_bit2() +
-                  recipes_flag_3_16bits_bit3() + recipes_flag_3_16bits_bit4() + recipes_flag_3_16bits_bit5() +
-                  recipes_flag_3_16bits_bit6() + recipes_flag_3_16bits_bit7() + bit0(0x0DBC9B) + bit1(0x0DBC9B) +
-                  bit2(0x0DBC9B) + bit3(0x0DBC9B) + bit4(0x0DBC9B) + bit5(0x0DBC9B) + bit6(0x0DBC9B) + bit7(0x0DBC9B) +
-                  recipes_flag_4_16bits_bit0() + recipes_flag_4_16bits_bit1() + recipes_flag_4_16bits_bit2() +
-                  recipes_flag_4_16bits_bit3() + recipes_flag_4_16bits_bit5() + recipes_flag_4_16bits_bit6() +
-                  recipes_flag_4_16bits_bit7() + bit0(0x0DBC9D) + bit1(0x0DBC9D)) == 50
-              ) &&
-              (prev(recipes_flag_1_16bits_bit6()) + prev(recipes_flag_1_16bits_bit7()) + prev(bit0(0x0DBC97)) +
-              prev(bit1(0x0DBC97)) + prev(bit2(0x0DBC97)) + prev(bit3(0x0DBC97)) + prev(bit4(0x0DBC97)) +
-              prev(bit5(0x0DBC97)) + prev(bit6(0x0DBC97)) + prev(bit7(0x0DBC97)) + prev(recipes_flag_2_16bits_bit0()) +
-              prev(recipes_flag_2_16bits_bit1()) + prev(recipes_flag_2_16bits_bit2()) +
-              prev(recipes_flag_2_16bits_bit3()) + prev(recipes_flag_2_16bits_bit4()) +
-              prev(recipes_flag_2_16bits_bit5()) + prev(recipes_flag_2_16bits_bit6()) +
-              prev(recipes_flag_2_16bits_bit7()) + prev(bit1(0x0DBC99)) + prev(bit2(0x0DBC99)) + prev(bit3(0x0DBC99)) +
-              prev(bit4(0x0DBC99)) + prev(bit5(0x0DBC99)) + prev(bit6(0x0DBC99)) + prev(bit7(0x0DBC99)) +
-              prev(recipes_flag_3_16bits_bit0()) + prev(recipes_flag_3_16bits_bit1()) +
-              prev(recipes_flag_3_16bits_bit2()) + prev(recipes_flag_3_16bits_bit3()) +
-              prev(recipes_flag_3_16bits_bit4()) + prev(recipes_flag_3_16bits_bit5()) +
-              prev(recipes_flag_3_16bits_bit6()) + prev(recipes_flag_3_16bits_bit7()) + prev(bit0(0x0DBC9B)) +
-              prev(bit1(0x0DBC9B)) + prev(bit2(0x0DBC9B)) + prev(bit3(0x0DBC9B)) + prev(bit4(0x0DBC9B)) +
-              prev(bit5(0x0DBC9B)) + prev(bit6(0x0DBC9B)) + prev(bit7(0x0DBC9B)) + prev(recipes_flag_4_16bits_bit0()) +
-              prev(recipes_flag_4_16bits_bit1()) + prev(recipes_flag_4_16bits_bit2()) +
-              prev(recipes_flag_4_16bits_bit3()) + prev(recipes_flag_4_16bits_bit5()) +
-              prev(recipes_flag_4_16bits_bit6()) + prev(recipes_flag_4_16bits_bit7()) + prev(bit0(0x0DBC9D)) +
-              prev(bit1(0x0DBC9D))) == 49
+    trigger = any_of(re, r => rc[r] &&
+        measured(sum_of(recipes(r), i => i) == 50) &&
+        sum_of(recipes(r), i => prev(i)) == 49
 ))
 
 achievement(
