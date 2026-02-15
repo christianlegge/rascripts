@@ -50,6 +50,23 @@ encounter_state = {
     "EU": byte(0x969d4)
 }
 
+current_encounter = {
+    "US": 0xb0f10,
+    "JP": 0x9a5e0,
+    "EU": 0x969d4
+}
+
+function minigame_score(r, var_table_idx, score_offset) {
+    enc = current_encounter[r]
+    cur_enc = tbyte(enc + 0x28)
+    scorekeeper = tbyte(cur_enc + 0x4)
+    score_table = tbyte(scorekeeper + 0x6c + 4*var_table_idx)
+    return dword(score_table + score_offset)
+}
+
+function jump_score(r) => minigame_score(r, 5, 0xc)
+function smash_score(r) => minigame_score(r, 0, 0x20)
+
 battle_status = {
     "US": byte(0xdc070),
     "JP": byte(0xdc050),
@@ -2317,6 +2334,12 @@ star_pieces = {
     "EU": word(0x10e0be)
 }
 
+smash_game_total = {
+    "US": dword(0x10f5c8),
+    "JP": dword(0x10f788),
+    "EU": dword(0x10e0c8)
+}
+
 // $10F5C0: Jump Attack Total Coins Won 16bits
 function jump_attack_total_coins_won_16bits() => byte(0x10F5C0)
 
@@ -3146,8 +3169,7 @@ achievement(
     title = "Jackpot", points = 10,
     description = "Win a total of 250 or more coins in the 'Smash Attack' Minigame",
     id = 79600, badge = "85936", published = "2019-08-05 8:02:13 AM", modified = "2025-05-13 1:56:26 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 25 && map_id() == 2 && smash_attack_total_coins_won_16bits() != 250 &&
-              smash_attack_total_coins_won_16bits() >= 250
+    trigger = any_of(re, r => rc[r] && room(r, 25, 2) && smash_game_total[r] >= 250 && prev(smash_game_total[r]) < 250
 ))
 
 achievement(
