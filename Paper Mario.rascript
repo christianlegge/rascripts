@@ -705,6 +705,70 @@ function game_byte(idx) {
     }
 }
 
+game_byte_addr = {
+    "US": 0xdbd73,
+    "JP": 0xdbd53,
+    "EU": 0xd84e3
+}
+
+tattle_bits = [
+    // starting at game_byte_addr[r] + 0x169
+    [0, 1, 2, 3, 4, 5, 6, 7],
+    [0, 1, 2, 3, 4, 5, 7],
+    [2, 3, 4, 5, 7],
+    [],
+    [0, 1, 2, 3, 4, 5, 6],
+    [1, 2, 3, 4, 5, 6, 7],
+    [0, 1, 2, 3, 4, 6, 7],
+    [0, 1, 2, 3, 4, 5, 6, 7],
+    [0, 2, 3, 5, 7],
+    [1, 2, 3, 4],
+    [5, 6, 7],
+    [0, 1, 2, 3],
+    [],
+    [],
+    [],
+    [2],
+    [0, 1, 2],
+    [1, 2, 3, 4, 5],
+    [],
+    [2, 3, 4, 5, 6],
+    [1, 3, 5, 7],
+    [0, 2, 7],
+    [0, 1, 2, 3, 5, 6, 7],
+    [1, 3, 4, 5, 6],
+    [],
+    [0, 2, 4],
+    [1, 3, 7],
+    [1, 2, 3, 4, 5, 7]
+]
+
+function tattle_bitflags(r, i) {
+    lava_piranha_variant = [
+        [3, 5],
+        [4, 6],
+        [4, 5],
+        [3, 6]
+    ]
+    addr = game_byte_addr[r] + 0x169
+    bitflag_array = []
+    for bitset in tattle_bits {
+        if (addr == game_byte_addr[r] + 0x17d) {
+            array_push(bitflag_array, bit(1, addr))
+            array_push(bitflag_array, bit(lava_piranha_variant[i][0], addr))
+            array_push(bitflag_array, bit(lava_piranha_variant[i][1], addr))
+            array_push(bitflag_array, bit(7, addr))
+        }
+        else {
+            for b in bitset {
+                array_push(bitflag_array, bit(b, addr))
+            }
+        }
+        addr = addr + 1
+    }
+    return bitflag_array
+}
+
 function game_flag(bit_index) {
     byte_index = bit_index / 8
     bit_in_byte = bit_index % 8
@@ -2979,356 +3043,10 @@ achievement(
     title = "Encyclopedia", points = 50, type="missable",
     description = "Have Goombario use 'Tattle' on every enemy",
     id = 79592, badge = "85928", published = "2019-08-05 8:01:58 AM", modified = "2025-05-13 1:56:24 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) == 1 && event_id() == 1 &&
-              ((measured((tattle_flags_1_bill_blaster() + tattle_flags_1_cleft() + tattle_flags_1_monty_mole() +
-                    tattle_flags_1_bandit() + tattle_flags_1_pokey() + tattle_flags_1_pokey_mummy() +
-                    tattle_flags_1_swooper() + tattle_flags_1_buzzy_beetle() + tattle_flags_2_paragoomba() +
-                    tattle_flags_2_spiked_goomba() + tattle_flags_2_fuzzy() + tattle_flags_2_koopa_troopa() +
-                    tattle_flags_2_paratroopa() + tattle_flags_2_bobomb() + tattle_flags_2_bullet_bill() +
-                    tattle_flags_3_gloomba() + tattle_flags_3_paragloomba() + tattle_flags_3_spiked_gloomba() +
-                    tattle_flags_3_dark_koopa() + tattle_flags_3_goomba() + tattle_flags_4_monty_mole_green() +
-                    tattle_flags_4_bzzap() + tattle_flags_4_crazee_dayzee() + tattle_flags_4_amazy_dayzee() +
-                    tattle_flags_4_ruff_puff() + tattle_flags_4_spike() + tattle_flags_4_gulpit() +
-                    tattle_flags_5_jungle_fuzzy() + tattle_flags_5_spear_guy() + tattle_flags_5_lava_bubble() +
-                    tattle_flags_5_spike_top() + tattle_flags_5_putrid_piranha() + tattle_flags_5_lakitu() +
-                    tattle_flags_5_spiny() + tattle_flags_6_groove_guy() + tattle_flags_6_sky_guy() +
-                    tattle_flags_6_medi_guy() + tattle_flags_6_pyro_guy() + tattle_flags_6_spy_guy() +
-                    tattle_flags_6_hurt_plant() + tattle_flags_6_m_bush() + tattle_flags_7_stone_chomp() +
-                    tattle_flags_7_piranha_plant() + tattle_flags_7_forest_fuzzy() + tattle_flags_7_hyper_goomba() +
-                    tattle_flags_7_hyper_paragoomba() + tattle_flags_7_hyper_cleft() + tattle_flags_7_clubba() +
-                    tattle_flags_7_shy_guy() + tattle_flags_8_magikoopa_bowser_castle() + tattle_flags_8_red_magikoopa() +
-                    tattle_flags_8_green_magikoopa() + tattle_flags_8_yellow_magikoopa() + tattle_flags_8_gray_magikoopa() +
-                    tattle_flags_9_bombshell_bill_blaster() + tattle_flags_9_bombshell_bill() + tattle_flags_9_hammer_bros()
-                    + tattle_flags_9_koopatrol() + tattle_flags_10_ember() + tattle_flags_10_bony_beetle() +
-                    tattle_flags_10_dry_bones() + tattle_flags_11_white_clubba() + tattle_flags_11_frost_piranha() +
-                    tattle_flags_11_swoopula() + tattle_flags_11_duplighost() + tattle_flags_12_white_magikoopa() +
-                    tattle_flags_13_blue_goomba() + tattle_flags_13_red_goomba() + tattle_flags_13_goomba_king() +
-                    tattle_flags_14_jr_troopa_2() + tattle_flags_14_jr_troopa_3() + tattle_flags_14_jr_troopa_4() +
-                    tattle_flags_14_jr_troopa_5() + tattle_flags_14_jr_troppa_6() + tattle_flags_15_the_master1() +
-                    tattle_flags_15_the_master2() + tattle_flags_15_the_master3() + tattle_flags_15_chan() +
-                    tattle_flags_15_lee() + tattle_flags_16_big_lantern_ghost() + tattle_flags_16_lava_piranha() +
-                    tattle_flags_16_lava_bud() + tattle_flags_16_petit_piranha() + tattle_flags_17_shy_squad() +
-                    tattle_flags_17_general_guy() + tattle_flags_17_anti_guy_shy_guy_toy_box() + tattle_flags_18_buzzar() +
-                    tattle_flags_18_tutankoopa() + tattle_flags_18_chomp() + tattle_flags_18_tubba_blubba_windmill() +
-                    tattle_flags_18_tubbas_heart() + tattle_flags_18_stilt_guy() + tattle_flags_18_shy_stack() +
-                    tattle_flags_19_bowser() + tattle_flags_19_g_ninjakoopa() + tattle_flags_19_r_ninjakoopa() +
-                    tattle_flags_19_b_ninjakoopa() + tattle_flags_19_y_ninjakoopa() + tattle_flags_20_electro_blooper() +
-                    tattle_flags_20_super_blooper() + tattle_flags_20_blooper_baby() + tattle_flags_21_bowser2() +
-                    tattle_flags_21_bowser3() + tattle_flags_21_blooper() + tattle_flags_22_kent_c_koopa() +
-                    tattle_flags_22_huff_n_puff() + tattle_flags_22_tuff_puff() + tattle_flags_22_monstar() +
-                    tattle_flags_22_crystal_king() + tattle_flags_22_crystal_bit()) == 110
-                ) &&
-                (prev(tattle_flags_1_bill_blaster()) + prev(tattle_flags_1_cleft()) + prev(tattle_flags_1_monty_mole())
-                + prev(tattle_flags_1_bandit()) + prev(tattle_flags_1_pokey()) + prev(tattle_flags_1_pokey_mummy()) +
-                prev(tattle_flags_1_swooper()) + prev(tattle_flags_1_buzzy_beetle()) + prev(tattle_flags_2_paragoomba())
-                + prev(tattle_flags_2_spiked_goomba()) + prev(tattle_flags_2_fuzzy()) +
-                prev(tattle_flags_2_koopa_troopa()) + prev(tattle_flags_2_paratroopa()) + prev(tattle_flags_2_bobomb())
-                + prev(tattle_flags_2_bullet_bill()) + prev(tattle_flags_3_gloomba()) +
-                prev(tattle_flags_3_paragloomba()) + prev(tattle_flags_3_spiked_gloomba()) +
-                prev(tattle_flags_3_dark_koopa()) + prev(tattle_flags_3_goomba()) +
-                prev(tattle_flags_4_monty_mole_green()) + prev(tattle_flags_4_bzzap()) +
-                prev(tattle_flags_4_crazee_dayzee()) + prev(tattle_flags_4_amazy_dayzee()) +
-                prev(tattle_flags_4_ruff_puff()) + prev(tattle_flags_4_spike()) + prev(tattle_flags_4_gulpit()) +
-                prev(tattle_flags_5_jungle_fuzzy()) + prev(tattle_flags_5_spear_guy()) +
-                prev(tattle_flags_5_lava_bubble()) + prev(tattle_flags_5_spike_top()) +
-                prev(tattle_flags_5_putrid_piranha()) + prev(tattle_flags_5_lakitu()) + prev(tattle_flags_5_spiny()) +
-                prev(tattle_flags_6_groove_guy()) + prev(tattle_flags_6_sky_guy()) + prev(tattle_flags_6_medi_guy()) +
-                prev(tattle_flags_6_pyro_guy()) + prev(tattle_flags_6_spy_guy()) + prev(tattle_flags_6_hurt_plant()) +
-                prev(tattle_flags_6_m_bush()) + prev(tattle_flags_7_stone_chomp()) +
-                prev(tattle_flags_7_piranha_plant()) + prev(tattle_flags_7_forest_fuzzy()) +
-                prev(tattle_flags_7_hyper_goomba()) + prev(tattle_flags_7_hyper_paragoomba()) +
-                prev(tattle_flags_7_hyper_cleft()) + prev(tattle_flags_7_clubba()) + prev(tattle_flags_7_shy_guy()) +
-                prev(tattle_flags_8_magikoopa_bowser_castle()) + prev(tattle_flags_8_red_magikoopa()) +
-                prev(tattle_flags_8_green_magikoopa()) + prev(tattle_flags_8_yellow_magikoopa()) +
-                prev(tattle_flags_8_gray_magikoopa()) + prev(tattle_flags_9_bombshell_bill_blaster()) +
-                prev(tattle_flags_9_bombshell_bill()) + prev(tattle_flags_9_hammer_bros()) +
-                prev(tattle_flags_9_koopatrol()) + prev(tattle_flags_10_ember()) + prev(tattle_flags_10_bony_beetle()) +
-                prev(tattle_flags_10_dry_bones()) + prev(tattle_flags_11_white_clubba()) +
-                prev(tattle_flags_11_frost_piranha()) + prev(tattle_flags_11_swoopula()) +
-                prev(tattle_flags_11_duplighost()) + prev(tattle_flags_12_white_magikoopa()) +
-                prev(tattle_flags_13_blue_goomba()) + prev(tattle_flags_13_red_goomba()) +
-                prev(tattle_flags_13_goomba_king()) + prev(tattle_flags_14_jr_troopa_2()) +
-                prev(tattle_flags_14_jr_troopa_3()) + prev(tattle_flags_14_jr_troopa_4()) +
-                prev(tattle_flags_14_jr_troopa_5()) + prev(tattle_flags_14_jr_troppa_6()) +
-                prev(tattle_flags_15_the_master1()) + prev(tattle_flags_15_the_master2()) +
-                prev(tattle_flags_15_the_master3()) + prev(tattle_flags_15_chan()) + prev(tattle_flags_15_lee()) +
-                prev(tattle_flags_16_big_lantern_ghost()) + prev(tattle_flags_16_lava_piranha()) +
-                prev(tattle_flags_16_lava_bud()) + prev(tattle_flags_16_petit_piranha()) +
-                prev(tattle_flags_17_shy_squad()) + prev(tattle_flags_17_general_guy()) +
-                prev(tattle_flags_17_anti_guy_shy_guy_toy_box()) + prev(tattle_flags_18_buzzar()) +
-                prev(tattle_flags_18_tutankoopa()) + prev(tattle_flags_18_chomp()) +
-                prev(tattle_flags_18_tubba_blubba_windmill()) + prev(tattle_flags_18_tubbas_heart()) +
-                prev(tattle_flags_18_stilt_guy()) + prev(tattle_flags_18_shy_stack()) + prev(tattle_flags_19_bowser()) +
-                prev(tattle_flags_19_g_ninjakoopa()) + prev(tattle_flags_19_r_ninjakoopa()) +
-                prev(tattle_flags_19_b_ninjakoopa()) + prev(tattle_flags_19_y_ninjakoopa()) +
-                prev(tattle_flags_20_electro_blooper()) + prev(tattle_flags_20_super_blooper()) +
-                prev(tattle_flags_20_blooper_baby()) + prev(tattle_flags_21_bowser2()) + prev(tattle_flags_21_bowser3())
-                + prev(tattle_flags_21_blooper()) + prev(tattle_flags_22_kent_c_koopa()) +
-                prev(tattle_flags_22_huff_n_puff()) + prev(tattle_flags_22_tuff_puff()) +
-                prev(tattle_flags_22_monstar()) + prev(tattle_flags_22_crystal_king()) +
-                prev(tattle_flags_22_crystal_bit())) == 109) ||
-               (measured((tattle_flags_1_bill_blaster() + tattle_flags_1_cleft() + tattle_flags_1_monty_mole() +
-                    tattle_flags_1_bandit() + tattle_flags_1_pokey() + tattle_flags_1_pokey_mummy() +
-                    tattle_flags_1_swooper() + tattle_flags_1_buzzy_beetle() + tattle_flags_2_paragoomba() +
-                    tattle_flags_2_spiked_goomba() + tattle_flags_2_fuzzy() + tattle_flags_2_koopa_troopa() +
-                    tattle_flags_2_paratroopa() + tattle_flags_2_bobomb() + tattle_flags_2_bullet_bill() +
-                    tattle_flags_3_gloomba() + tattle_flags_3_paragloomba() + tattle_flags_3_spiked_gloomba() +
-                    tattle_flags_3_dark_koopa() + tattle_flags_3_goomba() + tattle_flags_4_monty_mole_green() +
-                    tattle_flags_4_bzzap() + tattle_flags_4_crazee_dayzee() + tattle_flags_4_amazy_dayzee() +
-                    tattle_flags_4_ruff_puff() + tattle_flags_4_spike() + tattle_flags_4_gulpit() +
-                    tattle_flags_5_jungle_fuzzy() + tattle_flags_5_spear_guy() + tattle_flags_5_lava_bubble() +
-                    tattle_flags_5_spike_top() + tattle_flags_5_putrid_piranha() + tattle_flags_5_lakitu() +
-                    tattle_flags_5_spiny() + tattle_flags_6_groove_guy() + tattle_flags_6_sky_guy() +
-                    tattle_flags_6_medi_guy() + tattle_flags_6_pyro_guy() + tattle_flags_6_spy_guy() +
-                    tattle_flags_6_hurt_plant() + tattle_flags_6_m_bush() + tattle_flags_7_stone_chomp() +
-                    tattle_flags_7_piranha_plant() + tattle_flags_7_forest_fuzzy() + tattle_flags_7_hyper_goomba() +
-                    tattle_flags_7_hyper_paragoomba() + tattle_flags_7_hyper_cleft() + tattle_flags_7_clubba() +
-                    tattle_flags_7_shy_guy() + tattle_flags_8_magikoopa_bowser_castle() + tattle_flags_8_red_magikoopa() +
-                    tattle_flags_8_green_magikoopa() + tattle_flags_8_yellow_magikoopa() + tattle_flags_8_gray_magikoopa() +
-                    tattle_flags_9_bombshell_bill_blaster() + tattle_flags_9_bombshell_bill() + tattle_flags_9_hammer_bros()
-                    + tattle_flags_9_koopatrol() + tattle_flags_10_ember() + tattle_flags_10_bony_beetle() +
-                    tattle_flags_10_dry_bones() + tattle_flags_11_white_clubba() + tattle_flags_11_frost_piranha() +
-                    tattle_flags_11_swoopula() + tattle_flags_11_duplighost() + tattle_flags_12_white_magikoopa() +
-                    tattle_flags_13_blue_goomba() + tattle_flags_13_red_goomba() + tattle_flags_13_goomba_king() +
-                    tattle_flags_14_jr_troopa_2() + tattle_flags_14_jr_troopa_3() + tattle_flags_14_jr_troopa_4() +
-                    tattle_flags_14_jr_troopa_5() + tattle_flags_14_jr_troppa_6() + tattle_flags_15_the_master1() +
-                    tattle_flags_15_the_master2() + tattle_flags_15_the_master3() + tattle_flags_15_chan() +
-                    tattle_flags_15_lee() + tattle_flags_16_big_lantern_ghost() + tattle_flags_16_lava_piranha_bit4() +
-                    tattle_flags_16_lava_bud_bit6() + tattle_flags_16_petit_piranha() + tattle_flags_17_shy_squad() +
-                    tattle_flags_17_general_guy() + tattle_flags_17_anti_guy_shy_guy_toy_box() + tattle_flags_18_buzzar() +
-                    tattle_flags_18_tutankoopa() + tattle_flags_18_chomp() + tattle_flags_18_tubba_blubba_windmill() +
-                    tattle_flags_18_tubbas_heart() + tattle_flags_18_stilt_guy() + tattle_flags_18_shy_stack() +
-                    tattle_flags_19_bowser() + tattle_flags_19_g_ninjakoopa() + tattle_flags_19_r_ninjakoopa() +
-                    tattle_flags_19_b_ninjakoopa() + tattle_flags_19_y_ninjakoopa() + tattle_flags_20_electro_blooper() +
-                    tattle_flags_20_super_blooper() + tattle_flags_20_blooper_baby() + tattle_flags_21_bowser2() +
-                    tattle_flags_21_bowser3() + tattle_flags_21_blooper() + tattle_flags_22_kent_c_koopa() +
-                    tattle_flags_22_huff_n_puff() + tattle_flags_22_tuff_puff() + tattle_flags_22_monstar() +
-                    tattle_flags_22_crystal_king() + tattle_flags_22_crystal_bit()) == 110
-                ) &&
-                (prev(tattle_flags_1_bill_blaster()) + prev(tattle_flags_1_cleft()) + prev(tattle_flags_1_monty_mole())
-                + prev(tattle_flags_1_bandit()) + prev(tattle_flags_1_pokey()) + prev(tattle_flags_1_pokey_mummy()) +
-                prev(tattle_flags_1_swooper()) + prev(tattle_flags_1_buzzy_beetle()) + prev(tattle_flags_2_paragoomba())
-                + prev(tattle_flags_2_spiked_goomba()) + prev(tattle_flags_2_fuzzy()) +
-                prev(tattle_flags_2_koopa_troopa()) + prev(tattle_flags_2_paratroopa()) + prev(tattle_flags_2_bobomb())
-                + prev(tattle_flags_2_bullet_bill()) + prev(tattle_flags_3_gloomba()) +
-                prev(tattle_flags_3_paragloomba()) + prev(tattle_flags_3_spiked_gloomba()) +
-                prev(tattle_flags_3_dark_koopa()) + prev(tattle_flags_3_goomba()) +
-                prev(tattle_flags_4_monty_mole_green()) + prev(tattle_flags_4_bzzap()) +
-                prev(tattle_flags_4_crazee_dayzee()) + prev(tattle_flags_4_amazy_dayzee()) +
-                prev(tattle_flags_4_ruff_puff()) + prev(tattle_flags_4_spike()) + prev(tattle_flags_4_gulpit()) +
-                prev(tattle_flags_5_jungle_fuzzy()) + prev(tattle_flags_5_spear_guy()) +
-                prev(tattle_flags_5_lava_bubble()) + prev(tattle_flags_5_spike_top()) +
-                prev(tattle_flags_5_putrid_piranha()) + prev(tattle_flags_5_lakitu()) + prev(tattle_flags_5_spiny()) +
-                prev(tattle_flags_6_groove_guy()) + prev(tattle_flags_6_sky_guy()) + prev(tattle_flags_6_medi_guy()) +
-                prev(tattle_flags_6_pyro_guy()) + prev(tattle_flags_6_spy_guy()) + prev(tattle_flags_6_hurt_plant()) +
-                prev(tattle_flags_6_m_bush()) + prev(tattle_flags_7_stone_chomp()) +
-                prev(tattle_flags_7_piranha_plant()) + prev(tattle_flags_7_forest_fuzzy()) +
-                prev(tattle_flags_7_hyper_goomba()) + prev(tattle_flags_7_hyper_paragoomba()) +
-                prev(tattle_flags_7_hyper_cleft()) + prev(tattle_flags_7_clubba()) + prev(tattle_flags_7_shy_guy()) +
-                prev(tattle_flags_8_magikoopa_bowser_castle()) + prev(tattle_flags_8_red_magikoopa()) +
-                prev(tattle_flags_8_green_magikoopa()) + prev(tattle_flags_8_yellow_magikoopa()) +
-                prev(tattle_flags_8_gray_magikoopa()) + prev(tattle_flags_9_bombshell_bill_blaster()) +
-                prev(tattle_flags_9_bombshell_bill()) + prev(tattle_flags_9_hammer_bros()) +
-                prev(tattle_flags_9_koopatrol()) + prev(tattle_flags_10_ember()) + prev(tattle_flags_10_bony_beetle()) +
-                prev(tattle_flags_10_dry_bones()) + prev(tattle_flags_11_white_clubba()) +
-                prev(tattle_flags_11_frost_piranha()) + prev(tattle_flags_11_swoopula()) +
-                prev(tattle_flags_11_duplighost()) + prev(tattle_flags_12_white_magikoopa()) +
-                prev(tattle_flags_13_blue_goomba()) + prev(tattle_flags_13_red_goomba()) +
-                prev(tattle_flags_13_goomba_king()) + prev(tattle_flags_14_jr_troopa_2()) +
-                prev(tattle_flags_14_jr_troopa_3()) + prev(tattle_flags_14_jr_troopa_4()) +
-                prev(tattle_flags_14_jr_troopa_5()) + prev(tattle_flags_14_jr_troppa_6()) +
-                prev(tattle_flags_15_the_master1()) + prev(tattle_flags_15_the_master2()) +
-                prev(tattle_flags_15_the_master3()) + prev(tattle_flags_15_chan()) + prev(tattle_flags_15_lee()) +
-                prev(tattle_flags_16_big_lantern_ghost()) + prev(tattle_flags_16_lava_piranha_bit4()) +
-                prev(tattle_flags_16_lava_bud_bit6()) + prev(tattle_flags_16_petit_piranha()) +
-                prev(tattle_flags_17_shy_squad()) + prev(tattle_flags_17_general_guy()) +
-                prev(tattle_flags_17_anti_guy_shy_guy_toy_box()) + prev(tattle_flags_18_buzzar()) +
-                prev(tattle_flags_18_tutankoopa()) + prev(tattle_flags_18_chomp()) +
-                prev(tattle_flags_18_tubba_blubba_windmill()) + prev(tattle_flags_18_tubbas_heart()) +
-                prev(tattle_flags_18_stilt_guy()) + prev(tattle_flags_18_shy_stack()) + prev(tattle_flags_19_bowser()) +
-                prev(tattle_flags_19_g_ninjakoopa()) + prev(tattle_flags_19_r_ninjakoopa()) +
-                prev(tattle_flags_19_b_ninjakoopa()) + prev(tattle_flags_19_y_ninjakoopa()) +
-                prev(tattle_flags_20_electro_blooper()) + prev(tattle_flags_20_super_blooper()) +
-                prev(tattle_flags_20_blooper_baby()) + prev(tattle_flags_21_bowser2()) + prev(tattle_flags_21_bowser3())
-                + prev(tattle_flags_21_blooper()) + prev(tattle_flags_22_kent_c_koopa()) +
-                prev(tattle_flags_22_huff_n_puff()) + prev(tattle_flags_22_tuff_puff()) +
-                prev(tattle_flags_22_monstar()) + prev(tattle_flags_22_crystal_king()) +
-                prev(tattle_flags_22_crystal_bit())) == 109) ||
-               (measured((tattle_flags_1_bill_blaster() + tattle_flags_1_cleft() + tattle_flags_1_monty_mole() +
-                    tattle_flags_1_bandit() + tattle_flags_1_pokey() + tattle_flags_1_pokey_mummy() +
-                    tattle_flags_1_swooper() + tattle_flags_1_buzzy_beetle() + tattle_flags_2_paragoomba() +
-                    tattle_flags_2_spiked_goomba() + tattle_flags_2_fuzzy() + tattle_flags_2_koopa_troopa() +
-                    tattle_flags_2_paratroopa() + tattle_flags_2_bobomb() + tattle_flags_2_bullet_bill() +
-                    tattle_flags_3_gloomba() + tattle_flags_3_paragloomba() + tattle_flags_3_spiked_gloomba() +
-                    tattle_flags_3_dark_koopa() + tattle_flags_3_goomba() + tattle_flags_4_monty_mole_green() +
-                    tattle_flags_4_bzzap() + tattle_flags_4_crazee_dayzee() + tattle_flags_4_amazy_dayzee() +
-                    tattle_flags_4_ruff_puff() + tattle_flags_4_spike() + tattle_flags_4_gulpit() +
-                    tattle_flags_5_jungle_fuzzy() + tattle_flags_5_spear_guy() + tattle_flags_5_lava_bubble() +
-                    tattle_flags_5_spike_top() + tattle_flags_5_putrid_piranha() + tattle_flags_5_lakitu() +
-                    tattle_flags_5_spiny() + tattle_flags_6_groove_guy() + tattle_flags_6_sky_guy() +
-                    tattle_flags_6_medi_guy() + tattle_flags_6_pyro_guy() + tattle_flags_6_spy_guy() +
-                    tattle_flags_6_hurt_plant() + tattle_flags_6_m_bush() + tattle_flags_7_stone_chomp() +
-                    tattle_flags_7_piranha_plant() + tattle_flags_7_forest_fuzzy() + tattle_flags_7_hyper_goomba() +
-                    tattle_flags_7_hyper_paragoomba() + tattle_flags_7_hyper_cleft() + tattle_flags_7_clubba() +
-                    tattle_flags_7_shy_guy() + tattle_flags_8_magikoopa_bowser_castle() + tattle_flags_8_red_magikoopa() +
-                    tattle_flags_8_green_magikoopa() + tattle_flags_8_yellow_magikoopa() + tattle_flags_8_gray_magikoopa() +
-                    tattle_flags_9_bombshell_bill_blaster() + tattle_flags_9_bombshell_bill() + tattle_flags_9_hammer_bros()
-                    + tattle_flags_9_koopatrol() + tattle_flags_10_ember() + tattle_flags_10_bony_beetle() +
-                    tattle_flags_10_dry_bones() + tattle_flags_11_white_clubba() + tattle_flags_11_frost_piranha() +
-                    tattle_flags_11_swoopula() + tattle_flags_11_duplighost() + tattle_flags_12_white_magikoopa() +
-                    tattle_flags_13_blue_goomba() + tattle_flags_13_red_goomba() + tattle_flags_13_goomba_king() +
-                    tattle_flags_14_jr_troopa_2() + tattle_flags_14_jr_troopa_3() + tattle_flags_14_jr_troopa_4() +
-                    tattle_flags_14_jr_troopa_5() + tattle_flags_14_jr_troppa_6() + tattle_flags_15_the_master1() +
-                    tattle_flags_15_the_master2() + tattle_flags_15_the_master3() + tattle_flags_15_chan() +
-                    tattle_flags_15_lee() + tattle_flags_16_big_lantern_ghost() + tattle_flags_16_lava_piranha_bit4() +
-                    tattle_flags_16_lava_bud() + tattle_flags_16_petit_piranha() + tattle_flags_17_shy_squad() +
-                    tattle_flags_17_general_guy() + tattle_flags_17_anti_guy_shy_guy_toy_box() + tattle_flags_18_buzzar() +
-                    tattle_flags_18_tutankoopa() + tattle_flags_18_chomp() + tattle_flags_18_tubba_blubba_windmill() +
-                    tattle_flags_18_tubbas_heart() + tattle_flags_18_stilt_guy() + tattle_flags_18_shy_stack() +
-                    tattle_flags_19_bowser() + tattle_flags_19_g_ninjakoopa() + tattle_flags_19_r_ninjakoopa() +
-                    tattle_flags_19_b_ninjakoopa() + tattle_flags_19_y_ninjakoopa() + tattle_flags_20_electro_blooper() +
-                    tattle_flags_20_super_blooper() + tattle_flags_20_blooper_baby() + tattle_flags_21_bowser2() +
-                    tattle_flags_21_bowser3() + tattle_flags_21_blooper() + tattle_flags_22_kent_c_koopa() +
-                    tattle_flags_22_huff_n_puff() + tattle_flags_22_tuff_puff() + tattle_flags_22_monstar() +
-                    tattle_flags_22_crystal_king() + tattle_flags_22_crystal_bit()) == 110
-                ) &&
-                (prev(tattle_flags_1_bill_blaster()) + prev(tattle_flags_1_cleft()) + prev(tattle_flags_1_monty_mole())
-                + prev(tattle_flags_1_bandit()) + prev(tattle_flags_1_pokey()) + prev(tattle_flags_1_pokey_mummy()) +
-                prev(tattle_flags_1_swooper()) + prev(tattle_flags_1_buzzy_beetle()) + prev(tattle_flags_2_paragoomba())
-                + prev(tattle_flags_2_spiked_goomba()) + prev(tattle_flags_2_fuzzy()) +
-                prev(tattle_flags_2_koopa_troopa()) + prev(tattle_flags_2_paratroopa()) + prev(tattle_flags_2_bobomb())
-                + prev(tattle_flags_2_bullet_bill()) + prev(tattle_flags_3_gloomba()) +
-                prev(tattle_flags_3_paragloomba()) + prev(tattle_flags_3_spiked_gloomba()) +
-                prev(tattle_flags_3_dark_koopa()) + prev(tattle_flags_3_goomba()) +
-                prev(tattle_flags_4_monty_mole_green()) + prev(tattle_flags_4_bzzap()) +
-                prev(tattle_flags_4_crazee_dayzee()) + prev(tattle_flags_4_amazy_dayzee()) +
-                prev(tattle_flags_4_ruff_puff()) + prev(tattle_flags_4_spike()) + prev(tattle_flags_4_gulpit()) +
-                prev(tattle_flags_5_jungle_fuzzy()) + prev(tattle_flags_5_spear_guy()) +
-                prev(tattle_flags_5_lava_bubble()) + prev(tattle_flags_5_spike_top()) +
-                prev(tattle_flags_5_putrid_piranha()) + prev(tattle_flags_5_lakitu()) + prev(tattle_flags_5_spiny()) +
-                prev(tattle_flags_6_groove_guy()) + prev(tattle_flags_6_sky_guy()) + prev(tattle_flags_6_medi_guy()) +
-                prev(tattle_flags_6_pyro_guy()) + prev(tattle_flags_6_spy_guy()) + prev(tattle_flags_6_hurt_plant()) +
-                prev(tattle_flags_6_m_bush()) + prev(tattle_flags_7_stone_chomp()) +
-                prev(tattle_flags_7_piranha_plant()) + prev(tattle_flags_7_forest_fuzzy()) +
-                prev(tattle_flags_7_hyper_goomba()) + prev(tattle_flags_7_hyper_paragoomba()) +
-                prev(tattle_flags_7_hyper_cleft()) + prev(tattle_flags_7_clubba()) + prev(tattle_flags_7_shy_guy()) +
-                prev(tattle_flags_8_magikoopa_bowser_castle()) + prev(tattle_flags_8_red_magikoopa()) +
-                prev(tattle_flags_8_green_magikoopa()) + prev(tattle_flags_8_yellow_magikoopa()) +
-                prev(tattle_flags_8_gray_magikoopa()) + prev(tattle_flags_9_bombshell_bill_blaster()) +
-                prev(tattle_flags_9_bombshell_bill()) + prev(tattle_flags_9_hammer_bros()) +
-                prev(tattle_flags_9_koopatrol()) + prev(tattle_flags_10_ember()) + prev(tattle_flags_10_bony_beetle()) +
-                prev(tattle_flags_10_dry_bones()) + prev(tattle_flags_11_white_clubba()) +
-                prev(tattle_flags_11_frost_piranha()) + prev(tattle_flags_11_swoopula()) +
-                prev(tattle_flags_11_duplighost()) + prev(tattle_flags_12_white_magikoopa()) +
-                prev(tattle_flags_13_blue_goomba()) + prev(tattle_flags_13_red_goomba()) +
-                prev(tattle_flags_13_goomba_king()) + prev(tattle_flags_14_jr_troopa_2()) +
-                prev(tattle_flags_14_jr_troopa_3()) + prev(tattle_flags_14_jr_troopa_4()) +
-                prev(tattle_flags_14_jr_troopa_5()) + prev(tattle_flags_14_jr_troppa_6()) +
-                prev(tattle_flags_15_the_master1()) + prev(tattle_flags_15_the_master2()) +
-                prev(tattle_flags_15_the_master3()) + prev(tattle_flags_15_chan()) + prev(tattle_flags_15_lee()) +
-                prev(tattle_flags_16_big_lantern_ghost()) + prev(tattle_flags_16_lava_piranha_bit4()) +
-                prev(tattle_flags_16_lava_bud()) + prev(tattle_flags_16_petit_piranha()) +
-                prev(tattle_flags_17_shy_squad()) + prev(tattle_flags_17_general_guy()) +
-                prev(tattle_flags_17_anti_guy_shy_guy_toy_box()) + prev(tattle_flags_18_buzzar()) +
-                prev(tattle_flags_18_tutankoopa()) + prev(tattle_flags_18_chomp()) +
-                prev(tattle_flags_18_tubba_blubba_windmill()) + prev(tattle_flags_18_tubbas_heart()) +
-                prev(tattle_flags_18_stilt_guy()) + prev(tattle_flags_18_shy_stack()) + prev(tattle_flags_19_bowser()) +
-                prev(tattle_flags_19_g_ninjakoopa()) + prev(tattle_flags_19_r_ninjakoopa()) +
-                prev(tattle_flags_19_b_ninjakoopa()) + prev(tattle_flags_19_y_ninjakoopa()) +
-                prev(tattle_flags_20_electro_blooper()) + prev(tattle_flags_20_super_blooper()) +
-                prev(tattle_flags_20_blooper_baby()) + prev(tattle_flags_21_bowser2()) + prev(tattle_flags_21_bowser3())
-                + prev(tattle_flags_21_blooper()) + prev(tattle_flags_22_kent_c_koopa()) +
-                prev(tattle_flags_22_huff_n_puff()) + prev(tattle_flags_22_tuff_puff()) +
-                prev(tattle_flags_22_monstar()) + prev(tattle_flags_22_crystal_king()) +
-                prev(tattle_flags_22_crystal_bit())) == 109) ||
-               (measured((tattle_flags_1_bill_blaster() + tattle_flags_1_cleft() + tattle_flags_1_monty_mole() +
-                    tattle_flags_1_bandit() + tattle_flags_1_pokey() + tattle_flags_1_pokey_mummy() +
-                    tattle_flags_1_swooper() + tattle_flags_1_buzzy_beetle() + tattle_flags_2_paragoomba() +
-                    tattle_flags_2_spiked_goomba() + tattle_flags_2_fuzzy() + tattle_flags_2_koopa_troopa() +
-                    tattle_flags_2_paratroopa() + tattle_flags_2_bobomb() + tattle_flags_2_bullet_bill() +
-                    tattle_flags_3_gloomba() + tattle_flags_3_paragloomba() + tattle_flags_3_spiked_gloomba() +
-                    tattle_flags_3_dark_koopa() + tattle_flags_3_goomba() + tattle_flags_4_monty_mole_green() +
-                    tattle_flags_4_bzzap() + tattle_flags_4_crazee_dayzee() + tattle_flags_4_amazy_dayzee() +
-                    tattle_flags_4_ruff_puff() + tattle_flags_4_spike() + tattle_flags_4_gulpit() +
-                    tattle_flags_5_jungle_fuzzy() + tattle_flags_5_spear_guy() + tattle_flags_5_lava_bubble() +
-                    tattle_flags_5_spike_top() + tattle_flags_5_putrid_piranha() + tattle_flags_5_lakitu() +
-                    tattle_flags_5_spiny() + tattle_flags_6_groove_guy() + tattle_flags_6_sky_guy() +
-                    tattle_flags_6_medi_guy() + tattle_flags_6_pyro_guy() + tattle_flags_6_spy_guy() +
-                    tattle_flags_6_hurt_plant() + tattle_flags_6_m_bush() + tattle_flags_7_stone_chomp() +
-                    tattle_flags_7_piranha_plant() + tattle_flags_7_forest_fuzzy() + tattle_flags_7_hyper_goomba() +
-                    tattle_flags_7_hyper_paragoomba() + tattle_flags_7_hyper_cleft() + tattle_flags_7_clubba() +
-                    tattle_flags_7_shy_guy() + tattle_flags_8_magikoopa_bowser_castle() + tattle_flags_8_red_magikoopa() +
-                    tattle_flags_8_green_magikoopa() + tattle_flags_8_yellow_magikoopa() + tattle_flags_8_gray_magikoopa() +
-                    tattle_flags_9_bombshell_bill_blaster() + tattle_flags_9_bombshell_bill() + tattle_flags_9_hammer_bros()
-                    + tattle_flags_9_koopatrol() + tattle_flags_10_ember() + tattle_flags_10_bony_beetle() +
-                    tattle_flags_10_dry_bones() + tattle_flags_11_white_clubba() + tattle_flags_11_frost_piranha() +
-                    tattle_flags_11_swoopula() + tattle_flags_11_duplighost() + tattle_flags_12_white_magikoopa() +
-                    tattle_flags_13_blue_goomba() + tattle_flags_13_red_goomba() + tattle_flags_13_goomba_king() +
-                    tattle_flags_14_jr_troopa_2() + tattle_flags_14_jr_troopa_3() + tattle_flags_14_jr_troopa_4() +
-                    tattle_flags_14_jr_troopa_5() + tattle_flags_14_jr_troppa_6() + tattle_flags_15_the_master1() +
-                    tattle_flags_15_the_master2() + tattle_flags_15_the_master3() + tattle_flags_15_chan() +
-                    tattle_flags_15_lee() + tattle_flags_16_big_lantern_ghost() + tattle_flags_16_lava_piranha() +
-                    tattle_flags_16_lava_bud_bit6() + tattle_flags_16_petit_piranha() + tattle_flags_17_shy_squad() +
-                    tattle_flags_17_general_guy() + tattle_flags_17_anti_guy_shy_guy_toy_box() + tattle_flags_18_buzzar() +
-                    tattle_flags_18_tutankoopa() + tattle_flags_18_chomp() + tattle_flags_18_tubba_blubba_windmill() +
-                    tattle_flags_18_tubbas_heart() + tattle_flags_18_stilt_guy() + tattle_flags_18_shy_stack() +
-                    tattle_flags_19_bowser() + tattle_flags_19_g_ninjakoopa() + tattle_flags_19_r_ninjakoopa() +
-                    tattle_flags_19_b_ninjakoopa() + tattle_flags_19_y_ninjakoopa() + tattle_flags_20_electro_blooper() +
-                    tattle_flags_20_super_blooper() + tattle_flags_20_blooper_baby() + tattle_flags_21_bowser2() +
-                    tattle_flags_21_bowser3() + tattle_flags_21_blooper() + tattle_flags_22_kent_c_koopa() +
-                    tattle_flags_22_huff_n_puff() + tattle_flags_22_tuff_puff() + tattle_flags_22_monstar() +
-                    tattle_flags_22_crystal_king() + tattle_flags_22_crystal_bit()) == 110
-                ) &&
-                (prev(tattle_flags_1_bill_blaster()) + prev(tattle_flags_1_cleft()) + prev(tattle_flags_1_monty_mole())
-                + prev(tattle_flags_1_bandit()) + prev(tattle_flags_1_pokey()) + prev(tattle_flags_1_pokey_mummy()) +
-                prev(tattle_flags_1_swooper()) + prev(tattle_flags_1_buzzy_beetle()) + prev(tattle_flags_2_paragoomba())
-                + prev(tattle_flags_2_spiked_goomba()) + prev(tattle_flags_2_fuzzy()) +
-                prev(tattle_flags_2_koopa_troopa()) + prev(tattle_flags_2_paratroopa()) + prev(tattle_flags_2_bobomb())
-                + prev(tattle_flags_2_bullet_bill()) + prev(tattle_flags_3_gloomba()) +
-                prev(tattle_flags_3_paragloomba()) + prev(tattle_flags_3_spiked_gloomba()) +
-                prev(tattle_flags_3_dark_koopa()) + prev(tattle_flags_3_goomba()) +
-                prev(tattle_flags_4_monty_mole_green()) + prev(tattle_flags_4_bzzap()) +
-                prev(tattle_flags_4_crazee_dayzee()) + prev(tattle_flags_4_amazy_dayzee()) +
-                prev(tattle_flags_4_ruff_puff()) + prev(tattle_flags_4_spike()) + prev(tattle_flags_4_gulpit()) +
-                prev(tattle_flags_5_jungle_fuzzy()) + prev(tattle_flags_5_spear_guy()) +
-                prev(tattle_flags_5_lava_bubble()) + prev(tattle_flags_5_spike_top()) +
-                prev(tattle_flags_5_putrid_piranha()) + prev(tattle_flags_5_lakitu()) + prev(tattle_flags_5_spiny()) +
-                prev(tattle_flags_6_groove_guy()) + prev(tattle_flags_6_sky_guy()) + prev(tattle_flags_6_medi_guy()) +
-                prev(tattle_flags_6_pyro_guy()) + prev(tattle_flags_6_spy_guy()) + prev(tattle_flags_6_hurt_plant()) +
-                prev(tattle_flags_6_m_bush()) + prev(tattle_flags_7_stone_chomp()) +
-                prev(tattle_flags_7_piranha_plant()) + prev(tattle_flags_7_forest_fuzzy()) +
-                prev(tattle_flags_7_hyper_goomba()) + prev(tattle_flags_7_hyper_paragoomba()) +
-                prev(tattle_flags_7_hyper_cleft()) + prev(tattle_flags_7_clubba()) + prev(tattle_flags_7_shy_guy()) +
-                prev(tattle_flags_8_magikoopa_bowser_castle()) + prev(tattle_flags_8_red_magikoopa()) +
-                prev(tattle_flags_8_green_magikoopa()) + prev(tattle_flags_8_yellow_magikoopa()) +
-                prev(tattle_flags_8_gray_magikoopa()) + prev(tattle_flags_9_bombshell_bill_blaster()) +
-                prev(tattle_flags_9_bombshell_bill()) + prev(tattle_flags_9_hammer_bros()) +
-                prev(tattle_flags_9_koopatrol()) + prev(tattle_flags_10_ember()) + prev(tattle_flags_10_bony_beetle()) +
-                prev(tattle_flags_10_dry_bones()) + prev(tattle_flags_11_white_clubba()) +
-                prev(tattle_flags_11_frost_piranha()) + prev(tattle_flags_11_swoopula()) +
-                prev(tattle_flags_11_duplighost()) + prev(tattle_flags_12_white_magikoopa()) +
-                prev(tattle_flags_13_blue_goomba()) + prev(tattle_flags_13_red_goomba()) +
-                prev(tattle_flags_13_goomba_king()) + prev(tattle_flags_14_jr_troopa_2()) +
-                prev(tattle_flags_14_jr_troopa_3()) + prev(tattle_flags_14_jr_troopa_4()) +
-                prev(tattle_flags_14_jr_troopa_5()) + prev(tattle_flags_14_jr_troppa_6()) +
-                prev(tattle_flags_15_the_master1()) + prev(tattle_flags_15_the_master2()) +
-                prev(tattle_flags_15_the_master3()) + prev(tattle_flags_15_chan()) + prev(tattle_flags_15_lee()) +
-                prev(tattle_flags_16_big_lantern_ghost()) + prev(tattle_flags_16_lava_piranha()) +
-                prev(tattle_flags_16_lava_bud_bit6()) + prev(tattle_flags_16_petit_piranha()) +
-                prev(tattle_flags_17_shy_squad()) + prev(tattle_flags_17_general_guy()) +
-                prev(tattle_flags_17_anti_guy_shy_guy_toy_box()) + prev(tattle_flags_18_buzzar()) +
-                prev(tattle_flags_18_tutankoopa()) + prev(tattle_flags_18_chomp()) +
-                prev(tattle_flags_18_tubba_blubba_windmill()) + prev(tattle_flags_18_tubbas_heart()) +
-                prev(tattle_flags_18_stilt_guy()) + prev(tattle_flags_18_shy_stack()) + prev(tattle_flags_19_bowser()) +
-                prev(tattle_flags_19_g_ninjakoopa()) + prev(tattle_flags_19_r_ninjakoopa()) +
-                prev(tattle_flags_19_b_ninjakoopa()) + prev(tattle_flags_19_y_ninjakoopa()) +
-                prev(tattle_flags_20_electro_blooper()) + prev(tattle_flags_20_super_blooper()) +
-                prev(tattle_flags_20_blooper_baby()) + prev(tattle_flags_21_bowser2()) + prev(tattle_flags_21_bowser3())
-                + prev(tattle_flags_21_blooper()) + prev(tattle_flags_22_kent_c_koopa()) +
-                prev(tattle_flags_22_huff_n_puff()) + prev(tattle_flags_22_tuff_puff()) +
-                prev(tattle_flags_22_monstar()) + prev(tattle_flags_22_crystal_king()) +
-                prev(tattle_flags_22_crystal_bit())) == 109))
-))
+    trigger = any_of(re, r => any_of(range(0, 3), i => rc[r] &&
+        measured(sum_of(tattle_bitflags(r, i), x => x) == 110) &&
+        sum_of(tattle_bitflags(r, i), x => prev(x)) == 109
+)))
 
 achievement(
     title = "Kitchen Nightmare", points = 50,
