@@ -865,6 +865,56 @@ function game_flag(bit_index) {
     }
 }
 
+hidden_block_flags = [
+    0x034,
+    0x195,
+    0x196,
+    0x197,
+    0x198,
+    0x19c,
+    0x19d,
+    0x19e,
+    0x19f,
+    0x1A0,
+    0x1A1,
+    0x1A2,
+    0x1A4,
+    0x257,
+    0x31f,
+    0x32a,
+    0x32d,
+    0x32e,
+    0x456,
+    0x457,
+    0x45b,
+    0x45d,
+    0x470,
+    0x471,
+    0x473,
+    0x479,
+    0x498,
+    0x49a,
+    0x49d,
+    0x49e,
+    0x4A1,
+    0x4de,
+    0x4df,
+    0x4e1,
+    0x4e2,
+    0x4e3,
+    0x520,
+    0x56e,
+    0x572,
+    0x580,
+    0x581,
+    0x5aa,
+    0x5b0,
+    0x5E7,
+    0x62e,
+    0x637,
+    0x66b
+]
+
 function recipes(r) {
     idxs = array_filter(range(0, 51), i => i != 0x12 && i != 0x2e)
     return array_map(idxs, x => game_flag(0x136 + x)[r])
@@ -3256,38 +3306,9 @@ achievement(
     title = "Hidden Goodies", points = 10,
     description = "Find every hidden block (Must grab item from each box at least once)",
     id = 321728, badge = "359762", published = "2023-05-26 6:12:17 PM", modified = "2023-06-08 11:12:59 PM",
-    trigger = any_of(re, r => rc[r] && byte(0x0A094A) != 0 && event_id() == 0 &&
-              measured((hidden_block_in_00_02() + hidden_block_1_in_02_09() + hidden_block_2_in_02_09() +
-                  hidden_block_3_in_02_09() + hidden_block_in_02_0e() + hidden_block_1_in_02_11() +
-                  hidden_block_2_in_02_11() + hidden_block_3_in_02_11() + hidden_block_4_in_02_11() +
-                  hidden_block_1_in_02_13() + hidden_block_2_in_02_13() + hidden_block_3_in_02_13() +
-                  hidden_block_in_02_14() + hidden_block_in_06_07() + hidden_block_in_0a07() + hidden_block_in_0a12() +
-                  hidden_block_in_0a22() + hidden_block_in_0a2b() + hidden_block_1_in_10_00() + hidden_block_2_in_10_00() +
-                  hidden_block_in_10_01() + hidden_block_in_10_02() + hidden_block_1_in_10_04() + hidden_block_2_in_10_04()
-                  + hidden_block_in_10_05() + hidden_block_in_10_07() + hidden_block_in_10_09() +
-                  red_hidden_block_in_10_0a() + hidden_block_1_in_10_0a() + hidden_block_2_in_10_0a() +
-                  hidden_block_in_10_0c() + hidden_block_1_in_11_01() + hidden_block_2_in_11_01() + hidden_block_in_11_08()
-                  + hidden_block_in_11_0c() + hidden_block_in_11_0d() + hidden_block_in_12_05() + hidden_block_in_13_0c() +
-                  hidden_block_in_13_12() + hidden_block_1_in_13_11() + hidden_block_2_in_13_11() + hidden_block_in_14_04()
-                  + hidden_block_in_14_06() + hidden_block_in_15_12() + hidden_block_in_16_25() + hidden_block_in_16_31() +
-                  hidden_block_in_17_02()) == 47
-              ) &&
-              (prev(hidden_block_in_00_02()) + prev(hidden_block_1_in_02_09()) + prev(hidden_block_2_in_02_09()) +
-              prev(hidden_block_3_in_02_09()) + prev(hidden_block_in_02_0e()) + prev(hidden_block_1_in_02_11()) +
-              prev(hidden_block_2_in_02_11()) + prev(hidden_block_3_in_02_11()) + prev(hidden_block_4_in_02_11()) +
-              prev(hidden_block_1_in_02_13()) + prev(hidden_block_2_in_02_13()) + prev(hidden_block_3_in_02_13()) +
-              prev(hidden_block_in_02_14()) + prev(hidden_block_in_06_07()) + prev(hidden_block_in_0a07()) +
-              prev(hidden_block_in_0a12()) + prev(hidden_block_in_0a22()) + prev(hidden_block_in_0a2b()) +
-              prev(hidden_block_1_in_10_00()) + prev(hidden_block_2_in_10_00()) + prev(hidden_block_in_10_01()) +
-              prev(hidden_block_in_10_02()) + prev(hidden_block_1_in_10_04()) + prev(hidden_block_2_in_10_04()) +
-              prev(hidden_block_in_10_05()) + prev(hidden_block_in_10_07()) + prev(hidden_block_in_10_09()) +
-              prev(red_hidden_block_in_10_0a()) + prev(hidden_block_1_in_10_0a()) + prev(hidden_block_2_in_10_0a()) +
-              prev(hidden_block_in_10_0c()) + prev(hidden_block_1_in_11_01()) + prev(hidden_block_2_in_11_01()) +
-              prev(hidden_block_in_11_08()) + prev(hidden_block_in_11_0c()) + prev(hidden_block_in_11_0d()) +
-              prev(hidden_block_in_12_05()) + prev(hidden_block_in_13_0c()) + prev(hidden_block_in_13_12()) +
-              prev(hidden_block_1_in_13_11()) + prev(hidden_block_2_in_13_11()) + prev(hidden_block_in_14_04()) +
-              prev(hidden_block_in_14_06()) + prev(hidden_block_in_15_12()) + prev(hidden_block_in_16_25()) +
-              prev(hidden_block_in_16_31()) + prev(hidden_block_in_17_02())) == 47
+    trigger = any_of(re, r => rc[r] &&
+        measured(sum_of(hidden_block_flags, i => game_flag(i)[r]) == 47) &&
+        sum_of(hidden_block_flags, i => prev(game_flag(i)[r])) == 46
 	)
 )
 
