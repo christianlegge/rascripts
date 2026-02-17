@@ -708,9 +708,9 @@ function map_flag(bit_index) {
 
 function map_var(idx) {
     return {
-        "US": dword(0x2dbca8 + idx),
-        "JP": dword(0x2dbca8 + idx),
-        "EU": dword(0x2e1f88 + idx)
+        "US": dword(0x2dbca8 + 4*idx),
+        "JP": dword(0x2dbca8 + 4*idx),
+        "EU": dword(0x2e1f88 + 4*idx)
     }
 }
 
@@ -3233,20 +3233,23 @@ achievement(
     title = "Why, Spike?", points = 1, type="missable",
     description = "Don't forgive Lakilester",
     id = 79707, badge = "86072", published = "2019-08-07 3:10:48 AM", modified = "2025-05-13 1:56:26 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 19 && map_id() == 8 && prev(marios_battle_animation_id_byte()) == 43 &&
-              marios_battle_animation_id_byte() == 23
-	)
+    trigger = any_of(re, r => rc[r] && room(r, 19, 8) && map_var(10)[r] == 1 && prev(map_var(10)[r]) == 0
+    )
 )
 
 achievement(
     title = "Afraid of Ghosts", points = 4,
     description = "Make it to the chest at the end of the Spike Room in Tubba Blubba's Castle without using Bow",
     id = 84288, badge = "91675", published = "2019-09-28 7:30:40 PM", modified = "2025-05-13 1:56:26 PM",
-    trigger = any_of(re, r => rc[r] && never(area_world_id() != 15) && never(map_id() != 12) && never(sound_id_16bits() == 8206) &&
-              never(sound_id_2() == 8206) && never(sound_id_3() == 8206) && never(sound_id_16bits() == 661) &&
-              never(sound_id_2() == 661) && never(sound_id_3() == 661) && once(sound_id_16bits() == 450) &&
-              x_coordinates_16bits() <= 50050 && z_coordinates_16bits() >= 49988
-	)
+    trigger  = any_of(re, r =>
+        unless(!rc[r]) && once(prev(map_id[r] != 12) && map_id[r] == 12) &&
+        never(area_id[r] != 15) && never(map_id[r] != 12) &&
+        never(acting_partner[r] == 0x09 && partner_action_state[r] == 0x01) &&
+        trigger_when(
+            mario_x_pos[r] >= -262.0 && 
+            mario_z_pos[r] <= -200.0 && prev(mario_z_pos[r] > -200.0)
+        )
+    )
 )
 
 achievement(
