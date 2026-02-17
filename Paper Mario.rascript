@@ -2310,6 +2310,12 @@ function activated_badge_id_64() => word(0x10F514)
 //          05 = Petit
 function current_merlee_spell_8bit() => byte(0x10F519)
 
+merlee_casts_left = {
+    "US": byte(0x10f290 + 0x289),
+    "JP": byte(0x10f450 + 0x289),
+    "EU": byte(0x10dd90 + 0x289)
+}
+
 // $10F51A: Merlee spells remaining
 function merlee_spells_remaining() => byte(0x10F51A)
 
@@ -3306,8 +3312,8 @@ achievement(
     title = "Hidden Goodies", points = 10,
     description = "Find every hidden block (Must grab item from each box at least once)",
     id = 321728, badge = "359762", published = "2023-05-26 6:12:17 PM", modified = "2023-06-08 11:12:59 PM",
-    trigger = any_of(re, r => rc[r] &&
-        measured(sum_of(hidden_block_flags, i => game_flag(i)[r]) == 47) &&
+    trigger = any_of(re, r =>
+        measured(sum_of(hidden_block_flags, i => game_flag(i)[r]) == 47, when = rc[r]) &&
         sum_of(hidden_block_flags, i => prev(game_flag(i)[r])) == 46
 	)
 )
@@ -3316,8 +3322,8 @@ achievement(
     title = "I Feel Like I've Been Scammed", points = 3, type="missable",
     description = "Get an 'Upgrade' from Chet Rippo in Toad Town",
     id = 321729, badge = "359763", published = "2023-05-26 6:12:18 PM", modified = "2023-06-13 9:41:29 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 1 && prev(chet_rippo_flag_when_on_he_has_been_activated()) == 0 && map_id() == 5 &&
-              chet_rippo_flag_when_on_he_has_been_activated() == 1
+    trigger = any_of(re, r => rc[r] && room(r, 1, 5) &&
+        area_flag(50)[r] > prev(area_flag(50)[r])
 	)
 )
 
@@ -3325,7 +3331,7 @@ achievement(
     title = "She Does Spells, but Not for Free", points = 3,
     description = "Purchase a 'Special Course' Spell from Merlee in Dry Dry Outpost",
     id = 321730, badge = "359764", published = "2023-05-26 6:12:18 PM", modified = "2023-05-28 5:28:13 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 9 && prev(current_merlee_spell_8bit()) != 20 && current_merlee_spell_8bit() == 20
+    trigger = any_of(re, r => rc[r] && room(r, 9, 1) && prev(merlee_casts_left[r]) < 20 && merlee_casts_left[r] == 20
 	)
 )
 
@@ -3333,7 +3339,7 @@ achievement(
     title = "Old School House Party", points = 1,
     description = "Become 8-Bit Mario in Boo's Mansion",
     id = 321731, badge = "359765", published = "2023-05-26 6:12:18 PM", modified = "2023-05-29 7:41:23 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 13 && prev(music_id()) != 65 && music_id() == 65
+    trigger = any_of(re, r => rc[r] && room(r, 13, 4) && map_flag(10)[r] > prev(map_flag(10)[r])
 	)
 )
 
@@ -3341,7 +3347,7 @@ achievement(
     title = "You're A Monster", points = 0,
     description = "Deal enough damage to Whacka and cause him to disappear",
     id = 321732, badge = "359766", published = "2023-05-26 6:12:19 PM", modified = "2023-05-28 5:28:14 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 8 && prev(times_you_have_whacked_whacka()) != 8 && times_you_have_whacked_whacka() >= 8
+    trigger = any_of(re, r => rc[r] && room(r, 8, 0) && prev(game_byte(0x75)[r]) < 8 && game_byte(0x75)[r] >= 8
 	)
 )
 
@@ -3349,15 +3355,17 @@ achievement(
     title = "Dayzee'd and Confused", points = 5,
     description = "Defeat an Amazy Dayzee",
     id = 321733, badge = "359767", published = "2023-05-26 6:12:19 PM", modified = "2023-05-28 5:28:14 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id_word() == 19 && battle_id() == 6172 && event_id() == 1 && byte(pointer_2() + 0x1BB) == 0
-	)
+    trigger = any_of(re, r => rc[r] && enemy_actor(r, 1, addr =>
+        byte(addr + 0x135) == 0x33 &&
+        prev(byte(addr + 0x1bb)) > 0 && byte(addr + 0x1bb) == 0
+	))
 )
 
 achievement(
     title = "Loading Screen Aficionado", points = 1, type="missable",
     description = "Wait on any Chapter introduction and hear the classic Mario Bros. theme",
     id = 321734, badge = "359768", published = "2023-05-26 6:12:20 PM", modified = "2023-05-29 4:36:29 PM",
-    trigger = any_of(re, r => rc[r] && repeated(900, area_world_id() == 0 && music_id() == 65) && never(area_world_id() != 0)
+    trigger = any_of(re, r => unless(!rc[r]) && repeated(900, music[r] == 65) && never(area_id[r] != 0)
 	)
 )
 
