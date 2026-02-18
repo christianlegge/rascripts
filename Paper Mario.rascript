@@ -3373,9 +3373,7 @@ achievement(
     title = "Sorry, Bro!", points = 5, type="missable",
     description = "After getting the Super Boots, go and find Luigi's secret diary BEFORE meeting Lady Bow",
     id = 321737, badge = "359771", published = "2023-05-26 6:12:21 PM", modified = "2023-05-29 8:25:04 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 0 && map_id() == 11 && player_pos_y() <= -70.0 &&
-              prev(luigi_state_luigi_is_outside_of_his_room()) == 0 && luigi_state_luigi_is_outside_of_his_room() == 1
-	)
+    trigger = any_of(re, r => rc[r] && room(r, 0, 11) && game_flag(0x69)[r] > prev(game_flag(0x69)[r]))
 )
 
 achievement(
