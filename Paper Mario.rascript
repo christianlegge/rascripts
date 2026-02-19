@@ -2409,10 +2409,28 @@ star_pieces = {
     "EU": word(0x10e0be)
 }
 
+jump_game_total = {
+    "US": dword(0x10f5c0),
+    "JP": dword(0x10f780),
+    "EU": dword(0x10e0c0)
+}
+
 smash_game_total = {
     "US": dword(0x10f5c8),
     "JP": dword(0x10f788),
     "EU": dword(0x10e0c8)
+}
+
+jump_game_record = {
+    "US": word(0x10f5c6),
+    "JP": word(0x10f786),
+    "EU": word(0x10e0c6)
+}
+
+smash_game_record = {
+    "US": word(0x10f5ce),
+    "JP": word(0x10f78e),
+    "EU": word(0x10e0ce)
 }
 
 // $10F5C0: Jump Attack Total Coins Won 16bits
@@ -3451,40 +3469,48 @@ achievement(
 leaderboard(
     id = 5385, title = "Jump Attack Highscore",
     description = "Highscore in a single Jump Attack Minigame",
-    start  = area_world_id() == 25 && map_id() == 1 && music_id() == 133,
-    cancel = area_world_id() == 0 && map_id() == 0,
-    submit = map_id() != 1,
-    value  = byte(0x10F5C7) * 256 + jump_attack_highest_amount_won_in_a_single_game_16bits(),
+    start  =  any_of(re, r =>
+        area_id[r] == 25 && jump_game_record[r] > prev(jump_game_record[r])
+    ),
+    cancel = always_false(),
+    submit = always_true(),
+    value = max_of(array_map(re, r => measured( jump_game_record[r], when = rc[r]))),
     format = "VALUE"
 )
 
 leaderboard(
     id = 5384, title = "Jump Attack Total Coins",
     description = "Total Coins won in the Jump Attack Minigame",
-    start  = area_world_id() == 25 && map_id() == 1 && music_id() == 133,
-    cancel = area_world_id() == 0 && map_id() == 0,
-    submit = map_id() != 1,
-    value  = byte(0x10F5C1) * 256 + jump_attack_total_coins_won_16bits(),
+    start =  any_of(re, r =>
+        area_id[r] == 25 && jump_game_total[r] > prev(jump_game_total[r])
+    ),
+    cancel = always_false(),
+    submit = always_true(),
+    value = max_of(array_map(re, r => measured( jump_game_total[r], when = rc[r]))),
     format = "VALUE"
 )
 
 leaderboard(
     id = 5382, title = "Smash Attack Total Coins",
     description = "Total Coins won in the Smash Attack Minigame",
-    start  = area_world_id() == 25 && map_id() == 2 && music_id() == 133,
-    cancel = area_world_id() == 0 && map_id() == 0,
-    submit = map_id() != 2,
-    value  = byte(0x10F5C9) * 256 + smash_attack_total_coins_won_16bits_byte(),
+    start  = any_of(re, r =>
+        area_id[r] == 25 && smash_game_total[r] > prev(smash_game_total[r])
+    ),
+    cancel = always_false(),
+    submit = always_true(),
+    value = max_of(array_map(re, r => measured( smash_game_total[r], when = rc[r]))),
     format = "VALUE"
 )
 
 leaderboard(
     id = 5383, title = "Smash Attack Highscore",
     description = "Highscore in a single Smash Attack Minigame",
-    start  = area_world_id() == 25 && map_id() == 2 && music_id() == 133,
-    cancel = area_world_id() == 0 && map_id() == 0,
-    submit = map_id() != 2,
-    value  = byte(0x10F5CF) * 256 + smash_attack_highest_amount_won_in_a_single_game_16bits(),
+    start = any_of(re, r =>
+        area_id[r] == 25 && smash_game_record[r] > prev(smash_game_record[r])
+    ),
+    cancel = always_false(),
+    submit = always_true(),
+    value = max_of(array_map(re, r => measured( smash_game_record[r], when = rc[r]))),
     format = "VALUE"
 )
 
