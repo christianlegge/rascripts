@@ -1,6 +1,6 @@
 // Paper Mario
 // #MinimumVersion = 1.3
-// #ID = 33114
+// #ID = 10154
 // subset 33114, base 10154
 
 re = [ "US", "JP", "EU" ]
@@ -2981,7 +2981,6 @@ achievement(
     description = "Defeat the Goomba King without the use of the Goomnut",
     id = 49617, badge = "513627", published = "2017-06-15 6:21:11 AM", modified = "2021-02-05 1:55:20 AM",
     trigger = any_of(re, r => rc[r] && 
-        prev(battle_state[r] > 0) && prev(battle_state[r]) < 26 &&
         room(r, 0, 9) &&
         enemy_actor(r, 4, addr => byte(addr + 0x135) == 0x93 && dword(addr + 0x9c) == 0) &&
         trigger_when(prev(battle_state[r] != 33) && battle_state[r] == 33)
