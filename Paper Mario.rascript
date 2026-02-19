@@ -284,6 +284,12 @@ partner_action_state = {
     "EU": byte(0x10d6b3)
 }
 
+context = {
+    "US": word(tbyte(0x7419c) + 0x73),
+    "JP": word(tbyte(0x7417c) + 0x73),
+    "EU": word(tbyte(0x714ac) + 0x73)
+}
+
 area_id = {
     "US": word(tbyte(0x7419c) + 0x8a),
     "JP": word(tbyte(0x7417c) + 0x8a),
@@ -3482,23 +3488,26 @@ leaderboard(
     format = "VALUE"
 )
 
-rich_presence_conditional_display(byte(0x0A094A) == 0, "On the Main Menu")
+for r in ["US", "JP", "EU"] {
 
-rich_presence_conditional_display(byte(0x0A094A) == 1 && event_id() == 2, "In the Pause Menu at {0} | Level: {1} | {2} Star Spirits Rescued | {3} Total Battles and {4} Star Pieces",
-    rich_presence_lookup("Map", area_world_id_word(), MapLookup),
-    rich_presence_value("Level", marios_level()),
-    rich_presence_lookup("Spirit", star_spirits_low4(), SpiritLookup),
-    rich_presence_value("TotalBattles", number_of_battles_word()),
-    rich_presence_value("StarPieces", total_star_pieces_collected())
-)
+    rich_presence_conditional_display(rc[r] && !in_game[r], "On the Main Menu")
 
-rich_presence_conditional_display(byte(0x0A094A) == 1, "Traveling with {0} at {1} | Level: {2} | {3} Star Spirits Rescued | {4} Total Battles and {5} Star Pieces",
-    rich_presence_lookup("Partner", partner_currently_out(), PartnerLookup),
-    rich_presence_lookup("Map", area_world_id_word(), MapLookup),
-    rich_presence_value("Level", marios_level()),
-    rich_presence_lookup("Spirit", star_spirits_low4(), SpiritLookup),
-    rich_presence_value("TotalBattles", number_of_battles_word()),
-    rich_presence_value("StarPieces", total_star_pieces_collected())
-)
+    rich_presence_conditional_display(rc[r] && in_game[r] && context[r] == 2, "In the Pause Menu at {0} | Level: {1} | {2} Star Spirits Rescued | {3} Total Battles and {4} Star Pieces",
+        rich_presence_lookup("Map", area_id[r], MapLookup),
+        rich_presence_value("Level", mario_level[r]),
+        rich_presence_lookup("Spirit", max_star_power[r] & 0xf, SpiritLookup),
+        rich_presence_value("TotalBattles", battles[r]),
+        rich_presence_value("StarPieces", star_pieces[r])
+    )
+
+    rich_presence_conditional_display(byte(0x0A094A) == 1, "Traveling with {0} at {1} | Level: {2} | {3} Star Spirits Rescued | {4} Total Battles and {5} Star Pieces",
+        rich_presence_lookup("Partner", current_partner[r], PartnerLookup),
+        rich_presence_lookup("Map", area_id[r], MapLookup),
+        rich_presence_value("Level", mario_level[r]),
+        rich_presence_lookup("Spirit", max_star_power[r] & 0xf, SpiritLookup),
+        rich_presence_value("TotalBattles", battles[r]),
+        rich_presence_value("StarPieces", star_pieces[r])
+    )
+}
 
 rich_presence_display("Preparing to play Paper Mario")
