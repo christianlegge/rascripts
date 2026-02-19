@@ -314,6 +314,12 @@ jump_byte = {
     "EU": byte(0x10dac8)
 }
 
+peach_disguise = {
+    "US": byte(0x10efc8 + 0xf),
+    "JP": byte(0x10f188 + 0xf),
+    "EU": byte(0x10dac8 + 0xf)
+}
+
 jump_ascent = {
     "US": bit1(0x10efc8),
     "JP": bit1(0x10f188),
@@ -811,6 +817,13 @@ function area_flag(bit_index) {
     }
 }
 
+function area_byte(index) {
+    return {
+        "US": byte(0xdacc0 + 0x12d0 + index),
+        "JP": byte(0xdaca0 + 0x12d0 + index),
+        "EU": byte(0xd7430 + 0x12d0 + index)
+    }
+}
 function game_flag(bit_index) {
     byte_index = bit_index / 8
     bit_in_byte = bit_index % 8
@@ -3380,8 +3393,8 @@ achievement(
     title = "Survey Says...!", points = 3, type="missable",
     description = "Answer all of the questions correctly in the 64th Trivia Quiz-Off",
     id = 321738, badge = "359772", published = "2023-05-26 6:12:21 PM", modified = "2023-05-28 5:28:16 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 4 && prev(quiz_show_answers_correct_answer_count_for_peach()) == 9 &&
-              quiz_show_answers_correct_answer_count_for_peach() == 10
+    trigger = any_of(re, r => rc[r] && area_id[r] == 4 && prev(area_byte(0xa)[r]) == 9 &&
+              area_byte(0xa)[r] == 10
 	)
 )
 
@@ -3389,56 +3402,44 @@ achievement(
     title = "Mild Shock", points = 5,
     description = "Use a Thunder Rage from a 'Mystery?' item (Cannot use Double or Triple dip)",
     id = 321863, badge = "359779", published = "2023-05-27 2:01:14 AM", modified = "2023-06-15 12:24:10 AM",
-    trigger = any_of(re, r => rc[r] && once(battle_2() == 52 && prev(item_used_id()) == 150 && item_used_id() == 130) &&
-              (always_false() || (never(event_id() == 0) && never(remaining_turns_using_his_turn_mario() == 0)))
-	)
+    trigger = any_of(re, r => rc[r] &&
+        selected_move_category[r] == 2 &&
+        move_argument[r] == 130 &&
+        prev(move_argument[r] == 150) &&
+        selected_move_id[r] == 0x34 &&
+        battle_state[r] == 18
+    )
 )
 
 achievement(
     title = "Quite the New Look", points = 1, type="missable",
     description = "As Peach, disguise yourself as an enemy and look at the mirror in her room",
     id = 321950, badge = "359781", published = "2023-05-27 4:40:53 AM", modified = "2023-06-12 4:05:53 AM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 4 && map_id() == 8 && npc_dialogue_id() == 69 && npc_group_id() == 20 &&
-              prev(also_dialogue()) == 88 && also_dialogue() == 89 && prev(dialogue()) == 82 && dialogue() == 83
-	)
+    trigger = any_of(re, r => rc[r] &&
+        room(r, 4, 8) &&
+        peach_disguise[r] != 0 &&
+        bit1(tbyte(world_triggers[r] + 0x8)) >
+        prev(bit1(tbyte(world_triggers[r] + 0x8)))
+    )
 )
 
 achievement(
     title = "Shroomy Slots", points = 10,
     description = "Earn a Mushroom from the Slot Machine in Shy Guy's Toybox",
     id = 322960, badge = "360326", published = "2023-05-29 3:20:59 PM", modified = "2023-10-16 3:15:40 PM",
-    trigger = any_of(re, r => rc[r] && area_world_id() == 16 && map_id() == 8 && byte(0x0DBF90) == 1 && (what_2() == 143 || what_2() == 14) &&
-              ((prev(item_slots_word()) != 138 && item_slots_word() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit()) != 138 && _16bit() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_2()) != 138 && _16bit_2() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_3()) != 138 && _16bit_3() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_4()) != 138 && _16bit_4() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_5()) != 138 && _16bit_5() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_6()) != 138 && _16bit_6() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_7()) != 138 && _16bit_7() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_8()) != 138 && _16bit_8() == 138 && disable_player_inputs_flag() == 1) ||
-               (prev(_16bit_9()) != 138 && _16bit_9() == 138 && disable_player_inputs_flag() == 1))
-	)
-)
-
-achievement(
-    title = "Mighty Morphin' Shy Guys", points = 5,
-    description = "Defeat the groups of two Red, Pink, Yellow, Green, and Blue Shy Guys IN ORDER in the Blue Zone of Shy Guys Toybox (Must not use First Strike Badge!)",
-    id = 322736, badge = "359998", published = "2023-05-28 8:28:53 PM", modified = "2024-06-03 1:28:20 AM",
-    trigger = any_of(re, r => rc[r] && map_id() == 3 &&
-              once(once(once(once(once(once(once(once(once(once(battle_id() == 4096) &&
-                  remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())) &&
-                  battle_id() == 4100) &&
-                  remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())) &&
-                  battle_id() == 4098) &&
-                  remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())) &&
-                  battle_id() == 4101) &&
-                  remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())) &&
-                  battle_id() == 4097) &&
-                  remaining_turns_mario_won_the_battle() > prev(remaining_turns_mario_won_the_battle())
-              ) &&
-              (always_false() || (never(area_world_id() != 16)))
-	)
+    trigger = any_of(re, r => rc[r] && room(r, 16, 8) &&
+        any_of([
+            [0, 1, 1, 1],
+            [0, 2, 1, 1],
+            [1, 2, 1, 1],
+            [0, 1, 1, 4],
+            [1, 2, 4, 1]
+        ], val =>
+            (map_var(val[0])[r] % 360) / 45 == val[1] &&
+            (map_var(val[2])[r] % 360) / 45 == val[3] 
+        )
+        && map_flag(0)[r] < prev(map_flag(0)[r])
+    )
 )
 
 leaderboard(
