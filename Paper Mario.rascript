@@ -2773,7 +2773,9 @@ achievement(
     title = "Flower Power", points = 10,
     description = "Max out your FP (Including Badges)",
     id = 49535, badge = "86094", published = "2017-06-11 1:29:30 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = any_of(re, r => rc[r] && in_game[r] && prev(max_fp[r]) == 60 && max_fp[r] == 65
+    trigger = any_of(re, r => rc[r] && in_game[r] &&
+        __ornext(any_of([50, 55, 60], fp => prev(max_fp[r]) == fp)) &&
+        max_fp[r] == 65
 	)
 )
 
@@ -2781,7 +2783,9 @@ achievement(
     title = "Heartful", points = 10,
     description = "Max out your HP (Including Badges)",
     id = 49536, badge = "86092", published = "2017-06-11 1:29:32 AM", modified = "2025-05-13 1:56:18 PM",
-    trigger = any_of(re, r => rc[r] && in_game[r] && prev(max_hp[r]) == 60 && max_hp[r] == 65
+    trigger = any_of(re, r => rc[r] && in_game[r] &&
+        __ornext(any_of([50, 55, 60], hp => prev(max_hp[r]) == hp)) &&
+        max_hp[r] == 65
 	)
 )
 
@@ -2889,7 +2893,7 @@ achievement(
     title = "Super Jumpman Mario", points = 5,
     description = "Get the Super Boots",
     id = 49551, badge = "86108", published = "2017-06-11 1:48:13 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = any_of(re, r => rc[r] && super_boots_02_ultra_boots() == 1 && prev(super_boots_02_ultra_boots()) == 0 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && room(r, 0xd, 3) && current_boots[r] == 1 && prev(current_boots[r] == 0)
 	)
 )
 
@@ -2897,7 +2901,8 @@ achievement(
     title = "Ultra Jumpman Mario", points = 5,
     description = "Get the Ultra Boots",
     id = 49552, badge = "86109", published = "2017-06-11 1:48:15 AM", modified = "2025-05-13 1:56:20 PM",
-    trigger = any_of(re, r => rc[r] && super_boots_02_ultra_boots() == 2 && prev(super_boots_02_ultra_boots()) == 1 && byte(0x0A094A) != 0
+    trigger = any_of(re, r => rc[r] && room(r, 2, 0x15) &&
+        current_boots[r] == 2 && prev(current_boots[r]) == 1
 	)
 )
 
@@ -3441,6 +3446,7 @@ achievement(
     trigger = any_of(re, r => rc[r] &&
         room(r, 4, 8) &&
         peach_disguise[r] != 0 &&
+        dword(world_triggers[r]) != 0 &&
         bit1(tbyte(world_triggers[r] + 0x8)) >
         prev(bit1(tbyte(world_triggers[r] + 0x8)))
     )
@@ -3452,14 +3458,19 @@ achievement(
     id = 322960, badge = "360326", published = "2023-05-29 3:20:59 PM", modified = "2023-10-16 3:15:40 PM",
     trigger = any_of(re, r => rc[r] && room(r, 16, 8) &&
         any_of([
+            // slot A, slot B, result A, result B
+            // stars are on slot 0 result 1,
+            //              slot 1 result 1,
+            //              slot 1 result 4,
+            //              slot 2 result 1
             [0, 1, 1, 1],
             [0, 2, 1, 1],
             [1, 2, 1, 1],
             [0, 1, 1, 4],
             [1, 2, 4, 1]
         ], val =>
-            (map_var(val[0])[r] % 360) / 45 == val[1] &&
-            (map_var(val[2])[r] % 360) / 45 == val[3] 
+            (map_var(val[0])[r] % 360) / 45 == val[2] &&
+            (map_var(val[1])[r] % 360) / 45 == val[3] 
         )
         && map_flag(0)[r] < prev(map_flag(0)[r])
     )
