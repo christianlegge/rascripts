@@ -3536,7 +3536,7 @@ for r in ["US", "JP", "EU"] {
         rich_presence_value("StarPieces", star_pieces[r])
     )
 
-    rich_presence_conditional_display(byte(0x0A094A) == 1, "Traveling with {0} at {1} | Level: {2} | {3} Star Spirits Rescued | {4} Total Battles and {5} Star Pieces",
+    rich_presence_conditional_display(rc[r] && in_game[r], "Traveling with {0} at {1} | Level: {2} | {3} Star Spirits Rescued | {4} Total Battles and {5} Star Pieces",
         rich_presence_lookup("Partner", current_partner[r], PartnerLookup),
         rich_presence_lookup("Map", area_id[r], MapLookup),
         rich_presence_value("Level", mario_level[r]),
