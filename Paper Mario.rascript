@@ -3472,6 +3472,7 @@ achievement(
             (map_var(val[0])[r] % 360) / 45 == val[2] &&
             (map_var(val[1])[r] % 360) / 45 == val[3] 
         ) &&
+        map_flag(0)[r] == 1 &&
         entities[r] - prev(entities[r]) == 1
     )
 )
