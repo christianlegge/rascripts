@@ -2872,7 +2872,7 @@ achievement(
 )
 
 achievement(
-    title = "Super Hammer Bro ", points = 5,
+    title = "Super Hammer Bro", points = 5,
     description = "Get the Super Hammer",
     id = 49549, badge = "86106", published = "2017-06-11 1:48:08 AM", modified = "2019-08-07 6:47:19 AM",
     trigger = any_of(re, r => rc[r] && current_hammer[r] == 1 &&
@@ -3471,8 +3471,8 @@ achievement(
         ], val =>
             (map_var(val[0])[r] % 360) / 45 == val[2] &&
             (map_var(val[1])[r] % 360) / 45 == val[3] 
-        )
-        && map_flag(0)[r] < prev(map_flag(0)[r])
+        ) &&
+        entities[r] - prev(entities[r]) == 1
     )
 )
 
