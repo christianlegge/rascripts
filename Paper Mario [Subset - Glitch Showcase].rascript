@@ -1,6 +1,6 @@
 // Paper Mario [Subset - Glitch Showcase]
 // #MinimumVersion = 1.3
-// #ID = 33114
+// #ID = 10154
 
 debug = true
 
@@ -725,6 +725,7 @@ ch3_mysticalkey = game_flag(0x42F)
 ch4_fryingpanchest = game_flag(0x476)
 ch4_bombedwall = game_flag(0x459)
 ch5_intruderalert2 = game_flag(0x51E)
+ch5_kolorado_hallway = game_flag(0x52f)
 ch6_placedbean = game_flag(0x55C)
 ch7_palacekeyused = game_flag(0x5F0)
 
@@ -769,6 +770,16 @@ function rac(story, area, map, yes_flags, no_flags) {
     return any_of(regions, r =>
         region_check[r] && prev(area_id[r] == area) && prev(map_id[r] == map) &&
         prev(story_progress[r] == story) && story_progress[r] == story+1 &&
+        all_of(yes_flags, flag => flag[r] == 1) &&
+        all_of(no_flags, flag => flag[r] == 0) 
+    )
+}
+
+function rac_alt(story, area, map, yes_flags, no_flags) {
+    return any_of(regions, r =>
+        region_check[r] && prev(area_id[r] == area) && prev(map_id[r] == map) &&
+        story_progress[r] == story &&
+        area_id[r] == 0x00 && map_id[r] == 0xe &&
         all_of(yes_flags, flag => flag[r] == 1) &&
         all_of(no_flags, flag => flag[r] == 0) 
     )
@@ -1687,10 +1698,12 @@ achievement("Awesomely Cool Endeavor", "View the end screen without defeating Fi
 )
 
 achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star and all 7 Star Spirits.", points = 50,
+    id = 515924, set = 33103,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
         ch1_beatkoopabros[r] == 1 && ch2_beattutankoopa[r] == 1 && ch3_mysticalkey[r] == 1 &&
-        ch5_intruderalert2[r] == 1 && ch6_placedbean[r] == 1 &&
+        __ornext(ch5_intruderalert2[r] == 1 || ch5_kolorado_hallway[r] == 1) &&
+        ch6_placedbean[r] == 1 &&
         ch7_palacekeyused[r] == 1 &&
         all_of(range(0, 31), idx =>
             key_item_slot(r, idx) != 7
@@ -1720,7 +1733,8 @@ achievement("Reverse All Cards II", "Touch Klevar's Star Spirit card having only
 )
 
 achievement("Reverse All Cards III", "Touch Misstar's Star Spirit card having only completed Chapters 6 and 7 previously.", points = 10,
-    trigger = rac(0x23, 18, 13, [ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch4_bombedwall])
+    id = 515928, set = 33103,
+    trigger = rac_alt(0x23, 18, 13, [ch6_placedbean, ch7_palacekeyused], [ch1_beatkoopabros, ch2_beattutankoopa, ch4_bombedwall])
 )
 
 achievement("Reverse All Cards IV", "Touch Muskular's Star Spirit card having only completed Chapters 5 through 7 previously.", points = 10,
