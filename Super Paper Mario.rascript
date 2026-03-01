@@ -3,6 +3,19 @@
 
 map_addr = 0x525594
 
+function forget_round() => dword_be(0x010c6954)
+function forget_score() => dword_be(0x10c6a54)
+function forget_lives() => byte(0x10c6737)
+function mansion_round() => dword_be(0x10c2704)
+function mansion_score() => dword_be(0x10c256c)
+function mansion_lives() => dword_be(0x10a2cd8)
+function whacker_round() => dword_be(0x10c7e10)
+function whacker_score() => dword_be(0x10c80d0)
+function whacker_lives() => dword_be(0x10c7eb0)
+function tilt_round() => dword_be(0x10bacf4)
+function tilt_score() => dword_be(0x10ba424)
+function tilt_lives() => dword_be(0x10b3c88)
+
 function flipped() => word_be(0x0079c0ea) == 1
 
 function in_game() => byte(map_addr) != 0
@@ -888,7 +901,75 @@ achievement(
     points = 3
 )
 
+achievement(
+    title = "Eidetic Memory",
+    description = "Clear 10 rounds of Forget Me Not.",
+    points = 5,
+    trigger = m("mg2_01") && prev(forget_round() == 10) && forget_round() == 11
+)
+
+achievement(
+    title = "Who Needs a Vacuum?",
+    description = "Clear 5 rounds of Mansion Patrol.",
+    points = 10,
+    trigger = m("mg4_01") && prev(mansion_round() == 5) && mansion_round() == 6
+)
+
+achievement(
+    title = "I'm Using Tilt Controls!",
+    description = "Clear 10 rounds of Tilt Island.",
+    points = 10,
+    trigger = m("mg1_01") && prev(tilt_round() == 10) && tilt_round() == 11
+)
+
+achievement(
+    title = "Efficient Whacking",
+    description = "Clear 10 rounds of Hammer Whacker.",
+    points = 5,
+    trigger = m("mg3_01") && prev(whacker_round() == 10) && whacker_round() == 11
+)
+
 // Leaderboards
+
+leaderboard(
+    title = "Forget Me Not High Score",
+    description = "Achieve the highest score in the Forget Me Not minigame.",
+    start = m("mg2_01") && forget_lives() == 0 && prev(forget_lives()) == 1,
+    cancel = always_false(),
+    submit = always_true(),
+    value = forget_score(),
+    format = "VALUE"
+)
+
+leaderboard(
+    title = "Mansion Patrol High Score",
+    description = "Achieve the highest score in the Mansion Patrol minigame.",
+    start = m("mg4_01") && mansion_lives() == 0 && prev(mansion_lives()) == 1,
+    cancel = always_false(),
+    submit = always_true(),
+    value = mansion_score(),
+    format = "VALUE"
+)
+
+leaderboard(
+    title = "Tilt Island High Score",
+    description = "Achieve the highest score in the Tilt Island minigame.",
+    start = m("mg1_01") && tilt_lives() == 0 && prev(tilt_lives()) == 1,
+    cancel = always_false(),
+    submit = always_true(),
+    value = tilt_score(),
+    format = "VALUE"
+)
+
+leaderboard(
+    title = "Hammer Whacker High Score",
+    description = "Achieve the highest score in the Hammer Whacker minigame.",
+    start = m("mg3_01") && whacker_lives() == 0 && prev(whacker_lives()) == 1,
+    cancel = always_false(),
+    submit = always_true(),
+    value = whacker_score(),
+    format = "VALUE"
+)
 
 leaderboard(
     id = 155750,
