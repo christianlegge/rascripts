@@ -637,11 +637,11 @@ bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Ca
 bitflag_cheevo(saffron_recipes, "Joy of Cooking", "Cook all of the 1-ingredient recipes.", 5)
 bitflag_cheevo(dyllis_recipes, "Pépin Mario", "Cook all of the 2-ingredient recipes.", 10)
 
-bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all chest items and hidden Catch Cards in Flipside.", 5)
-bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all chest items and hidden Catch Cards in Flopside.", 5)
-bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all chest items and hidden Catch Cards in Chapter 1.", 5)
-bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all chest items and hidden Catch Cards in Chapter 2.", 5)
-bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all chest items and hidden Catch Cards in Chapter 3.", 5)
+bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all inventory items, chest items and hidden Catch Cards in Flipside.", 5)
+bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all inventory items, chest items and hidden Catch Cards in Flopside.", 5)
+bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all inventory items, chest items and hidden Catch Cards in Chapter 1.", 5)
+bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all inventory items, chest items and hidden Catch Cards in Chapter 2.", 5)
+bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all inventory items, chest items and hidden Catch Cards in Chapter 3.", 5)
 
 bitflag_cheevo(cards_flipside_pit, "All the Stars Are Here", "Collect all 9 Catch Cards from the Flipside Pit of 100 Trials.", 10)
 bitflag_cheevo(cards_flopside_pit, "Old Friends Hide Hard", "Collect all 9 Catch Cards from the Flopside Pit of 100 Trials.", 25)
