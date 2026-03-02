@@ -1697,7 +1697,7 @@ achievement("Awesomely Cool Endeavor", "View the end screen without defeating Fi
     )
 )
 
-achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star and all 7 Star Spirits.", points = 50,
+achievement("No, I Want a Real RPG", "Beat Final Bowser without the Lucky Star and with all 7 Star Spirits.", points = 50,
     id = 515924, set = 33103,
     trigger = any_of(regions, r =>
         region_check[r] && area_id[r] == 4 && map_id[r] == 19 &&
