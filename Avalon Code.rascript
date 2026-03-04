@@ -5108,23 +5108,14 @@ achievement(
     title = "It Stinks Here", points = 5,
     description = "Fully code all areas in Relneia Marsh.",
     id = 478316, badge = "542254", published = "11/13/2024 6:48:35 AM", modified = "11/13/2024 6:48:35 AM",
-    trigger = map_id() != 0 &&
-              tally(13, once(prev(relneia_marsh_1_clear()) == 15), once(prev(relneia_marsh_2_clear()) == 7),
-                  once(prev(relneia_marsh_3_clear()) == 7), once(prev(relneia_marsh_4_clear()) == 31),
-                  once(prev(relneia_marsh_5_clear()) == 7), once(prev(relneia_marsh_6_clear()) == 31),
-                  once(prev(relneia_marsh_7_clear()) == 0), once(prev(relneia_marsh_8_clear()) == 7),
-                  once(prev(relneia_marsh_9_clear()) == 7), once(prev(relneia_marsh_10_clear()) == 7),
-                  once(prev(relneia_marsh_11_clear()) == 7), once(prev(relneia_marsh_12_clear()) == 7),
-                  once(prev(relneia_marsh_13_clear()) == 7), once(prev(eddy_of_decay_coded()) == 1)
-              ) &&
-              measured(tally(14, once(relneia_marsh_1_clear() == 15), once(relneia_marsh_2_clear() == 7),
-                  once(relneia_marsh_3_clear() == 7), once(relneia_marsh_4_clear() == 31),
-                  once(relneia_marsh_5_clear() == 7), once(relneia_marsh_6_clear() == 31),
-                  once(relneia_marsh_7_clear() == 0), once(relneia_marsh_8_clear() == 7),
-                  once(relneia_marsh_9_clear() == 7), once(relneia_marsh_10_clear() == 7),
-                  once(relneia_marsh_11_clear() == 7), once(relneia_marsh_12_clear() == 7),
-                  once(relneia_marsh_13_clear() == 7), once(eddy_of_decay_coded() == 1))
-              )
+    trigger = 
+              value_checks_trigger([ [relneia_marsh_1_clear(), 15], [relneia_marsh_2_clear(), 7],
+                  [relneia_marsh_3_clear(), 7], [relneia_marsh_4_clear(), 31],
+                  [relneia_marsh_5_clear(), 7], [relneia_marsh_6_clear(), 31],
+                  [relneia_marsh_7_clear(), 7], [relneia_marsh_8_clear(), 7],
+                  [relneia_marsh_9_clear(), 7], [relneia_marsh_10_clear(), 7],
+                  [relneia_marsh_11_clear(), 7], [relneia_marsh_12_clear(), 7],
+                  [relneia_marsh_13_clear(), 7], [eddy_of_decay_coded(), 1]])
 )
 
 achievement(
