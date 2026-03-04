@@ -40,12 +40,14 @@ function player_x() => float_be(0x5104b4)
 function player_y() => float_be(0x5104b8)
 function player_z() => float_be(0x5104bc)
 
-function cooking_disk_2() => bit5(0x5256d8)
-function cooking_disk_3() => bit6(0x5256d8)
-function cooking_disk_4() => bit7(0x5256d8)
-function cooking_disk_5() => bit0(0x5256df)
-function cooking_disk_6() => bit1(0x5256df)
-function cooking_disk_7() => bit2(0x5256df)
+cooking_disks = [
+    bit5(0x5256d8),
+    bit6(0x5256d8),
+    bit7(0x5256d8),
+    bit0(0x5256df),
+    bit1(0x5256df),
+    bit2(0x5256df)
+]
 
 function score() => dword_be(0x511a40)
 
@@ -634,7 +636,7 @@ function cooking_disk_cheevo(addr, title, description) {
 
 bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 10)
 bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
-bitflag_cheevo(saffron_recipes, "Joy of Cooking", "Cook all of the 1-ingredient recipes.", 5)
+bitflag_cheevo(saffron_recipes, "Joy of Cooking", "Cook all of the 1-ingredient recipes.", 10)
 bitflag_cheevo(dyllis_recipes, "Pépin Mario", "Cook all of the 2-ingredient recipes.", 10)
 
 bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all inventory items, chest items and hidden Catch Cards in Flipside.", 5)
@@ -768,12 +770,7 @@ achievement(
     points = 10
 )
 
-cooking_disk_cheevo(cooking_disk_2(), "Red Velvet", "Upload Cooking Disk R to the Dining Specializer.")
-cooking_disk_cheevo(cooking_disk_3(), "White Chocolate", "Upload Cooking Disk W to the Dining Specializer.")
-cooking_disk_cheevo(cooking_disk_4(), "Yellow Sponge Cake", "Upload Cooking Disk Y to the Dining Specializer.")
-cooking_disk_cheevo(cooking_disk_5(), "Chicken Cordon Bleu", "Upload Cooking Disk B to the Dining Specializer.")
-cooking_disk_cheevo(cooking_disk_6(), "Salad Greens", "Upload Cooking Disk G to the Dining Specializer.")
-cooking_disk_cheevo(cooking_disk_7(), "Plum Pudding", "Upload Cooking Disk PU to the Dining Specializer.")
+bitflag_cheevo(cooking_disks, "Cooking by the Book", "Upload all of the Cooking Disks to the Dining Specializer.", 5)
 
 achievement(
     title = "No Fun Allowed",
@@ -834,12 +831,12 @@ achievement(
     points = 5
 )
 
-achievement(
-    title = "Coin Heaven",
-    description = "Reach the bonus cloud platform in Chapter 1-2.",
-    trigger = player_x() >= 400.0 && player_x() <= 1600.0 && m("he2_02") && prev(player_y()) != 1225.0 && player_y() == 1225.0,
-    points = 1
-)
+// achievement(
+//     title = "Coin Heaven",
+//     description = "Reach the bonus cloud platform in Chapter 1-2.",
+//     trigger = player_x() >= 400.0 && player_x() <= 1600.0 && m("he2_02") && prev(player_y()) != 1225.0 && player_y() == 1225.0,
+//     points = 1
+// )
 
 achievement(
     title = "Staircase Secret",
