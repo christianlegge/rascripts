@@ -601,6 +601,7 @@ function story_cheevo(seq, map_id, title, description, points) {
         title = title,
         description = description,
         points = points,
+        type = "progression",
         trigger =
             story() == seq &&
             prev(story()) < seq &&
@@ -776,7 +777,7 @@ achievement(
     title = "No Fun Allowed",
     description = "Attempt the classic 1-up trick with a Koopa and lose points.",
     trigger = in_game() && score() - prev(score()) == -1000,
-    points = 1
+    points = 0
 )
 
 achievement(
