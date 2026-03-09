@@ -11,6 +11,12 @@ rc = {
     "EU": ascii_string_equals(0x73f70, " grP", 4)
 }
 
+partner_input_disabled = {
+    "US": byte(0x10ebc7),
+    "JP": byte(0x10ed87),
+    "EU": byte(0x10d6c7)
+}
+
 in_game = {
     "US": word(0xa094a) == 1,
     "JP": word(0x9e75a) == 1,
@@ -664,6 +670,12 @@ buzzar_defeated = {
     "EU": bit4(0xd8438)
 }
 
+mf_byte = {
+    "US": byte(0x2dbc70),
+    "JP": byte(0x2dbc70),
+    "EU": byte(0x2e1f50)
+}
+
 function map_flag(bit_index) {
     byte_index = bit_index / 8
     bit_in_byte = bit_index % 8
@@ -1044,6 +1056,10 @@ function check_npc(list, num, cmp) {
 
 function all_inv_slots(r, cmp) {
     return all_of(range(0, 9), idx => cmp(word(item_inv[r] + 2*idx)))
+}
+
+function any_inv_slot(r, cmp) {
+    return any_of(range(0, 9), idx => cmp(word(item_inv[r] + 2*idx)))
 }
 
 function lzs(story, area, map, cutscene_map, exit_map) {
@@ -3457,23 +3473,8 @@ achievement(
     description = "Earn a Mushroom from the Slot Machine in Shy Guy's Toybox",
     id = 322960, badge = "360326", published = "2023-05-29 3:20:59 PM", modified = "2023-10-16 3:15:40 PM",
     trigger = any_of(re, r => rc[r] && room(r, 16, 8) &&
-        any_of([
-            // slot A, slot B, result A, result B
-            // stars are on slot 0 result 1,
-            //              slot 1 result 1,
-            //              slot 1 result 4,
-            //              slot 2 result 1
-            [0, 1, 1, 1],
-            [0, 2, 1, 1],
-            [1, 2, 1, 1],
-            [0, 1, 1, 4],
-            [1, 2, 4, 1]
-        ], val =>
-            (map_var(val[0])[r] % 360) / 45 == val[2] &&
-            (map_var(val[1])[r] % 360) / 45 == val[3] 
-        ) &&
-        map_flag(0)[r] == 1 &&
-        entities[r] - prev(entities[r]) == 1
+        __ornext(mf_byte[r] == 0x8f || mf_byte[r] == 0xe) &&
+        any_inv_slot(r, x => prev(x) != 0x8a && x == 0x8a)
     )
 )
 
