@@ -783,7 +783,7 @@ achievement(
 achievement(
     title = "For the Fans",
     description = "Perform a 5-move Stylish combo.",
-    trigger = in_game() && stylish_points() == 100 && prev(stylish_points()) == 80 && measured(stylish_combo() == 5) && prev(stylish_combo()) == 4,
+    trigger = in_game() && measured(stylish_combo() == 5) && prev(stylish_combo()) == 4,
     points = 1
 )
 
