@@ -796,8 +796,8 @@ achievement(
 
 achievement(
     title = "They Hate to See Me Coming",
-    description = "Find Whacka in Chapter 5-1 and obtain a Whacka Bump.",
-    trigger = ascii_string_equals(map_addr, "gn1_01") && any_of(range(0, 9), i =>
+    description = "Find Whacka in Chapter 5-1 and obtain a Whacka Bump from him.",
+    trigger = ascii_string_equals(map_addr, "gn1_01") && player_x() > 2600.0 && any_of(range(0, 9), i =>
         word_be(0x511a88 + i*2) == 0x6a &&
         prev(word_be(0x511a88 + i*2)) != 0x6a 
     ),
