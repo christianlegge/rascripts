@@ -776,7 +776,7 @@ bitflag_cheevo(cooking_disks, "Cooking by the Book", "Upload all of the Cooking 
 achievement(
     title = "No Fun Allowed",
     description = "Attempt the classic 1-up trick with a Koopa and lose points.",
-    trigger = in_game() && score() - prev(score()) == -1000,
+    trigger = in_game() && prev(in_game()) && score() - prev(score()) == -1000,
     points = 0
 )
 
@@ -903,28 +903,28 @@ achievement(
     title = "Eidetic Memory",
     description = "Clear 10 rounds of Forget Me Not.",
     points = 10,
-    trigger = m("mg2_01") && prev(forget_round() == 10) && forget_round() == 11
+    trigger = m("mg2_") && prev(forget_round() == 10) && forget_round() == 11
 )
 
 achievement(
     title = "Who Needs a Vacuum?",
     description = "Clear 5 rounds of Mansion Patrol.",
     points = 10,
-    trigger = m("mg4_01") && prev(mansion_round() == 5) && mansion_round() == 6
+    trigger = m("mg4_") && prev(mansion_round() == 5) && mansion_round() == 6
 )
 
 achievement(
     title = "I'm Using Tilt Controls!",
     description = "Clear 10 rounds of Tilt Island.",
     points = 10,
-    trigger = m("mg1_01") && prev(tilt_round() == 10) && tilt_round() == 11
+    trigger = m("mg1_") && prev(tilt_round() == 10) && tilt_round() == 11
 )
 
 achievement(
     title = "Efficient Whacking",
     description = "Clear 10 rounds of Hammer Whacker.",
     points = 10,
-    trigger = m("mg3_01") && prev(whacker_round() == 10) && whacker_round() == 11
+    trigger = m("mg3_") && prev(whacker_round() == 10) && whacker_round() == 11
 )
 
 // Leaderboards
@@ -932,7 +932,7 @@ achievement(
 leaderboard(
     title = "Forget Me Not High Score",
     description = "Achieve the highest score in the Forget Me Not minigame.",
-    start = m("mg2_01") && forget_lives() == 0 && prev(forget_lives()) == 1,
+    start = m("mg2_") && forget_lives() == 0 && prev(forget_lives()) == 1,
     cancel = always_false(),
     submit = always_true(),
     value = forget_score(),
@@ -942,7 +942,7 @@ leaderboard(
 leaderboard(
     title = "Mansion Patrol High Score",
     description = "Achieve the highest score in the Mansion Patrol minigame.",
-    start = m("mg4_01") && mansion_lives() == 0 && prev(mansion_lives()) == 1,
+    start = m("mg4_") && mansion_lives() == 0 && prev(mansion_lives()) == 1,
     cancel = always_false(),
     submit = always_true(),
     value = mansion_score(),
@@ -952,7 +952,7 @@ leaderboard(
 leaderboard(
     title = "Tilt Island High Score",
     description = "Achieve the highest score in the Tilt Island minigame.",
-    start = m("mg1_01") && tilt_lives() == 0 && prev(tilt_lives()) == 1,
+    start = m("mg1_") && tilt_lives() == 0 && prev(tilt_lives()) == 1,
     cancel = always_false(),
     submit = always_true(),
     value = tilt_score(),
@@ -962,7 +962,7 @@ leaderboard(
 leaderboard(
     title = "Hammer Whacker High Score",
     description = "Achieve the highest score in the Hammer Whacker minigame.",
-    start = m("mg3_01") && whacker_lives() == 0 && prev(whacker_lives()) == 1,
+    start = m("mg3_") && whacker_lives() == 0 && prev(whacker_lives()) == 1,
     cancel = always_false(),
     submit = always_true(),
     value = whacker_score(),
