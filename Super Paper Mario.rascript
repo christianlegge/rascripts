@@ -635,18 +635,18 @@ function cooking_disk_cheevo(addr, title, description) {
     )
 }
 
-bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 10)
+bitflag_cheevo(cards_1_star, "Ancestral Recall", "Collect all of the 1-star rarity Catch Cards.", 25)
 bitflag_cheevo(cards_2_star, "Black Lotus", "Collect all of the 2-star rarity Catch Cards.", 25)
-bitflag_cheevo(saffron_recipes, "Joy of Cooking", "Cook all of the 1-ingredient recipes.", 10)
-bitflag_cheevo(dyllis_recipes, "Pépin Mario", "Cook all of the 2-ingredient recipes.", 10)
+bitflag_cheevo(saffron_recipes, "Joy of Cooking", "Cook all of the 1 ingredient recipes.", 10)
+bitflag_cheevo(dyllis_recipes, "Pépin Mario", "Cook all of the 2 ingredient recipes.", 25)
 
-bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all inventory items, chest items and hidden Catch Cards in Flipside.", 5)
-bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all inventory items, chest items and hidden Catch Cards in Flopside.", 5)
-bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all inventory items, chest items and hidden Catch Cards in Chapter 1.", 5)
-bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all inventory items, chest items and hidden Catch Cards in Chapter 2.", 5)
-bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all inventory items, chest items and hidden Catch Cards in Chapter 3.", 5)
+bitflag_cheevo(flipside_items, "Fleecing the Front", "Obtain all inventory items, chest items, and hidden Catch Cards in Flipside.", 5)
+bitflag_cheevo(flopside_items, "Burgling the Back", "Obtain all inventory items, chest items, and hidden Catch Cards in Flopside.", 5)
+bitflag_cheevo(chapter_1_items, "Lineland's Loot", "Obtain all inventory items, chest items, and hidden Catch Cards in Chapter 1.", 5)
+bitflag_cheevo(chapter_2_items, "Gloam Valley Valuables", "Obtain all inventory items, chest items, and hidden Catch Cards in Chapter 2.", 5)
+bitflag_cheevo(chapter_3_items, "The Bitlands' Bounty", "Obtain all inventory items, chest items, and hidden Catch Cards in Chapter 3.", 5)
 
-bitflag_cheevo(cards_flipside_pit, "All the Stars Are Here", "Collect all 9 Catch Cards from the Flipside Pit of 100 Trials.", 10)
+bitflag_cheevo(cards_flipside_pit, "All the Stars Are Here", "Collect all 9 Catch Cards from the Flipside Pit of 100 Trials.", 25)
 bitflag_cheevo(cards_flopside_pit, "Old Friends Hide Hard", "Collect all 9 Catch Cards from the Flopside Pit of 100 Trials.", 25)
 bitflag_cheevo(cards_shadoo_reward, "The Gauntlet", "Defeat Shadoo in the Flopside Pit of 100 Trials and obtain all 8 Catch Card rewards.", 25)
 
@@ -655,7 +655,7 @@ story_cheevo(8, "mac_01", "The Dark Prognosticus Unfolds", "Place the first Pure
 achievement(
     title = "A Helping Hand",
     description = "Recruit Thoreau to the party.",
-    points = 2,
+    points = 3,
     type = "progression",
     trigger = ascii_string_equals(map_addr, "he2_07") && any_of(pixl_slots, slot => slot.obtained(0xdd))
 )
@@ -667,15 +667,15 @@ achievement(
     trigger = enemy_defeated(80, 254)
 )
 
-story_cheevo(0x22, "he3_04", "Thrown Off", "Defeat O'Chunks in the Yold Desert.", 2)
+story_cheevo(0x22, "he3_04", "Thrown Off", "Defeat O'Chunks in the Yold Desert.", 3)
 
-story_cheevo(0x35, "he4_11", "Colossal Wreck", "Defeat Fracktail and complete Chapter 1.", 2)
-story_cheevo(0x3f, "mac_02", "Float On", "Recruit Peach to the party.", 2)
+story_cheevo(0x35, "he4_11", "Colossal Wreck", "Defeat Fracktail and complete Chapter 1.", 5)
+story_cheevo(0x3f, "mac_02", "Float On", "Recruit Peach to the party.", 3)
 
 achievement(
     title = "Five Big Booms",
     description = "Recruit Boomer to the party.",
-    points = 2,
+    points = 3,
     type = "progression",
     trigger = m("mi1_07") && any_of(pixl_slots, slot => slot.obtained(0xde))
 )
@@ -683,21 +683,21 @@ achievement(
 achievement(
     title = "Paper Thin",
     description = "Recruit Slim to the party.",
-    points = 2,
+    points = 3,
     type = "progression",
     trigger = m("mi3_01") && any_of(pixl_slots, slot => slot.obtained(0xdf))
 )
 
-story_cheevo(0x57, "mi3_06", "The Easy Way or the Hard Way", "Pay off your 1-million Rubee debt.", 3)
+story_cheevo(0x57, "mi3_06", "The Easy Way or the Hard Way", "Pay off your 1 million Rubee debt.", 5)
 
-story_cheevo(0x5f, "mi4_14", "Arachnanthropy", "Defeat Mimi in Merlee's Mansion and complete Chapter 2.", 3)
+story_cheevo(0x5f, "mi4_14", "Arachnanthropy", "Defeat Mimi in Merlee's Mansion and complete Chapter 2.", 5)
 
 // story_cheevo(0x64, "mac_07", "Man in Green", "Place the third Pure Heart in its Heart Pillar.", 1)
 
 achievement(
     title = "A Common Enemy",
     description = "Recruit Bowser to the party.",
-    points = 2,
+    points = 3,
     type = "progression",
     trigger = m("ta1_04") && any_of(character_slots, slot => slot.obtained(0xda))
 )
@@ -705,26 +705,26 @@ achievement(
 achievement(
     title = "Weight for Me",
     description = "Recruit Thudley to the party.",
-    points = 2,
+    points = 3,
     type = "progression",
     trigger = m("ta2_04") && any_of(pixl_slots, slot => slot.obtained(0xe0))
 )
 
-story_cheevo(0x6e, "ta2_05", "Commotion in the Ocean", "Defeat Big Blooper.", 2)
+story_cheevo(0x6e, "ta2_05", "Commotion in the Ocean", "Defeat Big Blooper.", 3)
 
-story_cheevo(0x74, "ta3_03", "Treetop Tussle", "Defeat Dimentio in the Dotwood Tree.", 3)
+story_cheevo(0x74, "ta3_03", "Treetop Tussle", "Defeat Dimentio in the Dotwood Tree.", 5)
 
 achievement(
     title = "Magic Cuboid Ride",
     description = "Recruit Carrie to the party.",
-    points = 2,
+    points = 3,
     type = "progression",
     trigger = m("ta4_12") && any_of(pixl_slots, slot => slot.obtained(0xe1))
 )
 
 achievement(
-    title = "With Help From My Little Friends",
-    description = "Collect some Pal Pills.",
+    title = "With Help from My Little Friends",
+    description = "Collect a Pal Pill.",
     trigger = in_game() && bit6(0x51046a) > prev(bit6(0x51046a)),
     points = 1
 )
@@ -736,12 +736,12 @@ achievement(
     points = 1
 )
 
-story_cheevo(0x7d, "ta4_13", "Vellum Cerebellum", "Defeat Francis and complete Chapter 3.", 4)
+story_cheevo(0x7d, "ta4_13", "Vellum Cerebellum", "Defeat Francis and complete Chapter 3.", 5)
 
-map_cheevo(range(1, 11), "Pointing and Clicking", "Collect the treasures from Maps 1-11.", 10)
-map_cheevo(range(12, 24), "In Search of Something", "Collect the treasures from Maps 12-24.", 10)
-map_cheevo(range(25, 37), "Invisible Treasures", "Collect the treasures from Maps 25-37.", 10)
-map_cheevo(range(38, 48), "Right Under Your Nose", "Collect the treasures from Maps 38-48.", 10)
+map_cheevo(range(1, 11), "Pointing and Clicking", "Collect all of the treasures found with maps 1 through 11.", 10)
+map_cheevo(range(12, 24), "In Search of Something", "Collect all of the treasures found with maps 12 through 24.", 10)
+map_cheevo(range(25, 37), "Invisible Treasures", "Collect all of the treasures found with maps 25 through 37.", 10)
+map_cheevo(range(38, 48), "Right Under Your Nose", "Collect all of the treasures found with maps 38 through 48.", 10)
 
 achievement(
     title = "Quaver Mario",
@@ -759,7 +759,7 @@ achievement(
 
 achievement(
     title = "Welcome to the Pit",
-    description = "Defeat Wracktail in the Pit of 100 Trials and recruit Dashell to the party.",
+    description = "Defeat Wracktail in the Flipside Pit of 100 Trials and recruit Dashell to the party.",
     points = 25,
     trigger = ascii_string_equals(map_addr, "dan_30") && any_of(pixl_slots, slot => slot.obtained(0xe7))
 )
@@ -771,7 +771,7 @@ achievement(
     points = 10
 )
 
-bitflag_cheevo(cooking_disks, "Cooking by the Book", "Upload all of the Cooking Disks to the Dining Specializer.", 5)
+bitflag_cheevo(cooking_disks, "Cooking by the Book", "Upload all of the Cooking Disks to the Dining Specializer.", 10)
 
 achievement(
     title = "No Fun Allowed",
@@ -784,7 +784,7 @@ achievement(
     title = "For the Fans",
     description = "Perform a 5-move Stylish combo.",
     trigger = in_game() && measured(stylish_combo() == 5) && prev(stylish_combo()) == 4,
-    points = 1
+    points = 3
 )
 
 achievement(
@@ -801,21 +801,21 @@ achievement(
         word_be(0x511a88 + i*2) == 0x6a &&
         prev(word_be(0x511a88 + i*2)) != 0x6a 
     ),
-    points = 3
+    points = 5
 )
 
 achievement(
     title = "Bullet Sponge",
     description = "Destroy a Hedron.",
     trigger = ascii_string_equals(map_addr, "sp3_") && score() - prev(score()) == 256,
-    points = 3
+    points = 4
 )
 
 achievement(
     title = "Quarter Muncher",
     description = "Purchase the Amazy Dayzee Catch Card from Flipside Arcade.",
     trigger = ascii_string_equals(map_addr, "mac_30") && bit7(0x511d56) == 1 && ((byte(0x511b63) - prev(byte(0x511b63)) == 1) || (byte(0x511b63) == 0 && prev(byte(0x511b63)) == 255)),
-    points = 5
+    points = 10
 )
 
 achievement(
@@ -829,7 +829,7 @@ achievement(
     title = "Put It on My Black Card",
     description = "Earn the Whacka Catch Card via Shop Points.",
     trigger = in_game() && bit6(0x511d6f) == 1 && shop_points() == 0 && prev(shop_points()) == 300,
-    points = 5
+    points = 10
 )
 
 // achievement(
@@ -855,22 +855,22 @@ achievement(
 
 achievement(
     title = "Blast Mining",
-    description = "Find both hidden coin rooms in Chapter 5-3.",
+    description = "Use Boomer to find two hidden coin rooms in Chapter 5-3.",
     trigger = measured(tally(2, mdelta("gn3_03") && m("gn3_10"), mdelta("gn3_15") && m("gn3_04"))) && bit7(0x525715) == 1 && bit3(0x525710) == 1 && never(byte(map_addr) == 0),
-    points = 4
+    points = 5
 )
 
 achievement(
     title = "Bushido Bro",
     description = "Win the Sammer Guy Tournament and earn King Sammer's reward.",
-    points = 25,
+    points = 50,
     trigger = bit6(0x0052571e) > prev(bit6(0x0052571e)) && m("wa4_26")
 )
 
 achievement(
     title = "Mr. Driller",
     description = "Unlock all of Welderberg's shortcut warp pipes.",
-    points = 5,
+    points = 10,
     trigger = __ornext(m("mac_05") || m("mac_12") || m("mac_15")) &&
         measured(bit5(0x5256d5) + bit6(0x5256d5) + bit7(0x5256d5) == 3) &&
         (prev(bit5(0x5256d5)) + prev(bit6(0x5256d5)) + prev(bit7(0x5256d5))) == 2
@@ -884,7 +884,7 @@ achievement(
         never(mot() == 0x4c) &&
         prev(story() < 0x6e) &&
         trigger_when(story() == 0x6e),
-    points = 3,
+    points = 5,
     type = "missable"
 )
 
@@ -896,13 +896,13 @@ achievement(
         never(flipped()) &&
         never(hp() < prev(hp())) &&
         trigger_when(player_y() == 1300.0 && mot() <= 2 && prev(mot()) > 2),
-    points = 3
+    points = 5
 )
 
 achievement(
     title = "Eidetic Memory",
     description = "Clear 10 rounds of Forget Me Not.",
-    points = 5,
+    points = 10,
     trigger = m("mg2_01") && prev(forget_round() == 10) && forget_round() == 11
 )
 
@@ -923,7 +923,7 @@ achievement(
 achievement(
     title = "Efficient Whacking",
     description = "Clear 10 rounds of Hammer Whacker.",
-    points = 5,
+    points = 10,
     trigger = m("mg3_01") && prev(whacker_round() == 10) && whacker_round() == 11
 )
 
@@ -972,7 +972,7 @@ leaderboard(
 leaderboard(
     id = 155750,
     title = "Flipside Pit of 100 Trials Speedrun",
-    description = "Complete the non-boss enemy floors of the Flipside Pit as fast as possible.",
+    description = "Complete the non-boss enemy floors of the Flipside Pit of 100 Trials as fast as possible.",
     start = 
         ascii_string_equals(map_addr, "mac_05", transform = a => prev(a)) &&
         ascii_string_equals(map_addr, "dan_01"),
@@ -989,7 +989,7 @@ leaderboard(
 leaderboard(
     id = 155775,
     title = "Flipside Pit of 100 Trials Itemless Speedrun",
-    description = "Complete the non-boss enemy floors of the Flipside Pit as fast as possible without using items.",
+    description = "Complete the non-boss enemy floors of the Flipside Pit of 100 Trials as fast as possible without using items.",
     start = 
         ascii_string_equals(map_addr, "mac_05", transform = a => prev(a)) &&
         ascii_string_equals(map_addr, "dan_01"),
@@ -1009,7 +1009,7 @@ leaderboard(
 
 leaderboard(
     title = "Flopside Pit of 100 Trials Speedrun",
-    description = "Complete the non-boss enemy floors of the Flopside Pit as fast as possible.",
+    description = "Complete the non-boss enemy floors of the Flopside Pit of 100 Trials as fast as possible.",
     start = 
         ascii_string_equals(map_addr, "mac_15", transform = a => prev(a)) &&
         ascii_string_equals(map_addr, "dan_41"),
@@ -1025,7 +1025,7 @@ leaderboard(
 
 leaderboard(
     title = "Flopside Pit of 100 Trials Itemless Speedrun",
-    description = "Complete the non-boss floors of the Flopside Pit as fast as possible without using items.",
+    description = "Complete the non-boss floors of the Flopside Pit of 100 Trials as fast as possible without using items.",
     start = 
         ascii_string_equals(map_addr, "mac_15", transform = a => prev(a)) &&
         ascii_string_equals(map_addr, "dan_41"),
