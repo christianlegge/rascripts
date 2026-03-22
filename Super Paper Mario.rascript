@@ -985,7 +985,7 @@ leaderboard(
 leaderboard(
     title = "Hammer Whacker High Score",
     description = "Achieve the highest score in the Hammer Whacker minigame.",
-    start = m("mg3_") && whacker_lives() == 0 && prev(whacker_lives()) == 1,
+    start = m("mg3_") && ((whacker_lives() == 0 && prev(whacker_lives()) == 1) || (whacker_round() == 100 && whacker_score() > prev(whacker_score()))),
     cancel = always_false(),
     submit = always_true(),
     value = whacker_score(),
