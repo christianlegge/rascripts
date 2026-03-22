@@ -6,12 +6,19 @@ map_addr = 0x525594
 function blockblock() => bit1(0x0051046a) == 1
 function player_motion() => word_be(0x510484)
 
+mg_ptr_base = 0x4027f8
+function mg_ptr() => (dword_be(mg_ptr_base) & 0x7fffffff) + 0x120 // 0xe0....
+
+function mansion_base() => (dword_be(mg_ptr()) & 0x7fffffff) + 0x3e4
+function mansion_struct() => (dword_be(mansion_base()) & 0x7fffffff)
+
 function forget_round() => dword_be(0x010c6954)
 function forget_score() => dword_be(0x10c6a54)
 function forget_lives() => byte(0x10c6737)
-function mansion_round() => dword_be(0x10c2704)
-function mansion_score() => dword_be(0x10c256c)
-function mansion_lives() => dword_be(0x10a2cd8)
+function mansion_status() => dword_be(mansion_struct())
+function mansion_round() => dword_be(mansion_struct() + 0x1f8cc)
+function mansion_score() => dword_be(mansion_struct() + 0x1f8ec)
+function mansion_lives() => dword_be(mansion_struct() + 0x58)
 function whacker_round() => dword_be(0x10c7e10)
 function whacker_score() => dword_be(0x10c80d0)
 function whacker_lives() => dword_be(0x10c7eb0)
@@ -917,7 +924,7 @@ achievement(
     title = "Who Needs a Vacuum?",
     description = "Clear 5 rounds of Mansion Patrol.",
     points = 10,
-    trigger = m("mg4_") && prev(mansion_round() == 5) && mansion_round() == 6
+    trigger = m("mg4_") && prev(mansion_round() == 4) && mansion_round() == 5
 )
 
 achievement(
@@ -949,7 +956,7 @@ leaderboard(
 leaderboard(
     title = "Mansion Patrol High Score",
     description = "Achieve the highest score in the Mansion Patrol minigame.",
-    start = m("mg4_") && mansion_lives() == 0 && prev(mansion_lives()) == 1,
+    start = m("mg4_") && ((mansion_lives() == 0 && prev(mansion_lives()) == 1) || (mansion_status() == 502 && prev(mansion_status()) == 501)),
     cancel = always_false(),
     submit = always_true(),
     value = mansion_score(),
