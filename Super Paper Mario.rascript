@@ -11,20 +11,29 @@ function mg_ptr() => (dword_be(mg_ptr_base) & 0x7fffffff) + 0x120 // 0xe0....
 
 function mansion_base() => (dword_be(mg_ptr()) & 0x7fffffff) + 0x3e4
 function mansion_struct() => (dword_be(mansion_base()) & 0x7fffffff)
+function tilt_base() => (dword_be(mg_ptr()) & 0x7fffffff) + 0x3f4
+function tilt_struct() => (dword_be(tilt_base()) & 0x7fffffff)
+function forget_base() => (dword_be(mg_ptr()) & 0x7fffffff) + 0x404
+function forget_struct() => (dword_be(forget_base()) & 0x7fffffff)
+function whacker_base() => (dword_be(mg_ptr()) & 0x7fffffff) + 0x408
+function whacker_struct() => (dword_be(whacker_base()) & 0x7fffffff)
 
-function forget_round() => dword_be(0x010c6954)
-function forget_score() => dword_be(0x10c6a54)
-function forget_lives() => byte(0x10c6737)
+function forget_status() => dword_be(forget_struct())
+function forget_round() => dword_be(forget_struct() + 0xb34)
+function forget_score() => dword_be(forget_struct() + 0xc34)
+function forget_lives() => byte(forget_struct() + 0x917)
 function mansion_status() => dword_be(mansion_struct())
 function mansion_round() => dword_be(mansion_struct() + 0x1f8cc)
 function mansion_score() => dword_be(mansion_struct() + 0x1f8ec)
 function mansion_lives() => dword_be(mansion_struct() + 0x58)
-function whacker_round() => dword_be(0x10c7e10)
-function whacker_score() => dword_be(0x10c80d0)
-function whacker_lives() => dword_be(0x10c7eb0)
-function tilt_round() => dword_be(0x10bacf4)
-function tilt_score() => dword_be(0x10ba424)
-function tilt_lives() => dword_be(0x10b3c88)
+function whacker_status() => dword_be(whacker_struct())
+function whacker_round() => dword_be(whacker_struct() + 0x30)
+function whacker_score() => dword_be(whacker_struct() + 0x2f0)
+function whacker_lives() => dword_be(whacker_struct() + 0xd0) 
+function tilt_status() => dword_be(tilt_struct())
+function tilt_round() => dword_be(tilt_struct() + 0x717c)
+function tilt_score() => dword_be(tilt_struct() + 0x6864)
+function tilt_lives() => dword_be(tilt_struct() + 0xc8)
 
 function flipped() => word_be(0x0079c0ea) == 1
 
@@ -931,7 +940,7 @@ achievement(
     title = "I'm Using Tilt Controls!",
     description = "Clear 10 rounds of Tilt Island.",
     points = 10,
-    trigger = m("mg1_") && prev(tilt_round() == 10) && tilt_round() == 11
+    trigger = m("mg1_") && prev(tilt_round() == 9) && tilt_round() == 10
 )
 
 achievement(
@@ -946,7 +955,7 @@ achievement(
 leaderboard(
     title = "Forget Me Not High Score",
     description = "Achieve the highest score in the Forget Me Not minigame.",
-    start = m("mg2_") && forget_lives() == 0 && prev(forget_lives()) == 1,
+    start = m("mg2_") && ((forget_lives() == 0 && prev(forget_lives()) == 1) || (forget_status() == 0x1802 && prev(forget_status()) == 0x1801)),
     cancel = always_false(),
     submit = always_true(),
     value = forget_score(),
@@ -966,7 +975,7 @@ leaderboard(
 leaderboard(
     title = "Tilt Island High Score",
     description = "Achieve the highest score in the Tilt Island minigame.",
-    start = m("mg1_") && tilt_lives() == 0 && prev(tilt_lives()) == 1,
+    start = m("mg1_") && ((tilt_lives() == 0 && prev(tilt_lives()) == 1) || (tilt_status() == 0x0b000002 && prev(tilt_status()) == 0x0b000001)),
     cancel = always_false(),
     submit = always_true(),
     value = tilt_score(),
