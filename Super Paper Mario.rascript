@@ -735,8 +735,8 @@ achievement(
 
 achievement(
     title = "Kickin' It Old School",
-    description = "Collect a Mega Star.",
-    trigger = in_game() && bit1(0x005256c6) > prev(bit1(0x005256c6)),
+    description = "Collect a Mega Star for the first time.",
+    trigger = prev(in_game()) && bit1(0x005256c6) > prev(bit1(0x005256c6)),
     points = 1
 )
 
