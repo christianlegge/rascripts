@@ -547,6 +547,7 @@ chapter_1_items = [
     bit6(0x5256dc),
     bit7(0x5256dc),
     bit2(0x5256e2),
+    bit0(0x5256e3),
     bit1(0x5256e3),
     bit2(0x5256e3),
     bit3(0x5256e3),
