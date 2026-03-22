@@ -3,6 +3,9 @@
 
 map_addr = 0x525594
 
+function blockblock() => bit1(0x0051046a) == 1
+function player_motion() => word_be(0x510484)
+
 function forget_round() => dword_be(0x010c6954)
 function forget_score() => dword_be(0x10c6a54)
 function forget_lives() => byte(0x10c6737)
@@ -890,13 +893,16 @@ achievement(
 
 achievement(
     title = "Jump, Man",
-    description = "Climb the hill in Chapter 1-2 without flipping or taking damage.",
-    trigger = once(player_x() >= 600.0 && prev(player_x() < 600.0)) &&
+    description = "Climb the hill in Chapter 1-2 as Mario without flipping, using Slim, using invincibility items or taking damage.",
+    trigger = once(prev(player_x()) != 0.0 && player_x() >= 600.0 && prev(player_x() < 600.0)) &&
+        never(!mario()) &&
+        never(blockblock()) &&
         never(!m("he2_02")) &&
+        never(player_motion() == 0x12) &&
         never(flipped()) &&
         never(hp() < prev(hp())) &&
         trigger_when(player_y() == 1300.0 && mot() <= 2 && prev(mot()) > 2),
-    points = 5
+    points = 10
 )
 
 achievement(
