@@ -902,7 +902,8 @@ achievement(
 achievement(
     title = "Sashimi Chef",
     description = "Defeat Big Blooper without using Bowser's fire breath.",
-    trigger = once(player_x() >= 201.0 && prev(player_x() < 201.0)) &&
+
+    trigger = once(enemy_test(5, addr => dword_be(addr + 0x49c) != 317) && player_x() >= 201.0 && prev(player_x() < 201.0)) &&
         never(!m("ta2_05")) &&
         never(mot() == 0x4c) &&
         prev(story() < 0x6e) &&
