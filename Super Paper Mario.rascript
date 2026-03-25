@@ -6,6 +6,12 @@ map_addr = 0x525594
 function blockblock() => bit1(0x0051046a) == 1
 function player_motion() => word_be(0x510484)
 
+function hor_speed() => float_be(0x5105a0)
+function base_speed() => float_be(0x5105a8)
+
+function flipped() => word_be((dword_be(0x50b544) & 0x7fffffff) + 0xa) == 1
+function pixl_active() => bit0(0x5111b1) == 1
+
 mg_ptr_base = 0x4027f8
 function mg_ptr() => (dword_be(mg_ptr_base) & 0x7fffffff) + 0x120 // 0xe0....
 
@@ -35,7 +41,6 @@ function tilt_round() => dword_be(tilt_struct() + 0x717c)
 function tilt_score() => dword_be(tilt_struct() + 0x6864)
 function tilt_lives() => dword_be(tilt_struct() + 0xc8)
 
-function flipped() => word_be(0x0079c0ea) == 1
 
 function in_game() => byte(map_addr) != 0
 
@@ -914,12 +919,24 @@ achievement(
 
 achievement(
     title = "Jump, Man",
-    description = "Climb the hill in Chapter 1-2 as Mario without flipping, using Slim, using invincibility items or taking damage.",
+    description = "Climb the hill in Chapter 1-2 as Mario without flipping, using Pixls, using invincibility items, or taking damage.",
     trigger = once(prev(player_x()) != 0.0 && player_x() >= 600.0 && prev(player_x() < 600.0)) &&
         never(!mario()) &&
         never(blockblock()) &&
         never(!m("he2_02")) &&
+        never(pixl_active()) &&
+        never(player_motion() == 0xe) &&
         never(player_motion() == 0x12) &&
+        never(player_motion() == 0x24) &&
+        never(player_motion() == 0x25) &&
+        never(player_motion() == 0x26) &&
+        never(player_motion() == 0x10) &&
+        never(player_motion() == 0x2c) &&
+        never(player_motion() == 0x2d) &&
+        never(player_motion() == 0x27) &&
+        never(player_motion() == 0x2a) &&
+        never(player_motion() == 0x29) &&
+        never(hor_speed() > base_speed()) &&
         never(flipped()) &&
         never(hp() < prev(hp())) &&
         trigger_when(player_y() == 1300.0 && mot() <= 2 && prev(mot()) > 2),
