@@ -884,7 +884,7 @@ achievement(
 achievement(
     title = "Blast Mining",
     description = "Use Boomer to find two hidden coin rooms in Chapter 5-3.",
-    trigger = measured(tally(2, mdelta("gn3_03") && m("gn3_10"), mdelta("gn3_15") && m("gn3_04"))) && bit7(0x525715) == 1 && bit3(0x525710) == 1 && never(byte(map_addr) == 0),
+    trigger = measured(tally(2, once(mdelta("gn3_03") && m("gn3_10")), once(mdelta("gn3_15") && m("gn3_04")))) && bit7(0x525715) == 1 && bit3(0x525710) == 1 && never(byte(map_addr) == 0),
     points = 5
 )
 
