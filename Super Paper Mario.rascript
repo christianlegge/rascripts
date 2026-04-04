@@ -605,6 +605,11 @@ function enemy_test(num, predicate) {
     return any_of(range(0, num - 1), i => predicate(base_addr + 0x748 * i))
 }
 
+function all_enemies(num, predicate) {
+    base_addr = npc_entries()
+    return all_of(range(0, num - 1), i => predicate(base_addr + 0x748 * i))
+}
+
 function enemy_defeated(num, tribe_id) {
     return enemy_test(num, addr =>
         dword_be(addr + 0x49C) == tribe_id &&
@@ -908,7 +913,7 @@ achievement(
     title = "Sashimi Chef",
     description = "Defeat Big Blooper without using Bowser's fire breath.",
 
-    trigger = once(enemy_test(5, addr => dword_be(addr + 0x49c) != 317) && player_x() >= 201.0 && prev(player_x() < 201.0)) &&
+    trigger = once(all_enemies(80, addr => dword_be(addr + 0x49c) != 317) && player_x() >= 201.0 && prev(player_x() < 201.0)) &&
         never(!m("ta2_05")) &&
         never(mot() == 0x4c) &&
         prev(story() < 0x6e) &&
