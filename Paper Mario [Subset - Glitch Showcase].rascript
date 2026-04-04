@@ -1627,14 +1627,11 @@ achievement("Scooch Over, I'm Tired", "Take a nap in Peach's Castle without free
     )
 )
 
-achievement("See You There, Bro", "After defeating Final Bowser and recovering the Star Rod, reach Peach's Castle without talking to Luigi in Toad Town.", points = 1,
+achievement("See You There, Bro", "After defeating Final Bowser and recovering the Star Rod, exit through the Mario's House pipe without triggering Luigi's dialogue in Toad Town.", points = 1,
     trigger = any_of(regions, r =>
-        region_check[r] && area_id[r] == 1 && map_id[r] == 2 &&
-        prev(map_id[r] == 1) && story_progress[r] == 0x60 &&
-        check_npc(world_npcs[r], 24, addr =>
-            byte(addr + 0xa7) == 0x19 &&
-            byte(addr + 0x28) == 0
-        )
+        region_check[r] && story_progress[r] == 0x60 &&
+        prev(area_id[r] == 0) && prev(entry_id[r] == 3) && prev(map_id[r] == 0xb) &&
+        trigger_when(area_id[r] == 1 && entry_id[r] == 4 && map_id[r] == 1)
     )
 )
 
