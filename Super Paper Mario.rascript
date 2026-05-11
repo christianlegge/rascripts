@@ -3,6 +3,8 @@
 
 map_addr = 0x525594
 
+function pose_name(text) => ascii_string_equals(tbyte_be(0x510475), text)
+function control_disabled() => bit1(0x510463) == 1
 function blockblock() => bit1(0x0051046a) == 1
 function player_motion() => word_be(0x510484)
 
@@ -913,10 +915,11 @@ achievement(
     title = "Sashimi Chef",
     description = "Defeat Big Blooper without using Bowser's fire breath.",
 
-    trigger = once(all_enemies(80, addr => dword_be(addr + 0x49c) != 317) && player_x() >= 201.0 && prev(player_x() < 201.0)) &&
+    trigger = once(story() < 0x6e && player_x() >= 201.0 && prev(player_x() < 201.0)) &&
+        disable_when(once(player_x() >= 201.0 && prev(!control_disabled()) && control_disabled()) && !control_disabled() && mot() == 0x4c,
+            until = !m("ta2_05")) &&
         never(!m("ta2_05")) &&
-        never(mot() == 0x4c) &&
-        prev(story() < 0x6e) &&
+        never(prev(story() >= 0x6e)) &&
         trigger_when(story() == 0x6e),
     points = 5,
     type = "missable"
@@ -941,7 +944,7 @@ achievement(
         never(player_motion() == 0x27) &&
         never(player_motion() == 0x2a) &&
         never(player_motion() == 0x29) &&
-        never(hor_speed() > base_speed()) &&
+        never(pose_name("R_3")) &&
         never(flipped()) &&
         never(hp() < prev(hp())) &&
         trigger_when(player_y() == 1300.0 && mot() <= 2 && prev(mot()) > 2),
